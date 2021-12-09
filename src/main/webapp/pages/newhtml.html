@@ -1,0 +1,57 @@
+ <p:dialog header="Boletas"  showEffect="fade"
+                          modal="true"
+                          dynamic="true" 
+
+                          widgetVar="manageBoletasDialog" responsive="true"
+                          width="50%"
+                          style="width:20%;margin:0 auto"
+                          position="center center" onShow="PF('manageBoletasDialog').initPosition()"
+
+                          >
+                    <p:outputPanel id="manage-boletas-content" class="ui-fluid">
+
+                        <p:outputPanel rendered="#{not empty datatableController.personaSelected}">
+                            <div class="p-field">
+                                <p:outputLabel for="description">Description</p:outputLabel>
+                                <p:outputLabel id="description" value="#{apruebaBoletasJefeUnidadController.selectedMedia.idboleta}"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="foto">foto</p:outputLabel>
+                                <p:outputLabel id="foto" value="#{apruebaBoletasJefeUnidadController.selectedMedia.user.name}"/>
+                            </div>
+
+
+                            <div class="p-field">
+                                <h:outputText value="image name: "  />
+                                <p:graphicImage id="image" 
+                                                width="80"
+                                                height="80"   
+                                                 rendered="#{jMoordbMediaManager.isImage(datatableController.personaSelected.foto)}"
+                                                value="#{jMoordbMediaManager.generate(datatableController.personaSelected.foto)}" 
+                                                stream="false" cache="false" />
+                            </div>
+
+
+                            <div class="p-field">
+                                <p:commandButton id="downloaddisk1" value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);"
+                                                 icon="fa fa-fw fa-download" styleClass="p-mr-2">
+
+                                    <p:fileDownload value="#{jMoordbMediaManager.media}"/>
+                                </p:commandButton>
+
+                            </div>
+
+                            <div class="card">
+                                <h5><p:outputLabel value="PDF" rendered="#{jMoordbMediaManager.isPDF()}"/></h5>
+                                <p:media value="#{jMoordbMediaManager.media}"
+                                          rendered="#{jMoordbMediaManager.isPDF()}"
+                                         player="pdf" width="100%" height="200px">
+                                    Your browser can't display pdf,
+                                    <h:outputLink
+                                        value="#{jMoordbMediaManager.media}">click</h:outputLink> to download pdf instead.
+                                </p:media>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+                </p:dialog>

@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <div class="col-12 col-lg-5">
+            <div class="row">
+                <div class="col-12 col-lg-12 grid-margin stretch-card">
+
+                    <div class="card rounded-top rounded-bottom shadow atm-xtramrgn01" >
+                        <div class="card-header atm-head01" style="background-color: #74cbed">
+                            <p class="card-title text-md-center text-xl-left" style="background-color: #74cbed"><font color="#fff">Resumen de Acciones Generadas</font></p>
+                        </div>
+
+                        <div class="card-body atm-body01 mb-0" style="background-color: #74cbed">
+
+                            <div class="row justify-content-center">
+                                <div class="col-4 col-lg-4 atm-align01">
+                                    <a class="atm-link01" href="dashboard.xhtml" data-toggle="modal" data-target=".bd-example-modal-lg">
+
+                                        <i> <p:graphicImage name="atmg-icon01.png" library="images"/></i>
+                                        <span class="badge badge-danger badge-counter marpru02 rounded"><p:outputLabel value="#{dashboardController.totalSolicitado}" /></span>
+                                        <p>Solicitados </p></a>
+                                </div>
+                                <div class="col-4 col-lg-4 atm-align01">
+                                    <a class="atm-link01" href="dashboard.xhtml">
+                                        <i> <p:graphicImage name="atmg-ep-icon01.png" library="images"/></i>
+
+                                        <span class="badge badge-danger badge-counter marpru02 rounded"><p:outputLabel value="#{dashboardController.totalEnProceso}" /></span>
+                                        <p>En Proceso</p></a>
+                                </div>
+                                <div class="col-4 col-lg-4 atm-align01">
+                                    <a class="atm-link01" href="dashboard.xhtml">
+                                        <i> <p:graphicImage name="atmg-fin-icon01.png" library="images"/></i>
+
+                                        <span class="badge badge-danger badge-counter marpru02 rounded"><p:outputLabel value="#{dashboardController.totalFinalizado}" /></span>
+                                        <p>Finalizados</p></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-12 col-lg-12">&nbsp;</div>
+            </div> 
+        </div>
+    </cc:implementation>
+</html>

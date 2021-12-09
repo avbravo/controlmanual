@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://xmlns.jcp.org/jsf">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="action" />
+        <cc:attribute name="id" default="outputPanelTokenModal"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:outputPanel id="#{cc.attrs.id}">
+
+            <div class="modal fade bd-example-modal-lg" id="token01" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                    <div class="modal-content bg-token01">
+
+                        <div class="modal-header">
+                            <!--<h5 class="titu-token01" id="token01Title">Recibirás un SMS con tu token</h5>-->
+                            <h5 id="token01Title">Ingrese el token recibido en su correo</h5>
+                           
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-lg-12">
+
+                                    <div class="row justify-content-center">
+                                        <div class="col-auto col-lg-auto">
+
+                                            <div id="content" class="col-lg-12">
+
+
+
+                                                <p:inputTextarea rows="1" cols="4" id="mytokeen" maxlength="4" class="board"
+                                                                 styleClass="board"
+                                                                 value="#{reinicioRemotoConfirmarController.tokenIngresado}"
+                                                                 >
+                                                    <p:autoUpdate />
+                                                </p:inputTextarea>
+                                                
+                                                 <p:messages id="tokenreinicioremotomessages">
+                                <p:autoUpdate/>
+                            </p:messages>
+                                                 
+
+                                                <div class="row justify-content-center ">
+                                                    <div class="col-12 col-lg-12 desc-token01 pl-0">
+                                                        Digita el token que recibiste
+                                                    </div>
+                                                </div>
+
+
+                                                <div id="virtual-keyboard">
+                                                    <div class="keyboard-row">
+
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-12 col-lg-12 keyboard-row">
+                                                                <p:commandLink value="1" class="number"  
+                                                                               action="#{reinicioRemotoConfirmarController.marcarNumero('1')}"
+                                                                               update=" "/>
+                                                                <p:commandLink value="2" class="number" 
+                                                                               action="#{reinicioRemotoConfirmarController.marcarNumero('2')}"
+                                                                               update=" "/>
+                                                                <p:commandLink value="3" class="number" 
+                                                                               action="#{reinicioRemotoConfirmarController.marcarNumero('3')}"
+                                                                               update=" "/>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row justify-content-center keyboard-row">
+                                                            <div class="col-12 col-lg-12">
+                                                                <p:commandLink value="4" class="number" 
+                                                                               action="#{reinicioRemotoConfirmarController.marcarNumero('4')}"
+                                                                               update=" "/>
+                                                                <p:commandLink value="5" class="number"  
+                                                                               action="#{reinicioRemotoConfirmarController.marcarNumero('5')}"
+                                                                               update=" "/>
+                                                                <p:commandLink value="6" class="number"
+                                                                                action="#{reinicioRemotoConfirmarController.marcarNumero('6')}"
+                                                                               update=" "/>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-12 col-lg-12">					
+                                                                <p:commandLink value="7" class="number" 
+                                                                                action="#{reinicioRemotoConfirmarController.marcarNumero('7')}"
+                                                                               update=" "/>
+                                                                <p:commandLink value="8" class="number" 
+                                                                                action="#{reinicioRemotoConfirmarController.marcarNumero('8')}"
+                                                                               update=" "/>
+                                                                <p:commandLink value="9" class="number"
+                                                                                action="#{reinicioRemotoConfirmarController.marcarNumero('9')}"
+                                                                               update=" "/>
+                                                            </div>
+                                                        </div>							
+
+                                                    </div>
+
+                                                    <div class="keyboard-row">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-12 col-lg-12">					
+
+                                                                <p:commandLink value="0" class="number2" 
+                                                                                action="#{reinicioRemotoConfirmarController.marcarNumero('0')}"
+                                                                               update=" "/>
+                                                                
+                                                                <p:commandLink value="DEL" class="" 
+                                                                                action="#{reinicioRemotoConfirmarController.marcarNumero('b')}"
+                                                                               update=" ">
+                                                                    <i class="ti-eraser"></i>
+                                                                </p:commandLink>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>					
+
+                                                </div>
+
+                                                <div class="row justify-content-center separabot02">
+                                                    <div class="col-auto col-lg-auto separabot01 pr-1 pl-1">
+                                                        <button type="button" class="btn btn-secondary rounded-pill " data-dismiss="modal"><i class="fas fa-times-circle"></i>&nbsp;Cancelar</button>
+
+                                                    </div>
+                                                    <div class="col-auto col-lg-auto separabot01">
+
+                                                        <p:commandLink class="btn btn-danger rounded-pill"  update=":form:growl"
+                                                                       action="#{reinicioRemotoConfirmarController.onCommandButtonReinicioRemoto()}">
+                                                            <i class="ti-arrow-circle-down" style="color:#cc0000;"></i>&nbsp;Aceptar
+                                                        </p:commandLink>
+                                                    </div>  
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+
+                                </div>    
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p:outputPanel>
+    </cc:implementation>
+</html>

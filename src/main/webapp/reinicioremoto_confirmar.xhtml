@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"         
+      xmlns:template="http://xmlns.jcp.org/jsf/composite/template"
+      xmlns:p="http://primefaces.org/ui"
+
+      xmlns:token="http://xmlns.jcp.org/jsf/composite/token"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ultimaacciongenerada="http://xmlns.jcp.org/jsf/composite/ultimaacciongenerada"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <link rel="stylesheet" href="./resources/vendors/ti-icons/css/themify-icons.css"/>
+        <link rel="stylesheet" href="./resources/vendors/base/vendor.bundle.base.css"/>
+        <link href="./resources/vendors/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="./resources/css/style.css"/>
+        <link rel="stylesheet" href="./resources/css/dash01.css"/>
+        <link rel="stylesheet" href="./resources/css/mantenimiento.css"/>
+         <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
+        <meta name="referrer" content="no-referrer"/>
+        <meta name="referrer" content="strict-origin-when-cross-origin"/>
+
+        <title>Control Manual</title>         <f:metadata><f:viewAction action="#{f5Detector.checkF5}" onPostback="true" /> </f:metadata>
+
+    </h:head>
+    <h:body>
+    <h:form id="form" prependId="false" rendered="#{accessController.loged}">
+
+            <script type="text/javascript">
+                function setDataTableWithPageStart() {
+
+                    widgetVardataTable.getPaginator().setPage(0);
+                    alert("ejecutado la funcion setDataTableWithPageStart()")
+                }
+            </script>
+            <p:growl id='growl' widgetVar="widgetVarGrowl"/>
+            <div class="container-scroller">
+                <!-- partial:partials/_navbar.html -->
+                <template:top/>
+
+
+                <!-- Body -->
+                <div class="container-fluid page-body-wrapper">
+                    <template:navigator/>
+
+                    <!-- partial -->
+
+
+                    <!-- partial -->
+
+                    <div class="main-panel">
+                        <div class="content-wrapper" id="bgarc01">
+
+                            <div class="row up01">
+                                <div class="col-md-12 grid-margin">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h4 class="text-secondary">#{reinicioRemotoConfirmarController.grupoAccion.GRUPOACCION} Se envio Token  a su correo</h4>
+                                            <p:commandLink value="REGRESAR" class="bot-regresar01" action="reinicioremoto"/>
+                                            <p:messages id="message" showSummary="true" />
+
+                                        </div>
+
+                                        <!--<button type="button" class="btn btn-danger btn-rounded btn-fw text-nowrap" data-toggle="modal" data-target="#exampleModalScrollable"><i class="ti-search"></i>&nbsp;BUSCA CAJERO</button>-->
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-lg-12 ">
+
+                                    <div class="row justify-content-center">
+                                        <div class="col-12 col-lg-10">
+
+                                            <div class="card card-bor-bottom01 card-bor-top01 ">
+
+
+                                                <div class="card-header atm-head01 card-bor-top01">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-12 col-lg-11">
+                                                            <p class="card-title text-md-center text-xl-left textmvl01"><font color="#fff">Acción a Ejecutar</font></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-body atm-body02">
+                                                    <div class="row justify-content-center align-content-center atm-row01">
+                                                        <div class="col-1 col-lg-auto atm-card-marbody01 atm-mar01" >
+                                                            <p:graphicImage name="atm-green01.png" library="images" alt="" class="card-icono01" />
+
+                                                        </div>
+                                                        <div class="col-2 col-lg-auto atm-card-marbody01" >
+                                                            <button type="button" class="btn btn-rounded btn-fw text-nowrap btn-secondary btn-sm" data-toggle="modal" data-target="#acciones01">
+                                                                #{reinicioRemotoConfirmarController.cajero.CAJERO}
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-8 col-lg-9 atm-card-marbody01 atm-mar02" >
+                                                            <dl>
+                                                                <dd class="atm-title-mar01"><strong>#{reinicioRemotoConfirmarController.cajero.DIRECCIONCORTA}</strong></dd>
+                                                                <dd class="atm-title-mar01">#{reinicioRemotoConfirmarController.cajero.DIRECCION}</dd>
+                                                            </dl>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body ">
+                                                    <div class="row justify-content-center align-content-center">
+                                                        <div class="col-12 col-lg-11 atm-card-marbody01 ali-desc-mov01" >
+                                                            <c:if test="${!reinicioRemotoController.haveAccionReciente}">
+                                                                <p class="atm-title-mar01"><strong>No hay acciones agendadas</strong></p>
+                                                            </c:if>
+                                                            <c:if test="${reinicioRemotoController.haveAccionReciente}">
+                                                                <dd class="atm-title-mar01"><strong>ULTIMA ACCION QUE SE EJECUTO</strong></dd>
+                                                                <dd class="atm-title-mar01"><strong>#{reinicioRemotoController.accionReciente.TITULO}</strong></dd>
+
+                                                                <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{reinicioRemotoController.showDate(reinicioRemotoController.accionReciente.FECHA)}"/></dd>
+                                                                <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{reinicioRemotoController.showHour(reinicioRemotoController.accionReciente.FECHA)}"/></dd>
+                                                                <dd class="atm-title-mar01"><p:outputLabel rendered="#{!reinicioRemotoController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{reinicioRemotoController.showDate(reinicioRemotoController.accionReciente.FECHA)}"/></dd>
+                                                                <dd class="atm-title-mar01"><p:outputLabel rendered="#{!reinicioRemotoController.renderedByEstadoSolicitado()}" value="Hora Ejecución: #{reinicioRemotoController.showHour(reinicioRemotoController.accionReciente.FECHA)}"/></dd>
+                                                                <dd class="atm-title-mar01"><p:outputLabel value="Estado:#{reinicioRemotoController.accionReciente.ESTADO}"/></dd>
+
+                                                               
+                                                            </c:if>
+                                                             <dd class="atm-title-mar01"><strong>ACCIÓN A EJECUTAR</strong></dd>
+                                                                <dd class="atm-title-mar01"><p:outputLabel value="#{reinicioRemotoConfirmarController.accionSelected.ACCION}"/></dd>
+                                                                <dd class="atm-title-mar01"><p:outputLabel value="Revise su email se envio un token de validación"/></dd>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!--<div class="row justify-content-center pt-4 pb-0">-->
+                                    
+
+
+                                    <div class="row justify-content-center">
+                                        <div class="col-12 col-lg-10 pt-3 pb-3 ali-desc-mov01">
+                                            
+
+                                            <c:if test="${reinicioRemotoConfirmarController.showButton}">
+                                                <button  type="button"  class="btn btn-danger btn-rounded btn-fw text-nowrap separabot01" data-toggle="modal" data-target="#token01"><i class="ti-check-box"></i>&nbsp;FINALIZAR</button>
+
+
+
+                                            </c:if>
+
+
+
+
+                                        </div>
+                                    </div>	
+
+
+
+                                </div>
+                            </div>
+
+                            <token:tokenreinicioremoto id="tokenmodal"/>
+
+
+                        </div>
+                        <!-- content-wrapper ends -->
+
+
+
+
+
+                        <!-- FOOTER -->
+                        <template:footer/>
+
+
+
+                        <!-- partial -->
+                    </div>
+                    <!-- main-panel ends -->
+
+
+
+                </div>
+                <!-- page-body-wrapper ends -->
+            </div>
+
+
+
+        </h:form>    
+         <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
+
+            <template:accesodenegado/>
+          
+        </h:form>
+        <!-- container-scroller -->
+
+            <!-- container-scroller -->
+       <template:script/> 
+    </h:body>
+
+</html>
+

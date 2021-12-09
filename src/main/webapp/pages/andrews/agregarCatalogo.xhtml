@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <link rel="stylesheet" href="./resources/vendors/ti-icons/css/themify-icons.css"/>
+        <link rel="stylesheet" href="./resources/vendors/base/vendor.bundle.base.css"/>
+        <link href="./resources/vendors/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="./resources/css/style.css"/>
+        <link rel="stylesheet" href="./resources/css/dash01.css"/>
+        <link rel="stylesheet" href="./resources/css/mantenimiento.css"/>
+    <link rel="stylesheet" href="./resources/css/dataTables.bootstrap4.min.css"/>
+        <title>Agregar Catálogo</title>
+         
+    </h:head>
+    <h:body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row shadow-none">
+         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+           <a class="navbar-brand brand-logo mr-5" href="catalogos.xhtml"><img src="./resources/images/telered-logo01-03.png" class="mr-2" alt="logo"/></a>
+           <a class="navbar-brand brand-logo-mini" href="catalogos.xhtml"><img src="./resources/images/telered-icon01-04.png" alt="logo"/></a>
+
+         </div>
+         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+             <span class="ti-menu"></span>
+           </button>
+           <ul class="navbar-nav navbar-nav-right">	
+             <li class="nav-item">
+                 <h:button class="btn btn-block btn-danger btn-sm font-weight-medium auth-form-btn rounded-pill" outcome="login" value="CERRAR SESIÓN" ></h:button>
+             </li>
+           </ul>
+           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+             <span class="ti-view-list"></span>
+           </button>
+         </div>
+       </nav>
+       <!-- Body -->
+       <div class="container-fluid page-body-wrapper">
+          <!-- Diseño del sidebar -->
+          <nav class="sidebar sidebar-offcanvas" id="sidebar">
+              
+            <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="catalogos.xhtml">
+                    <i class="menu-icon ti-calendar"></i>
+                    <span class="menu-title">Catálogos</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="parametros.xhtml">
+                    <i class="menu-icon ti-calendar"></i>
+                    <span class="menu-title">Parámetros</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="categoriaCatalogo.xhtml">
+                      <i class="menu-icon ti-calendar"></i>
+                      <span class="menu-title">Categoría de catálogo</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="categoriaParametro.xhtml">
+                      <i class="menu-icon ti-calendar"></i>
+                      <span class="menu-title">Cateogía de parametros</span>
+                    </a>
+                </li>
+            </ul>
+          </nav>
+        <!-- Contenido -->
+        <div id="content">
+            <h3 id="tituloDeContenido">AGREGAR CATÁLOGO</h3>
+            <div class="card rounded shadow" id="contenedorAgregarCatalogo">
+                <div class="card-header" >
+                    <div class="row justify-content-end">
+                            <h:button class="btn btn-success btn-md font-weight-medium auth-form-btn rounded-pill mr-2" outcome="catalogos" value="REGRESAR" ></h:button>
+                            <h:button class="btn btn-primary btn-md font-weight-medium auth-form-btn rounded-pill" outcome="catalogos" value="GUARDAR" ></h:button>
+                            <!--<h:button class="btn btn-block btn-primary btn-sm font-weight-medium auth-form-btn rounded-pill float-right" outcome="catalogo" value="GUARDAR" ></h:button>-->
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row"> 
+                        <div class="col-md-6 align-self-center">
+                            <form class="pt-3">
+                                <div class="form-group">
+                                    <h4>Catálogo</h4>  
+                                    <h:inputText id="identificadorCatalogo" class="form-control form-control-md rounded-pill mt-1 border border-secondary" pt:placeholder="Identificador"></h:inputText>
+                                </div>
+                                <div class="form-group">
+                                    <h4>Categoría de catálogo</h4>  
+                                    <h:selectOneMenu class="form-control form-control-md border border-secondary rounded-pill mt-1" value="Seleccionar">
+                                        <f:selectItem itemValue="" itemLabel="Seleccionar" />
+                                        <f:selectItem itemValue="Categoria1" itemLabel="Categoría 1" />
+                                        <f:selectItem itemValue="Categoria2" itemLabel="Categoría 2" />
+                                        <f:selectItem itemValue="Categoria3" itemLabel="Categoría 3" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="form-group mt-1">
+                                    <h4>Descripción</h4> 
+                                    <h:inputText id="descripcionCatalogo" class="form-control form-control-md rounded-pill mt-1 border border-secondary" pt:placeholder="Descripción"></h:inputText>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+        
+        
+      <!-- container-scroller -->
+      
+      <!-- plugins:js -->
+        <script src="./resources/vendors/base/vendor.bundle.base.js"></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page-->
+        <script src="./resources/vendors/chart.js/Chart.min.js"></script>
+        <!-- End plugin js for this page-->
+        <!-- inject:js -->
+        <script src="./resources/js/off-canvas.js"></script>
+        <script src="./resources/js/hoverable-collapse.js"></script>
+        <script src="./resources/js/template.js"></script>
+        <script src="./resources/js/todolist.js"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page-->
+        <script src="./resources/js/dashboard.js"></script>
+        <!-- End custom js for this page-->
+        <script src ="./resources/js/mantenimiento.js"></script>
+    </h:body>
+</html>
+
