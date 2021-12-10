@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="./resources/css/style.css"/>
         <link rel="stylesheet" href="./resources/css/dash01.css"/>
         <link rel="stylesheet" href="./resources/css/mantenimiento.css"/>
-         <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
+        <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
         <meta name="referrer" content="no-referrer"/>
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
@@ -24,7 +24,7 @@
 
     </h:head>
     <h:body>
-      <h:form id="form" prependId="false" rendered="#{accessController.loged}">
+        <h:form id="form" prependId="false" rendered="#{accessController.loged}">
 
             <script type="text/javascript">
                 function setDataTableWithPageStart() {
@@ -117,10 +117,10 @@
                                     </div>
 
                                     <div class="row justify-content-center pt-4 pb-0">
-                                         <div class="col-1 col-lg-1 form-group pt-0 pb-0">
-                                              <p:outputLabel value="Acción"/>
-                                         </div>
-                                     <div class="col-11 col-lg-4 form-group pt-0 pb-0">
+                                        <div class="col-1 col-lg-1 form-group pt-0 pb-0">
+                                            <p:outputLabel value="Acción"/>
+                                        </div>
+                                        <div class="col-11 col-lg-4 form-group pt-0 pb-0">
 
 
                                             <p:selectOneMenu id="selectOneMenuAccion" 
@@ -143,58 +143,58 @@
                                         </div>
 
                                     </div>
-                                    
-                                     <div class="row justify-content-center pt-4 pb-0">
-                                         <div class="col-1 col-lg-1 form-group pt-0 pb-0">
-                                              <p:outputLabel value="Fecha"/>
-                                         </div>
+
+                                    <div class="row justify-content-center pt-4 pb-0">
+                                        <div class="col-1 col-lg-1 form-group pt-0 pb-0">
+                                            <p:outputLabel value="Fecha"/>
+                                        </div>
                                         <div class="col-10 col-lg-4 form-group pt-0 pb-0">
-                                           
+
                                             <p:datePicker id="time1" 
-                                                       
+
                                                           value="#{bajarPlantillaController.fechahoraBaja}" showTime="true">
-                                 
+
                                             </p:datePicker>
-                                           
-                                            
+
+
                                         </div>
 
                                     </div>
-<!--                                    <div class="row justify-content-center pt-4 pb-0">
-                                         <div class="col-1 col-lg-1 form-group pt-0 pb-0">
-                                              <p:outputLabel value="Cuando"/>
-                                         </div>
-                                        <div class="col-11 col-lg-4 form-group pt-0 pb-0">
-
-
-                                            <p:selectOneMenu id="selectOneMenuCuando" value="#{bajarPlantillaController.selectOneMenuCuandoValue}">
-                                                <f:selectItem itemLabel="Cuando?" itemValue=""/>
-                                                <f:selectItem itemLabel="Ahora" itemValue="ahora"/>
-                                                <f:selectItem itemLabel="Programar Evento" itemValue="programar evento"/>
-                                                 
-                                            </p:selectOneMenu>
-
-
-                                        </div>
-
-                                    </div>-->
-                                   
+                                    <!--                                    <div class="row justify-content-center pt-4 pb-0">
+                                                                             <div class="col-1 col-lg-1 form-group pt-0 pb-0">
+                                                                                  <p:outputLabel value="Cuando"/>
+                                                                             </div>
+                                                                            <div class="col-11 col-lg-4 form-group pt-0 pb-0">
                                     
-        
+                                    
+                                                                                <p:selectOneMenu id="selectOneMenuCuando" value="#{bajarPlantillaController.selectOneMenuCuandoValue}">
+                                                                                    <f:selectItem itemLabel="Cuando?" itemValue=""/>
+                                                                                    <f:selectItem itemLabel="Ahora" itemValue="ahora"/>
+                                                                                    <f:selectItem itemLabel="Programar Evento" itemValue="programar evento"/>
+                                                                                     
+                                                                                </p:selectOneMenu>
+                                    
+                                    
+                                                                            </div>
+                                    
+                                                                        </div>-->
+
+
+
 
                                     <div class="row justify-content-center">
-<!--                                        <div class="col-12 col-lg-10 pt-3 pb-3 ali-desc-mov01">                                                                                       -->
-  <div class="col-2 col-lg-2 pt-3 pb-3 ali-desc-mov01">
+                                        <!--                                        <div class="col-12 col-lg-10 pt-3 pb-3 ali-desc-mov01">                                                                                       -->
+                                        <div class="col-2 col-lg-2 pt-3 pb-3 ali-desc-mov01">
                                             <c:if test="${bajarPlantillaController.showButton}">
                                                 <p:commandButton value="Continuar" 
                                                                  class="btn btn-block btn-danger btn-sm font-weight-medium auth-form-btn rounded-pill"
-                                                               update=":form:growl"
-                                                                icon="pi pi-caret-right"
-                                                               action="#{bajarPlantillaController.onCommandButtonCuando()}">
-                                            
+                                                                 update=":form:growl"
+                                                                 icon="pi pi-caret-right"
+                                                                 action="#{bajarPlantillaController.onCommandButtonCuando()}">
+
                                                 </p:commandButton>
 
-                                            </c:if>ususted esta bien
+                                            </c:if>
                                         </div>
                                     </div>	
 
@@ -228,30 +228,30 @@
                 <!-- page-body-wrapper ends -->
             </div>
 
-  <p:dialog header="Nuevo Banco" showEffect="fade" modal="true"
-            
-                                                  widgetVar="bancoDialog" responsive="true">
-                                            <p:outputPanel id="manage-banco-content" class="ui-fluid">
-                                                <p:outputLabel>Banco</p:outputLabel>
-                                            </p:outputPanel>
+            <p:dialog header="Nuevo Banco" showEffect="fade" modal="true"
 
-                                            <f:facet name="footer">
-                                                <p:commandButton value="Save" icon="pi pi-check" action="dashboard"
-                                                                 update="manage-banco-content" process="manage-banco-content @this"/>
-                                                <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('bancoDialog').hide()"
-                                                                 class="ui-button-secondary"/>
-                                            </f:facet>
-                                        </p:dialog>
+                      widgetVar="bancoDialog" responsive="true">
+                <p:outputPanel id="manage-banco-content" class="ui-fluid">
+                    <p:outputLabel>Banco</p:outputLabel>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Save" icon="pi pi-check" action="dashboard"
+                                     update="manage-banco-content" process="manage-banco-content @this"/>
+                    <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('bancoDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+            </p:dialog>
 
         </h:form>    
-         <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
+        <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
 
             <template:accesodenegado/>
-          
+
         </h:form>
         <!-- container-scroller -->
 
-         <template:script/> 
+        <template:script/> 
     </h:body>
 
 </html>

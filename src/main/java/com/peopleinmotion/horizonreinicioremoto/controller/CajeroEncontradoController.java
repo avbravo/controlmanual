@@ -145,7 +145,19 @@ public class CajeroEncontradoController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="fillSelectOneMenuGrupoAccion() ">
     public String fillSelectOneMenuGrupoAccion() {
         try {
-            grupoAccionList = grupoAccionRepository.findAll();
+             grupoAccionList = new ArrayList<>();
+            List<GrupoAccion> list= grupoAccionRepository.findAll();
+            if(list == null || list.isEmpty()){}
+            else{
+                for(GrupoAccion ga:list){
+                    if(ga.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionBajarPlantillaId"))){
+                        grupoAccionList.add(ga);
+                    }
+                }
+                 
+            }
+            
+            
         } catch (Exception e) {
             JsfUtil.errorMessage("fillSelectOneMenuGrupoAccion() " + e.getLocalizedMessage());
         }

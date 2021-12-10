@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="./resources/css/style.css"/>
         <link rel="stylesheet" href="./resources/css/dash01.css"/>
         <link rel="stylesheet" href="./resources/css/mantenimiento.css"/>
-         <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
+        <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
         <meta name="referrer" content="no-referrer"/>
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
@@ -22,7 +22,7 @@
 
     </h:head>
     <h:body>
-    <h:form id="form" prependId="false" rendered="#{accessController.loged}">
+        <h:form id="form" prependId="false" rendered="#{accessController.loged}">
             <script type="text/javascript">
                 function setDataTableWithPageStart() {
 
@@ -105,9 +105,9 @@
                                                     </div>
                                                 </div>
 
-                                               
-                                             <ultimaacciongenerada:cajeroencontrado id="ultimaacciongeneradacajeroencontrado"  />
-     
+
+                                                <ultimaacciongenerada:cajeroencontrado id="ultimaacciongeneradacajeroencontrado"  />
+
                                             </div>
 
                                         </div>
@@ -115,12 +115,18 @@
 
                                     <div class="row justify-content-center">
                                         <div class="col-12 col-lg-10 pt-3 pb-3 ali-desc-mov01">
-<!--                                            <p:commandLink value="CANCELAR" class="btn btn-secondary btn-rounded btn-fw text-nowrap" action="dashboard">
-                                                <i class="fas fa-times-circle"></i>
-                                            </p:commandLink>-->
+                                            <!--                                            <p:commandLink value="CANCELAR" class="btn btn-secondary btn-rounded btn-fw text-nowrap" action="dashboard">
+                                                                                            <i class="fas fa-times-circle"></i>
+                                                                                        </p:commandLink>-->
 
                                             <button type="button" class="btn btn-danger btn-rounded btn-fw text-nowrap" data-toggle="modal" data-target="#acciones01"><i class="ti-arrow-circle-right"></i>&nbsp;ACCIÓN</button>
+                                            <p:commandButton value="IR A CONTROL MANUAL" 
+                                                             class="btn btn-block btn-danger btn-sm font-weight-medium auth-form-btn rounded-pill"
+                                                             update=":form:growl"
+                                                             icon="pi pi-caret-right"
+                                                             action="#{bajarPlantillaController.onCommandButtonCuando()}">
 
+                                            </p:commandButton>
                                         </div>
                                     </div>	
 
@@ -152,15 +158,15 @@
             </div>
 
         </h:form>    
-         <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
+        <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
 
             <template:accesodenegado/>
-          
+
         </h:form>
         <!-- container-scroller -->
 
-           <!-- container-scroller -->
-       <template:script/> 
+        <!-- container-scroller -->
+        <template:script/> 
     </h:body>
 
 </html>
