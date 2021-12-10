@@ -59,7 +59,26 @@
 
                                         </div>
                                         <div>
+                                            <p:selectOneMenu id="selectOneMenuBanco" 
+                                                             class="form-control rounded-pill solosel01"
+                                                             value="#{dashboardController.selectOneMenuBancoValue}" 
+                                                             converter="#{bancoConverter}"
+                                                             >
+                                                <f:selectItem itemLabel="Seleccione un Banco" itemValue="#{null}"  noSelectionOption="true"/>
+                                                <f:selectItems value="#{dashboardController.bancoList}" 
+                                                               var="var" 
+                                                               itemValue="#{var}" itemLabel="#{var.BANCO} " />
+
+                                                <p:ajax listener="#{dashboardController.subjectSelectionChanged}"
+                                                      event="itemSelect"
+                                     />
+
+
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div>
                                            
+
                                             <p:commandButton icon= "pi pi-search" value="Buscar Cajero"  class="btn btn-block btn-danger btn-sm font-weight-medium auth-form-btn rounded-pill"
                                                            action="#{dashboardController.onCommnandButtonGoBuscarCajero()}">
                                               

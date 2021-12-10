@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="./resources/css/style.css"/>
         <link rel="stylesheet" href="./resources/css/dash01.css"/>
         <link rel="stylesheet" href="./resources/css/mantenimiento.css"/>
-         <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
+        <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
         <meta name="referrer" content="no-referrer"/>
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
@@ -54,7 +54,7 @@
                                 <div class="col-md-12 grid-margin">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <h4 class="text-secondary">Buscar Cajero</h4>
+                                            <h4 class="text-secondary">Buscar Cajero de #{dashboardController.banco.BANCO}</h4>
                                             <p:commandLink value="REGRESAR" class="bot-regresar01" action="dashboard"/>
 
                                         </div>
@@ -69,57 +69,69 @@
 
 
 
-  <div class="row justify-content-center">
-                                  
-                                    
-                                    <div class="col-12 col-lg-12">
-                                        <div class="table-responsive">
-                                            <p:dataTable value="#{dashboardController.lazyDataModelCajero}"  
-                                                         var="item" 
-                                                         id="dataTable"
-                                                         widgetVar="widgetVardataTable"
-                                                           lazy="true"
-                                                           
-                                                           binding="#{table1}"
-                                                 paginator="true"
-                                                 rows="#{dashboardController.rowForPage}"
-                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                                                         tableStyleClass="table table-hover"
-                                                         >
-                                                
-                                                        
-                                                
-                                                <p:column headerText="Cajero"  style="width:5%; color:'#02A1DE'">
-                                                    <p:graphicImage name="atm-blue02.png" library="images" alt="" class="" />
-                                                </p:column>
-                                                <p:column headerText="" style="width:20%;" >
-                                                   
-                                                    <p:commandLink  class="btn btn-rounded btn-fw text-nowrap btn-secondary btn-sm" 
-                                                                    style="text-decoration:none;color:black;"
-                                                                    value="#{item.CAJERO}"
-                                                                      update=":form:growl"
-                                                                      action="#{dashboardController.onCommandButtonSelectCajero(item)}"/>
-                                                  
-                                                </p:column>
-                                                <p:column headerText="Dirección" >
-                                                  
-                                                    <label class="text-black">#{item.DIRECCION}</label>
-                                                </p:column>
-                                                <p:column headerText="Alias" >
-                                                    <label class="badge badge-danger">#{item.DIRECCIONCORTA}</label>
-                                                  
-                                                </p:column>
-                                            </p:dataTable>
-                                            
-                                        </div>
+                            <div class="row justify-content-center">
+
+
+                                <div class="col-12 col-lg-12">
+                                    <div class="table-responsive">
+                                        <p:dataTable value="#{dashboardController.cajeroList}"  
+                                                     var="item" 
+                                                     id="dataTable"
+                                                     widgetVar="widgetVardataTable"
+
+                                                     lazy="false"
+                                                     filteredValue="#{dashboardController.cajeroSelectedList}" 
+                                                     binding="#{table1}"
+                                                     paginator="true"
+                                                     rows="#{dashboardController.rowForPage}"
+                                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                                     tableStyleClass="table table-hover"
+                                                     >
+ <f:facet name="header">
+                                                <div class="products-table-header">
+                                                    <span style="font-weight: bold">BUSCAR</span>
+
+                                                    <span class="filter-container ui-input-icon-left">
+                                                        <i class="pi pi-search"></i>
+                                                        <p:inputText id="globalFilter" onkeyup="PF('widgetVardataTable').filter()" placeholder="Search"/>
+                                                    </span>
+
+
+                                                </div>
+                                            </f:facet>
+
+
+                                            <p:column headerText="Cajero"  style="width:5%; color:'#02A1DE'">
+                                                <p:graphicImage name="atm-blue02.png" library="images" alt="" class="" />
+                                            </p:column>
+                                            <p:column headerText="" style="width:20%;" filterBy="#{item.CAJERO}" >
+
+                                                <p:commandLink  class="btn btn-rounded btn-fw text-nowrap btn-secondary btn-sm" 
+                                                                style="text-decoration:none;color:black;"
+                                                                value="#{item.CAJERO}"
+                                                                update=":form:growl"
+                                                                action="#{dashboardController.onCommandButtonSelectCajero(item)}"/>
+
+                                            </p:column>
+                                            <p:column headerText="Dirección" filterBy="#{item.DIRECCION}">
+
+                                                <label class="text-black">#{item.DIRECCION}</label>
+                                            </p:column>
+                                            <p:column headerText="Alias" filterBy="#{item.DIRECCIONCORTA}">
+                                                <label class="badge badge-danger">#{item.DIRECCIONCORTA}</label>
+
+                                            </p:column>
+                                        </p:dataTable>
+
                                     </div>
-                                    
-                              
-                                    
-                                    
                                 </div>
 
-                           
+
+
+
+                            </div>
+
+
 
                         </div>
                         <!-- content-wrapper ends -->
@@ -144,15 +156,15 @@
             </div>
 
         </h:form>  
-         <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
+        <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
 
             <template:accesodenegado/>
-          
+
         </h:form>
         <!-- container-scroller -->
 
-          <!-- container-scroller -->
-       <template:script/> 
+        <!-- container-scroller -->
+        <template:script/> 
     </h:body>
 
 </html>

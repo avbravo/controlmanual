@@ -16,6 +16,7 @@ import com.peopleinmotion.horizonreinicioremoto.paginator.Paginator;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaHistorialRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaRepository;
+import com.peopleinmotion.horizonreinicioremoto.repository.BancoRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.CajeroRepository;
 import com.peopleinmotion.horizonreinicioremoto.services.AgendaHistorialServices;
 import com.peopleinmotion.horizonreinicioremoto.services.DashboardServices;
@@ -29,9 +30,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.StringTokenizer;
 import javax.annotation.PostConstruct;
 import javax.faces.component.UIData;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -69,6 +70,7 @@ public class DashboardController implements Serializable {
 
     Usuario user = new Usuario();
     Banco banco = new Banco();
+    List<Banco> bancoList = new ArrayList<>();
     List<AccionReciente> accionRecienteList = new ArrayList<>();
     List<AccionReciente> accionRecienteSelectedList = new ArrayList<>();
     List<AccionReciente> accionRecienteScheduleList = new ArrayList<>();
@@ -79,7 +81,7 @@ public class DashboardController implements Serializable {
     private BigInteger totalEnProceso = new BigInteger("0");
     private BigInteger totalNoSePuedeEjecutar = new BigInteger("0");
     private String selectOneMenuMesValue = "Enero";
-
+    Banco selectOneMenuBancoValue = new Banco();
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="paginator ">
     Paginator paginator = new Paginator();
@@ -95,6 +97,8 @@ public class DashboardController implements Serializable {
     @Inject
     AgendaHistorialServices agendaHistorialServices;
     @Inject
+    BancoRepository bancoRepository;
+    @Inject
     CajeroRepository cajeroRepository;
     @Inject
     DashboardServices dashboardServices;
@@ -102,9 +106,32 @@ public class DashboardController implements Serializable {
     AccionRecienteRepository accionRecienteRepository;
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="set/get ">
+
+    public List<Cajero> getCajeroSelectedList() {
+        return cajeroSelectedList;
+    }
+
+    public void setCajeroSelectedList(List<Cajero> cajeroSelectedList) {
+        this.cajeroSelectedList = cajeroSelectedList;
+    }
+
     
     
-    
+    public Banco getSelectOneMenuBancoValue() {
+        return selectOneMenuBancoValue;
+    }
+
+    public void setSelectOneMenuBancoValue(Banco selectOneMenuBancoValue) {
+        this.selectOneMenuBancoValue = selectOneMenuBancoValue;
+    }
+
+    public List<Banco> getBancoList() {
+        return bancoList;
+    }
+
+    public void setBancoList(List<Banco> bancoList) {
+        this.bancoList = bancoList;
+    }
 
     public List<AccionReciente> getAccionRecienteSelectedList() {
         return accionRecienteSelectedList;
@@ -114,9 +141,6 @@ public class DashboardController implements Serializable {
         this.accionRecienteSelectedList = accionRecienteSelectedList;
     }
 
-    
-    
-    
     public AccionReciente getAccionRecienteSelected() {
         return accionRecienteSelected;
     }
@@ -253,6 +277,17 @@ public class DashboardController implements Serializable {
         this.totalNoSePuedeEjecutar = totalNoSePuedeEjecutar;
     }
 
+    public Banco getBanco() {
+        return banco;
+    }
+
+    public void setBanco(Banco banco) {
+        this.banco = banco;
+    }
+
+    
+    
+    
 // </editor-fold>
     /**
      * Creates a new instance of DashboadController
@@ -264,62 +299,67 @@ public class DashboardController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-             if(JmoordbContext.get("user")==null){
-                
-            }else{
-            accionRecienteScheduleList = new ArrayList<>();
-            /**
-             * Leer de la sesion
-             */
-            user = (Usuario) JmoordbContext.get("user");
-            banco = (Banco) JmoordbContext.get("banco");
+            if (JmoordbContext.get("user") == null) {
 
-            /**
-             * Muestro las acciones Recientes
-             */
-            System.out.println("Test {=========================INIT =======================}");
-            System.out.println("Test ===> findBancoIdEntreFechasTypeDate()");
-            Date DESDE = DateUtil.setHourToDate(DateUtil.getFechaActual(), 0, 00);
-            Date HASTA = DateUtil.setHourToDate(DateUtil.getFechaActual(), 23, 59);
-            List<AccionReciente> list = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
-
-            if (list == null || list.isEmpty() || list.size() == 0) {
-                System.out.println("Test--> no hay eventos para hoy");
             } else {
-                for (AccionReciente a : list) {
-                    System.out.println("Test --> Accion :" + a.getCAJERO() + " Fecha agendada " + a.getFECHAAGENDADA());
+
+                bancoList = bancoRepository.findAll();
+
+                accionRecienteScheduleList = new ArrayList<>();
+                /**
+                 * Leer de la sesion
+                 */
+                user = (Usuario) JmoordbContext.get("user");
+                banco = (Banco) JmoordbContext.get("banco");
+
+                /**
+                 * Muestro las acciones Recientes
+                 */
+                System.out.println("Test {=========================INIT =======================}");
+                System.out.println("Test ===> findBancoIdEntreFechasTypeDate()");
+                Date DESDE = DateUtil.setHourToDate(DateUtil.getFechaActual(), 0, 00);
+                Date HASTA = DateUtil.setHourToDate(DateUtil.getFechaActual(), 23, 59);
+                List<AccionReciente> list = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
+
+                if (list == null || list.isEmpty() || list.size() == 0) {
+                    System.out.println("Test--> no hay eventos para hoy");
+                } else {
+                    for (AccionReciente a : list) {
+                        System.out.println("Test --> Accion :" + a.getCAJERO() + " Fecha agendada " + a.getFECHAAGENDADA());
+                    }
                 }
-            }
-            /**
-             * Mes
-             */
-            String mes = DateUtil.nameOfMonthStartWith1(DateUtil.mesActual());
+                /**
+                 * Mes
+                 */
+                String mes = DateUtil.nameOfMonthStartWith1(DateUtil.mesActual());
 
-            selectOneMenuMesValue = mes;
+                selectOneMenuMesValue = mes;
 
-            accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
+                accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
 
-            paginator = new Paginator.Builder()
-                    .page(1)
-                    .filter("banco")
-                    .build();
+                paginator = new Paginator.Builder()
+                        .page(1)
+                        .filter("banco")
+                        .build();
 
-            codigoSearch = "";
-            direccionSearch = "";
-            onCommandButttonCalcularTotales();
-            loadSchedule();
-            this.lazyDataModelCajero = new LazyDataModel<Cajero>() {
-                @Override
-                public List<Cajero> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
+                codigoSearch = "";
+                direccionSearch = "";
+                onCommandButttonCalcularTotales();
+                loadSchedule();
+                cajeroList = cajeroRepository.findByBancoId(banco);
+                
+                this.lazyDataModelCajero = new LazyDataModel<Cajero>() {
+                    @Override
+                    public List<Cajero> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
 
-                    /**
-                     * Contar la cantidad de registros
-                     */
-                    Integer totalRecords = 0;
+                        /**
+                         * Contar la cantidad de registros
+                         */
+                        Integer totalRecords = 0;
 
-                    /**
-                     * Calcular la pagina donde se debe iniciar
-                     */
+                        /**
+                         * Calcular la pagina donde se debe iniciar
+                         */
 //                       Integer page=0;
 //                        if (offset == 0) {
 //                            page=1;
@@ -328,11 +368,11 @@ public class DashboardController implements Serializable {
 //                        }
 //                
 //                        String filter =(String)JmoordbContext.get("filter");
-                    List<Cajero> result = new ArrayList<>();
+                        List<Cajero> result = new ArrayList<>();
 //                    result = cajeroRepository.findAll();
 //            result = cajeroRepository.findByBancoIdAndActivo(banco);
-                    result = cajeroRepository.findByBancoId(banco);
-                    totalRecords = result.size();
+                        result = cajeroRepository.findByBancoId(banco);
+                        totalRecords = result.size();
 //                        switch(paginator.getFilter()){
 //                            case "banco":
 //                                totalRecords =   cajeroFacade.countBYBanco(banco.getBANCOID());
@@ -358,17 +398,17 @@ public class DashboardController implements Serializable {
 //                                
 //                        }
 
-                    lazyDataModelCajero.setRowCount(totalRecords);
-                    PrimeFaces.current().executeScript("setDataTableWithPageStart()");
-                    if (paginator.getPage().equals(1)) {
+                        lazyDataModelCajero.setRowCount(totalRecords);
+                        PrimeFaces.current().executeScript("setDataTableWithPageStart()");
+                        if (paginator.getPage().equals(1)) {
 //                        DataTable dataTable = (DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("widgetVardataTable");
 //         dataTable.setFirst(0);
+                        }
+                        return result;
                     }
-                    return result;
-                }
 
-            };
-             }
+                };
+            }
         } catch (Exception e) {
             JsfUtil.errorMessage("init() " + e.getLocalizedMessage());
 
@@ -622,14 +662,14 @@ public class DashboardController implements Serializable {
                     System.out.println("|Test--> start " + start + " |");
                     System.out.println("|Test--> end " + end + " |");
                     System.out.println("|Test-->{================================}|");
-                    
-                                Date DESDE = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(start), 0, 00);
-            Date HASTA = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(end), 23, 59);
-           accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
+
+                    Date DESDE = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(start), 0, 00);
+                    Date HASTA = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(end), 23, 59);
+                    accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
 //           
                     // accionRecienteScheduleList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
 //                    filterAccionReciente(banco.getBANCOID(), DateUtil.convertLocalDateTimeToJavaDate(start), DateUtil.convertLocalDateTimeToJavaDate(end), "SI");
-                  //  filterAccionReciente(banco.getBANCOID(),start, end, "SI");
+                    //  filterAccionReciente(banco.getBANCOID(),start, end, "SI");
                     if (accionRecienteScheduleList == null || accionRecienteScheduleList.isEmpty()) {
                         JsfUtil.successMessage("No hay registros");
                     } else {
@@ -679,7 +719,7 @@ public class DashboardController implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="String filterAccionReciente(Date start, Date end) ">
 //    public String filterAccionReciente(BigInteger bancoId, Date start, Date end, String activo) {
-    public String filterAccionReciente(BigInteger bancoId, LocalDateTime start, LocalDateTime  end, String activo) {
+    public String filterAccionReciente(BigInteger bancoId, LocalDateTime start, LocalDateTime end, String activo) {
 
         try {
             System.out.println("Test...<===============filterAccionReciente()=======================>");
@@ -722,9 +762,8 @@ public class DashboardController implements Serializable {
                 JmoordbContext.put("cajero", cajeroSelected);
             }
             JmoordbContext.put("formularioRetorno", "dashboard");
-            
+
             //
-  
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + ": " + e.getLocalizedMessage());
         }
@@ -753,8 +792,8 @@ public class DashboardController implements Serializable {
 
                     if (agendaRepository.update(agenda)) {
                         agendaHistorialServices.createHistorial(agendaOptional.get(), "CANCELAR ACCION", user);
-                         JmoordbContext.put("operacionexitosaMensaje","Cancelar Accion");
-                      JmoordbContext.put("accionReciente",accionRecienteSelected);
+                        JmoordbContext.put("operacionexitosaMensaje", "Cancelar Accion");
+                        JmoordbContext.put("accionReciente", accionRecienteSelected);
                         return "operacionexitosa.xhtml";
                     } else {
                         JsfUtil.warningMessage("No se puede actualizar la agenda...");
@@ -777,7 +816,18 @@ public class DashboardController implements Serializable {
         return "faces/buscarcajero.xhtml";
     }
 // </editor-fold>
-    
-    
+
+    // <editor-fold defaultstate="collapsed" desc="subjectSelectionChanged(final AjaxBehaviorEvent event) ">
+
+    public void subjectSelectionChanged(final AjaxBehaviorEvent event) {
+        try {
+            System.out.println("Test--> Banco seleciconado "+selectOneMenuBancoValue.getBANCO());
+ JmoordbContext.put("banco", selectOneMenuBancoValue);
+           
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+// </editor-fold>
+    }
 
 }
