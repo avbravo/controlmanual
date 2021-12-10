@@ -315,17 +315,17 @@ public class DashboardController implements Serializable {
                 /**
                  * Muestro las acciones Recientes
                  */
-                System.out.println("Test {=========================INIT =======================}");
-                System.out.println("Test ===> findBancoIdEntreFechasTypeDate()");
+//                System.out.println("Test {=========================INIT =======================}");
+//                System.out.println("Test ===> findBancoIdEntreFechasTypeDate()");
                 Date DESDE = DateUtil.setHourToDate(DateUtil.getFechaActual(), 0, 00);
                 Date HASTA = DateUtil.setHourToDate(DateUtil.getFechaActual(), 23, 59);
                 List<AccionReciente> list = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
 
                 if (list == null || list.isEmpty() || list.size() == 0) {
-                    System.out.println("Test--> no hay eventos para hoy");
+//                    System.out.println("Test--> no hay eventos para hoy");
                 } else {
                     for (AccionReciente a : list) {
-                        System.out.println("Test --> Accion :" + a.getCAJERO() + " Fecha agendada " + a.getFECHAAGENDADA());
+//                        System.out.println("Test --> Accion :" + a.getCAJERO() + " Fecha agendada " + a.getFECHAAGENDADA());
                     }
                 }
                 /**
@@ -657,11 +657,11 @@ public class DashboardController implements Serializable {
 
                 @Override
                 public void loadEvents(LocalDateTime start, LocalDateTime end) {
-                    System.out.println("|Test-->{================================}|");
-                    System.out.println("|Test-->{lazyEventModel}|");
-                    System.out.println("|Test--> start " + start + " |");
-                    System.out.println("|Test--> end " + end + " |");
-                    System.out.println("|Test-->{================================}|");
+//                    System.out.println("|Test-->{================================}|");
+//                    System.out.println("|Test-->{lazyEventModel}|");
+//                    System.out.println("|Test--> start " + start + " |");
+//                    System.out.println("|Test--> end " + end + " |");
+//                    System.out.println("|Test-->{================================}|");
 
                     Date DESDE = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(start), 0, 00);
                     Date HASTA = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(end), 23, 59);

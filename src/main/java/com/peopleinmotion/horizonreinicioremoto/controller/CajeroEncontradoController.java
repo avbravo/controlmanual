@@ -245,4 +245,14 @@ public class CajeroEncontradoController implements Serializable {
     }
     // </editor-fold>
     
+    public String onCommandButtonIrControlManual(){
+        try {
+            JmoordbContext.put("accionRecienteDashboard",accionReciente);
+            JmoordbContext.put("formularioRetorno","cajeroencontrado");
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+        }
+        return "reagendar.xhtml";
+    }
+    
 }

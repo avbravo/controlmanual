@@ -27,11 +27,11 @@
                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{!reagendarController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{reagendarController.showDate(reagendarController.accionReciente.FECHA)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{!reagendarController.renderedByEstadoSolicitado()}" value="Hora Ejecución: #{reagendarController.showHour(reagendarController.accionReciente.FECHA)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel value="Estado:#{reagendarController.accionReciente.ESTADO}"/></dd>
-                          <p:datePicker id="time1" 
-                                                       
-                                        value="#{reagendarController.accionReciente.FECHAAGENDADA}" showTime="true">
-                                 
-                                            </p:datePicker>
+                        <p:datePicker id="time1" 
+
+                                      value="#{reagendarController.accionReciente.FECHAAGENDADA}" showTime="true">
+
+                        </p:datePicker>
                     </c:if>
                 </div>
 

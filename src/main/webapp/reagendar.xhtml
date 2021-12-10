@@ -54,7 +54,7 @@
                                 <div class="col-md-12 grid-margin">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <h4 class="text-secondary">REAGENDAR</h4>
+                                            <h4 class="text-secondary">CONTROL MANUAL</h4>
                                             <p:commandLink value="REGRESAR" class="bot-regresar01" action="#{reagendarController.regresar()}"/>
 
                                         </div>
@@ -128,20 +128,20 @@
 								</div>
 
 								<div class="col-6 col-lg-auto">
-                                                                    <p:commandLink value="Cancelar Accion" class="bot-cancelar01" 
+                                                                    <p:commandLink value="Procesando" class="bot-cancelar01" 
                                                                                    update=":form:growl"
-                                                                                   
-                                                                                   action="#{reagendarController.cancelarAccion()}">
-                                                                       <p:confirm header="Confirmación" message="Desea cancelar este agendamiento?" icon="pi pi-exclamation-triangle"/> 
+                                                                                   rendered="#{reagendarController.showCommandButtonProcesando}"
+                                                                                   action="#{reagendarController.onCommandButtonProcesando()}">
+                                                                       <p:confirm header="Confirmación" message="Desea cambiar el estatus a procesando" icon="pi pi-exclamation-triangle"/> 
                                                                     </p:commandLink>
 									
 								</div>
 								<div class="col-6 col-lg-auto">
-									 <p:commandLink value="Reagendar Accion" class="bot-cancelar01" 
+									 <p:commandLink value="Finalizado" class="bot-cancelar01" 
                                                                                    update=":form:growl"
-                                                                                   
-                                                                                   action="#{reagendarController.reagendarAccion()}">
-                                                                       <p:confirm header="Confirmación" message="Desea reagendar esta acción?" icon="pi pi-exclamation-triangle"/> 
+                                                                                   rendered="#{!reagendarController.showCommandButtonFinalizar}"
+                                                                                   action="#{reagendarController.onCommandButtonFinalizando()}">
+                                                                       <p:confirm header="Confirmación" message="Desea cambiar el estatus a terminado?" icon="pi pi-exclamation-triangle"/> 
                                                                     </p:commandLink>
 								</div>
 						
