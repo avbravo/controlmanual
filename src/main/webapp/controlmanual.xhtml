@@ -55,7 +55,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h4 class="text-secondary">CONTROL MANUAL</h4>
-                                            <p:commandLink value="REGRESAR" class="bot-regresar01" action="#{reagendarController.regresar()}"/>
+                                            <p:commandLink value="REGRESAR" class="bot-regresar01" action="#{controlmanualController.regresar()}"/>
 
                                         </div>
                                         <!--                                        <div>
@@ -94,19 +94,19 @@
 
                                                         </div>
                                                         <div class="col-2 col-lg-auto atm-card-marbody01" >
-                                                            <button type="button" class="btn btn-rounded btn-fw text-nowrap btn-secondary btn-sm" data-toggle="modal" data-target="#acciones01">#{reagendarController.cajero.CAJERO}</button>
+                                                            <button type="button" class="btn btn-rounded btn-fw text-nowrap btn-secondary btn-sm" data-toggle="modal" data-target="#acciones01">#{controlmanualController.cajero.CAJERO}</button>
                                                         </div>
                                                         <div class="col-8 col-lg-9 atm-card-marbody01 atm-mar02" >
                                                             <dl>
-                                                                <dd class="atm-title-mar01"><strong>#{reagendarController.cajero.DIRECCIONCORTA}</strong></dd>
-                                                                <dd class="atm-title-mar01">#{reagendarController.cajero.DIRECCION}</dd>
+                                                                <dd class="atm-title-mar01"><strong>#{controlmanualController.cajero.DIRECCIONCORTA}</strong></dd>
+                                                                <dd class="atm-title-mar01">#{controlmanualController.cajero.DIRECCION}</dd>
                                                             </dl>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                
-                                                <ultimaacciongenerada:reagendar id="ultimaacciongeneradareagendar"  />
+                                                <ultimaacciongenerada:controlmanual id="ultimaacciongeneradacontrolmanual"  />
      
                                             </div>
 
@@ -121,7 +121,7 @@
                                                             <div class="col-6 col-lg-auto">
                                                                     <p:commandLink value="Regresar" class="bot-regresar01"
                                                                                    update=":form:growl"
-                                                                              action="#{reagendarController.regresar()}">
+                                                                              action="#{controlmanualController.regresar()}">
                                                                         
                                                                     </p:commandLink>
 									
@@ -130,8 +130,8 @@
 								<div class="col-6 col-lg-auto">
                                                                     <p:commandLink value="Procesando" class="bot-cancelar01" 
                                                                                    update=":form:growl"
-                                                                                   rendered="#{reagendarController.showCommandButtonProcesando}"
-                                                                                   action="#{reagendarController.onCommandButtonProcesando()}">
+                                                                                   rendered="#{controlmanualController.showCommandButtonProcesando}"
+                                                                                   action="#{controlmanualController.onCommandButtonProcesando()}">
                                                                        <p:confirm header="Confirmación" message="Desea cambiar el estatus a procesando" icon="pi pi-exclamation-triangle"/> 
                                                                     </p:commandLink>
 									
@@ -139,8 +139,8 @@
 								<div class="col-6 col-lg-auto">
 									 <p:commandLink value="Finalizado" class="bot-cancelar01" 
                                                                                    update=":form:growl"
-                                                                                   rendered="#{!reagendarController.showCommandButtonFinalizar}"
-                                                                                   action="#{reagendarController.onCommandButtonFinalizando()}">
+                                                                                   rendered="#{!controlmanualController.showCommandButtonFinalizar}"
+                                                                                   action="#{controlmanualController.onCommandButtonFinalizando()}">
                                                                        <p:confirm header="Confirmación" message="Desea cambiar el estatus a terminado?" icon="pi pi-exclamation-triangle"/> 
                                                                     </p:commandLink>
 								</div>

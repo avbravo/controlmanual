@@ -41,7 +41,7 @@ import org.primefaces.PrimeFaces;
  */
 @Named
 @ViewScoped
-public class ReagendarController implements Serializable {
+public class ControlmanualController implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="field ">
     private static final long serialVersionUID = 1L;
@@ -173,7 +173,7 @@ public class ReagendarController implements Serializable {
     /**
      * Creates a new instance of CajeroAccionController
      */
-    public ReagendarController() {
+    public ControlmanualController() {
     }
 
     // <editor-fold defaultstate="collapsed" desc="init() ">
@@ -405,10 +405,10 @@ public class ReagendarController implements Serializable {
                     agenda.setFECHAAGENDADA(accionReciente.getFECHAAGENDADA());
 
                     if (agendaRepository.update(agenda)) {
-                        agendaHistorialServices.createHistorial(agendaOptional.get(), "REAGENDAR ACCION", user);
-                        JmoordbContext.put("operacionexitosaMensaje", "Reagendar Accion");
+                        agendaHistorialServices.createHistorial(agendaOptional.get(), "CONTROLMANUAL ACCION", user);
+                        JmoordbContext.put("operacionexitosaMensaje", "Control Manual Accion");
                         JmoordbContext.put("accionReciente", accionReciente);
-                        emailServices.sendEmailToTecnicosHeader(accionReciente, "REAGENDAR ACCION", user, cajero, bank);
+                        emailServices.sendEmailToTecnicosHeader(accionReciente, "CONTROLMANUAL ACCION", user, cajero, bank);
                         return "operacionexitosa.xhtml";
                     } else {
                         JsfUtil.warningMessage("No se puede actualizar la agenda...");

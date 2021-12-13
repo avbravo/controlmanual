@@ -210,7 +210,7 @@ public class CajeroEncontradoController implements Serializable {
             if(accionRecienteOptional.isPresent()){
                 accionReciente = accionRecienteOptional.get();
                 haveAccionReciente = Boolean.TRUE;
-                    PrimeFaces.current().ajax().update("form:growl");
+                PrimeFaces.current().ajax().update("form:growl");
    
             }else{
                 
@@ -252,7 +252,7 @@ public class CajeroEncontradoController implements Serializable {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
         }
-        return "reagendar.xhtml";
+        return "controlmanual.xhtml";
     }
     
 }

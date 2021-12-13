@@ -302,7 +302,7 @@ public class DashboardController implements Serializable {
             if (JmoordbContext.get("user") == null) {
 
             } else {
-
+                System.out.println("Test--> llego al init a "+DateUtil.fechaHoraActual());
                 bancoList = bancoRepository.findAll();
 
                 accionRecienteScheduleList = new ArrayList<>();
@@ -311,13 +311,17 @@ public class DashboardController implements Serializable {
                  */
                 user = (Usuario) JmoordbContext.get("user");
                 banco = (Banco) JmoordbContext.get("banco");
+                
+                selectOneMenuBancoValue=banco;
+ String mes = DateUtil.nameOfMonthStartWith1(DateUtil.mesActual());
 
+                selectOneMenuMesValue = mes;
+                fillAccionRecienteList();
                 /**
-                 * Muestro las acciones Recientes
+                 * Filtrar Acciones recientes entre fechas
                  */
-//                System.out.println("Test {=========================INIT =======================}");
-//                System.out.println("Test ===> findBancoIdEntreFechasTypeDate()");
-                Date DESDE = DateUtil.setHourToDate(DateUtil.getFechaActual(), 0, 00);
+                
+                 Date DESDE = DateUtil.setHourToDate(DateUtil.getFechaActual(), 0, 00);
                 Date HASTA = DateUtil.setHourToDate(DateUtil.getFechaActual(), 23, 59);
                 List<AccionReciente> list = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
 
@@ -331,12 +335,14 @@ public class DashboardController implements Serializable {
                 /**
                  * Mes
                  */
-                String mes = DateUtil.nameOfMonthStartWith1(DateUtil.mesActual());
-
-                selectOneMenuMesValue = mes;
-
-                accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
-
+                
+                
+                /**
+                 * Muestro las acciones Recientes
+                 */
+//                System.out.println("Test {=========================INIT =======================}");
+//                System.out.println("Test ===> findBancoIdEntreFechasTypeDate()");
+              
                 paginator = new Paginator.Builder()
                         .page(1)
                         .filter("banco")
@@ -410,13 +416,27 @@ public class DashboardController implements Serializable {
                 };
             }
         } catch (Exception e) {
-            JsfUtil.errorMessage("init() " + e.getLocalizedMessage());
+          JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
 
         }
 
     }
 
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="method() ">
+    public String fillAccionRecienteList(){
+        try {
+             banco = (Banco) JmoordbContext.get("banco");
+                             accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
+
+        } catch (Exception e) {
+             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return "";
+    }
+          
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="onCommandButtonSelectCajero ">
     public String onCommandButtonSelectCajero(Cajero cajero) {
         try {
@@ -426,7 +446,7 @@ public class DashboardController implements Serializable {
         } catch (Exception e) {
             JsfUtil.errorMessage("onCommandButtonSelectCajero() " + e.getLocalizedMessage());
         }
-        System.out.println("Test--->voy a llamar cajero encontrado...,.");
+
         return "/faces/cajeroencontrado.xhtml";
     }
 // </editor-fold>
@@ -646,7 +666,7 @@ public class DashboardController implements Serializable {
         } catch (Exception e) {
             JsfUtil.errorMessage("onCommandButtonSelectCajero() " + e.getLocalizedMessage());
         }
-        return "/faces/reagendar.xhtml";
+        return "/faces/controlmanual.xhtml";
     }
 // </editor-fold>
 
@@ -819,15 +839,18 @@ public class DashboardController implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="subjectSelectionChanged(final AjaxBehaviorEvent event) ">
 
-    public void subjectSelectionChanged(final AjaxBehaviorEvent event) {
+//    public String subjectSelectionChanged(final AjaxBehaviorEvent event) {
+    public String subjectSelectionChanged() {
         try {
             System.out.println("Test--> Banco seleciconado "+selectOneMenuBancoValue.getBANCO());
  JmoordbContext.put("banco", selectOneMenuBancoValue);
-           
+           fillAccionRecienteList();
+           loadSchedule();
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-// </editor-fold>
+      return "";
+//      return "/faces/buscarcajero.xhtml";
     }
-
+// </editor-fold>
 }
