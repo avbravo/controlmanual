@@ -31,7 +31,7 @@ public class TokenRepositoryImpl implements TokenRepository {
          return Boolean.TRUE;
         } catch (Exception e) {
             JsfUtil.warningMessage("create() " + e.getLocalizedMessage());
-            System.out.println("create() " + e.getLocalizedMessage());
+            // System.out.println("create() " + e.getLocalizedMessage());
         }
        return Boolean.FALSE;
     }
@@ -44,7 +44,7 @@ public class TokenRepositoryImpl implements TokenRepository {
             return Boolean.TRUE;
         } catch (Exception e) {
             JsfUtil.warningMessage("update() " + e.getLocalizedMessage());
-            System.out.println("update() " + e.getLocalizedMessage());
+            // System.out.println("update() " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }

@@ -50,7 +50,7 @@ public class CajeroRepositoryImpl implements CajeroRepository {
             cajeroFacade.create(cajero);
             return true;
         } catch (Exception e) {
-            System.out.println("create() "+e.getLocalizedMessage());
+            // System.out.println("create() "+e.getLocalizedMessage());
         }
         return false;
     }

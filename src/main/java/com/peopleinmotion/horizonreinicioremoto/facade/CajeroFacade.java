@@ -42,7 +42,7 @@ public Optional<Cajero> findByCajeroId(BigInteger CAJEROID) {
        Cajero cajero = (Cajero)query.setParameter("CAJEROID", CAJEROID).getSingleResult();
          return Optional.of(cajero);
          } catch (Exception e) {
-             System.out.println("findByCajeroId() "+e.getLocalizedMessage());
+             // System.out.println("findByCajeroId() "+e.getLocalizedMessage());
          }
          return Optional.empty();
       
@@ -57,7 +57,7 @@ public Optional<Cajero> findByCajeroId(BigInteger CAJEROID) {
             
             list = query.setParameter("BANCOID", BANCOID).getResultList();
         } catch (Exception ex) {
-            System.out.println("findByBancoId() " + ex.getLocalizedMessage());
+            // System.out.println("findByBancoId() " + ex.getLocalizedMessage());
         }
         return list;
     }
@@ -72,7 +72,7 @@ public Optional<Cajero> findByCajeroId(BigInteger CAJEROID) {
             list = query.setParameter("BANCOID", BANCOID).setParameter("ACTIVO", ACTIVO).getResultList();
             
         } catch (Exception ex) {
-            System.out.println("findByBancoIdAndActivo() " + ex.getLocalizedMessage());
+            // System.out.println("findByBancoIdAndActivo() " + ex.getLocalizedMessage());
             JsfUtil.errorMessage("findByBancoIdAndActivo() "+ex.getLocalizedMessage());
         }
         return list;
@@ -91,7 +91,7 @@ public List<Cajero> findByCajeroIdAndActivo(BigInteger CAJEROID, String ACTIVO) 
            list = query.setParameter("ACTIVO", ACTIVO).getResultList();
         } catch (Exception ex) {
 
-            System.out.println("findByCajeroId() " + ex.getLocalizedMessage());
+            // System.out.println("findByCajeroId() " + ex.getLocalizedMessage());
 
         }
         return list;
@@ -107,7 +107,7 @@ public List<Cajero> findByCajeroIdBancoIdAndActivo(Banco BANCOID, String CAJERO,
            list = query.setParameter("ACTIVO", ACTIVO).getResultList();
         } catch (Exception ex) {
 
-            System.out.println("findByCajeroId() " + ex.getLocalizedMessage());
+            // System.out.println("findByCajeroId() " + ex.getLocalizedMessage());
 
         }
         return list;
@@ -124,7 +124,7 @@ public List<Cajero> findByDireccionCortaBancoIdAndActivo(Banco BANCOID, String D
            list = query.setParameter("ACTIVO", ACTIVO).getResultList();
         } catch (Exception ex) {
 
-            System.out.println("findByDireccionCortaBancoIdAndActivo() " + ex.getLocalizedMessage());
+            // System.out.println("findByDireccionCortaBancoIdAndActivo() " + ex.getLocalizedMessage());
 
         }
         return list;

@@ -41,7 +41,7 @@ public class GrupoEstadoRepositoryImpl implements GrupoEstadoRepository {
             grupoEstadoFacade.create(grupoEstado);
             return true;
         } catch (Exception e) {
-            System.out.println("create() " + e.getLocalizedMessage());
+            // System.out.println("create() " + e.getLocalizedMessage());
         }
         return false;
     }

@@ -210,7 +210,7 @@ public class EmailServicesImpl implements EmailServices {
             /**
              * Localizo el codigo banco de control
              */
-            Optional<Banco> bancoOptional = bancoRepository.findByEsControlActivo("SI", "SI");
+            Optional<Banco> bancoOptional = bancoRepository.findByEsControlAndActivo("SI", "SI");
             if (!bancoOptional.isPresent()) {
                 JsfUtil.warningMessage("No existe el banco de control para ser usado para localizar tecnicos.");
                 return Boolean.FALSE;
@@ -265,7 +265,7 @@ public class EmailServicesImpl implements EmailServices {
             /**
              * Localizo el codigo banco de control
              */
-            Optional<Banco> bancoOptional = bancoRepository.findByEsControlActivo("SI", "SI");
+            Optional<Banco> bancoOptional = bancoRepository.findByEsControlAndActivo("SI", "SI");
             if (!bancoOptional.isPresent()) {
                 JsfUtil.warningMessage("No existe el banco de control para ser usado para localizar tecnicos.");
                 return Boolean.FALSE;
@@ -344,9 +344,9 @@ public class EmailServicesImpl implements EmailServices {
                             emailConfigurationOptional.get().getEMAIL(),
                             JsfUtil.desencriptar(emailConfigurationOptional.get().getPASSWORD()));
 //            if(completableFutureCC.isDone()){
-//                System.out.println("test---> Tarea de envio completada...");
+//                // System.out.println("test---> Tarea de envio completada...");
 //            }else{
-//                System.out.println("test---> Tarea de envio no completada..,...");
+//                // System.out.println("test---> Tarea de envio no completada..,...");
 //            }
             return Boolean.TRUE;
         } catch (Exception e) {

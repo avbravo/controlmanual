@@ -175,18 +175,18 @@ public class CajeroEncontradoController implements Serializable {
     public String onCommandButtonGrupoAccion(GrupoAccion grupoAccion) {
         try {
             JmoordbContext.put("grupoAccion", grupoAccion);
-            System.out.println("============================================");
-            System.out.println("test onCommandButtonGrupoAccion() grupoAccion.getGRUPOACCION():"+grupoAccion.getGRUPOACCION());
-            System.out.println("============================================");
+            // System.out.println("============================================");
+            // System.out.println("test onCommandButtonGrupoAccion() grupoAccion.getGRUPOACCION():"+grupoAccion.getGRUPOACCION());
+            // System.out.println("============================================");
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionEncenderSubirPlantillaId"))) {
                 return "/faces/subirplantilla.xhtml";
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionReinicioRemotoId"))) {
-                System.out.println("Test --> se va a reinicio remoto");
+                // System.out.println("Test --> se va a reinicio remoto");
                 return "/faces/reinicioremoto.xhtml";
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionBajarPlantillaId"))) {
-                System.out.println("Test --> se va a bajar plantilla");
+                // System.out.println("Test --> se va a bajar plantilla");
                 return "/faces/bajarplantilla.xhtml";
             }
             JsfUtil.warningMessage("No se identifico el grupo de accion para continuar esta operación");

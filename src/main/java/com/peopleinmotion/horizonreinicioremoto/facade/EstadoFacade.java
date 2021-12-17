@@ -45,7 +45,7 @@ public class EstadoFacade extends AbstractFacade<Estado> {
             Estado estado = (Estado) query.setParameter("ESTADOID", ESTADOID).getSingleResult();
             return Optional.of(estado);
         } catch (Exception e) {
-            System.out.println("findByEstadoId() " + e.getLocalizedMessage());
+            // System.out.println("findByEstadoId() " + e.getLocalizedMessage());
         }
         return Optional.empty();
 
@@ -60,7 +60,7 @@ public class EstadoFacade extends AbstractFacade<Estado> {
             Query query = em.createQuery("SELECT e FROM Estado e WHERE e.GRUPOESTADOID = :GRUPOESTADOID");
             list = query.setParameter("GRUPOESTADOID", GRUPOESTADOID).getResultList();
         } catch (Exception ex) {
-            System.out.println("findByGrupoEstadoId() " + ex.getLocalizedMessage());
+            // System.out.println("findByGrupoEstadoId() " + ex.getLocalizedMessage());
         }
         return list;
     }
@@ -73,7 +73,7 @@ public class EstadoFacade extends AbstractFacade<Estado> {
             Estado estado = (Estado) query.setParameter("PREDETERMINADO", PREDETERMINADO).getSingleResult();
             return Optional.of(estado);
         } catch (Exception e) {
-            System.out.println("findByPredeterminado() " + e.getLocalizedMessage());
+            // System.out.println("findByPredeterminado() " + e.getLocalizedMessage());
         }
         return Optional.empty();
 
@@ -88,7 +88,7 @@ public class EstadoFacade extends AbstractFacade<Estado> {
             list = query.setParameter("ACTIVO", ACTIVO).getResultList();
 
         } catch (Exception e) {
-            System.out.println("findByActivo() " + e.getLocalizedMessage());
+            // System.out.println("findByActivo() " + e.getLocalizedMessage());
         }
         return list;
 
@@ -103,7 +103,7 @@ public class EstadoFacade extends AbstractFacade<Estado> {
             Estado estado = (Estado) query.setParameter("PREDETERMINADO", PREDETERMINADO).setParameter("ACTIVO", ACTIVO).getSingleResult();
             return Optional.of(estado);
         } catch (Exception e) {
-            System.out.println("findByPredeterminadoAndActivo() " + e.getLocalizedMessage());
+            // System.out.println("findByPredeterminadoAndActivo() " + e.getLocalizedMessage());
         }
         return Optional.empty();
 

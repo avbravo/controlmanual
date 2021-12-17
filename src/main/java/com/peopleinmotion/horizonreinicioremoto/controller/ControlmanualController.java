@@ -311,7 +311,7 @@ public class ControlmanualController implements Serializable {
                 Optional<Agenda> agendaOptional = agendaRepository.findByAgendaId(accionReciente.getAGENDAID());
                 if (!agendaOptional.isPresent()) {
                     JsfUtil.warningMessage("No se encontro registros de ese agendamiento");
-                    System.out.println("Test--> No se encontro registros de ese agendamiento");
+                    // System.out.println("Test--> No se encontro registros de ese agendamiento");
                     return "";
                 } else {
                     Agenda agenda = agendaOptional.get();
@@ -361,7 +361,7 @@ public class ControlmanualController implements Serializable {
                 Optional<Agenda> agendaOptional = agendaRepository.findByAgendaId(accionReciente.getAGENDAID());
                 if (!agendaOptional.isPresent()) {
                     JsfUtil.warningMessage("No se encontro registros de ese agendamiento");
-                    System.out.println("Test--> No se encontro registros de ese agendamiento");
+                    // System.out.println("Test--> No se encontro registros de ese agendamiento");
                     return "";
                 } else {
                     Agenda agenda = agendaOptional.get();

@@ -35,11 +35,11 @@ public class AccionConverter implements Converter {
     public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
         Accion a = new Accion();
         if (accionRepository == null) {
-            System.out.println("Repository is null");
+            // System.out.println("Repository is null");
         }
 
         if (submittedValue == null || submittedValue.isEmpty()) {
-            System.out.println("submitted = null");
+            // System.out.println("submitted = null");
             return null;
         }
 
@@ -50,9 +50,9 @@ public class AccionConverter implements Converter {
             }
             return a;
         } catch (Exception e) {
-            System.out.println("====================");
-            System.out.println("---> getAsObject" +e.getLocalizedMessage());
-            System.out.println("====================");
+            // System.out.println("====================");
+            // System.out.println("---> getAsObject" +e.getLocalizedMessage());
+            // System.out.println("====================");
             throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
         }
     }

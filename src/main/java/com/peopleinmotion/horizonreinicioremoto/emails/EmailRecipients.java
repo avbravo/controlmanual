@@ -115,7 +115,7 @@ public class EmailRecipients {
 
             });
         } catch (Exception e) {
-            System.out.println("EmailRecipients.divide() "+e.getLocalizedMessage());
+            // System.out.println("EmailRecipients.divide() "+e.getLocalizedMessage());
         }
     }
     

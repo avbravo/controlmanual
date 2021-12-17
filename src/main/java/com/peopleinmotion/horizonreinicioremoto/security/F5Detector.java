@@ -29,18 +29,18 @@ public class F5Detector implements Serializable {
 
     public void checkF5() {
         try {
-            System.out.println("Test-->  llego a F%");
+            // System.out.println("Test-->  llego a F%");
              String msg = "";
         UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
         String id = viewRoot.getViewId();
         if (previousPage != null && (previousPage.equals(id))) { 
 // It's a reload event } previousPage = id; }
-System.out.println("Test---> It's a reload event } previousPage = id; }");
+// System.out.println("Test---> It's a reload event } previousPage = id; }");
         }else{
-            System.out.println("Test--> f5 else id "+id);
+            // System.out.println("Test--> f5 else id "+id);
         }
         } catch (Exception e) {
-            System.out.println("Test--> catchF5 "+e.getLocalizedMessage());
+            // System.out.println("Test--> catchF5 "+e.getLocalizedMessage());
             JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " "+e.getLocalizedMessage());
         }
        

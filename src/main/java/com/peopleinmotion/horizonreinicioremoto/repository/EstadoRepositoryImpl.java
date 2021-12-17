@@ -37,7 +37,7 @@ public class EstadoRepositoryImpl implements EstadoRepository {
             estadoFacade.create(estado);
             return true;
         } catch (Exception e) {
-            System.out.println("create() " + e.getLocalizedMessage());
+            // System.out.println("create() " + e.getLocalizedMessage());
         }
         return false;
     }

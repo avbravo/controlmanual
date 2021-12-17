@@ -39,7 +39,7 @@ public class AgendaHistorialFacade extends AbstractFacade<AgendaHistorial> {
         AgendaHistorial agendaHistorial = (AgendaHistorial)query.setParameter("AGENDAHISTORIALID", AGENDAHISTORIALID).getSingleResult();
          return Optional.of(agendaHistorial);
          } catch (Exception e) {
-             System.out.println("findByAgendaHistorialId() "+e.getLocalizedMessage());
+             // System.out.println("findByAgendaHistorialId() "+e.getLocalizedMessage());
          }
          return Optional.empty();
       

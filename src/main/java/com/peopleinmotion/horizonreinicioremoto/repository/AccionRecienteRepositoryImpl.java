@@ -40,7 +40,7 @@ public class AccionRecienteRepositoryImpl implements AccionRecienteRepository {
             agendaRecienteFacade.create(accionReciente);
             return true;
         } catch (Exception e) {
-            System.out.println("create() " + e.getLocalizedMessage());
+            // System.out.println("create() " + e.getLocalizedMessage());
         }
         return false;
     }
@@ -50,7 +50,7 @@ public class AccionRecienteRepositoryImpl implements AccionRecienteRepository {
             agendaRecienteFacade.edit(accionReciente);
             return true;
         } catch (Exception e) {
-            System.out.println("create() " + e.getLocalizedMessage());
+            // System.out.println("create() " + e.getLocalizedMessage());
         }
         return false;
     }

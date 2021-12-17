@@ -17,7 +17,8 @@ import java.util.Optional;
 public interface BancoRepository {
     public List<Banco> findAll();
     public Optional<Banco> findByBancoId(BigInteger BANCOID);
-    public Optional<Banco> findByEsControlActivo(String ESCONTROL, String ACTIVO);
+    public Optional<Banco> findByEsControlAndActivo(String ESCONTROL, String ACTIVO);
+    public List<Banco> findByEsControlAndActivoList(String ESCONTROL, String ACTIVO);
     public Boolean create(Banco banco);
     public Boolean update(Banco banco);
     public Boolean delete(Banco banco);

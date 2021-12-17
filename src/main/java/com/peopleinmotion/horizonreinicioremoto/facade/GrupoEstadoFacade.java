@@ -43,7 +43,7 @@ public class GrupoEstadoFacade extends AbstractFacade<GrupoEstado> {
         GrupoEstado grupoEstado = (GrupoEstado)query.setParameter("GRUPOESTADOID", GRUPOESTADOID).getSingleResult();
          return Optional.of(grupoEstado);
          } catch (Exception e) {
-             System.out.println("findByGrupoEstadoId() "+e.getLocalizedMessage());
+             // System.out.println("findByGrupoEstadoId() "+e.getLocalizedMessage());
          }
          return Optional.empty();
       
@@ -58,7 +58,7 @@ public List<GrupoEstado> findByActivo(String ACTIVO) {
           list =query.setParameter("ACTIVO", ACTIVO).getResultList();
 
          } catch (Exception e) {
-             System.out.println("findByActivo() "+e.getLocalizedMessage());
+             // System.out.println("findByActivo() "+e.getLocalizedMessage());
          }
          return list;
       

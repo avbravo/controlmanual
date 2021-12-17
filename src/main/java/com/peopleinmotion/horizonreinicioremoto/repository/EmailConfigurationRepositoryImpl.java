@@ -38,7 +38,7 @@ public class EmailConfigurationRepositoryImpl implements EmailConfigurationRepos
            emailConfigurationFacade.create(emailConfiguration);
             return true;
         } catch (Exception e) {
-            System.out.println("create() " + e.getLocalizedMessage());
+            // System.out.println("create() " + e.getLocalizedMessage());
         }
         return false;
     }

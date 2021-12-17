@@ -43,7 +43,7 @@ public class BancoRepositoryImpl implements BancoRepository {
             bancoFacade.create(banco);
             return true;
         } catch (Exception e) {
-            System.out.println("create() " + e.getLocalizedMessage());
+            // System.out.println("create() " + e.getLocalizedMessage());
         }
         return false;
     }
@@ -52,8 +52,15 @@ public class BancoRepositoryImpl implements BancoRepository {
     // <editor-fold defaultstate="collapsed" desc="Optional<Banco> findByEsControlActivo(String ESCONTROL, String ACTIVO) ">
 
     @Override
-    public Optional<Banco> findByEsControlActivo(String ESCONTROL, String ACTIVO) {
-      return bancoFacade.findByEsControlActivo("SI", "SI");
+    public Optional<Banco> findByEsControlAndActivo(String ESCONTROL, String ACTIVO) {
+      return bancoFacade.findByEsControlAndActivo(ESCONTROL, ACTIVO);
+    }
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Optional<Banco> findByEsControlActivoList(String ESCONTROL, String ACTIVO) ">
+
+    @Override
+    public List<Banco> findByEsControlAndActivoList(String ESCONTROL, String ACTIVO) {
+      return bancoFacade.findByEsControlAndActivoList(ESCONTROL, ACTIVO);
     }
     // </editor-fold>
 
@@ -63,7 +70,7 @@ public class BancoRepositoryImpl implements BancoRepository {
             bancoFacade.edit(banco);
             return true;
         } catch (Exception e) {
-            System.out.println("update() " + e.getLocalizedMessage());
+            // System.out.println("update() " + e.getLocalizedMessage());
         }
         return false;
     }
@@ -74,7 +81,7 @@ public class BancoRepositoryImpl implements BancoRepository {
             bancoFacade.remove(banco);
             return true;
         } catch (Exception e) {
-            System.out.println("update() " + e.getLocalizedMessage());
+            // System.out.println("update() " + e.getLocalizedMessage());
         }
         return false;
     }

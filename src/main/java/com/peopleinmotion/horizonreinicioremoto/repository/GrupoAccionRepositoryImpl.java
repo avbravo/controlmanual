@@ -41,7 +41,7 @@ public class GrupoAccionRepositoryImpl implements GrupoAccionRepository {
             grupoAccionFacade.create(grupoAccion);
             return true;
         } catch (Exception e) {
-            System.out.println("create() " + e.getLocalizedMessage());
+            // System.out.println("create() " + e.getLocalizedMessage());
         }
         return false;
     }

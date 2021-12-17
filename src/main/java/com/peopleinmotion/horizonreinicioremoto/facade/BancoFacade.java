@@ -7,7 +7,11 @@ package com.peopleinmotion.horizonreinicioremoto.facade;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
+import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
+import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -41,7 +45,7 @@ public class BancoFacade extends AbstractFacade<Banco> {
         Banco banco = (Banco)query.setParameter("BANCOID", BANCOID).getSingleResult();
          return Optional.of(banco);
          } catch (Exception e) {
-             System.out.println("findByBancoId() "+e.getLocalizedMessage());
+             // System.out.println("findByBancoId() "+e.getLocalizedMessage());
          }
          return Optional.empty();
       
@@ -50,17 +54,34 @@ public class BancoFacade extends AbstractFacade<Banco> {
    
          // <editor-fold defaultstate="collapsed" desc="Optional<Banco> findByEsControlActivo(String ESCONTROL, String ACTIVO) ">
 
-     public Optional<Banco> findByEsControlActivo(String ESCONTROL, String ACTIVO) {
+     public Optional<Banco> findByEsControlAndActivo(String ESCONTROL, String ACTIVO) {
          try {
-      Query query = em.createQuery("SELECT b FROM Banco b WHERE b.ESCONTROL = :ESCONTROL AND b.ACTIVO = :ACTIVO");
+      Query query = em.createQuery("SELECT b FROM Banco b WHERE b.ESCONTROL = :ESCONTROL AND b.ACTIVO = :ACTIVO ORDER BY b.BANCO");
             
           
        Banco banco = (Banco)query.setParameter("ESCONTROL", ESCONTROL).setParameter("ACTIVO", ACTIVO).getSingleResult();
          return Optional.of(banco);
          } catch (Exception e) {
-             System.out.println("findByEsControlActivo() "+e.getLocalizedMessage());
+             // System.out.println("findByEsControlActivo() "+e.getLocalizedMessage());
          }
          return Optional.empty();
+      
+    }
+     // </editor-fold>
+         // <editor-fold defaultstate="collapsed" desc="Optional<Banco> findByEsControlActivo(String ESCONTROL, String ACTIVO) ">
+
+     public List<Banco> findByEsControlAndActivoList(String ESCONTROL, String ACTIVO) {
+           List<Banco> list = new ArrayList<>();
+         try {
+      Query query = em.createQuery("SELECT b FROM Banco b WHERE b.ESCONTROL = :ESCONTROL AND b.ACTIVO = :ACTIVO ORDER BY b.BANCO");
+              list =
+          
+      list = query.setParameter("ESCONTROL", ESCONTROL).setParameter("ACTIVO", ACTIVO).getResultList();
+       
+         } catch (Exception e) {
+             // System.out.println(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+         }
+         return list;
       
     }
      // </editor-fold>

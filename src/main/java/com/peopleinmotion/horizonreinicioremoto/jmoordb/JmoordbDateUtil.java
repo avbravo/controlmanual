@@ -132,7 +132,7 @@ public class JmoordbDateUtil implements Serializable {
 //                    }
                     break;
                 default:
-                    System.out.println("\nEl mes " + mes + " es incorrecto.");
+                    // System.out.println("\nEl mes " + mes + " es incorrecto.");
                     break;
             }
 
@@ -177,7 +177,7 @@ public class JmoordbDateUtil implements Serializable {
 //                    }
                     break;
                 default:
-                    System.out.println("\nEl mes " + mes + " es incorrecto.");
+                    // System.out.println("\nEl mes " + mes + " es incorrecto.");
                     break;
             }
 
@@ -384,7 +384,7 @@ public class JmoordbDateUtil implements Serializable {
             }
 
         } catch (Exception e) {
-            System.out.println("nombreMesStartWith1 " + e.getLocalizedMessage());
+            // System.out.println("nombreMesStartWith1 " + e.getLocalizedMessage());
         }
         return nombre;
     }
@@ -436,7 +436,7 @@ public class JmoordbDateUtil implements Serializable {
             }
 
         } catch (Exception e) {
-            System.out.println("nombreMesStartWith0 " + e.getLocalizedMessage());
+            // System.out.println("nombreMesStartWith0 " + e.getLocalizedMessage());
         }
         return nombre;
     }
@@ -951,11 +951,11 @@ public class JmoordbDateUtil implements Serializable {
         calendar.add(Calendar.HOUR_OF_DAY, 0);
         return calendar.getTime();
 //        Calendar ahoraCal = Calendar.getInstance();
-//System.out.println(ahoraCal.getClass());
+//// System.out.println(ahoraCal.getClass());
 //ahoraCal.set(2004,1,7);
-//System.out.println(ahoraCal.getTime());
+//// System.out.println(ahoraCal.getTime());
 //ahoraCal.set(2004,1,7,7,0,0);
-//System.out.println(ahoraCal.getTime());
+//// System.out.println(ahoraCal.getTime());
 //        LocalDate now = LocalDate.now();//# 2015-11-23
 //        Integer day = numberDayOfMonth(year, month);
 //
@@ -1010,7 +1010,7 @@ public class JmoordbDateUtil implements Serializable {
             long dias = diferenciaEn_ms / (1000 * 60 * 60 * 24);
             d = (int) dias;
         } catch (Exception e) {
-            System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
+            // System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
         }
 
         return d;
@@ -1059,7 +1059,7 @@ public class JmoordbDateUtil implements Serializable {
             tiempo.setMinutos(minutos);
 
         } catch (Exception e) {
-            System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
+            // System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
         }
 
         return tiempo;
@@ -1118,7 +1118,7 @@ public class JmoordbDateUtil implements Serializable {
             date = java.sql.Date.valueOf(localDate);
 
         } catch (Exception e) {
-            System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
+            // System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
         }
 
         return date;
@@ -1187,7 +1187,7 @@ public class JmoordbDateUtil implements Serializable {
             milisegundos = System.nanoTime();
 
         } catch (Exception e) {
-            System.out.println("getMilisegundos() " + e.getLocalizedMessage());
+            // System.out.println("getMilisegundos() " + e.getLocalizedMessage());
         }
         return milisegundos;
     }// </editor-fold>
@@ -1203,7 +1203,7 @@ public class JmoordbDateUtil implements Serializable {
             milisegundos = System.nanoTime();
 
         } catch (Exception e) {
-            System.out.println("getMilisegundos() " + e.getLocalizedMessage());
+            // System.out.println("getMilisegundos() " + e.getLocalizedMessage());
         }
         return Math.toIntExact(milisegundos);
     }// </editor-fold>
@@ -1219,7 +1219,7 @@ public class JmoordbDateUtil implements Serializable {
 
         } catch (Exception e) {
             errorMessage("getMilisegundos() " + e.getLocalizedMessage());
-            System.out.println("getMilisegundos() " + e.getLocalizedMessage());
+            // System.out.println("getMilisegundos() " + e.getLocalizedMessage());
         }
         return milisegundos;
     }// </editor-fold>
@@ -1826,7 +1826,7 @@ public class JmoordbDateUtil implements Serializable {
             date = format.parse(dateStringWithT);
 
         } catch (Exception e) {
-            System.out.println(" stringToDateWithT() " + e.getLocalizedMessage());
+            // System.out.println(" stringToDateWithT() " + e.getLocalizedMessage());
         }
         return date;
     }
@@ -1855,7 +1855,7 @@ public class JmoordbDateUtil implements Serializable {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSS");
             date = format.parse(str);
         } catch (Exception e) {
-            System.out.println("stringToDate()");
+            // System.out.println("stringToDate()");
         }
         return new java.sql.Date(date.getTime());
         //  return date;
@@ -1879,7 +1879,7 @@ public class JmoordbDateUtil implements Serializable {
             text = nombreDia + " " + dia + " de " + nombremes + " de " + anio;
 
         } catch (Exception e) {
-            System.out.println("fechaEnLetras()" + e.getLocalizedMessage());
+            // System.out.println("fechaEnLetras()" + e.getLocalizedMessage());
         }
         return text;
         //  return date;
@@ -1903,7 +1903,7 @@ public class JmoordbDateUtil implements Serializable {
             text = nombreDia + " " + dia + " de " + nombremes + " de " + anio;
 
         } catch (Exception e) {
-            System.out.println("fechaEnLetras()" + e.getLocalizedMessage());
+            // System.out.println("fechaEnLetras()" + e.getLocalizedMessage());
         }
         return text;
         //  return date;
@@ -1929,7 +1929,7 @@ public class JmoordbDateUtil implements Serializable {
             }
 
         } catch (Exception e) {
-            System.out.println("esMismoDia()" + e.getLocalizedMessage());
+            // System.out.println("esMismoDia()" + e.getLocalizedMessage());
         }
         return iguales;
         //  return date;
@@ -1984,7 +1984,7 @@ public class JmoordbDateUtil implements Serializable {
             String text = sdf.format(date);
             return text;
         } catch (Exception e) {
-            System.out.println("isoDateToString() " +e.getLocalizedMessage());
+            // System.out.println("isoDateToString() " +e.getLocalizedMessage());
         }
         return "";
 
@@ -2008,7 +2008,7 @@ public class JmoordbDateUtil implements Serializable {
             Date date = df.parse(dateString);
             return date;
         } catch (Exception e) {
-            System.out.println("stringToISODateFrom() " + e.getLocalizedMessage());
+            // System.out.println("stringToISODateFrom() " + e.getLocalizedMessage());
 
         }
         return conveter;

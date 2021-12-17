@@ -556,10 +556,10 @@ public class JsfUtil implements Serializable {
     public static Double round(Double value) {
 
         if (value != null) {
-            System.out.println("value: " + value);
-            System.out.println("value to String: " + value.toString());
+            // System.out.println("value: " + value);
+            // System.out.println("value to String: " + value.toString());
             String[] splitter = value.toString().split("\\.");
-            System.out.println("decimals: " + splitter[1].length());
+            // System.out.println("decimals: " + splitter[1].length());
             if (splitter[1].length() <= 2) {
                 return value;
             } else {
@@ -622,7 +622,7 @@ public class JsfUtil implements Serializable {
 
             texto = letra.toUpperCase() + texto.substring(1);
         } catch (Exception ex) {
-            System.out.println("letterToUpper() " + ex.getLocalizedMessage());
+            // System.out.println("letterToUpper() " + ex.getLocalizedMessage());
         }
         return texto;
     }
@@ -649,7 +649,7 @@ public class JsfUtil implements Serializable {
 
             texto = letra.toLowerCase() + texto.substring(1);
         } catch (Exception ex) {
-            System.out.println("letterToLower() " + ex.getLocalizedMessage());
+            // System.out.println("letterToLower() " + ex.getLocalizedMessage());
         }
         return texto;
     }// </editor-fold>
@@ -1255,7 +1255,7 @@ public class JsfUtil implements Serializable {
      * new ArrayList<>()); JsfUtil.addListToMapWithDuplicated(treeMap, 20,
      * 3020); JsfUtil.addListToMapWithDuplicated(treeMap, 20, 500);
      * JsfUtil.addListToMapWithDuplicated(treeMap, 20, 1000);
-     * System.out.println("Lista " + treeMap);
+     * // System.out.println("Lista " + treeMap);
      *
      * Salida Lista {20=[3020, 500, 1000], 55=[55, 438, 900, 1025, 3020]}
      */
@@ -1283,7 +1283,7 @@ public class JsfUtil implements Serializable {
     public static Integer totalEspaciosAlfinalCadena(String texto) {
         Integer count = 0;
         for (int x = texto.length() - 1; x > 0; x--) {
-            System.out.println("Inverso " + x + ": " + texto.charAt(x));
+            // System.out.println("Inverso " + x + ": " + texto.charAt(x));
             char c = texto.charAt(x);
 
             if (texto.charAt(x) == ' ') {
@@ -1322,7 +1322,7 @@ public class JsfUtil implements Serializable {
             }
             decena = Integer.parseInt(x.substring(0, x.length() - 1));
         } catch (Exception e) {
-            System.out.println("decenaDeUnEntero() " + e.getLocalizedMessage());
+            // System.out.println("decenaDeUnEntero() " + e.getLocalizedMessage());
         }
 
         return decena;
@@ -1773,7 +1773,7 @@ public class JsfUtil implements Serializable {
                         continue;
                     } else {
 
-                        System.out.println("Extracting file: " + destinationPath);
+                        // System.out.println("Extracting file: " + destinationPath);
 
                         BufferedInputStream bis = new BufferedInputStream(zipFile.getInputStream(entry));
 
@@ -1796,14 +1796,14 @@ public class JsfUtil implements Serializable {
                 }
                 return true;
             } catch (IOException ioe) {
-                System.out.println("Error opening zip file" + ioe);
+                // System.out.println("Error opening zip file" + ioe);
             } finally {
                 try {
                     if (zipFile != null) {
                         zipFile.close();
                     }
                 } catch (IOException ioe) {
-                    System.out.println("Error while closing zip file" + ioe);
+                    // System.out.println("Error while closing zip file" + ioe);
                 }
             }
 
@@ -2130,7 +2130,7 @@ public class JsfUtil implements Serializable {
             }
 
         } catch (Exception ex) {
-            System.out.println("insertarTextoArchivo()" + ex.getLocalizedMessage());
+            // System.out.println("insertarTextoArchivo()" + ex.getLocalizedMessage());
             // errorDialog("insertarTextoArchivo()", ex.getLocalizedMessage());
         }
         return false;
@@ -2174,9 +2174,9 @@ public class JsfUtil implements Serializable {
 
             File myObj = new File(fileName);
             if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
+                // System.out.println("File created: " + myObj.getName());
             } else {
-                System.out.println("File already exists.");
+                // System.out.println("File already exists.");
             }
 
             // String str = "World"+DateUtil.fechaActual();
@@ -2310,7 +2310,7 @@ public class JsfUtil implements Serializable {
             result = r1 + r2;
 
         } catch (Exception e) {
-            System.out.println("error " + e.getLocalizedMessage());
+            // System.out.println("error " + e.getLocalizedMessage());
         }
         return result;
     }
@@ -2413,7 +2413,7 @@ public class JsfUtil implements Serializable {
             emailRecipients.divide(list);
 
         } catch (Exception e) {
-            System.out.println("divideDestinatary() " + e.getLocalizedMessage());
+            // System.out.println("divideDestinatary() " + e.getLocalizedMessage());
         }
         return emailRecipients;
     }

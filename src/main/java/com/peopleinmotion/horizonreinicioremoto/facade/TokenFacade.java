@@ -48,7 +48,7 @@ public class TokenFacade extends AbstractFacade<Token> {
        Token token = (Token)query.setParameter("TOKENID", TOKENID).getSingleResult();
          return Optional.of(token);
          } catch (Exception e) {
-             System.out.println("findByTokenId() "+e.getLocalizedMessage());
+             // System.out.println("findByTokenId() "+e.getLocalizedMessage());
          }
          return Optional.empty();
       
@@ -63,7 +63,7 @@ public class TokenFacade extends AbstractFacade<Token> {
             Token token = (Token) query.setParameter("CODIGOTRANSACCION", CODIGOTRANSACCION).getSingleResult();
             return Optional.of(token);
         } catch (Exception e) {
-            System.out.println("findByCodigoTransaccion() " + e.getLocalizedMessage());
+            // System.out.println("findByCodigoTransaccion() " + e.getLocalizedMessage());
         }
         return Optional.empty();
 
@@ -78,7 +78,7 @@ public class TokenFacade extends AbstractFacade<Token> {
              list = query.setParameter("ACTIVO", ACTIVO).getResultList();
             
         } catch (Exception e) {
-            System.out.println("findByCodigoTransaccion() " + e.getLocalizedMessage());
+            // System.out.println("findByCodigoTransaccion() " + e.getLocalizedMessage());
         }
         return list;
 
@@ -93,7 +93,7 @@ public class TokenFacade extends AbstractFacade<Token> {
             Query query = em.createQuery("SELECT t FROM Token t WHERE t.USUARIOID = :USUARIOID AND t.ACTIVO = :ACTIVO ORDER BY t.TOKENID DESC");
             list = query.setParameter("USUARIOID", USUARIOID).setParameter("ACTIVO", ACTIVO).getResultList();
         } catch (Exception ex) {
-            System.out.println("findByUsuarioIdAndActivo() " + ex.getLocalizedMessage());
+            // System.out.println("findByUsuarioIdAndActivo() " + ex.getLocalizedMessage());
             JsfUtil.errorMessage("findByUsuarioIdAndActivo() " + ex.getLocalizedMessage());
         }
         return list;
@@ -107,7 +107,7 @@ public class TokenFacade extends AbstractFacade<Token> {
             Query query = em.createQuery("SELECT t FROM Token t WHERE t.USUARIOID = :USUARIOID AND t.ACTIVO = :ACTIVO AND t.TOKEN = :TOKEN ORDER BY t.TOKENID DESC");
             list = query.setParameter("USUARIOID", USUARIOID).setParameter("ACTIVO", ACTIVO).setParameter("TOKEN", TOKEN).getResultList();
         } catch (Exception ex) {
-            System.out.println("findByUsuarioIdAndActivo() " + ex.getLocalizedMessage());
+            // System.out.println("findByUsuarioIdAndActivo() " + ex.getLocalizedMessage());
             JsfUtil.errorMessage("findByUsuarioIdAndActivo() " + ex.getLocalizedMessage());
         }
         return list;

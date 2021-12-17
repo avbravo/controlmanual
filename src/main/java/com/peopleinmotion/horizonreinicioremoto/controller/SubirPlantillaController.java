@@ -227,7 +227,7 @@ public class SubirPlantillaController implements Serializable {
             findAccionReciente();
              }
         } catch (Exception e) {
-            System.out.println("init() " + e.getLocalizedMessage());
+            // System.out.println("init() " + e.getLocalizedMessage());
             JsfUtil.errorMessage("init() " + e.getLocalizedMessage());
 
         }
@@ -245,7 +245,7 @@ public class SubirPlantillaController implements Serializable {
                 JsfUtil.infoDialog("onAccionChangee()", " Nada Seleccionado");
             } else {
                 JsfUtil.infoDialog("onAccionChangee() ", selectOneMenuAccionValue.getACCION());
-                System.out.println("onAccionChange " + selectOneMenuAccionValue.getACCION());
+                // System.out.println("onAccionChange " + selectOneMenuAccionValue.getACCION());
                 JmoordbContext.put("accion", selectOneMenuAccionValue);
             }
 

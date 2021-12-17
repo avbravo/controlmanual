@@ -239,7 +239,7 @@ TokenServices tokenServices;
            
 
         } catch (Exception e) {
-            System.out.println("init() " + e.getLocalizedMessage());
+            // System.out.println("init() " + e.getLocalizedMessage());
             JsfUtil.errorMessage("init() " + e.getLocalizedMessage());
 
         }
@@ -378,7 +378,7 @@ TokenServices tokenServices;
             } else {
 
                 Date fechahoraBaja = (Date)JmoordbContext.get("fechahoraBaja");
-                System.out.println("Test--> fechahoraBaja "+fechahoraBaja);
+                // System.out.println("Test--> fechahoraBaja "+fechahoraBaja);
                 Agenda agenda = new Agenda();
                 agenda.setACTIVO("SI");
                 agenda.setCODIGOTRANSACCION(JsfUtil.generateUniqueID());

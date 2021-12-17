@@ -39,10 +39,10 @@ public class Planificador {
 
     public void downToken() {
         try {
-            System.out.println("-----------------------------------------------");
-            System.out.println(" <<<Planificador>>>");
-            System.out.println("Lanzado "+DateUtil.getFechaHoraActual());
-            System.out.println("------------------------------------------------");
+            // System.out.println("-----------------------------------------------");
+            // System.out.println(" <<<Planificador>>>");
+            // System.out.println("Lanzado "+DateUtil.getFechaHoraActual());
+            // System.out.println("------------------------------------------------");
            List<Token> list = tokenRepository.findByActivo("SI");
            
            if(list == null  || list.isEmpty()){
@@ -63,9 +63,9 @@ public class Planificador {
            }
         } catch (Exception e) {
               JsfUtil.errorMessage("downToken() "+e.getLocalizedMessage());
-            System.out.println("rdownToken()()" + e.getLocalizedMessage());
+            // System.out.println("rdownToken()()" + e.getLocalizedMessage());
         }
-      System.out.println("Planificador finalizado.....");
+      // System.out.println("Planificador finalizado.....");
     }
 
 }

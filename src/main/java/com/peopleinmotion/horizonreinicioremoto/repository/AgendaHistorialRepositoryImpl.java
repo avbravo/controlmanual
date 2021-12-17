@@ -38,7 +38,7 @@ public class AgendaHistorialRepositoryImpl implements AgendaHistorialRepository 
             agendaHistorialFacade.create(agendaHistorial);
             return true;
         } catch (Exception e) {
-            System.out.println("create() " + e.getLocalizedMessage());
+            // System.out.println("create() " + e.getLocalizedMessage());
         }
         return false;
     }

@@ -72,11 +72,11 @@ public class JmoordbEmailSender implements Serializable{
 
             Transport.send(message);
 
-            System.out.println("Done");
+            // System.out.println("Done");
 
         } catch (Exception ex) {
             JmoordbUtil.infoDialog("error", ex.getLocalizedMessage());
-            System.out.println("error " + ex.getLocalizedMessage());
+            // System.out.println("error " + ex.getLocalizedMessage());
         }
         return null;
     }// </editor-fold>
@@ -137,7 +137,7 @@ public class JmoordbEmailSender implements Serializable{
             sending = true;
         } catch (Exception ex) {
             JmoordbUtil.errorMessage("send() " + ex.getLocalizedMessage());
-            System.out.println("send() " + ex.getLocalizedMessage());
+            // System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
@@ -229,7 +229,7 @@ public class JmoordbEmailSender implements Serializable{
             sending = true;
         } catch (Exception ex) {
             JmoordbUtil.errorMessage("send() " + ex.getLocalizedMessage());
-            System.out.println("send() " + ex.getLocalizedMessage());
+            // System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
@@ -291,7 +291,7 @@ public class JmoordbEmailSender implements Serializable{
             sending = true;
         } catch (Exception ex) {
             JmoordbUtil.errorMessage("send() " + ex.getLocalizedMessage());
-            System.out.println("send() " + ex.getLocalizedMessage());
+            // System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
@@ -387,7 +387,7 @@ public class JmoordbEmailSender implements Serializable{
             sending = true;
         } catch (Exception ex) {
             JmoordbUtil.errorMessage("send() " + ex.getLocalizedMessage());
-            System.out.println("send() " + ex.getLocalizedMessage());
+            // System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
@@ -443,7 +443,7 @@ public class JmoordbEmailSender implements Serializable{
             sending = true;
         } catch (Exception ex) {
             JmoordbUtil.errorMessage("send() " + ex.getLocalizedMessage());
-            System.out.println("send() " + ex.getLocalizedMessage());
+            // System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
@@ -505,7 +505,7 @@ public class JmoordbEmailSender implements Serializable{
             sending = true;
         } catch (Exception ex) {
             JmoordbUtil.errorMessage("send() " + ex.getLocalizedMessage());
-            System.out.println("send() " + ex.getLocalizedMessage());
+            // System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
@@ -542,16 +542,16 @@ public class JmoordbEmailSender implements Serializable{
 
             // retrieve the messages from the folder in an array and print it
             Message[] messages = emailFolder.getMessages();
-            System.out.println("messages.length---" + messages.length);
+            // System.out.println("messages.length---" + messages.length);
 
             for (int i = 0, n = messages.length; i < n; i++) {
                 Message message = messages[i];
-                System.out.println("---------------------------------");
-                System.out.println("Email Number " + (i + 1));
-                System.out.println("Subject: " + message.getSubject());
-                System.out.println("From: " + message.getFrom()[0]);
-                System.out.println("Fecha: " + message.getSentDate());
-                System.out.println("Content: " + message.getContent());
+                // System.out.println("---------------------------------");
+                // System.out.println("Email Number " + (i + 1));
+                // System.out.println("Subject: " + message.getSubject());
+                // System.out.println("From: " + message.getFrom()[0]);
+                // System.out.println("Fecha: " + message.getSentDate());
+                // System.out.println("Content: " + message.getContent());
             }
 
             //close the store and folder objects
@@ -560,7 +560,7 @@ public class JmoordbEmailSender implements Serializable{
             sending = true;
         } catch (Exception ex) {
             JmoordbUtil.errorMessage("send() " + ex.getLocalizedMessage());
-            System.out.println("send() " + ex.getLocalizedMessage());
+            // System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
     }

@@ -45,7 +45,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             usuarioFacade.create(usuario);
             return true;
         } catch (Exception e) {
-            System.out.println("create() " + e.getLocalizedMessage());
+            // System.out.println("create() " + e.getLocalizedMessage());
         }
         return false;
     }

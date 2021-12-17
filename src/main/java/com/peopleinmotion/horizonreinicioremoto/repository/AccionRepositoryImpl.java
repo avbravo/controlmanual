@@ -52,7 +52,7 @@ public class AccionRepositoryImpl implements AccionRepository {
             return true;
         } catch (Exception e) {
             JsfUtil.warningMessage("create() "+e.getLocalizedMessage());
-            System.out.println("create() "+e.getLocalizedMessage());
+            // System.out.println("create() "+e.getLocalizedMessage());
         }
         return false;
     }
@@ -64,7 +64,7 @@ public class AccionRepositoryImpl implements AccionRepository {
             return true;
         } catch (Exception e) {
             JsfUtil.warningMessage("update() "+e.getLocalizedMessage());
-            System.out.println("update() "+e.getLocalizedMessage());
+            // System.out.println("update() "+e.getLocalizedMessage());
         }
         return false;
     }

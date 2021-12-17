@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="./resources/css/style.css"/>
         <link rel="stylesheet" href="./resources/css/dash01.css"/>
         <link rel="stylesheet" href="./resources/css/mantenimiento.css"/>
-         <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
+        <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
         <meta name="referrer" content="no-referrer"/>
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
@@ -24,8 +24,10 @@
 
 
     </h:head>
-    <h:body>
-         <h:form id="form" prependId="false" rendered="#{accessController.loged}">
+    <h:body >
+        <h:form id="form" prependId="false" rendered="#{accessController.loged}">
+
+
             <script type="text/javascript">
                 function setDataTableWithPageStart() {
 
@@ -33,7 +35,8 @@
                     alert("ejecutado la funcion setDataTableWithPageStart()")
                 }
             </script>
-              <p:growl id='growl' widgetVar="widgetVarGrowl"/>
+
+            <p:growl id='growl' widgetVar="widgetVarGrowl"/>
             <div class="container-scroller">
                 <!-- partial:partials/_navbar.html -->
                 <template:top/>
@@ -70,22 +73,27 @@
                                                                itemValue="#{var}" itemLabel="#{var.BANCO} " />
 
                                                 <p:ajax listener="#{dashboardController.subjectSelectionChanged}"
-                                                     event="change"
-                                                      update=":form:dashboardresumenaccionreciente,:form:dashnoardschedule"
-                                     />
+                                                        event="change"
+                                                        oncomplete="remoteCommand()"
+                                                        update=":form:dashboardresumenaccionreciente:outputPanelresumenaccionreciente,:form:dashboardresumenacciontotal:outputPaneltotalFinalizado, :form:dashboardresumenacciontotal:outputPaneltotalEnProceso, :form:dashboardresumenacciontotal:outputPaneltotalSolicitado,:form:dashboardschedule:outputPanelschedule"
+                                                        />
 
 
                                             </p:selectOneMenu>
+                                            <p:remoteCommand name="remoteCommand" 
+                                                             update=":form:dashboardresumenacciontotal:outputPaneltotalFinalizado, :form:dashboardresumenacciontotal:outputPaneltotalEnProceso, :form:dashboardresumenacciontotal:outputPaneltotalSolicitado" 
+                                                             action="#{dashboardController.remoteCommand()}"
+/>
                                         </div>
-                                      
+
                                         <div>
-                                           
+
 
                                             <p:commandButton icon= "pi pi-search" value="Buscar Cajero"  class="btn btn-block btn-danger btn-sm font-weight-medium auth-form-btn rounded-pill"
-                                                           action="#{dashboardController.onCommnandButtonGoBuscarCajero()}">
-                                              
+                                                             action="#{dashboardController.onCommnandButtonGoBuscarCajero()}">
+
                                             </p:commandButton>
-                                           
+
                                             <!--<cajero:search id="outputPanelSearchCajero"/>-->
                                         </div>
                                     </div>
@@ -102,12 +110,12 @@
                                     </div>
                                 </div>
 
-                                <dashboard:resumenacciontotal/>
+                                <dashboard:resumenacciontotal id="dashboardresumenacciontotal"/>
                             </div>
 
                             <dashboard:resumenaccionreciente id="dashboardresumenaccionreciente"/>
 
-<!--                           <agendados:agendadosmodal id="agendadosagendadosmodal"/>-->
+                            <!--                           <agendados:agendadosmodal id="agendadosagendadosmodal"/>-->
 
                         </div>
                         <!-- content-wrapper ends -->
@@ -116,7 +124,7 @@
                         <!--AGENDAMIENTOS-->
 
                         <!--<dashboard:agendamiento/>--> 
-                        <dashboard:schedule id="dashnoardschedule"/> 
+                        <dashboard:schedule id="dashboardschedule"/> 
 
 
 
@@ -136,14 +144,14 @@
             </div>
 
         </h:form>    
-         <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
+        <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
 
             <template:accesodenegado/>
-          
+
         </h:form>
         <!-- container-scroller -->
-     <!-- container-scroller -->
-       <template:script/> 
+        <!-- container-scroller -->
+        <template:script/> 
     </h:body>
 
 </html>

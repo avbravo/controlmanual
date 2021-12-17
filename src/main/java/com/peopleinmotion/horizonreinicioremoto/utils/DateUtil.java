@@ -119,7 +119,7 @@ public class DateUtil implements Serializable {
 //                    }
                     break;
                 default:
-                    System.out.println("\nEl mes " + mes + " es incorrecto.");
+                    // System.out.println("\nEl mes " + mes + " es incorrecto.");
                     break;
             }
 
@@ -164,7 +164,7 @@ public class DateUtil implements Serializable {
 //                    }
                     break;
                 default:
-                    System.out.println("\nEl mes " + mes + " es incorrecto.");
+                    // System.out.println("\nEl mes " + mes + " es incorrecto.");
                     break;
             }
 
@@ -361,7 +361,7 @@ public class DateUtil implements Serializable {
             }
 
         } catch (Exception e) {
-            System.out.println("nombreMesStartWith1 " + e.getLocalizedMessage());
+            // System.out.println("nombreMesStartWith1 " + e.getLocalizedMessage());
         }
         return nombre;
     }
@@ -413,7 +413,7 @@ public class DateUtil implements Serializable {
             }
 
         } catch (Exception e) {
-            System.out.println("nombreMesStartWith0 " + e.getLocalizedMessage());
+            // System.out.println("nombreMesStartWith0 " + e.getLocalizedMessage());
         }
         return nombre;
     }
@@ -897,11 +897,11 @@ public class DateUtil implements Serializable {
         calendar.add(Calendar.HOUR_OF_DAY, 0);
         return calendar.getTime();
 //        Calendar ahoraCal = Calendar.getInstance();
-//System.out.println(ahoraCal.getClass());
+//// System.out.println(ahoraCal.getClass());
 //ahoraCal.set(2004,1,7);
-//System.out.println(ahoraCal.getTime());
+//// System.out.println(ahoraCal.getTime());
 //ahoraCal.set(2004,1,7,7,0,0);
-//System.out.println(ahoraCal.getTime());
+//// System.out.println(ahoraCal.getTime());
 //        LocalDate now = LocalDate.now();//# 2015-11-23
 //        Integer day = numberDayOfMonth(year, month);
 //
@@ -956,7 +956,7 @@ public class DateUtil implements Serializable {
             long dias = diferenciaEn_ms / (1000 * 60 * 60 * 24);
             d = (int) dias;
         } catch (Exception e) {
-            System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
+            // System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
         }
 
         return d;
@@ -1017,7 +1017,7 @@ public class DateUtil implements Serializable {
             date = java.sql.Date.valueOf(localDate);
 
         } catch (Exception e) {
-            System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
+            // System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
         }
 
         return date;
@@ -1182,7 +1182,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
             milisegundos = System.nanoTime();
 
         } catch (Exception e) {
-            System.out.println("getMilisegundos() " + e.getLocalizedMessage());
+            // System.out.println("getMilisegundos() " + e.getLocalizedMessage());
         }
         return milisegundos;
     }// </editor-fold>
@@ -1198,7 +1198,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
             milisegundos = System.nanoTime();
 
         } catch (Exception e) {
-            System.out.println("getMilisegundos() " + e.getLocalizedMessage());
+            // System.out.println("getMilisegundos() " + e.getLocalizedMessage());
         }
         return Math.toIntExact(milisegundos);
     }// </editor-fold>
@@ -1214,7 +1214,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
 
         } catch (Exception e) {
             errorMessage("getMilisegundos() " + e.getLocalizedMessage());
-            System.out.println("getMilisegundos() " + e.getLocalizedMessage());
+            // System.out.println("getMilisegundos() " + e.getLocalizedMessage());
         }
         return milisegundos;
     }// </editor-fold>
@@ -1697,7 +1697,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
             date = format.parse(dateStringWithT);
 
         } catch (Exception e) {
-            System.out.println(" stringToDateWithT() " + e.getLocalizedMessage());
+            // System.out.println(" stringToDateWithT() " + e.getLocalizedMessage());
         }
         return date;
     }
@@ -1726,7 +1726,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSS");
             date = format.parse(str);
         } catch (Exception e) {
-            System.out.println("stringToDate()");
+            // System.out.println("stringToDate()");
         }
         return new java.sql.Date(date.getTime());
         //  return date;
@@ -1750,7 +1750,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
             text = nombreDia + " " + dia + " de " + nombremes + " de " + anio;
 
         } catch (Exception e) {
-            System.out.println("fechaEnLetras()" + e.getLocalizedMessage());
+            // System.out.println("fechaEnLetras()" + e.getLocalizedMessage());
         }
         return text;
         //  return date;
@@ -1774,7 +1774,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
             text = nombreDia + " " + dia + " de " + nombremes + " de " + anio;
 
         } catch (Exception e) {
-            System.out.println("fechaEnLetras()" + e.getLocalizedMessage());
+            // System.out.println("fechaEnLetras()" + e.getLocalizedMessage());
         }
         return text;
         //  return date;
@@ -1800,7 +1800,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
             }
 
         } catch (Exception e) {
-            System.out.println("esMismoDia()" + e.getLocalizedMessage());
+            // System.out.println("esMismoDia()" + e.getLocalizedMessage());
         }
         return iguales;
         //  return date;
@@ -1855,7 +1855,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
             String text = sdf.format(date);
             return text;
         } catch (Exception e) {
-            System.out.println("isoDateToString() " +e.getLocalizedMessage());
+            // System.out.println("isoDateToString() " +e.getLocalizedMessage());
         }
         return "";
 
@@ -1879,7 +1879,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
             Date date = df.parse(dateString);
             return date;
         } catch (Exception e) {
-            System.out.println("stringToISODateFrom() " + e.getLocalizedMessage());
+            // System.out.println("stringToISODateFrom() " + e.getLocalizedMessage());
 
         }
         return conveter;
@@ -1898,7 +1898,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
          
       
         } catch (Exception e) {
-            System.out.println("stringToISODateFrom() " + e.getLocalizedMessage());
+            // System.out.println("stringToISODateFrom() " + e.getLocalizedMessage());
 
         }
         return null;
@@ -1914,7 +1914,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
      * @return 
      *   LocalTime time = LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault()).toLocalTime();
         String timeString = converterLocalTimeToStringAMPM(time);
-        System.out.println(".......timeString "+timeString);
+        // System.out.println(".......timeString "+timeString);
      */
      public static String converterLocalTimeToStringAMPM(LocalTime time){
         String tiempoString ="";
@@ -1939,7 +1939,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
            tiempoString = horasFinales + ":" + minutosFinales + " " + amPM;
       
         } catch (Exception e) {
-            System.out.println("timeToStringAMPM() "+e.getLocalizedMessage());
+            // System.out.println("timeToStringAMPM() "+e.getLocalizedMessage());
         }
         return tiempoString;
     }
@@ -1990,7 +1990,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
             tiempo = LocalTime.of(Integer.parseInt(hora), Integer.parseInt(minutos));
             return tiempo;
         } catch (Exception e) {
-            System.out.println("la hora no es valida");
+            // System.out.println("la hora no es valida");
             return null;
         }
 

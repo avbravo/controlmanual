@@ -10,9 +10,10 @@
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
-
+        <p:outputPanel id="outputPanelresumenaccionreciente">
 
         <p:carousel var="item"  value="#{dashboardController.accionRecienteList}" numVisible="3" >
+         
             <div class="col-12 col-lg-10 grid-margin stretch-card upx" >
 
                 <div class="card card-bor-bottom01 card-bor-top01">
@@ -66,6 +67,6 @@
             </div>
 
         </p:carousel>
-
+</p:outputPanel>
     </cc:implementation>
 </html>

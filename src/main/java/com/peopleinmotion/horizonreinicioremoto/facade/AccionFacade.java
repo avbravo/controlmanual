@@ -44,7 +44,7 @@ public Optional<Accion> findByAccionId(BigInteger ACCIONID) {
        Accion accion = (Accion)query.setParameter("ACCIONID", ACCIONID).getSingleResult();
          return Optional.of(accion);
          } catch (Exception e) {
-             System.out.println("findByAccionId() "+e.getLocalizedMessage());
+             // System.out.println("findByAccionId() "+e.getLocalizedMessage());
          }
          return Optional.empty();
       
@@ -59,7 +59,7 @@ public Optional<Accion> findByAccionId(BigInteger ACCIONID) {
             Query query = em.createQuery("SELECT a FROM Accion a WHERE a.GRUPOACCIONID = :GRUPOACCIONID");
             list = query.setParameter("GRUPOACCIONID", GRUPOACCIONID).getResultList();
         } catch (Exception ex) {
-            System.out.println("findByGrupoAccionId() " + ex.getLocalizedMessage());
+            // System.out.println("findByGrupoAccionId() " + ex.getLocalizedMessage());
             JsfUtil.errorMessage("findByGrupoAccionId() "+ex.getLocalizedMessage());
         }
         return list;
@@ -76,7 +76,7 @@ public Optional<Accion> findByAccionId(BigInteger ACCIONID) {
    query.setParameter("GRUPOACCIONID", GRUPOACCIONID);
             list = query.setParameter("PREDETERMINADO", PREDETERMINADO ).getResultList();
         } catch (Exception ex) {
-            System.out.println("findByGrupoAccionIdAndPredeterminado() " + ex.getLocalizedMessage());
+            // System.out.println("findByGrupoAccionIdAndPredeterminado() " + ex.getLocalizedMessage());
         }
         return list;
     }
@@ -91,7 +91,7 @@ public List<Accion> findByAccionIdAndActivo(BigInteger ACCIONID, String ACTIVO) 
            list = query.setParameter("ACTIVO", ACTIVO).getResultList();
         } catch (Exception ex) {
 
-            System.out.println("findByAccionId() " + ex.getLocalizedMessage());
+            // System.out.println("findByAccionId() " + ex.getLocalizedMessage());
 
         }
         return list;

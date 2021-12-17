@@ -44,7 +44,7 @@ public class AgendaRepositoryImpl implements AgendaRepository {
       
             return true;
         } catch (Exception e) {
-            System.out.println("create() " + e.getLocalizedMessage());
+            // System.out.println("create() " + e.getLocalizedMessage());
             new FacesMessage("create(() "+e.getLocalizedMessage());
         }
         return false;
@@ -57,7 +57,7 @@ public class AgendaRepositoryImpl implements AgendaRepository {
       
             return true;
         } catch (Exception e) {
-            System.out.println("edit() " + e.getLocalizedMessage());
+            // System.out.println("edit() " + e.getLocalizedMessage());
             new FacesMessage("edit(() "+e.getLocalizedMessage());
         }
         return false;

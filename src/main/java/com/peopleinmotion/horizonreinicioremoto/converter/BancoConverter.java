@@ -37,11 +37,11 @@ public class BancoConverter implements Converter {
     public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
         Banco a = new Banco();
         if (bancoRepository == null) {
-            System.out.println("Repository is null");
+            // System.out.println("Repository is null");
         }
 
         if (submittedValue == null || submittedValue.isEmpty()) {
-            System.out.println("submitted = null");
+            // System.out.println("submitted = null");
             return null;
         }
 
@@ -52,9 +52,9 @@ public class BancoConverter implements Converter {
             }
             return a;
         } catch (Exception e) {
-            System.out.println("====================");
-            System.out.println("---> getAsObject" +e.getLocalizedMessage());
-            System.out.println("====================");
+            // System.out.println("====================");
+            // System.out.println("---> getAsObject" +e.getLocalizedMessage());
+            // System.out.println("====================");
             throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
         }
     }
@@ -70,11 +70,11 @@ public class BancoConverter implements Converter {
         if (modelValue instanceof Banco) {
           return String.valueOf(((Banco) modelValue).getBANCOID());
         } else {
-            System.out.println("----------->getAsString");
+            // System.out.println("----------->getAsString");
           throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
         }
       } catch (Exception e) {
-            System.out.println("--------getAsString () "+e.getLocalizedMessage());
+            // System.out.println("--------getAsString () "+e.getLocalizedMessage());
             new FacesMessage("Error en converter Banco "+e.getLocalizedMessage());
       }
 

@@ -44,7 +44,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             Usuario usuario = (Usuario) query.setParameter("USUARIOID", USUARIOID).getSingleResult();
             return Optional.of(usuario);
         } catch (Exception e) {
-            System.out.println("findByUsuarioId() " + e.getLocalizedMessage());
+            // System.out.println("findByUsuarioId() " + e.getLocalizedMessage());
         }
         return Optional.empty();
 
@@ -80,7 +80,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             list = query.setParameter("BANCOID", BANCOID).setParameter("ACTIVO",ACTIVO).getResultList();
         } catch (Exception ex) {
             JsfUtil.warningMessage("findByBancoId() " + ex.getLocalizedMessage());
-            System.out.println("findByBancoId() " + ex.getLocalizedMessage());
+            // System.out.println("findByBancoId() " + ex.getLocalizedMessage());
         }
         return list;
     }

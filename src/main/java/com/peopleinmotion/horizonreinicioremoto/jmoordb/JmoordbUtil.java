@@ -379,7 +379,7 @@ public class JmoordbUtil {
     public static Integer totalEspaciosAlfinalCadena(String texto) {
         Integer count = 0;
         for (int x = texto.length() - 1; x > 0; x--) {
-            System.out.println("Inverso " + x + ": " + texto.charAt(x));
+            // System.out.println("Inverso " + x + ": " + texto.charAt(x));
             char c = texto.charAt(x);
 
             if (texto.charAt(x) == ' ') {
@@ -477,7 +477,7 @@ public class JmoordbUtil {
 //                    }
                     break;
                 default:
-                    System.out.println("\nEl mes " + mes + " es incorrecto.");
+                    // System.out.println("\nEl mes " + mes + " es incorrecto.");
                     break;
             }
 
@@ -522,7 +522,7 @@ public class JmoordbUtil {
 //                    }
                     break;
                 default:
-                    System.out.println("\nEl mes " + mes + " es incorrecto.");
+                    // System.out.println("\nEl mes " + mes + " es incorrecto.");
                     break;
             }
 
@@ -1091,11 +1091,11 @@ public class JmoordbUtil {
         calendar.add(Calendar.HOUR_OF_DAY, 0);
         return calendar.getTime();
 //        Calendar ahoraCal = Calendar.getInstance();
-//System.out.println(ahoraCal.getClass());
+//// System.out.println(ahoraCal.getClass());
 //ahoraCal.set(2004,1,7);
-//System.out.println(ahoraCal.getTime());
+//// System.out.println(ahoraCal.getTime());
 //ahoraCal.set(2004,1,7,7,0,0);
-//System.out.println(ahoraCal.getTime());
+//// System.out.println(ahoraCal.getTime());
 //        LocalDate now = LocalDate.now();//# 2015-11-23
 //        Integer day = numberDayOfMonth(year, month);
 //
@@ -1150,7 +1150,7 @@ public class JmoordbUtil {
             long dias = diferenciaEn_ms / (1000 * 60 * 60 * 24);
             d = (int) dias;
         } catch (Exception e) {
-            System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
+            // System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
         }
 
         return d;
@@ -1212,7 +1212,7 @@ public class JmoordbUtil {
             date = java.sql.Date.valueOf(localDate);
 
         } catch (Exception e) {
-            System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
+            // System.out.println("diasEntreFechas() " + e.getLocalizedMessage());
         }
 
         return date;
@@ -1278,7 +1278,7 @@ public class JmoordbUtil {
             milisegundos = System.nanoTime();
 
         } catch (Exception e) {
-            System.out.println("getMilisegundos() " + e.getLocalizedMessage());
+            // System.out.println("getMilisegundos() " + e.getLocalizedMessage());
         }
         return milisegundos;
     }// </editor-fold>
@@ -1291,7 +1291,7 @@ public class JmoordbUtil {
 
         } catch (Exception e) {
             errorMessage("getMilisegundos() " + e.getLocalizedMessage());
-            System.out.println("getMilisegundos() " + e.getLocalizedMessage());
+            // System.out.println("getMilisegundos() " + e.getLocalizedMessage());
         }
         return milisegundos;
     }// </editor-fold>
@@ -1929,7 +1929,7 @@ public class JmoordbUtil {
             return true;
 
         } catch (Exception e) {
-            System.out.println("appendTextToLogErrorFile()" + e.getLocalizedMessage());
+            // System.out.println("appendTextToLogErrorFile()" + e.getLocalizedMessage());
             // errorDialog("appendTextToLogErrorFile()", e.getLocalizedMessage());
         }
         return false;
@@ -1981,7 +1981,7 @@ public class JmoordbUtil {
             }
 
         } catch (Exception ex) {
-            System.out.println("insertarTextoArchivo()" + ex.getLocalizedMessage());
+            // System.out.println("insertarTextoArchivo()" + ex.getLocalizedMessage());
             // errorDialog("insertarTextoArchivo()", ex.getLocalizedMessage());
         }
         return false;
@@ -2154,7 +2154,7 @@ public class JmoordbUtil {
                         continue;
                     } else {
 
-                        System.out.println("Extracting file: " + destinationPath);
+                        // System.out.println("Extracting file: " + destinationPath);
 
                         BufferedInputStream bis = new BufferedInputStream(zipFile.getInputStream(entry));
 
@@ -2177,14 +2177,14 @@ public class JmoordbUtil {
                 }
                 return true;
             } catch (IOException ioe) {
-                System.out.println("Error opening zip file" + ioe);
+                // System.out.println("Error opening zip file" + ioe);
             } finally {
                 try {
                     if (zipFile != null) {
                         zipFile.close();
                     }
                 } catch (IOException ioe) {
-                    System.out.println("Error while closing zip file" + ioe);
+                    // System.out.println("Error while closing zip file" + ioe);
                 }
             }
 
@@ -2433,7 +2433,7 @@ public class JmoordbUtil {
             return true;
 
         } catch (Exception e) {
-            System.out.println("appendTextToLogErrorFile()" + e.getLocalizedMessage());
+            // System.out.println("appendTextToLogErrorFile()" + e.getLocalizedMessage());
             // errorDialog("appendTextToLogErrorFile()", e.getLocalizedMessage());
         }
         return false;
@@ -2528,9 +2528,9 @@ public class JmoordbUtil {
             }
             trace += "\n          ]";
 
-            System.out.println("---------------===========TRACE====================------------------------------");
-            System.out.println(trace);
-            System.out.println("---------------===============================------------------------------");
+            // System.out.println("---------------===========TRACE====================------------------------------");
+            // System.out.println(trace);
+            // System.out.println("---------------===============================------------------------------");
 
             json += "{\n \"dateTime\":\"" + JmoordbDateUtil.fechaHoraActual() + "\",\n \"nameOfClass\":\"" + nameOfClass + "\",\n \"nameOfMethod\":\"" + nameOfMethod + "\",\n \"Error\":\"" + text + "\"";
             json += trace;

@@ -42,7 +42,7 @@ public class GrupoAccionFacade extends AbstractFacade<GrupoAccion> {
         GrupoAccion grupoAccion = (GrupoAccion)query.setParameter("GRUPOACCIONID", GRUPOACCIONID).getSingleResult();
          return Optional.of(grupoAccion);
          } catch (Exception e) {
-             System.out.println("findByGrupoAccionId() "+e.getLocalizedMessage());
+             // System.out.println("findByGrupoAccionId() "+e.getLocalizedMessage());
          }
          return Optional.empty();
       

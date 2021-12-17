@@ -35,7 +35,7 @@ public class DashboardServicesImpl implements DashboardServices {
     @Inject
     AgendaRepository agendaRepository;
 
-    // <editor-fold defaultstate="collapsed" desc=" List<GrupoEstado> calcultateTotal(Banco banco) ">
+    // <editor-fold defaultstate="collapsed" desc="  List<GrupoEstado> calcularTotalGrupoEstado(Banco banco)">
     @Override
     public List<GrupoEstado> calcularTotalGrupoEstado(Banco banco) {
         List<GrupoEstado> grupoEstadoList = new ArrayList<>();

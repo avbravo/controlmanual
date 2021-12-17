@@ -258,7 +258,7 @@ public class TestController implements Serializable {
             bank = (Banco) JmoordbContext.get("banco");
 
         } catch (Exception e) {
-            System.out.println("init() " + e.getLocalizedMessage());
+            // System.out.println("init() " + e.getLocalizedMessage());
             JsfUtil.errorMessage("init() " + e.getLocalizedMessage());
             JsfUtil.errorDialog("init()", e.getLocalizedMessage());
 
@@ -273,7 +273,7 @@ public class TestController implements Serializable {
              * Remover esto
              */
             Optional<Cajero> cajeroOptional = cajeroRepository.findByCajeroId(JsfUtil.toBigInteger(1));
-            System.out.println("Ooptional " + cajeroOptional);
+            // System.out.println("Ooptional " + cajeroOptional);
             if (!cajeroOptional.isPresent()) {
                 JsfUtil.warningMessage("no existe cajero con el codigo 10");
             } else {
@@ -328,7 +328,7 @@ public class TestController implements Serializable {
             }
 
         } catch (Exception e) {
-            System.out.println("onCommandButtonInitial() " + e.getLocalizedMessage());
+            // System.out.println("onCommandButtonInitial() " + e.getLocalizedMessage());
             JsfUtil.errorMessage("onCommandButtonInitial() " + e.getLocalizedMessage());
             JsfUtil.errorDialog("ionCommandButtonInitial()", e.getLocalizedMessage());
         }
@@ -347,7 +347,7 @@ public class TestController implements Serializable {
                 JsfUtil.infoDialog("onAccionChangee()", " Nada Seleccionado");
             } else {
                 JsfUtil.infoDialog("onAccionChangee() ", selectOneMenuAccionValue.getACCION());
-                System.out.println("onAccionChange " + selectOneMenuAccionValue.getACCION());
+                // System.out.println("onAccionChange " + selectOneMenuAccionValue.getACCION());
                 JmoordbContext.put("accion", selectOneMenuAccionValue);
             }
 
@@ -370,7 +370,7 @@ public class TestController implements Serializable {
 //            todo.setDESCRIPCION("Aquiu");
 //todo.setFECHA(DateUtil.fechaHoraActual());
 //todoFacade.create(todo);
-//            System.out.println("gardo todo");
+//            // System.out.println("gardo todo");
 
             Agenda agenda = new Agenda();
             agenda.setACTIVO("SI");
@@ -384,12 +384,12 @@ public class TestController implements Serializable {
             agenda.setUSUARIOIDSOLICITA(user.getUSUARIOID());
 
             if (agendaRepository.create(agenda)) {
-                System.out.println("agemda creada voy a buscar el id");
+                // System.out.println("agemda creada voy a buscar el id");
                 Optional<Agenda> agendaOptional = agendaRepository.findByCodigoTransaccion(agenda.getCODIGOTRANSACCION());
                 if (!agendaOptional.isPresent()) {
                     JsfUtil.warningMessage("No se encontro la agenda con ese codigo de transaccion");
                 } else {
-                    System.out.println("id encontrado " + agendaOptional.get().getAGENDAID());
+                    // System.out.println("id encontrado " + agendaOptional.get().getAGENDAID());
                     JsfUtil.successMessage("id encontrado " + agendaOptional.get().getAGENDAID());
 
                 }
@@ -407,7 +407,7 @@ public class TestController implements Serializable {
 //                Agenda agenda = new Agenda();
 ////                agenda.setACCIONID(accionList.get(0).getACCIONID());
 ////                
-////                System.out.println("voy a otra....");
+////                // System.out.println("voy a otra....");
 //                agenda.setACTIVO("SI");
 ////           
 ////                agenda.setCAJEROID(cajero.getCAJEROID());
@@ -416,9 +416,9 @@ public class TestController implements Serializable {
 ////                agenda.setFECHAAGENDADA(DateUtil.getFechaHoraActual());
 ////                agenda.setUSUARIOIDATIENDE(JsfUtil.toBigInteger(0));
 ////                agenda.setUSUARIOIDSOLICITA(user.getUSUARIOID());
-//                System.out.println("voy a guardar...... la agenda");
+//                // System.out.println("voy a guardar...... la agenda");
 //                agendaRepository.create(agenda);
-//                System.out.println(" la guarde");
+//                // System.out.println(" la guarde");
 ////                if(agendaRepository.create(agenda)){
 ////                    JsfUtil.successMessage("Se guardo adecuadamaente la agenda");
 ////                }else{
@@ -520,12 +520,12 @@ public class TestController implements Serializable {
 
             cajeroList = cajeroRepository.findByBancoIdAndActivo(bank, "SI");
             if (cajeroList == null || cajeroList.isEmpty()) {
-                System.out.println(" no encontre para ese banco los cajeros");
+                // System.out.println(" no encontre para ese banco los cajeros");
                 JsfUtil.warningMessage("No hay cajeros para el banco que esten activos");
             } else {
                 JsfUtil.successMessage("Encontro cajeros del banco.,");
                 for (Cajero c : cajeroList) {
-                    System.out.println("------> " + c.getCAJEROID() + "  " + c.getCAJERO() + " " + c.getDIRECCIONCORTA());
+                    // System.out.println("------> " + c.getCAJEROID() + "  " + c.getCAJERO() + " " + c.getDIRECCIONCORTA());
                 }
             }
         } catch (Exception e) {
@@ -569,10 +569,10 @@ public class TestController implements Serializable {
             totalFinalizado = dashboardServices.totalFinalizado(grupoEstadoList);
             totalEnProceso = dashboardServices.totalEnProceso(grupoEstadoList);
             totalNoSePuedeEjecutar = dashboardServices.totalNoSePuedeEjecutar(grupoEstadoList);
-            System.out.println("totalSolicitado " + totalSolicitado);
-            System.out.println("totalFinalizado " + totalFinalizado);
-            System.out.println("totalEnProceso " + totalEnProceso);
-            System.out.println("totalNoSePuedeEjecutar " + totalNoSePuedeEjecutar);
+            // System.out.println("totalSolicitado " + totalSolicitado);
+            // System.out.println("totalFinalizado " + totalFinalizado);
+            // System.out.println("totalEnProceso " + totalEnProceso);
+            // System.out.println("totalNoSePuedeEjecutar " + totalNoSePuedeEjecutar);
         } catch (Exception e) {
             JsfUtil.errorMessage("onCommandButttonCalcularTotales()" + e.getLocalizedMessage());
         }
@@ -586,9 +586,9 @@ public class TestController implements Serializable {
 
             List<GrupoEstado> all = grupoEstadoRepository.findAll();
             if (all == null || all.isEmpty()) {
-                System.out.println("no encontro nada de grupo de estados........");
+                // System.out.println("no encontro nada de grupo de estados........");
             } else {
-                System.out.println("si hay grupos de estado");
+                // System.out.println("si hay grupos de estado");
             }
             grupoEstadoList = grupoEstadoRepository.findByActivo("SI");
             if (grupoEstadoList == null || grupoEstadoList.isEmpty()) {

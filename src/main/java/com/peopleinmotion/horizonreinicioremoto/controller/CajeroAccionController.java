@@ -132,18 +132,18 @@ public class CajeroAccionController implements Serializable {
              * Buscare las acciones del grupo
              */
             
-                System.out.println(" Buscare las acciones del grupo........"+grupoAccion.getGRUPOACCION());
+                // System.out.println(" Buscare las acciones del grupo........"+grupoAccion.getGRUPOACCION());
                  if(grupoAccion.getGRUPOACCION().toUpperCase().trim().equals("BAJAR PLANTILLA")){
-                     System.out.println(".... es bajar plantilla");
+                     // System.out.println(".... es bajar plantilla");
                       accionList = accionRepository.findByGrupoAccionIdAndPredeterminado(grupoAccion,"SI");
                  }else{
-                     System.out.println("no es bajar plantilla");
+                     // System.out.println("no es bajar plantilla");
                         accionList = accionRepository.findByGrupoAccionId(grupoAccion);
                 }
               
                 
                 if (accionList == null || accionList.isEmpty()) {
-                    System.out.println("...... no encontre ninguna accion de ese grupo");
+                    // System.out.println("...... no encontre ninguna accion de ese grupo");
                     JsfUtil.warningMessage("No acciones para el grupo seleccionado");
                 } 
                
@@ -151,7 +151,7 @@ public class CajeroAccionController implements Serializable {
              }
 
         } catch (Exception e) {
-            System.out.println("init() " + e.getLocalizedMessage());
+            // System.out.println("init() " + e.getLocalizedMessage());
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
             JsfUtil.errorDialog("init()", e.getLocalizedMessage());
 
@@ -170,7 +170,7 @@ public class CajeroAccionController implements Serializable {
                 JsfUtil.infoDialog("onAccionChangee()"," Nada Seleccionado");
             }else{
                 JsfUtil.infoDialog("onAccionChangee() ", selectOneMenuAccionValue.getACCION());
-                System.out.println("onAccionChange "+selectOneMenuAccionValue.getACCION());
+                // System.out.println("onAccionChange "+selectOneMenuAccionValue.getACCION());
                 JmoordbContext.put("accion", selectOneMenuAccionValue);
             }
 

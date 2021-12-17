@@ -72,11 +72,11 @@ public class UsuarioController implements Serializable{
             /**
              * Voy a agregar uno nuevo
              */
-            System.out.println("voy a guardador");
+            // System.out.println("voy a guardador");
 //            Usuario usuario = new Usuario("prueba", "Uusario prueba","12", "Tecnico");
 
        //     usuarioFacade.create(usuario);
-            System.out.println(" voy a llamar el find All");
+            // System.out.println(" voy a llamar el find All");
             
             
             
@@ -85,7 +85,7 @@ public class UsuarioController implements Serializable{
             usuarioList= usuarioFacade.findAll();
         } catch (Exception e) {
             JsfUtil.errorMessage("init "+ e.getLocalizedMessage());
-            System.out.println("init.... "+e.getLocalizedMessage());
+            // System.out.println("init.... "+e.getLocalizedMessage());
         }
         
     }
@@ -96,7 +96,7 @@ public class UsuarioController implements Serializable{
         usuarioFacade.create(usuario);
         } catch (Exception e) {
             JsfUtil.errorMessage("save "+ e.getLocalizedMessage());
-            System.out.println("init.... "+e.getLocalizedMessage());
+            // System.out.println("init.... "+e.getLocalizedMessage());
         }
         return "";
     }

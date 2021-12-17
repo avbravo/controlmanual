@@ -45,7 +45,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
             AccionReciente accionReciente = (AccionReciente) query.setParameter("ACCIONRECIENTEID", ACCIONRECIENTEID).getSingleResult();
             return Optional.of(accionReciente);
         } catch (Exception e) {
-            System.out.println("findByAccionRecienteId() " + e.getLocalizedMessage());
+            // System.out.println("findByAccionRecienteId() " + e.getLocalizedMessage());
         }
         return Optional.empty();
 
@@ -73,7 +73,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
             query.setParameter("BANCOID", BANCOID);
             list = query.setParameter("CAJEROID", CAJEROID).getResultList();
         } catch (Exception ex) {
-            System.out.println("findByBancoIdAndCajeroId() " + ex.getLocalizedMessage());
+            // System.out.println("findByBancoIdAndCajeroId() " + ex.getLocalizedMessage());
             JsfUtil.errorMessage("findByBancoIdAndCajeroId() " + ex.getLocalizedMessage());
         }
         return list;
@@ -91,7 +91,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
             AccionReciente accionReciente = (AccionReciente) query.getSingleResult();
             return Optional.of(accionReciente);
         } catch (Exception ex) {
-            System.out.println("findByBancoIdAndCajeroIdUltimaAccionReciente " + ex.getLocalizedMessage());
+            // System.out.println("findByBancoIdAndCajeroIdUltimaAccionReciente " + ex.getLocalizedMessage());
 //            JsfUtil.errorMessage("findByBancoIdAndCajeroIdUltimaAccionReciente " + ex.getLocalizedMessage());
         }
         return Optional.empty();
@@ -107,7 +107,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
             query.setParameter("CAJEROID", CAJEROID);
             list = query.setParameter("VISTOBANCO", VISTOBANCO).getResultList();
         } catch (Exception ex) {
-            System.out.println("findByCajeroIdAndVistoBanco() " + ex.getLocalizedMessage());
+            // System.out.println("findByCajeroIdAndVistoBanco() " + ex.getLocalizedMessage());
             JsfUtil.errorMessage("findByCajeroIdAndVistoBanco() " + ex.getLocalizedMessage());
         }
         return list;
@@ -123,7 +123,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
             query.setParameter("BANCOID", BANCOID);
             list = query.setParameter("VISTOBANCO", VISTOBANCO).getResultList();
         } catch (Exception ex) {
-            System.out.println("findByBancoIdAndVistoBanco() " + ex.getLocalizedMessage());
+            // System.out.println("findByBancoIdAndVistoBanco() " + ex.getLocalizedMessage());
             JsfUtil.errorMessage("findByBancoIdAndVistoBanco() " + ex.getLocalizedMessage());
         }
         return list;
@@ -138,7 +138,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
             query.setParameter("BANCOID", BANCOID);
             list = query.setParameter("ACTIVO", ACTIVO).getResultList();
         } catch (Exception ex) {
-            System.out.println("findByBancoIdAndActivo() " + ex.getLocalizedMessage());
+            // System.out.println("findByBancoIdAndActivo() " + ex.getLocalizedMessage());
             JsfUtil.errorMessage("findByBancoIdAndActivo() " + ex.getLocalizedMessage());
         }
         return list;
@@ -154,7 +154,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
             query.setParameter("BANCOID", BANCOID);
             list = query.setParameter("VISTOTECNICO", VISTOTENICO).getResultList();
         } catch (Exception ex) {
-            System.out.println("findByBancoIdAndVistoTecnico() " + ex.getLocalizedMessage());
+            // System.out.println("findByBancoIdAndVistoTecnico() " + ex.getLocalizedMessage());
             JsfUtil.errorMessage("findByBancoIdAndVistoTecnico() " + ex.getLocalizedMessage());
         }
         return list;
@@ -170,7 +170,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
             query.setParameter("CAJEROID", CAJEROID);
             list = query.setParameter("VISTOTECNICO", VISTOTECNICO).getResultList();
         } catch (Exception ex) {
-            System.out.println("findByCajeroIdAndVistoTecnico() " + ex.getLocalizedMessage());
+            // System.out.println("findByCajeroIdAndVistoTecnico() " + ex.getLocalizedMessage());
             JsfUtil.errorMessage("findByCajeroIdAndVistoTecnico() " + ex.getLocalizedMessage());
         }
         return list;
@@ -190,7 +190,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
         
           list=  query.getResultList();
         } catch (Exception ex) {
-            System.out.println("findBancoIdEntreFechas() " + ex.getLocalizedMessage());
+            // System.out.println("findBancoIdEntreFechas() " + ex.getLocalizedMessage());
              JsfUtil.errorMessage(JsfUtil.nameOfMethod() +": " + ex.getLocalizedMessage());
         }
         return list;
@@ -212,7 +212,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
         
           list=  query.getResultList();
         } catch (Exception ex) {
-            System.out.println("findBancoIdEntreFechas() " + ex.getLocalizedMessage());
+            // System.out.println("findBancoIdEntreFechas() " + ex.getLocalizedMessage());
              JsfUtil.errorMessage(JsfUtil.nameOfMethod() +": " + ex.getLocalizedMessage());
         }
         return list;

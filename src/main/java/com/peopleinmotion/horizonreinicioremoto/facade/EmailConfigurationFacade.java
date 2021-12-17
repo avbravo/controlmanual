@@ -41,7 +41,7 @@ public class EmailConfigurationFacade extends AbstractFacade<EmailConfiguration>
         EmailConfiguration emailConfiguration = (EmailConfiguration)query.setParameter("EMAILCONFIGURATIONID", EMAILCONFIGURATIONID).getSingleResult();
          return Optional.of(emailConfiguration);
          } catch (Exception e) {
-             System.out.println("findByEmailConfigurationId() "+e.getLocalizedMessage());
+             // System.out.println("findByEmailConfigurationId() "+e.getLocalizedMessage());
          }
          return Optional.empty();
       
@@ -55,7 +55,7 @@ public class EmailConfigurationFacade extends AbstractFacade<EmailConfiguration>
         EmailConfiguration emailConfiguration = (EmailConfiguration)query.setParameter("ACTIVO", ACTIVO).getSingleResult();
          return Optional.of(emailConfiguration);
          } catch (Exception e) {
-             System.out.println("findByActivo() "+e.getLocalizedMessage());
+             // System.out.println("findByActivo() "+e.getLocalizedMessage());
          }
          return Optional.empty();
       

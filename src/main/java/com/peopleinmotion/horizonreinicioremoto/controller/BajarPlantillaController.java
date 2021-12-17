@@ -243,7 +243,7 @@ public class BajarPlantillaController implements Serializable {
             findAccionReciente();
              }
         } catch (Exception e) {
-            System.out.println("init() " + e.getLocalizedMessage());
+            // System.out.println("init() " + e.getLocalizedMessage());
             JsfUtil.errorMessage("init() " + e.getLocalizedMessage());
 
         }
@@ -368,7 +368,7 @@ public class BajarPlantillaController implements Serializable {
                     return "/faces/bajarplantilla_ahora.xhtml";
                 } else {
                     if (selectOneMenuCuandoValue.equals("programar evento")) {
-                        System.out.println("Test -->/faces/bajarplantilla_programarevento.xhtml");
+                        // System.out.println("Test -->/faces/bajarplantilla_programarevento.xhtml");
                         return "/faces/bajarplantilla_programarevento.xhtml";
                     }
                 }
@@ -400,13 +400,13 @@ public class BajarPlantillaController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="Boolean isProgramarEvento()">
     public Boolean isProgramarEvento() {
         try {
-            System.out.println("Test --> selectOneMenuCuandoValue " + selectOneMenuCuandoValue);
+            // System.out.println("Test --> selectOneMenuCuandoValue " + selectOneMenuCuandoValue);
             JsfUtil.warningMessage("Test--> selectOneMenuCuandoValue " + selectOneMenuCuandoValue);
             if (selectOneMenuCuandoValue.trim().toLowerCase().equals("programar evento")) {
-                System.out.println("Test--> es programar evento");
+                // System.out.println("Test--> es programar evento");
                 return Boolean.TRUE;
             }
-            System.out.println("Test--> no es programar evento...");
+            // System.out.println("Test--> no es programar evento...");
         } catch (Exception e) {
             JsfUtil.errorMessage("isProgramarEvento() " + e.getLocalizedMessage());
         }

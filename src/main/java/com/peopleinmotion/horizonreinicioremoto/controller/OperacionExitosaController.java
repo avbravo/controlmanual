@@ -220,7 +220,7 @@ public class OperacionExitosaController implements Serializable {
             }
 
         } catch (Exception e) {
-            System.out.println("init() " + e.getLocalizedMessage());
+            // System.out.println("init() " + e.getLocalizedMessage());
             JsfUtil.errorMessage("init() " + e.getLocalizedMessage());
 
         }
