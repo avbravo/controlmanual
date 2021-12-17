@@ -89,7 +89,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
 
             Query query = em.createQuery("SELECT a FROM AccionReciente a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID ORDER BY a.AGENDAID DESC");
             query.setParameter("BANCOID", BANCOID).setParameter("CAJEROID", CAJEROID);
-            query.setFirstResult(1);
+            query.setFirstResult(0);
             query.setMaxResults(1);
             AccionReciente accionReciente = (AccionReciente) query.getSingleResult();
             return Optional.of(accionReciente);
@@ -112,8 +112,8 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
 
         try {
             System.out.println("Test-->AccionRecienteFacade BANCOID "+BANCOID + " CAJEROID "+CAJEROID);
-//            Query query = em.createQuery("SELECT a FROM AccionReciente a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID AND (a.ESTADOID <= 2) ORDER BY a.AGENDAID DESC");
-          Query query = em.createQuery("SELECT a FROM AccionReciente a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID ORDER BY a.AGENDAID DESC");
+            Query query = em.createQuery("SELECT a FROM AccionReciente a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID AND (a.ESTADOID <= 2) ORDER BY a.AGENDAID DESC");
+     //     Query query = em.createQuery("SELECT a FROM AccionReciente a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID ORDER BY a.AGENDAID DESC");
             query.setParameter("BANCOID", BANCOID).setParameter("CAJEROID", CAJEROID);
             query.setFirstResult(0);
             query.setMaxResults(1);
