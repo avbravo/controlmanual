@@ -125,11 +125,11 @@
 					
 							<div class="row justify-content-start">
                                                             <div class="col-6 col-lg-auto">
-                                                                    <p:commandLink value="Regresar" class="bot-regresar01"
+<!--                                                                    <p:commandLink value="Regresar" class="bot-regresar01"
                                                                                    update=":form:growl"
                                                                             action="buscarcajero">
                                                                         
-                                                                    </p:commandLink>
+                                                                    </p:commandLink>-->
 									
 								</div>
 
@@ -139,6 +139,7 @@
 								</div>
 								<div class="col-6 col-lg-auto">
 									  <p:commandButton value="IR A CONTROL MANUAL" 
+                                                                                           rendered="#{cajeroEncontradoController.haveAccionReciente}"
                                                              class="btn btn-block btn-danger btn-sm font-weight-medium auth-form-btn rounded-pill"
                                                              update=":form:growl"
                                                              icon="pi pi-caret-right"

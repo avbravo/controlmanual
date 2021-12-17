@@ -100,6 +100,10 @@ public class AccionRecienteRepositoryImpl implements AccionRecienteRepository {
     public Optional<AccionReciente> findByBancoIdAndCajeroIdUltimaAccionReciente(BigInteger BANCOID, BigInteger CAJEROID) {
        return agendaRecienteFacade.findByBancoIdAndCajeroIdUltimaAccionReciente(BANCOID, CAJEROID);
     }
+    @Override
+    public Optional<AccionReciente> findByBancoIdAndCajeroIdUltimaAccionDisponible(BigInteger BANCOID, BigInteger CAJEROID) {
+       return agendaRecienteFacade.findByBancoIdAndCajeroIdUltimaAccionDisponible(BANCOID, CAJEROID);
+    }
 
     @Override
     public List<AccionReciente> findBancoIdEntreFechasTypeDate(BigInteger BANCOID, Date DESDE, Date HASTA, String ACTIVO) {

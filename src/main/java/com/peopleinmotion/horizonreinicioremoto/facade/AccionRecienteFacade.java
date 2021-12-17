@@ -78,6 +78,9 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
         }
         return list;
     }
+
+
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="List<Cajero> findByBancoIdAndCajeroIdUltimaAccionReciente(BigInteger BANCOID, BigInteger CAJEROID)">
 
     public Optional<AccionReciente> findByBancoIdAndCajeroIdUltimaAccionReciente(BigInteger BANCOID, BigInteger CAJEROID) {
@@ -97,7 +100,38 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
         return Optional.empty();
     }
 // </editor-fold>
-    // <editor-fold defaultstate="List<AccionReciente> findByCajeroIdAndVistoBanco( BigInteger CAJEROID, String VISTOBANCO)">
+    // <editor-fold defaultstate="collapsed" desc="List<Cajero> findByBancoIdAndCajeroIdUltimaAccionDisponible(BigInteger BANCOID, BigInteger CAJEROID)">
+
+    /**
+     * Devuelve la ultima accion disponible que no se ha ejecutado
+     * @param BANCOID
+     * @param CAJEROID
+     * @return 
+     */
+    public Optional<AccionReciente> findByBancoIdAndCajeroIdUltimaAccionDisponible(BigInteger BANCOID, BigInteger CAJEROID) {
+
+        try {
+            System.out.println("Test-->AccionRecienteFacade BANCOID "+BANCOID + " CAJEROID "+CAJEROID);
+//            Query query = em.createQuery("SELECT a FROM AccionReciente a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID AND (a.ESTADOID <= 2) ORDER BY a.AGENDAID DESC");
+          Query query = em.createQuery("SELECT a FROM AccionReciente a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID ORDER BY a.AGENDAID DESC");
+            query.setParameter("BANCOID", BANCOID).setParameter("CAJEROID", CAJEROID);
+            query.setFirstResult(0);
+            query.setMaxResults(1);
+            AccionReciente accionReciente = (AccionReciente) query.getSingleResult();
+            return Optional.of(accionReciente);
+        } catch (Exception ex) {
+           System.out.println("error() "+JsfUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
+//            JsfUtil.errorMessage("findByBancoIdAndCajeroIdUltimaAccionReciente " + ex.getLocalizedMessage());
+        }
+        return Optional.empty();
+    }
+// </editor-fold>
+   
+    
+
+
+
+// <editor-fold defaultstate="List<AccionReciente> findByCajeroIdAndVistoBanco( BigInteger CAJEROID, String VISTOBANCO)">
 
     public List<AccionReciente> findByCajeroIdAndVistoBanco(BigInteger CAJEROID, String VISTOBANCO) {
         List<AccionReciente> list = new ArrayList<>();

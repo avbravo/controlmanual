@@ -128,7 +128,12 @@ public class CajeroEncontradoController implements Serializable {
             user = (Usuario) JmoordbContext.get("user");
             bank = (Banco) JmoordbContext.get("banco");
             cajero = (Cajero) JmoordbContext.get("cajero");
-            findAccionReciente();
+            findAccionDisponible();
+            if(accionReciente == null || accionReciente.getACCIONID() == null){
+                System.out.println("Test--> No tiene accion disponible se mostrara la ultima ejecutada.");
+               // findAccionReciente();
+            }
+            
          fillSelectOneMenuGrupoAccion();
              }
         } catch (Exception e) {
@@ -218,8 +223,37 @@ public class CajeroEncontradoController implements Serializable {
 
             }
         } catch (Exception e) {
-             JsfUtil.errorMessage("findAccionReciente()" + e.getLocalizedMessage());
+             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
              PrimeFaces.current().ajax().update("form:growl");
+             
+        }
+        return "";
+    }
+// </editor-fold>
+        // <editor-fold defaultstate="collapsed" desc="String findAccionDisponible()">
+    /**
+     *Busca la ultima accion reciente del cajero
+     * @return 
+     */
+    private String findAccionDisponible(){
+        try {
+            System.out.println("Test--> findAccionDisponible()");
+            Optional<AccionReciente> accionRecienteOptional = accionRecienteRepository.findByBancoIdAndCajeroIdUltimaAccionDisponible(bank.getBANCOID(), cajero.getCAJEROID());
+            if(accionRecienteOptional.isPresent()){
+                accionReciente = accionRecienteOptional.get();
+                haveAccionReciente = Boolean.TRUE;
+                System.out.println("Test--> encontro accion disponible");
+              //  PrimeFaces.current().ajax().update(":form:growl");
+   
+            }else{
+                System.out.println("Test--> NO encontro accion disponible");
+                //PrimeFaces.current().ajax().update(":form:growl");
+
+            }
+        } catch (Exception e) {
+            System.out.println("Error() "+ JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             PrimeFaces.current().ajax().update(":form:growl");
              
         }
         return "";
