@@ -8,6 +8,7 @@ package com.peopleinmotion.horizonreinicioremoto.services;
 import com.peopleinmotion.horizonreinicioremoto.domains.TotalesEstadoBanco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoEstado;
+import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.repository.BancoRepository;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
@@ -41,7 +42,7 @@ public class TotalesEstadoBancoServicesImpl implements TotalesEstadoBancoService
     public TotalesEstadoBancoServicesImpl() {
     }
 
-    // <editor-fold defaultstate="collapsed" desc="method() ">
+    // <editor-fold defaultstate="collapsed" desc="List<TotalesEstadoBanco> calcularTotales()">
     @Override
     public List<TotalesEstadoBanco> calcularTotales() {
         List<TotalesEstadoBanco> totalesEstadoBancoList = new ArrayList<>();
@@ -72,6 +73,28 @@ public class TotalesEstadoBancoServicesImpl implements TotalesEstadoBancoService
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return totalesEstadoBancoList;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="TotalesEstadoBanco calcularTotalesDelBanco()">
+
+    @Override
+    public TotalesEstadoBanco calcularTotalesDelBanco() {
+        TotalesEstadoBanco totalesEstadoBanco = new TotalesEstadoBanco();
+        try{
+            Banco banco = (Banco) JmoordbContext.get("banco");
+             List<GrupoEstado> grupoEstadoList = dashboardServices.calcularTotalGrupoEstado(banco);
+
+                    totalSolicitado = dashboardServices.totalSolicitado(grupoEstadoList);
+                    totalFinalizado = dashboardServices.totalFinalizado(grupoEstadoList);
+                    totalEnProceso = dashboardServices.totalEnProceso(grupoEstadoList);
+                    totalNoSePuedeEjecutar = dashboardServices.totalNoSePuedeEjecutar(grupoEstadoList);
+                    totalesEstadoBanco
+                            = new TotalesEstadoBanco(banco, totalSolicitado, totalFinalizado, totalEnProceso, totalNoSePuedeEjecutar);
+      } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return totalesEstadoBanco;
     }
     // </editor-fold>
 }

@@ -14,5 +14,6 @@ import java.util.List;
  */
 public interface TotalesEstadoBancoServices {
     public List<TotalesEstadoBanco> calcularTotales();
+    public TotalesEstadoBanco calcularTotalesDelBanco();
     
 }

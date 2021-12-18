@@ -5,6 +5,7 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.services;
 
+import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoEstado;
 import java.math.BigInteger;
@@ -21,4 +22,8 @@ public interface DashboardServices {
     public BigInteger totalEnProceso(List<GrupoEstado> grupoEstadoList);
     public BigInteger totalFinalizado(List<GrupoEstado> grupoEstadoList);
     public BigInteger totalNoSePuedeEjecutar(List<GrupoEstado> grupoEstadoList);
+    
+    public Boolean drawRowsAgendamiento(List<AccionReciente> accionRecienteList);
+    
+   public String onCommandButtonSelectAccionReciente(AccionReciente accionReciente, String formularioretorno);
 }

@@ -5,17 +5,21 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.services;
 
+import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
+import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoEstado;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaRepository;
+import com.peopleinmotion.horizonreinicioremoto.repository.CajeroRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.EstadoRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.GrupoEstadoRepository;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -26,6 +30,8 @@ import javax.inject.Inject;
 @Stateless
 public class DashboardServicesImpl implements DashboardServices {
     
+    // <editor-fold defaultstate="collapsed" desc="@Inject">
+
     @Inject
     GrupoEstadoRepository grupoEstadoRepository;
     
@@ -34,7 +40,9 @@ public class DashboardServicesImpl implements DashboardServices {
     
     @Inject
     AgendaRepository agendaRepository;
-
+    @Inject
+    CajeroRepository cajeroRepository;
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="  List<GrupoEstado> calcularTotalGrupoEstado(Banco banco)">
     @Override
     public List<GrupoEstado> calcularTotalGrupoEstado(Banco banco) {
@@ -152,6 +160,66 @@ public class DashboardServicesImpl implements DashboardServices {
             JsfUtil.errorMessage("totalNoSePuedeEjecutar()" + e.getLocalizedMessage());
         }
         return total;
+    }
+    // </editor-fold>
+
+    
+    // <editor-fold defaultstate="collapsed" desc="method() ">
+
+    @Override
+    public Boolean drawRowsAgendamiento(List<AccionReciente> accionRecienteList) {
+        try {
+            Integer index = (Integer) JmoordbContext.get("index");
+
+            if (accionRecienteList == null || accionRecienteList.isEmpty() || accionRecienteList.size() == 0) {
+                return Boolean.FALSE;
+
+            }
+
+            switch (index) {
+                case 0:
+                case 4:
+                case 8:
+                case 12:
+                case 16:
+                case 20:
+                case 24:
+                case 28:
+                case 32:
+                case 36:
+                case 40:
+                case 44:
+                case 48:
+                case 52:
+
+                    return Boolean.TRUE;
+            }
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " "+ e.getLocalizedMessage());
+        }
+        return Boolean.FALSE;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="String onCommandButtonSelectAccionReciente(AccionReciente accionReciente, String formularioretorno)">
+
+    @Override
+    public String onCommandButtonSelectAccionReciente(AccionReciente accionReciente, String formularioretorno) {
+        try {
+            JmoordbContext.put("accionRecienteDashboard", accionReciente);
+            JmoordbContext.put("formularioRetorno", formularioretorno);
+            Optional<Cajero> cajeroOptional = cajeroRepository.findByCajeroId(accionReciente.getCAJEROID());
+
+            if (!cajeroOptional.isPresent()) {
+
+            } else {
+                Cajero cajero = cajeroOptional.get();
+                JmoordbContext.put("cajero", cajero);
+            }
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+        }
+        return "";
     }
     // </editor-fold>
 }

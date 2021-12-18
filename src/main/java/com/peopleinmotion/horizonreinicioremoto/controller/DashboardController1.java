@@ -5,7 +5,6 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.controller;
 
-import com.peopleinmotion.horizonreinicioremoto.domains.TotalesEstadoBanco;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
@@ -21,7 +20,6 @@ import com.peopleinmotion.horizonreinicioremoto.repository.BancoRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.CajeroRepository;
 import com.peopleinmotion.horizonreinicioremoto.services.AgendaHistorialServices;
 import com.peopleinmotion.horizonreinicioremoto.services.DashboardServices;
-import com.peopleinmotion.horizonreinicioremoto.services.TotalesEstadoBancoServices;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
@@ -57,7 +55,7 @@ import org.primefaces.model.SortMeta;
 @Named
 @ViewScoped
 @Data
-public class DashboardController implements Serializable {
+public class DashboardController1 implements Serializable {
 
 // <editor-fold defaultstate="collapsed" desc="field ">
     private static final long serialVersionUID = 1L;
@@ -78,10 +76,13 @@ public class DashboardController implements Serializable {
     List<AccionReciente> accionRecienteList = new ArrayList<>();
     List<AccionReciente> accionRecienteSelectedList = new ArrayList<>();
     List<AccionReciente> accionRecienteScheduleList = new ArrayList<>();
-
-    private TotalesEstadoBanco totalesEstadoBanco = new TotalesEstadoBanco();
-
-
+    //Totales en el dashboard por grupo
+    List<GrupoEstado> grupoEstadoList = new ArrayList<>();
+    private BigInteger totalSolicitado = new BigInteger("0");
+    private BigInteger totalFinalizado = new BigInteger("0");
+    private BigInteger totalEnProceso = new BigInteger("0");
+    private BigInteger totalNoSePuedeEjecutar = new BigInteger("0");
+    private String selectOneMenuMesValue = "Enero";
     Banco selectOneMenuBancoValue = new Banco();
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="paginator ">
@@ -105,25 +106,23 @@ public class DashboardController implements Serializable {
     DashboardServices dashboardServices;
     @Inject
     AccionRecienteRepository accionRecienteRepository;
-    @Inject
-    TotalesEstadoBancoServices totalesEstadoBancoServices;
 // </editor-fold>
-
+    
     /**
      * Creates a new instance of DashboadController
      */
-    public DashboardController() {
+    public DashboardController1() {
     }
 
     // <editor-fold defaultstate="collapsed" desc="init()">
     @PostConstruct
     public void init() {
         try {
-
+           
             if (JmoordbContext.get("user") == null) {
 
             } else {
-
+              
                 bancoList = bancoRepository.findByEsControlAndActivoList("NO", "SI");
 
                 accionRecienteScheduleList = new ArrayList<>();
@@ -132,15 +131,17 @@ public class DashboardController implements Serializable {
                  */
                 user = (Usuario) JmoordbContext.get("user");
                 banco = (Banco) JmoordbContext.get("banco");
+                
+                selectOneMenuBancoValue=banco;
+ String mes = DateUtil.nameOfMonthStartWith1(DateUtil.mesActual());
 
-                selectOneMenuBancoValue = banco;
-
+                selectOneMenuMesValue = mes;
                 fillAccionRecienteList();
                 /**
                  * Filtrar Acciones recientes entre fechas
                  */
-
-                Date DESDE = DateUtil.setHourToDate(DateUtil.getFechaActual(), 0, 00);
+                
+                 Date DESDE = DateUtil.setHourToDate(DateUtil.getFechaActual(), 0, 00);
                 Date HASTA = DateUtil.setHourToDate(DateUtil.getFechaActual(), 23, 59);
                 List<AccionReciente> list = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
 
@@ -154,12 +155,14 @@ public class DashboardController implements Serializable {
                 /**
                  * Mes
                  */
-
+                
+                
                 /**
                  * Muestro las acciones Recientes
                  */
 //                // System.out.println("Test {=========================INIT =======================}");
 //                // System.out.println("Test ===> findBancoIdEntreFechasTypeDate()");
+              
                 paginator = new Paginator.Builder()
                         .page(1)
                         .filter("banco")
@@ -170,7 +173,7 @@ public class DashboardController implements Serializable {
                 onCommandButttonCalcularTotales();
                 loadSchedule();
                 cajeroList = cajeroRepository.findByBancoId(banco);
-
+                
                 this.lazyDataModelCajero = new LazyDataModel<Cajero>() {
                     @Override
                     public List<Cajero> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
@@ -233,26 +236,27 @@ public class DashboardController implements Serializable {
                 };
             }
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
+          JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
 
         }
 
     }
 
     // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="String fillAccionRecienteList(">
-    public String fillAccionRecienteList() {
+    public String fillAccionRecienteList(){
         try {
-            banco = (Banco) JmoordbContext.get("banco");
-            accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
-            
+             banco = (Banco) JmoordbContext.get("banco");
+              accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
+              // System.out.println("Test--> fillAccionRecienteList() accionRecienteList.size() "+accionRecienteList.size());
 
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
+             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
         }
         return "";
     }
-
+          
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="onCommandButtonSelectCajero ">
     public String onCommandButtonSelectCajero(Cajero cajero) {
@@ -261,7 +265,7 @@ public class DashboardController implements Serializable {
 
             JsfUtil.infoDialog("Selecciono el cajero ", cajero.getCAJEROID().toString());
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage("onCommandButtonSelectCajero() " + e.getLocalizedMessage());
         }
 
         return "/faces/cajeroencontrado.xhtml";
@@ -365,10 +369,20 @@ public class DashboardController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="onCommandButttonCalcularTotales() ">    
     public String onCommandButttonCalcularTotales() {
         try {
-            totalesEstadoBanco = totalesEstadoBancoServices.calcularTotalesDelBanco();
-           
+             banco =(Banco)JmoordbContext.get("banco");
+             // System.out.println("Test-->------------------------------------------------");
+             // System.out.println("Test--> onCommandButttonCalcularTotales() banco "+banco.getBANCOID());
+            grupoEstadoList = dashboardServices.calcularTotalGrupoEstado(banco);
+
+            totalSolicitado = dashboardServices.totalSolicitado(grupoEstadoList);
+            totalFinalizado = dashboardServices.totalFinalizado(grupoEstadoList);
+            totalEnProceso = dashboardServices.totalEnProceso(grupoEstadoList);
+            totalNoSePuedeEjecutar = dashboardServices.totalNoSePuedeEjecutar(grupoEstadoList);
+            
+            // System.out.println("Test--> Total solicitado "+totalSolicitado);
+
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage("onCommandButttonCalcularTotales()" + e.getLocalizedMessage());
         }
         return "";
     }
@@ -382,18 +396,40 @@ public class DashboardController implements Serializable {
             }
             return Boolean.FALSE;
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage("renderedByEstadoSolicitado() " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc=" String onSelectOneMenuAreaChange()">
+    public String onSelectOneMenuMenuChange() {
+        try {
+            if (selectOneMenuMesValue == null) {
+                return "";
+            }
+            // System.out.println("Test -->Mes seleccionado " + selectOneMenuMesValue);
+
+            List<String> diasMes = DateUtil.letterDayOfMonth(DateUtil.getAnioActual(), selectOneMenuMesValue);
+            Integer dia = 0;
+            for (String d : diasMes) {
+                dia++;
+                // System.out.println("Test--> dia: " + dia + "Dias " + d);
+            }
+
+        } catch (Exception e) {
+            JsfUtil.errorMessage("renderedByEstadoSolicitado() " + e.getLocalizedMessage());
+        }
+        return "";
+    }
+
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="String saveIndex(Integer index) ">
     public String saveIndex(Integer index) {
         try {
             JmoordbContext.put("index", index);
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage("saveIndex() " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -407,17 +443,54 @@ public class DashboardController implements Serializable {
      * @return
      */
     public Boolean drawRowsAgendamiento() {
-        return dashboardServices.drawRowsAgendamiento(accionRecienteList);
-       
+        try {
+            Integer index = (Integer) JmoordbContext.get("index");
+
+            if (accionRecienteList == null || accionRecienteList.isEmpty() || accionRecienteList.size() == 0) {
+                return Boolean.FALSE;
+
+            }
+
+            switch (index) {
+                case 0:
+                case 4:
+                case 8:
+                case 12:
+                case 16:
+                case 20:
+                case 24:
+                case 28:
+                case 32:
+                case 36:
+                case 40:
+                case 44:
+                case 48:
+                case 52:
+                    // System.out.println("TEST--> es row inicial");
+                    return Boolean.TRUE;
+            }
+        } catch (Exception e) {
+            //    JsfUtil.errorMessage("drawRowsAgendamiento() " + e.getLocalizedMessage());
+        }
+        return Boolean.FALSE;
     }
 // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="String onCommandButtonSelectAccionReciente(AccionReciente accionReciente)">
     public String onCommandButtonSelectAccionReciente(AccionReciente accionReciente, String formularioretorno) {
         try {
-          dashboardServices.onCommandButtonSelectAccionReciente(accionReciente, formularioretorno);
+            JmoordbContext.put("accionRecienteDashboard", accionReciente);
+            JmoordbContext.put("formularioRetorno", formularioretorno);
+            Optional<Cajero> cajeroOptional = cajeroRepository.findByCajeroId(accionReciente.getCAJEROID());
+
+            if (!cajeroOptional.isPresent()) {
+
+            } else {
+                Cajero cajero = cajeroOptional.get();
+                JmoordbContext.put("cajero", cajero);
+            }
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage("onCommandButtonSelectCajero() " + e.getLocalizedMessage());
         }
         return "/faces/controlmanual.xhtml";
     }
@@ -430,12 +503,19 @@ public class DashboardController implements Serializable {
 
                 @Override
                 public void loadEvents(LocalDateTime start, LocalDateTime end) {
-                 
+//                    // System.out.println("|Test-->{================================}|");
+//                    // System.out.println("|Test-->{lazyEventModel}|");
+//                    // System.out.println("|Test--> start " + start + " |");
+//                    // System.out.println("|Test--> end " + end + " |");
+//                    // System.out.println("|Test-->{================================}|");
+
                     Date DESDE = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(start), 0, 00);
                     Date HASTA = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(end), 23, 59);
                     accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
- 
-                  
+//           
+                    // accionRecienteScheduleList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
+//                    filterAccionReciente(banco.getBANCOID(), DateUtil.convertLocalDateTimeToJavaDate(start), DateUtil.convertLocalDateTimeToJavaDate(end), "SI");
+                    //  filterAccionReciente(banco.getBANCOID(),start, end, "SI");
                     if (accionRecienteScheduleList == null || accionRecienteScheduleList.isEmpty()) {
                         JsfUtil.successMessage("No hay registros");
                     } else {
@@ -488,8 +568,12 @@ public class DashboardController implements Serializable {
     public String filterAccionReciente(BigInteger bancoId, LocalDateTime start, LocalDateTime end, String activo) {
 
         try {
-            
+            // System.out.println("Test...<===============filterAccionReciente()=======================>");
+            // System.out.println("Test---> start " + start);
+            // System.out.println("Test---> end " + end);
+            // System.out.println("Test...<======================================>");
             accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeLocalDate(bancoId, end, start, activo);
+//            accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechas(banco.getBANCOID(), end, start, activo);
 
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + ": " + e.getLocalizedMessage());
@@ -501,17 +585,17 @@ public class DashboardController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="String onEventSelect(SelectEvent<ScheduleEvent<?>> selectEvent)">
     public String onEventSelect(SelectEvent<ScheduleEvent<?>> selectEvent) {
         try {
-        
+            // System.out.println("Test--> onEventSelect");
             event = selectEvent.getObject();
             String id = event.getId();
 
             Optional<AccionReciente> accionRecienteOptional = accionRecienteRepository.findByAccionRecienteId(JsfUtil.toBigInteger(Integer.parseInt(id)));
             if (!accionRecienteOptional.isPresent()) {
-            
+                // System.out.println("Test--> no isPresent");
                 JsfUtil.warningMessage("No se encontro el codigo de accion reciente");
                 return "";
             }
-         
+            // System.out.println("Test--> si es presente");
             accionRecienteSelected = accionRecienteOptional.get();
             JmoordbContext.put("accionRecienteDashboard", accionRecienteSelected);
             Optional<Cajero> cajeroOptional = cajeroRepository.findByCajeroId(accionRecienteSelected.getCAJEROID());
@@ -525,12 +609,13 @@ public class DashboardController implements Serializable {
             }
             JmoordbContext.put("formularioRetorno", "dashboard");
 
-
+            //
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + ": " + e.getLocalizedMessage());
         }
         return "";
-
+//        // System.out.println("Test-->hare el saltoo......");
+//        return "/faces/reagendar.xhtml";
 
     }
 
@@ -539,7 +624,8 @@ public class DashboardController implements Serializable {
     public String cancelarAccion() {
         try {
             accionRecienteSelected.setACTIVO("NO");
-            
+            // System.out.println("Test--->=================================");
+            // System.out.println("Test CancelarAccion " + accionRecienteSelected.toString());
             if (accionRecienteRepository.update(accionRecienteSelected)) {
                 //Actualizar la agenda
                 Optional<Agenda> agendaOptional = agendaRepository.findByAgendaId(accionRecienteSelected.getAGENDAID());
@@ -577,29 +663,29 @@ public class DashboardController implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="String subjectSelectionChanged() ">
-    /**
-     * Cuando cambia el banco
-     *
-     * @return
-     */
+
+
+ // <editor-fold defaultstate="collapsed" desc="String subjectSelectionChanged() ">
     public String subjectSelectionChanged() {
         try {
-
-            JmoordbContext.put("banco", selectOneMenuBancoValue);
-            onCommandButttonCalcularTotales();
-            fillAccionRecienteList();
-            loadSchedule();
+            // System.out.println("******************************************************************");
+            // System.out.println("Test--> Banco seleciconado "+selectOneMenuBancoValue.getBANCO());
+            // System.out.println("Test--> Banco seleciconado.getBANCOID() "+selectOneMenuBancoValue.getBANCOID());
+ JmoordbContext.put("banco", selectOneMenuBancoValue);
+ onCommandButttonCalcularTotales() ;
+           fillAccionRecienteList();
+           loadSchedule();
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-        return "";
-
+      return "";
+//      return "/faces/buscarcajero.xhtml";
     }
 // </editor-fold>
-
+    
+    
     // <editor-fold defaultstate="collapsed" desc="remoteCommand ">
-    public String remoteCommand() {
+    public String remoteCommand(){
         return "";
     }
 // </editor-fold>

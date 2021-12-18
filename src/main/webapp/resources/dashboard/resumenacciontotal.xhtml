@@ -30,7 +30,7 @@
                                     <a class="atm-link01" href="dashboard.xhtml" data-toggle="modal" data-target=".bd-example-modal-lg">
 
                                         <i> <p:graphicImage name="atmg-icon01.png" library="images"/></i>
-                                        <span class="badge badge-danger badge-counter marpru02 rounded"><p:outputLabel id="outputPaneltotalSolicitado" value="#{dashboardController.totalSolicitado}" >
+                                        <span class="badge badge-danger badge-counter marpru02 rounded"><p:outputLabel id="outputPaneltotalSolicitado" value="#{dashboardController.totalesEstadoBanco.totalSolicitado}" >
                                                 <p:autoUpdate/>
                                             </p:outputLabel> 
                                         </span>
@@ -40,7 +40,7 @@
                                     <a class="atm-link01" href="dashboard.xhtml">
                                         <i> <p:graphicImage name="atmg-ep-icon01.png" library="images"/></i>
 
-                                        <span class="badge badge-danger badge-counter marpru02 rounded"><p:outputLabel id="outputPaneltotalEnProceso" value="#{dashboardController.totalEnProceso}" >
+                                        <span class="badge badge-danger badge-counter marpru02 rounded"><p:outputLabel id="outputPaneltotalEnProceso" value="#{dashboardController.totalesEstadoBanco.totalEnProceso}" >
                                                 <p:autoUpdate/>
                                             </p:outputLabel>                         
                                         </span>
@@ -50,7 +50,7 @@
                                     <a class="atm-link01" href="dashboard.xhtml">
                                         <i> <p:graphicImage name="atmg-fin-icon01.png" library="images"/></i>
 
-                                        <span class="badge badge-danger badge-counter marpru02 rounded"><p:outputLabel id="outputPaneltotalFinalizado" value="#{dashboardController.totalFinalizado}" >
+                                        <span class="badge badge-danger badge-counter marpru02 rounded"><p:outputLabel id="outputPaneltotalFinalizado" value="#{dashboardController.totalesEstadoBanco.totalFinalizado}" >
                                                 <p:autoUpdate/>
                                             </p:outputLabel> 
                                         </span>
