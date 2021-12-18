@@ -55,7 +55,7 @@
                                 <div class="col-md-12 grid-margin">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <h4 class="text-secondary">Buscar Cajero de #{dashboardController.banco.BANCO}</h4>
+                                            <h4 class="text-secondary">Buscar Cajero de #{buscarCajeroController.banco.BANCO}</h4>
                                             <p:commandLink value="REGRESAR" class="bot-regresar01" action="dashboard"/>
 
                                         </div>
@@ -75,16 +75,16 @@
 
                                 <div class="col-12 col-lg-12">
                                     <div class="table-responsive">
-                                        <p:dataTable value="#{dashboardController.cajeroList}"  
+                                        <p:dataTable value="#{buscarCajeroController.cajeroList}"  
                                                      var="item" 
                                                      id="dataTable"
                                                      widgetVar="widgetVardataTable"
 
                                                      lazy="false"
-                                                     filteredValue="#{dashboardController.cajeroSelectedList}" 
+                                                     filteredValue="#{buscarCajeroController.cajeroSelectedList}" 
                                                      binding="#{table1}"
                                                      paginator="true"
-                                                     rows="#{dashboardController.rowForPage}"
+                                                     rows="#{buscarCajeroController.rowForPage}"
                                                      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                                      tableStyleClass="table table-hover"
                                                      >
@@ -111,7 +111,7 @@
                                                                 style="text-decoration:none;color:black;"
                                                                 value="#{item.CAJERO}"
                                                                 update=":form:growl"
-                                                                action="#{dashboardController.onCommandButtonSelectCajero(item)}"/>
+                                                                action="#{buscarCajeroController.onCommandButtonSelectCajero(item)}"/>
 
                                             </p:column>
                                             <p:column headerText="Dirección" filterBy="#{item.DIRECCION}">

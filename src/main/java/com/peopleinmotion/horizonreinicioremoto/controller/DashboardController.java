@@ -36,6 +36,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import lombok.Data;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
@@ -53,6 +54,7 @@ import org.primefaces.model.SortMeta;
 //@Named(value = "dashboardController")
 @Named
 @ViewScoped
+@Data
 public class DashboardController implements Serializable {
 
 // <editor-fold defaultstate="collapsed" desc="field ">
@@ -105,190 +107,7 @@ public class DashboardController implements Serializable {
     @Inject
     AccionRecienteRepository accionRecienteRepository;
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="set/get ">
-
-    public List<Cajero> getCajeroSelectedList() {
-        return cajeroSelectedList;
-    }
-
-    public void setCajeroSelectedList(List<Cajero> cajeroSelectedList) {
-        this.cajeroSelectedList = cajeroSelectedList;
-    }
-
     
-    
-    public Banco getSelectOneMenuBancoValue() {
-        return selectOneMenuBancoValue;
-    }
-
-    public void setSelectOneMenuBancoValue(Banco selectOneMenuBancoValue) {
-        this.selectOneMenuBancoValue = selectOneMenuBancoValue;
-    }
-
-    public List<Banco> getBancoList() {
-        return bancoList;
-    }
-
-    public void setBancoList(List<Banco> bancoList) {
-        this.bancoList = bancoList;
-    }
-
-    public List<AccionReciente> getAccionRecienteSelectedList() {
-        return accionRecienteSelectedList;
-    }
-
-    public void setAccionRecienteSelectedList(List<AccionReciente> accionRecienteSelectedList) {
-        this.accionRecienteSelectedList = accionRecienteSelectedList;
-    }
-
-    public AccionReciente getAccionRecienteSelected() {
-        return accionRecienteSelected;
-    }
-
-    public void setAccionRecienteSelected(AccionReciente accionRecienteSelected) {
-        this.accionRecienteSelected = accionRecienteSelected;
-    }
-
-    public ScheduleEvent<?> getEvent() {
-        return event;
-    }
-
-    public void setEvent(ScheduleEvent<?> event) {
-        this.event = event;
-    }
-
-    public List<AccionReciente> getAccionRecienteScheduleList() {
-        return accionRecienteScheduleList;
-    }
-
-    public void setAccionRecienteScheduleList(List<AccionReciente> accionRecienteScheduleList) {
-        this.accionRecienteScheduleList = accionRecienteScheduleList;
-    }
-
-    public ScheduleModel getLazyEventModel() {
-        return lazyEventModel;
-    }
-
-    public void setLazyEventModel(ScheduleModel lazyEventModel) {
-        this.lazyEventModel = lazyEventModel;
-    }
-
-    public String getSelectOneMenuMesValue() {
-        return selectOneMenuMesValue;
-    }
-
-    public void setSelectOneMenuMesValue(String selectOneMenuMesValue) {
-        this.selectOneMenuMesValue = selectOneMenuMesValue;
-    }
-
-    public List<GrupoEstado> getGrupoEstadoList() {
-        return grupoEstadoList;
-    }
-
-    public void setGrupoEstadoList(List<GrupoEstado> grupoEstadoList) {
-        this.grupoEstadoList = grupoEstadoList;
-    }
-
-    public List<AccionReciente> getAccionRecienteList() {
-        return accionRecienteList;
-    }
-
-    public void setAccionRecienteList(List<AccionReciente> accionRecienteList) {
-        this.accionRecienteList = accionRecienteList;
-    }
-
-    public Cajero getCajeroSelected() {
-        return cajeroSelected;
-    }
-
-    public void setCajeroSelected(Cajero cajeroSelected) {
-        this.cajeroSelected = cajeroSelected;
-    }
-
-    public String getCodigoSearch() {
-        return codigoSearch;
-    }
-
-    public void setCodigoSearch(String codigoSearch) {
-        this.codigoSearch = codigoSearch;
-    }
-
-    public String getDireccionSearch() {
-        return direccionSearch;
-    }
-
-    public void setDireccionSearch(String direccionSearch) {
-        this.direccionSearch = direccionSearch;
-    }
-
-    public LazyDataModel<Cajero> getLazyDataModelCajero() {
-        return lazyDataModelCajero;
-    }
-
-    public void setLazyDataModelCajero(LazyDataModel<Cajero> lazyDataModelCajero) {
-        this.lazyDataModelCajero = lazyDataModelCajero;
-    }
-
-    public Integer getRowForPage() {
-        return rowForPage;
-    }
-
-    public void setRowForPage(Integer rowForPage) {
-        this.rowForPage = rowForPage;
-    }
-
-    public List<Cajero> getCajeroList() {
-        return cajeroList;
-    }
-
-    public void setCajeroList(List<Cajero> cajeroList) {
-        this.cajeroList = cajeroList;
-    }
-
-    public BigInteger getTotalSolicitado() {
-        return totalSolicitado;
-    }
-
-    public void setTotalSolicitado(BigInteger totalSolicitado) {
-        this.totalSolicitado = totalSolicitado;
-    }
-
-    public BigInteger getTotalFinalizado() {
-        return totalFinalizado;
-    }
-
-    public void setTotalFinalizado(BigInteger totalFinalizado) {
-        this.totalFinalizado = totalFinalizado;
-    }
-
-    public BigInteger getTotalEnProceso() {
-        return totalEnProceso;
-    }
-
-    public void setTotalEnProceso(BigInteger totalEnProceso) {
-        this.totalEnProceso = totalEnProceso;
-    }
-
-    public BigInteger getTotalNoSePuedeEjecutar() {
-        return totalNoSePuedeEjecutar;
-    }
-
-    public void setTotalNoSePuedeEjecutar(BigInteger totalNoSePuedeEjecutar) {
-        this.totalNoSePuedeEjecutar = totalNoSePuedeEjecutar;
-    }
-
-    public Banco getBanco() {
-        return banco;
-    }
-
-    public void setBanco(Banco banco) {
-        this.banco = banco;
-    }
-
-    
-    
-    
-// </editor-fold>
     /**
      * Creates a new instance of DashboadController
      */
@@ -299,9 +118,7 @@ public class DashboardController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            System.out.println("Test-->_____________________________________");
-            System.out.println("Test--> Dashboarwd,init.....");
-            System.out.println("Test-->_____________________________________");
+           
             if (JmoordbContext.get("user") == null) {
 
             } else {
