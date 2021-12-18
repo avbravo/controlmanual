@@ -60,15 +60,11 @@
                                 <div class="col-md-12 grid-margin">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <h4 class="text-secondary">AGENDADOS de #{agendadosController.banco.BANCO}</h4>
-                                            <p:commandLink value="REGRESAR" class="bot-regresar01" action="dashboard"/>
+                                            <h4 class="text-secondary">TOTALES DE ESTADO </h4>
+                                          
 
                                         </div>
-                                        <!--                                        <div>
-                                                                                    <button type="button" class="btn btn-danger btn-rounded btn-fw text-nowrap" data-toggle="modal" data-target="#exampleModalScrollable"><i class="ti-search"></i>&nbsp;BUSCA CAJERO</button>
-                                        
-                                        
-                                                                                </div>-->
+                                      
                                     </div>
                                 </div>
                             </div>
@@ -81,22 +77,22 @@
 
                                 <div class="col-12 col-lg-12">
                                     <div class="table-responsive">
-                                        <p:dataTable value="#{agendadosController.accionRecienteList}"  
+                                        <p:dataTable value="#{totalesEstadoBancoController.totalesEstadoBancoList}"  
                                                      var="item" 
                                                      id="dataTableagendadosmodal"
                                                      widgetVar="widgetVardataTableagendadosmodal"
                                                      lazy="false"
-                                                     filteredValue="#{agendadosController.accionRecienteSelectedList}" 
+                                                     filteredValue="#{totalesEstadoBancoController.totalesEstadoBancoSelectedList}" 
 
                                                      paginator="true"
-                                                     rows="#{agendadosController.rowForPage}"
+                                                     rows="#{totalesEstadoBancoController.rowForPage}"
                                                      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                                      tableStyleClass="table table-hover"
                                                      >
 
                                             <f:facet name="header">
                                                 <div class="products-table-header">
-                                                    <span style="font-weight: bold">AGENDADOS</span>
+                                                    <span style="font-weight: bold">Banco</span>
 
                                                     <span class="filter-container ui-input-icon-left">
                                                         <i class="pi pi-search"></i>
@@ -106,36 +102,27 @@
 
                                                 </div>
                                             </f:facet>
-                                            <p:column headerText="Cajero"  style="width:4%; color:'#02A1DE'">
-                                                <p:graphicImage name="atm-blue02.png" library="images" alt="" class="" />
-                                            </p:column>
-                                            <p:column headerText="" style="width:8%;" filterBy="#{item.CAJERO}">
-
-                                                <p:commandLink  class="btn btn-rounded btn-fw text-nowrap btn-secondary btn-sm" 
-                                                                style="text-decoration:none;color:black;"
-                                                                value="#{item.CAJERO}"
-                                                                update=":form:growl"
-                                                                action="#{agendadosController.onCommandButtonSelectAccionReciente(item,'agendados')}"/>
-
+                                          
+                                            <p:column headerText="Banco"  filterBy="#{item.banco.BANCO}">
+                                                <label class="text-black">#{item.banco.BANCO}</label>
+                                             
                                             </p:column>
 
 
-                                            <p:column headerText="Estado" filterBy="#{item.ESTADO}">
+                                            <p:column headerText="Solicitado"> 
 
-                                                <label class="text-black">#{item.ESTADO}</label>
+                                                <label class="text-black">#{item.totalSolicitado}</label>
                                             </p:column>
-                                            <p:column headerText="Acción" filterBy="#{item.TITULO}">
-                                                <label class="badge badge-danger">#{item.TITULO}</label>
-
-                                            </p:column>
-                                            <p:column headerText="Fecha" >
-
-                                                <label class="text-black">#{agendadosController.showDate(item.FECHAAGENDADA)}</label>
+                                            <p:column headerText="Proceso" >
+                                                <label class="text-black">#{item.totalEnProceso}</label>
 
                                             </p:column>
-                                            <p:column headerText="Hora" >
-                                                <label class="text-black">#{agendadosController.showHour(item.FECHAAGENDADA)}</label>
+                                            <p:column headerText="Proceso" >
+                                              <label class="text-black">#{item.totalFinalizado}</label>
+
                                             </p:column>
+
+                                           
 
                                         </p:dataTable>
 
