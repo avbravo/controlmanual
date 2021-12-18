@@ -116,7 +116,7 @@ public class BuscarCajeroController implements Serializable {
 
             JsfUtil.infoDialog("Selecciono el cajero ", cajero.getCAJEROID().toString());
         } catch (Exception e) {
-            JsfUtil.errorMessage("onCommandButtonSelectCajero() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
         }
 
         return "/faces/cajeroencontrado.xhtml";
