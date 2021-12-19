@@ -25,6 +25,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import lombok.Data;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -33,6 +34,7 @@ import org.primefaces.PrimeFaces;
  */
 @Named
 @ViewScoped
+@Data
 public class CajeroEncontradoController implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="field ">
@@ -55,61 +57,7 @@ public class CajeroEncontradoController implements Serializable {
    
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="set/get() ">
 
-    public Boolean getHaveAccionReciente() {
-        return haveAccionReciente;
-    }
-
-    public void setHaveAccionReciente(Boolean haveAccionReciente) {
-        this.haveAccionReciente = haveAccionReciente;
-    }
-    
-    
-
-    public AccionReciente getAccionReciente() {
-        return accionReciente;
-    }
-
-    public void setAccionReciente(AccionReciente accionReciente) {
-        this.accionReciente = accionReciente;
-    }
-    
-    
-    
-    public List<GrupoAccion> getGrupoAccionList() {
-        return grupoAccionList;
-    }
-
-    public void setGrupoAccionList(List<GrupoAccion> grupoAccionList) {
-        this.grupoAccionList = grupoAccionList;
-    }
-
-    public void setBank(Banco bank) {
-        this.bank = bank;
-    }
-
-    public Cajero getCajero() {
-        return cajero;
-    }
-
-    public void setCajero(Cajero cajero) {
-        this.cajero = cajero;
-    }
-
-    public Usuario getUser() {
-        return user;
-    }
-
-    public void setUser(Usuario user) {
-        this.user = user;
-    }
-
-    public Banco getBank() {
-        return bank;
-    }
-
-// </editor-fold>
     /**
      * Creates a new instance of CajeroAccionController
      */
@@ -130,8 +78,7 @@ public class CajeroEncontradoController implements Serializable {
             cajero = (Cajero) JmoordbContext.get("cajero");
             findAccionDisponible();
             if(accionReciente == null || accionReciente.getACCIONID() == null){
-                System.out.println("Test--> No tiene accion disponible se mostrara la ultima ejecutada.");
-               // findAccionReciente();
+            
             }
             
          fillSelectOneMenuGrupoAccion();
@@ -180,25 +127,23 @@ public class CajeroEncontradoController implements Serializable {
     public String onCommandButtonGrupoAccion(GrupoAccion grupoAccion) {
         try {
             JmoordbContext.put("grupoAccion", grupoAccion);
-            // System.out.println("============================================");
-            // System.out.println("test onCommandButtonGrupoAccion() grupoAccion.getGRUPOACCION():"+grupoAccion.getGRUPOACCION());
-            // System.out.println("============================================");
+            
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionEncenderSubirPlantillaId"))) {
                 return "/faces/subirplantilla.xhtml";
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionReinicioRemotoId"))) {
-                // System.out.println("Test --> se va a reinicio remoto");
+                
                 return "/faces/reinicioremoto.xhtml";
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionBajarPlantillaId"))) {
-                // System.out.println("Test --> se va a bajar plantilla");
+                
                 return "/faces/bajarplantilla.xhtml";
             }
             JsfUtil.warningMessage("No se identifico el grupo de accion para continuar esta operación");
 
           
         } catch (Exception e) {
-            JsfUtil.errorMessage("onCommandButtonGrupoAccion() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " "+ e.getLocalizedMessage());
         }
         return "";
     }

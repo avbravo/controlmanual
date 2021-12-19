@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="./resources/css/style.css"/>
         <link rel="stylesheet" href="./resources/css/dash01.css"/>
         <link rel="stylesheet" href="./resources/css/mantenimiento.css"/>
-         <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
+        <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
         <meta name="referrer" content="no-referrer"/>
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
@@ -24,7 +24,7 @@
 
     </h:head>
     <h:body>
-    <h:form id="form" prependId="false" rendered="#{accessController.loged}">
+        <h:form id="form" prependId="false" rendered="#{accessController.loged}">
 
             <script type="text/javascript">
                 function setDataTableWithPageStart() {
@@ -56,7 +56,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h4 class="text-secondary">#{bajarPlantillaConfirmarController.grupoAccion.GRUPOACCION} Se envio Token  a su correo</h4>
-                                            <p:commandLink value="REGRESAR" class="bot-regresar01" action="reinicioremoto"/>
+                                            <p:commandLink value="REGRESAR" class="bot-regresar01" action="bajarplantilla"/>
                                             <p:messages id="message" showSummary="true" />
 
                                         </div>
@@ -145,11 +145,13 @@
 
                                     <div class="row justify-content-center">
                                         <div class="col-12 col-lg-10 pt-3 pb-3 ali-desc-mov01">
-                                           
+
 
                                             <c:if test="${bajarPlantillaConfirmarController.showButton}">
                                                 <button  type="button"  class="btn btn-danger btn-rounded btn-fw text-nowrap separabot01" data-toggle="modal" data-target="#token01"><i class="ti-check-box"></i>&nbsp;FINALIZAR</button>
-
+ <p:commandButton value="Token" 
+                    oncomplete="PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
+          />
 
 
                                             </c:if>
@@ -190,18 +192,46 @@
                 <!-- page-body-wrapper ends -->
             </div>
 
+            <p:dialog widgetVar="widgetVarTokenDialog" header="Token" showEffect="fade" hideEffect="fade"
+                      height="250px" width="600px"
+                    
+                                  position="center center" onShow="PF('widgetVarTokenDialog').initPosition()"
+                                  resizable="false"
+                      >
+                <h:panelGrid id="tokenDialogDetails" columns="2" cellpadding="7">
+                    <p:outputLabel  value="Ingrese Token" styleClass="p-text-bold"/>
+                    <p:inputTextarea rows="1" cols="4" id="mytokeen" maxlength="4" class="board"
+                                     styleClass="board"
+                                     value="#{bajarPlantillaConfirmarController.tokenIngresado}"
+                                     >
+                        <p:autoUpdate />
+                    </p:inputTextarea>
 
+
+                </h:panelGrid>
+
+
+
+                <f:facet name="footer">
+                    <p:commandButton  oncomplete="PF('widgetVarTokenDialog').hide();" value="Cerrar" styleClass="p-text-bold ui-button-outlined"/>
+                    <p:commandLink class="btn btn-danger rounded-pill"  update=":form:growl"
+                                   action="#{bajarPlantillaConfirmarController.onCommandButtonBajarPlantillaProgramarEvento()}">
+                        <i class="ti-arrow-circle-down" style="color:#cc0000;"></i>&nbsp;Aceptar
+                    </p:commandLink>
+
+                </f:facet>
+            </p:dialog>
 
         </h:form>    
-         <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
+        <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
 
             <template:accesodenegado/>
-          
+
         </h:form>
         <!-- container-scroller -->
 
-           <!-- container-scroller -->
-       <template:script/> 
+        <!-- container-scroller -->
+        <template:script/> 
     </h:body>
 
 </html>
