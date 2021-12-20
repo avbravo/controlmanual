@@ -44,6 +44,7 @@ public class CajeroEncontradoController implements Serializable {
     Banco bank = new Banco();
     AccionReciente accionReciente = new AccionReciente();
     List<GrupoAccion> grupoAccionList = new ArrayList<>();
+    private GrupoAccion grupoAccionBajarPlantilla = new GrupoAccion();
     Boolean haveAccionReciente = Boolean.FALSE;
 // </editor-fold>
 
@@ -81,7 +82,7 @@ public class CajeroEncontradoController implements Serializable {
             
             }
             
-         fillSelectOneMenuGrupoAccion();
+         fillSelectOneMenuGrupoAccionBajarPlantilla();
              }
         } catch (Exception e) {
             JsfUtil.errorMessage("init() " + e.getLocalizedMessage());
@@ -95,23 +96,30 @@ public class CajeroEncontradoController implements Serializable {
     
 
     // <editor-fold defaultstate="collapsed" desc="fillSelectOneMenuGrupoAccion() ">
-    public String fillSelectOneMenuGrupoAccion() {
+    public String fillSelectOneMenuGrupoAccionBajarPlantilla() {
         try {
              grupoAccionList = new ArrayList<>();
-            List<GrupoAccion> list= grupoAccionRepository.findAll();
-            if(list == null || list.isEmpty()){}
-            else{
-                for(GrupoAccion ga:list){
-                    if(ga.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionBajarPlantillaId"))){
-                        grupoAccionList.add(ga);
-                    }
-                }
-                 
-            }
+//            List<GrupoAccion> list= grupoAccionRepository.fºindAll();
+           Optional<GrupoAccion> optional= grupoAccionRepository.findByGrupoAccionId(JsfUtil.contextToBigInteger("grupoAccionBajarPlantillaId"));
+           if(optional.isPresent()){
+               grupoAccionBajarPlantilla = optional.get();
+           }else{
+               JsfUtil.warningMessage("No se encontro el grupo de Accion para bajar plantilla");
+           }
+           
+//            if(list == null || list.isEmpty()){}
+//            else{
+//                for(GrupoAccion ga:list){
+//                    if(ga.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionBajarPlantillaId"))){
+//                        grupoAccionList.add(ga);
+//                    }
+//                }
+//                 
+//            }
             
             
         } catch (Exception e) {
-            JsfUtil.errorMessage("fillSelectOneMenuGrupoAccion() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+  " " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -141,6 +149,26 @@ public class CajeroEncontradoController implements Serializable {
             }
             JsfUtil.warningMessage("No se identifico el grupo de accion para continuar esta operación");
 
+          
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " "+ e.getLocalizedMessage());
+        }
+        return "";
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String onCommandButtonGrupoAccionBajarPlantilla() ">
+
+    /**
+     * Se ejecuta cuando se selecciona un grupo de accion
+     *
+     * @param grupoAccion
+     * @return
+     */
+    public String onCommandButtonGrupoAccionBajarPlantilla() {
+        try {
+            JmoordbContext.put("grupoAccion", grupoAccionBajarPlantilla);
+             return "/faces/bajarplantilla.xhtml";
+           
           
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " "+ e.getLocalizedMessage());

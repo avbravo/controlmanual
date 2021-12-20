@@ -150,6 +150,7 @@
                                             <c:if test="${bajarPlantillaConfirmarController.showButton}">
                                                 <button  type="button"  class="btn btn-danger btn-rounded btn-fw text-nowrap separabot01" data-toggle="modal" data-target="#token01"><i class="ti-check-box"></i>&nbsp;FINALIZAR</button>
  <p:commandButton value="Token" 
+                  update=":panelGroupToken"
                     oncomplete="PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
           />
 
@@ -191,7 +192,7 @@
                 </div>
                 <!-- page-body-wrapper ends -->
             </div>
-
+            <h:panelGroup id="panelGroupToken">
             <p:dialog widgetVar="widgetVarTokenDialog" header="Token" showEffect="fade" hideEffect="fade"
                       height="250px" width="600px"
                     
@@ -221,7 +222,7 @@
 
                 </f:facet>
             </p:dialog>
-
+</h:panelGroup>
         </h:form>    
         <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
 
