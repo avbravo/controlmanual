@@ -20,7 +20,7 @@
             <artifactId>primefaces</artifactId>
 
             <version>10.0.0</version>
-<!--            <version>10.0.0</version>-->
+            <!--            <version>10.0.0</version>-->
 
         </dependency>
         <!--        <dependency>
@@ -129,7 +129,11 @@ Oracle DB
             <version>1.18.22</version>
             <scope>provided</scope>
         </dependency>
-                        
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.4</version>
+        </dependency>  
     </dependencies>
 
     <build>

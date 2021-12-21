@@ -7,6 +7,7 @@ package com.peopleinmotion.horizonreinicioremoto.controller;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
+import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
@@ -25,13 +26,16 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRepository;
+import com.peopleinmotion.horizonreinicioremoto.repository.AgendaRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.CajeroRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.EmailConfigurationRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.EstadoRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.GrupoAccionRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.TokenRepository;
 import com.peopleinmotion.horizonreinicioremoto.services.AccionRecienteServices;
+import com.peopleinmotion.horizonreinicioremoto.services.AgendaHistorialServices;
 import com.peopleinmotion.horizonreinicioremoto.services.EmailServices;
+import com.peopleinmotion.horizonreinicioremoto.services.TokenServices;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import java.util.Date;
 import lombok.Data;
@@ -61,7 +65,8 @@ public class BajarPlantillaController implements Serializable {
     private Boolean haveAccionReciente = Boolean.TRUE;
     private String selectOneMenuCuandoValue = "ahora";
     private Date fechahoraBaja;
-
+    private String tokenIngresado = "****";
+    private Boolean tokenEnviado = Boolean.FALSE;
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="@Inject ">
     @Inject
@@ -84,8 +89,18 @@ public class BajarPlantillaController implements Serializable {
     AccionRepository accionRepository;
     @Inject
     EstadoRepository estadoRepository;
+    @Inject
+    AgendaRepository agendaRepository;
+
+    @Inject
+    AgendaHistorialServices agendaHistorialServices;
+    @Inject
+    TokenServices tokenServices;
 
 // </editor-fold>
+    
+    
+    
     /**
      * Creates a new instance of CajeroAccionController
      */
@@ -96,6 +111,8 @@ public class BajarPlantillaController implements Serializable {
     @PostConstruct
     public void init() {
         try {
+            System.out.println("Test-->Init.....");
+             tokenEnviado = Boolean.FALSE;
             if (JmoordbContext.get("user") == null) {
 
             } else {
@@ -135,7 +152,7 @@ public class BajarPlantillaController implements Serializable {
             }
         } catch (Exception e) {
             // System.out.println("init() " + e.getLocalizedMessage());
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() +  " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
 
         }
 
@@ -204,32 +221,13 @@ public class BajarPlantillaController implements Serializable {
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="onCommandButtonCuando()">
-    public String onCommandButtonCuando() {
-        try {
-            selectOneMenuCuandoValue = "programar evento";
-            if (selectOneMenuCuandoValue == null || selectOneMenuCuandoValue.isEmpty()) {
-                JsfUtil.warningMessage("Indique cuando sera efecutada la acción");
-                return "";
-            } else {
-                if (selectOneMenuCuandoValue.equals("ahora")) {
-                    return sendToken();
-                } else {
-                    if (selectOneMenuCuandoValue.equals("programar evento")) {
-                        if (fechahoraBaja == null) {
-                            JsfUtil.warningMessage("Seleccione la fecha y hora");
-                            return "";
-                        }
-                        JmoordbContext.put("fechahoraBaja", fechahoraBaja);
-                        return sendToken();
-                    } else {
-                        JsfUtil.warningMessage("No se encontro una condición que coincida para cuando ejecutar la acción-");
-                    }
-                }
-            }
-        } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-        }
+ 
+
+    // <editor-fold defaultstate="collapsed" desc="method() ">
+    public String onCommandButtonSendToken() {
+        System.out.println("Test-->voy a invocar..");
+        sendToken();
+        System.out.println("Test--> tokenEnviado "+tokenEnviado);
         return "";
     }
 // </editor-fold>
@@ -237,10 +235,17 @@ public class BajarPlantillaController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="String sendToken()">
     public String sendToken() {
         try {
+            System.out.println("Test--> llego a sendToken.....");
+            tokenEnviado = Boolean.FALSE;
             if (selectOneMenuAccionValue == null) {
                 JsfUtil.warningMessage("Seleccione la acción a ejecutar..");
                 return "";
             }
+            if (fechahoraBaja == null) {
+                JsfUtil.warningMessage("Seleccione la fecha y hora");
+                return "";
+            }
+            JmoordbContext.put("fechahoraBaja", fechahoraBaja);
             Token token = new Token();
             token.setACTIVO("SI");
             token.setCODIGOTRANSACCION(JsfUtil.getUUID());
@@ -255,21 +260,17 @@ public class BajarPlantillaController implements Serializable {
                 //Envia el token al usuario
                 emailServices.sendTokenToEmail(token, user);
                 JmoordbContext.put("accion", selectOneMenuAccionValue);
-                if (selectOneMenuCuandoValue.equals("ahora")) {
-                    return "/faces/bajarplantilla_ahora.xhtml";
-                } else {
-                    if (selectOneMenuCuandoValue.equals("programar evento")) {
-                      
-                        return "/faces/bajarplantilla_programarevento.xhtml";
-                    }
-                }
+               
+                    JsfUtil.successMessage("Se envio el token a su correo. Reviselo por favor");
+                    tokenEnviado = Boolean.TRUE;
+                 
 
             } else {
-                JsfUtil.warningMessage("No se creo el token");
+                JsfUtil.warningMessage("No se pudo generar el token. Repita la acción");
             }
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("sendToken() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
         }
         return "";
     }
@@ -291,18 +292,119 @@ public class BajarPlantillaController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="Boolean isProgramarEvento()">
     public Boolean isProgramarEvento() {
         try {
-        
-        
+
             if (selectOneMenuCuandoValue.trim().toLowerCase().equals("programar evento")) {
-        
+
                 return Boolean.TRUE;
             }
-        
+
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
 // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="String onCommandButtonBajarPlantillaProgramarEvento()">
+    /**
+     * Guarda el evento y envia notificaciones
+     *
+     * @return
+     */
+    public String onCommandButtonBajarPlantillaProgramarEvento() {
+        try {
+            if(!tokenEnviado){
+                JsfUtil.warningMessage("Usted debe solicite primero un token");
+                return "";
+            }
+            if (!validateToken()) {
+                return "";
+            }
+
+            if (accionList == null || accionList.isEmpty()) {
+                JsfUtil.warningMessage("No acciones para el grupo seleccionado");
+            } else {
+
+                Date fechahoraBaja = (Date) JmoordbContext.get("fechahoraBaja");
+                // System.out.println("Test--> fechahoraBaja "+fechahoraBaja);
+                Agenda agenda = new Agenda();
+                agenda.setACTIVO("SI");
+                agenda.setCODIGOTRANSACCION(JsfUtil.generateUniqueID());
+                agenda.setCAJEROID(cajero.getCAJEROID());
+                agenda.setCAJERO(cajero.getCAJERO());
+                agenda.setBANCOID(cajero.getBANCOID().getBANCOID());
+                agenda.setESTADOID(estado.getESTADOID());
+                agenda.setACCIONID(accion.getACCIONID());
+                agenda.setFECHA(DateUtil.getFechaHoraActual());
+                agenda.setFECHAAGENDADA(fechahoraBaja);
+                agenda.setFECHAEJECUCION(fechahoraBaja);
+                agenda.setUSUARIOIDATIENDE(JsfUtil.toBigInteger(0));
+                agenda.setUSUARIOIDSOLICITA(user.getUSUARIOID());
+
+                if (agendaRepository.create(agenda)) {
+
+                    Optional<Agenda> agendaOptional = agendaRepository.findByCodigoTransaccion(agenda.getCODIGOTRANSACCION());
+                    if (!agendaOptional.isPresent()) {
+                        JsfUtil.warningMessage("No se encontro la agenda con ese codigo de transaccion");
+                    } else {
+
+                        agendaHistorialServices.createHistorial(agendaOptional.get(), "BAJAR PLANTILLA PROGRAMAR EVENTO", user);
+
+                        AccionReciente accionReciente = accionRecienteServices.create(agenda, bank, cajero, accion, grupoAccion, estado);
+                        JmoordbContext.put("accionReciente", accionReciente);
+                        /**
+                         * Envio de email
+                         */
+
+                        emailServices.sendEmailToTecnicos(accionReciente, accion, user, cajero, bank);
+                        return "/faces/operacionexitosa.xhtml";
+                    }
+
+                }
+
+            }
+        } catch (Exception e) {
+            JsfUtil.errorMessage("onCommandButtonSubirPlantilla()" + e.getLocalizedMessage());
+        }
+        return "";
+    }
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Boolean validateToken() ">    
+    public Boolean validateToken() {
+        try {
+            return tokenServices.validateToken(user, tokenIngresado);
+        } catch (Exception e) {
+            JsfUtil.errorMessage("validateToken()" + e.getLocalizedMessage());
+        }
+        return Boolean.FALSE;
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="String remoteCommand()">
+
+    public String remoteCommand(){
+        return "";
+    }
+// </editor-fold>            
+    // <editor-fold defaultstate="collapsed" desc="String marcarNumero() ">
+    /**
+     * Se usa para marcar el numero del tokem
+     * @param numero
+     * @return 
+     */
+    public String marcarNumero(String numero) {
+       
+        try {
+            tokenIngresado = tokenServices.marcarToken(numero, tokenIngresado);
+            
+           
+        } catch (Exception e) {
+            JsfUtil.errorMessage("marcarNumero() " + e.getLocalizedMessage());
+        }
+        return "";
+    }
+// </editor-fold> 
+   
 
 }

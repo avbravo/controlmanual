@@ -64,6 +64,7 @@ import java.util.SplittableRandom;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import javax.faces.component.UIViewRoot;
+import org.apache.commons.beanutils.BeanUtils;
 
 
 // </editor-fold>
@@ -2485,4 +2486,21 @@ public class JsfUtil implements Serializable {
         return Boolean.FALSE;
     }
 // </editor-fold>
+    
+      // <editor-fold defaultstate="collapsed" desc="Object copyBeans(Object destino, Object fuente)">
+    /**
+     * Copia el contenido de un bean en otro
+     *
+     * @param destino
+     * @param fuente
+     * @return
+     */
+    public static Object copyBeans(Object destino, Object fuente) {
+        try {
+            BeanUtils.copyProperties(destino, fuente);
+        } catch (Exception e) {
+        }
+
+        return destino;
+    }// </editor-fold>
 }

@@ -125,32 +125,24 @@
                                             <div class="col-11 col-lg-11">
 
                                                 <div class="row justify-content-start">
-                                                    <div class="col-6 col-lg-auto">
-                                                        <!--                                                                    <p:commandLink value="Regresar" class="bot-regresar01"
-                                                                                                                                           update=":form:growl"
-                                                                                                                                    action="buscarcajero">
-                                                                                                                                
-                                                                                                                            </p:commandLink>-->
-
-                                                    </div>
+                                                   
 
                                                     <div class="col-6 col-lg-auto">
-                                                         <p:commandButton value="Bajar Plantilla" icon="pi pi-arrow-down-right" 
-                                                                          process="@this" action="#{cajeroEncontradoController.onCommandButtonGrupoAccionBajarPlantilla()}"
-                                                                    update=":form:growl"
-                                                                     styleClass="rounded-button ui-button-danger" style="margin-right: .5rem">
-                                                      
-                                                    </p:commandButton>
-                                                    </div>
-<!--                                                    <div class="col-6 col-lg-auto">
-                                                        <button type="button" class="btn btn-danger btn-rounded btn-fw text-nowrap" data-toggle="modal" data-target="#acciones01"><i class="ti-arrow-circle-right"></i>&nbsp;ACCIÓN</button>
+                                                        <p:commandButton value="Bajar Plantilla" icon="pi pi-arrow-down-right" 
+                                                                         process="@this" action="#{cajeroEncontradoController.onCommandButtonGrupoAccionBajarPlantilla()}"
+                                                                         update=":form:growl"
+                                                                         styleClass="rounded-button ui-button-danger" 
+                                                                         style="margin-right: .5rem">
 
-                                                    </div>-->
+                                                        </p:commandButton>
+                                                    </div>
+                                                    
                                                     <div class="col-6 col-lg-auto">
                                                         <p:commandButton value="IR A CONTROL MANUAL" 
                                                                          rendered="#{cajeroEncontradoController.haveAccionReciente}"
-                                                                         class="btn btn-block btn-danger btn-sm font-weight-medium auth-form-btn rounded-pill"
-                                                                         update=":form:growl"
+                                                                         styleClass="rounded-button ui-button-success" 
+                                                                         style="margin-right: .5rem"
+                                                                          update=":form:growl"
                                                                          icon="pi pi-caret-right"
                                                                          action="#{cajeroEncontradoController.onCommandButtonIrControlManual()}">
 

@@ -5,10 +5,17 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.facade;
 
+import com.peopleinmotion.horizonreinicioremoto.entity.Grupo;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoUsuario;
+import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +35,59 @@ public class GrupoUsuarioFacade extends AbstractFacade<GrupoUsuario> {
     public GrupoUsuarioFacade() {
         super(GrupoUsuario.class);
     }
+    
+    public Optional<GrupoUsuario> findByGrupoUsuarioId(BigInteger GRUPOUSUARIOID) {
+         try {
+               Query query = em.createNamedQuery("GrupoUsuario.findByGrupoUsuarioId");
+        GrupoUsuario grupoUsuario = (GrupoUsuario)query.setParameter("GRUPOUSUARIOID", GRUPOUSUARIOID).getSingleResult();
+         return Optional.of(grupoUsuario);
+         } catch (Exception e) {
+             System.out.println("findByGrupoUsuarioId() "+e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    }
+    
+     // <editor-fold defaultstate="collapsed" desc="List<GrupoUsuario> findByUsuarioId(Usuario USUARIOID)">
+    public List<GrupoUsuario> findByUsuarioId(Usuario USUARIOID) {
+        List<GrupoUsuario> list = new ArrayList<>();
+        try {
+
+            Query query = em.createQuery("SELECT e FROM GrupoUsuario e WHERE e.USUARIOID = :USUARIOID");
+            list = query.setParameter("USUARIOID", USUARIOID).getResultList();
+        } catch (Exception ex) {
+            System.out.println("findByUsuarioId() " + ex.getLocalizedMessage());
+        }
+        return list;
+    }
+// </editor-fold>
+     // <editor-fold defaultstate="collapsed" desc="List<GrupoUsuario> findByUsuarioIdAndGrupoId(Usuario USUARIOID, Grupo GRUPOID)">
+    public List<GrupoUsuario> findByUsuarioIdAndGrupoId(Usuario USUARIOID, Grupo GRUPOID) {
+        List<GrupoUsuario> list = new ArrayList<>();
+        try {
+
+            Query query = em.createQuery("SELECT g FROM GrupoUsuario g WHERE g.USUARIOID = :USUARIOID AND g.GRUPOID = :GRUPOID");
+            query.setParameter("USUARIOID", USUARIOID);
+            list = query.setParameter("GRUPOID", GRUPOID).getResultList();
+        } catch (Exception ex) {
+            System.out.println("findByUsuarioIdAndGrupoId() " + ex.getLocalizedMessage());
+        }
+        return list;
+    }
+// </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="List<GrupoUsuario> findByGrupoId(Grupo GRUPOID)">
+    public List<GrupoUsuario> findByGrupoId(Grupo GRUPOID) {
+        List<GrupoUsuario> list = new ArrayList<>();
+        try {
+
+            Query query = em.createQuery("SELECT e FROM GrupoUsuario e WHERE e.GRUPOID = :GRUPOID");
+            list = query.setParameter("GRUPOID", GRUPOID).getResultList();
+        } catch (Exception ex) {
+            System.out.println("findByGrupoId() " + ex.getLocalizedMessage());
+        }
+        return list;
+    }
+// </editor-fold>
     
 }

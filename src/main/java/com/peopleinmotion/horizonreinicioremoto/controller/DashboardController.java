@@ -172,6 +172,12 @@ public class DashboardController implements Serializable {
                 cajeroList = cajeroRepository.findByBancoId(banco);
 
                 this.lazyDataModelCajero = new LazyDataModel<Cajero>() {
+//                    @Override
+//            public int count(Map<String, FilterMeta> filterBy) {
+//                Integer totalElements=5;
+//                // logical row count based on a count query taking filter into account
+//                return totalElements;
+//            }
                     @Override
                     public List<Cajero> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
 

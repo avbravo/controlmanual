@@ -61,6 +61,7 @@ public class BajarPlantillaConfirmarController implements Serializable {
     private Boolean showButton = Boolean.FALSE;
     private Boolean haveAccionReciente = Boolean.TRUE;
     private String tokenIngresado = "****";
+    private Boolean tokenEnviado= Boolean.FALSE;
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="@Inject ">
 @Inject
@@ -199,6 +200,7 @@ TokenServices tokenServices;
                 
             }else{
                  tokenIngresado = "****";
+                 tokenEnviado= Boolean.FALSE;
             user = (Usuario) JmoordbContext.get("user");
             bank = (Banco) JmoordbContext.get("banco");
             cajero = (Cajero) JmoordbContext.get("cajero");
@@ -361,7 +363,7 @@ TokenServices tokenServices;
         return "";
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="String onCommandButtonBajarPlantilla()">
+    // <editor-fold defaultstate="collapsed" desc="String onCommandButtonBajarPlantillaProgramarEvento()">
     /**
      * Guarda el evento y envia notificaciones
      *
