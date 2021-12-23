@@ -327,8 +327,7 @@ public class ControlmanualController implements Serializable {
             if (accionRecienteServices.fueCambiadoPorOtroUsuario(accionRecienteOld,"accionRecienteDashboard")) {
                 PrimeFaces.current().ajax().update("form:growl", "form");
                 return "";
-            }
-            
+            }            
             
             Estado estado = new Estado();
             Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoFinalizadoId"));
