@@ -333,7 +333,7 @@ public class EmailServicesImpl implements EmailServices {
              * divide los emails
              */
             EmailRecipients emailRecipients = JsfUtil.divideDestinatary(emailList);
-
+            
             Future<String> completableFutureCC
                     = sendEmailCccBccAsync(
                             emailRecipients.getTo(),
@@ -344,9 +344,9 @@ public class EmailServicesImpl implements EmailServices {
                             emailConfigurationOptional.get().getEMAIL(),
                             JsfUtil.desencriptar(emailConfigurationOptional.get().getPASSWORD()));
 //            if(completableFutureCC.isDone()){
-//                // System.out.println("test---> Tarea de envio completada...");
+//                 System.out.println("test---> Tarea de envio completada...");
 //            }else{
-//                // System.out.println("test---> Tarea de envio no completada..,...");
+//                 System.out.println("test---> Tarea de envio no completada..,...");
 //            }
             return Boolean.TRUE;
         } catch (Exception e) {

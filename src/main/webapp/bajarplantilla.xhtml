@@ -131,7 +131,7 @@
                                                              value="#{bajarPlantillaController.selectOneMenuAccionValue}" 
                                                              converter="#{accionConverter}"
                                                              >
-                                                <f:selectItem itemLabel="Seleccione una Accion" itemValue="#{null}"  noSelectionOption="true"/>
+                                                <!--<f:selectItem itemLabel="Seleccione una Accion" itemValue="#{null}"  noSelectionOption="true"/>-->
                                                 <f:selectItems value="#{bajarPlantillaController.accionList}" 
                                                                var="var" 
                                                                itemValue="#{var}" itemLabel="#{var.ACCION} " />
@@ -183,23 +183,20 @@
                                                                              id="commandButtonSendToken"
                                                                              action="#{bajarPlantillaController.onCommandButtonSendToken()}"
 
-                                                                             update=":form:growl, form:commandButtonFinalizar"
-                                                                             oncomplete="remoteCommandUpdateCommandButtonFinalizar()"
+                                                                             update=":form:growl, :form:commandButtonFinalizar"
+                                                                              oncomplete="PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
                                                                              styleClass="rounded-button ui-button-danger" style="margin-right: .5rem">
 
                                                             </p:commandButton>
-                                                            <p:remoteCommand name="remoteCommandUpdateCommandButtonFinalizar"
-                                                                             update=":form:commandButtonFinalizar"
-                                                                             action="#{bajarPlantillaController.remoteCommand()}"
-                                                                             />
+                                                           
                                                         </c:if>
 
                                                     </div>
 
-                                                    <div class="col-6 col-lg-auto">
+                                                   <div class="col-6 col-lg-auto">
                                                         <p:commandButton value="Finalizar" 
                                                                          id="commandButtonFinalizar"
-                                                                        
+                                                                         rendered="#{bajarPlantillaController.tokenEnviado}"
                                                                          icon="pi pi-unlock" 
                                                                         
                                                                          oncomplete="PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
@@ -209,7 +206,7 @@
                                                         </p:commandButton>
 
 
-                                                    </div>
+                                                   </div>
 
                                                 </div>	
 

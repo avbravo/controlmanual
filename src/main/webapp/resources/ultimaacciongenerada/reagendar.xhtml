@@ -22,10 +22,10 @@
                     <c:if test="${reagendarController.haveAccionReciente}">
                         <dd class="atm-title-mar01"><strong>#{reagendarController.accionReciente.TITULO}</strong></dd>
                         <!--<dd class="atm-title-mar01"><p:outputLabel value="Evento Agendado:#{reagendarController.accionReciente.MENSAJE}"/></dd>-->
-                        <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{reagendarController.showDate(reagendarController.accionReciente.FECHA)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{reagendarController.showHour(reagendarController.accionReciente.FECHA)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!reagendarController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{reagendarController.showDate(reagendarController.accionReciente.FECHA)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!reagendarController.renderedByEstadoSolicitado()}" value="Hora Ejecución: #{reagendarController.showHour(reagendarController.accionReciente.FECHA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{reagendarController.showDate(reagendarController.accionReciente.FECHAAGENDADA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{reagendarController.showHour(reagendarController.accionReciente.FECHAAGENDADA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!reagendarController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{reagendarController.showDate(reagendarController.accionReciente.FECHAEJECUCION)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!reagendarController.renderedByEstadoSolicitado()}" value="Hora Ejecución: #{reagendarController.showHour(reagendarController.accionReciente.FECHAEJECUCION)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel value="Estado:#{reagendarController.accionReciente.ESTADO}"/></dd>
                         <p:datePicker id="time1" 
 

@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="./resources/css/style.css"/>
         <link rel="stylesheet" href="./resources/css/dash01.css"/>
         <link rel="stylesheet" href="./resources/css/mantenimiento.css"/>
-         <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
+        <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
         <meta name="referrer" content="no-referrer"/>
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
@@ -22,7 +22,7 @@
 
     </h:head>
     <h:body>
-           <h:form id="form" prependId="false" rendered="#{accessController.loged}">
+        <h:form id="form" prependId="false" rendered="#{accessController.loged}">
             <script type="text/javascript">
                 function setDataTableWithPageStart() {
 
@@ -105,58 +105,61 @@
                                                     </div>
                                                 </div>
 
-                                               
+
                                                 <ultimaacciongenerada:controlmanual id="ultimaacciongeneradacontrolmanual"  />
-     
+
                                             </div>
 
                                         </div>
                                     </div>
-                                    
+
                                     <div class="card-body ">
-					<div class="row justify-content-center">
-						<div class="col-11 col-lg-11">
-					
-							<div class="row justify-content-start">
-                                                            <div class="col-6 col-lg-auto">
-                                                                    <p:commandLink value="Regresar" class="bot-regresar01"
-                                                                                   update=":form:growl"
-                                                                              action="#{controlmanualController.regresar()}">
-                                                                        
-                                                                    </p:commandLink>
-									
-								</div>
+                                        <div class="row justify-content-center">
+                                            <div class="col-11 col-lg-11">
 
-								<div class="col-6 col-lg-auto">
-                                                                    <p:commandLink value="Procesando" class="bot-cancelar01" 
-                                                                                   update=":form:growl"
-                                                                                   rendered="#{controlmanualController.showCommandButtonProcesando}"
-                                                                                   action="#{controlmanualController.onCommandButtonProcesando()}">
-                                                                       <p:confirm header="Confirmación" message="Desea cambiar el estatus a procesando" icon="pi pi-exclamation-triangle"/> 
-                                                                    </p:commandLink>
-									
-								</div>
-								<div class="col-6 col-lg-auto">
-									 <p:commandLink value="Finalizado" class="bot-cancelar01" 
-                                                                                   update=":form:growl"
-                                                                                   rendered="#{!controlmanualController.showCommandButtonFinalizar}"
-                                                                                   action="#{controlmanualController.onCommandButtonFinalizando()}">
-                                                                       <p:confirm header="Confirmación" message="Desea cambiar el estatus a terminado?" icon="pi pi-exclamation-triangle"/> 
-                                                                    </p:commandLink>
-								</div>
-						
-							</div>	
-							
-						</div>
-					</div>
-				</div>
+                                                <div class="row justify-content-start">
 
-                                   
+
+                                                    <div class="col-6 col-lg-auto">
+                                                        <p:commandButton value="Procesando" 
+                                                                         update=":form:growl"
+
+                                                                         rendered="#{controlmanualController.showCommandButtonProcesando}"
+                                                                         action="#{controlmanualController.onCommandButtonSendToken()}"
+                                                                         oncomplete="PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
+                                                                         title="Envia el token al correo"
+                                                                         styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
+                                                                         >
+
+                                                        </p:commandButton>
+
+                                                    </div>
+
+                                                    <div class="col-6 col-lg-auto">
+                                                        <p:commandButton value="Finalizado" 
+                                                                         styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
+                                                                         update=":form:growl"
+                                                                         action="#{controlmanualController.onCommandButtonSendToken()}"
+                                                                         oncomplete="PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
+                                                                         rendered="#{controlmanualController.showCommandButtonFinalizar}"
+                                                                         >
+
+                                                        </p:commandButton>
+                                                    </div>
+
+
+                                                </div>	
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
 
                                 </div>
                             </div>
 
-                           
+
 
                         </div>
                         <!-- content-wrapper ends -->
@@ -179,19 +182,156 @@
                 </div>
                 <!-- page-body-wrapper ends -->
             </div>
-<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
-            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
-            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
-        </p:confirmDialog>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+            </p:confirmDialog>
+
+
+
+            <h:panelGroup id="panelGroupToken">
+
+                <p:dialog widgetVar="widgetVarTokenDialog" header="Token" showEffect="fade" hideEffect="fade"
+                          width="50%"
+
+                          style="width:20%;margin:0 auto"
+                          position="center center"
+                          onShow="PF('widgetVarTokenDialog').initPosition()"
+                          resizable="false"
+                          >
+                    <!--                                    <p:dialog widgetVar="widgetVarTokenDialog" header="Token" showEffect="fade" hideEffect="fade"
+                                                                  height="250px" width="600px"
+                                        
+                                                                  position="center center"
+                                                                  onShow="PF('widgetVarTokenDialog').initPosition()"
+                                                                  resizable="false"
+                                                                  >-->
+                    <h:panelGrid id="tokenDialogDetails" columns="3" cellpadding="7"  >
+                        <p:outputLabel value=""/>
+                        <p:outputLabel  value="Ingrese Token" styleClass="p-text-bold"/>
+                        <p:inputTextarea rows="1" cols="4" id="mytokeen" maxlength="4" 
+                                         class="board"
+                                         styleClass="board"
+                                         value="#{controlmanualController.tokenIngresado}"
+                                         >
+                            <p:autoUpdate />
+                        </p:inputTextarea>
+
+
+                    </h:panelGrid>
+                    <div id="virtual-keyboard">
+                        <div class="keyboard-row">
+
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-lg-12 keyboard-row">
+                                    <p:commandLink value="1" class="number"  
+                                                   action="#{controlmanualController.marcarNumero('1')}"
+                                                   update=" "/>
+                                    <p:commandLink value="2" class="number" 
+                                                   action="#{controlmanualController.marcarNumero('2')}"
+                                                   update=" "/>
+                                    <p:commandLink value="3" class="number" 
+                                                   action="#{controlmanualController.marcarNumero('3')}"
+                                                   update=" "/>
+
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center keyboard-row">
+                                <div class="col-12 col-lg-12">
+                                    <p:commandLink value="4" class="number" 
+                                                   action="#{controlmanualController.marcarNumero('4')}"
+                                                   update=" "/>
+                                    <p:commandLink value="5" class="number"  
+                                                   action="#{controlmanualController.marcarNumero('5')}"
+                                                   update=" "/>
+                                    <p:commandLink value="6" class="number"
+                                                   action="#{controlmanualController.marcarNumero('6')}"
+                                                   update=" "/>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-lg-12">					
+                                    <p:commandLink value="7" class="number" 
+                                                   action="#{controlmanualController.marcarNumero('7')}"
+                                                   update=" "/>
+                                    <p:commandLink value="8" class="number" 
+                                                   action="#{controlmanualController.marcarNumero('8')}"
+                                                   update=" "/>
+                                    <p:commandLink value="9" class="number"
+                                                   action="#{controlmanualController.marcarNumero('9')}"
+                                                   update=" "/>
+                                </div>
+                            </div>							
+
+                        </div>
+
+                        <div class="keyboard-row">
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-lg-12">					
+
+                                    <p:commandLink value="0" class="number2" 
+                                                   action="#{controlmanualController.marcarNumero('0')}"
+                                                   update=" "/>
+
+                                    <p:commandLink value="DEL" class="" 
+                                                   action="#{controlmanualController.marcarNumero('b')}"
+                                                   update=" ">
+                                        <i class="ti-eraser"></i>
+                                    </p:commandLink>
+
+                                </div>
+                            </div>
+                        </div>					
+
+                    </div>
+
+
+
+
+                    <f:facet name="footer">
+                        <p:commandButton  oncomplete="PF('widgetVarTokenDialog').hide();" 
+                                          action="#{controlmanualController.remoteCommand()}"
+                                          value="Cerrar"
+                                          process="@this"
+                                          icon="pi pi-times" styleClass="rounded-button ui-button-danger"
+                                          />
+                        <p:commandButton styleClass="rounded-button ui-button-success" 
+                                         update="tokenDialogDetails, tokenmessage"
+                                         rendered="#{controlmanualController.showCommandButtonProcesando}"
+                                         icon="pi pi-unlock"
+                                         value="Aceptar"
+                                         action="#{controlmanualController.onCommandButtonProcesando()}">
+
+                        </p:commandButton>
+                        <p:commandButton styleClass="rounded-button ui-button-success" 
+                                         update="tokenDialogDetails, tokenmessage"
+                                         rendered="#{controlmanualController.showCommandButtonFinalizar}"
+                                         icon="pi pi-unlock"
+                                         value="Aceptar"
+                                         action="#{controlmanualController.onCommandButtonFinalizando()}"
+                                         >
+
+                        </p:commandButton>
+
+                    </f:facet>
+                    <p:messages id="tokenmessage" />
+                </p:dialog>
+            </h:panelGroup>     
+
+
+
+
         </h:form>    
-         <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
+        <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
 
             <template:accesodenegado/>
-          
+
         </h:form>
         <!-- container-scroller -->
-     <!-- container-scroller -->
-       <template:script/> 
+        <!-- container-scroller -->
+        <template:script/> 
     </h:body>
 
 </html>

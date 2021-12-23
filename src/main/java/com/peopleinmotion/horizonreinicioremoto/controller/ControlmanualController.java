@@ -11,6 +11,7 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
+import com.peopleinmotion.horizonreinicioremoto.entity.Token;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
@@ -18,13 +19,14 @@ import com.peopleinmotion.horizonreinicioremoto.repository.AgendaHistorialReposi
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.EstadoRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.GrupoAccionRepository;
+import com.peopleinmotion.horizonreinicioremoto.repository.TokenRepository;
 import com.peopleinmotion.horizonreinicioremoto.services.AccionRecienteServices;
 import com.peopleinmotion.horizonreinicioremoto.services.AgendaHistorialServices;
 import com.peopleinmotion.horizonreinicioremoto.services.EmailServices;
+import com.peopleinmotion.horizonreinicioremoto.services.TokenServices;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +35,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import lombok.Data;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -41,6 +44,7 @@ import org.primefaces.PrimeFaces;
  */
 @Named
 @ViewScoped
+@Data
 public class ControlmanualController implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="field ">
@@ -54,6 +58,8 @@ public class ControlmanualController implements Serializable {
 
     private Boolean showCommandButtonFinalizar = Boolean.FALSE;
     private Boolean showCommandButtonProcesando = Boolean.FALSE;
+    private String tokenIngresado = "****";
+    private Boolean tokenEnviado = Boolean.FALSE;
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="@Inject ">
@@ -74,99 +80,44 @@ public class ControlmanualController implements Serializable {
     @Inject
     EstadoRepository estadoRepository;
 
+    @Inject
+    TokenRepository tokenRepository;
+    @Inject
+    TokenServices tokenServices;
+
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="set/get() ">
-
     public Boolean getShowCommandButtonProcesando() {
-        
-         try {
-            if (!accionReciente.getESTADOID().equals(JsfUtil.toBigInteger(2))
-                    && !accionReciente.getESTADOID().equals(JsfUtil.toBigInteger(3))
+
+        try {
+            
+           
+            if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId"))
                     ) {
-               showCommandButtonProcesando = Boolean.TRUE;
-            }else{
-                         showCommandButtonProcesando= Boolean.FALSE;
+                showCommandButtonProcesando = Boolean.TRUE;
+            } else {
+                showCommandButtonProcesando = Boolean.FALSE;
             }
-  
+
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return showCommandButtonProcesando;
     }
 
-    public void setShowCommandButtonProcesando(Boolean showCommandButtonProcesando) {
-        this.showCommandButtonProcesando = showCommandButtonProcesando;
-    }
-    
-    
-    
-    
     public Boolean getShowCommandButtonFinalizar() {
         try {
-           
-            if (accionReciente.getESTADOID().equals(JsfUtil.toBigInteger(3))) {
+            if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoProcesandoId"))) {
                 showCommandButtonFinalizar = Boolean.TRUE;
-         
-            }else{
-                      showCommandButtonFinalizar= Boolean.FALSE;
+
+            } else {
+                showCommandButtonFinalizar = Boolean.FALSE;
             }
-       
+
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return showCommandButtonFinalizar;
-    }
-
-    public void setShowCommandButtonFinalizar(Boolean showCommandButtonFinalizar) {
-        this.showCommandButtonFinalizar = showCommandButtonFinalizar;
-    }
-
-    public Boolean getHaveAccionReciente() {
-        return haveAccionReciente;
-    }
-
-    public void setHaveAccionReciente(Boolean haveAccionReciente) {
-        this.haveAccionReciente = haveAccionReciente;
-    }
-
-    public AccionReciente getAccionReciente() {
-        return accionReciente;
-    }
-
-    public void setAccionReciente(AccionReciente accionReciente) {
-        this.accionReciente = accionReciente;
-    }
-
-    public List<GrupoAccion> getGrupoAccionList() {
-        return grupoAccionList;
-    }
-
-    public void setGrupoAccionList(List<GrupoAccion> grupoAccionList) {
-        this.grupoAccionList = grupoAccionList;
-    }
-
-    public void setBank(Banco bank) {
-        this.bank = bank;
-    }
-
-    public Cajero getCajero() {
-        return cajero;
-    }
-
-    public void setCajero(Cajero cajero) {
-        this.cajero = cajero;
-    }
-
-    public Usuario getUser() {
-        return user;
-    }
-
-    public void setUser(Usuario user) {
-        this.user = user;
-    }
-
-    public Banco getBank() {
-        return bank;
     }
 
 // </editor-fold>
@@ -180,6 +131,7 @@ public class ControlmanualController implements Serializable {
     @PostConstruct
     public void init() {
         try {
+            System.out.println("Test--> init....");
             if (JmoordbContext.get("user") == null) {
 
             } else {
@@ -293,9 +245,15 @@ public class ControlmanualController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="String onCommandButtonProcesando()">
     public String onCommandButtonProcesando() {
         try {
-
+ if(!tokenEnviado){
+                JsfUtil.warningMessage("Usted debe solicite primero un token");
+                return "";
+            }
+            if (!validateToken()) {
+                return "";
+            }
             Estado estado = new Estado();
-            Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.toBigInteger(2));
+            Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoProcesandoId"));
             if (!optional.isPresent()) {
 
                 JsfUtil.warningMessage("No se ha encontado el estado predeterminado para asignalor a esta operacion.");
@@ -345,7 +303,7 @@ public class ControlmanualController implements Serializable {
         try {
 
             Estado estado = new Estado();
-            Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.toBigInteger(3));
+            Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoFinalizadoId"));
             if (!optional.isPresent()) {
 
                 JsfUtil.warningMessage("No se ha encontado el estado predeterminado para asignalor a esta operacion.");
@@ -369,7 +327,7 @@ public class ControlmanualController implements Serializable {
 
                     if (agendaRepository.update(agenda)) {
                         agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIO ESTADO A EJECUTADA", user);
-                        JmoordbContext.put("operacionexitosaMensaje", "Cambio Estado a procesando");
+                        JmoordbContext.put("operacionexitosaMensaje", "Cambio Estado a ejecutada");
                         JmoordbContext.put("accionReciente", accionReciente);
                         emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIO ESTADO A EJECUTADA", user, cajero, bank);
                         return "operacionexitosa.xhtml";
@@ -441,4 +399,83 @@ public class ControlmanualController implements Serializable {
         return "";
     }
 // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="onCommandButtonSendToken()">
+    public String onCommandButtonSendToken() {
+
+        sendToken();
+
+        return "";
+    }
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="String sendToken()">
+    public String sendToken() {
+        try {
+            System.out.println("Test--> llego a sendToken.....");
+            tokenEnviado = Boolean.FALSE;
+
+            Token token = new Token();
+            token.setACTIVO("SI");
+            token.setCODIGOTRANSACCION(JsfUtil.getUUID());
+            token.setFECHAGENERACION(DateUtil.fechaHoraActual());
+            token.setFECHAVENCIMIENTO(DateUtil.sumarMinutosAFecha(token.getFECHAGENERACION(), 3));
+            token.setTOKEN(JsfUtil.otp(4));
+            token.setUSADO("NO");
+            token.setUSUARIOID(user.getUSUARIOID());
+            token.setVENCIDO("NO");
+            if (tokenRepository.create(token)) {
+
+                //Envia el token al usuario
+                emailServices.sendTokenToEmail(token, user);
+
+                JsfUtil.successMessage("Se envio el token a su correo. Reviselo por favor");
+                tokenEnviado = Boolean.TRUE;
+
+            } else {
+                JsfUtil.warningMessage("No se pudo generar el token. Repita la acción");
+            }
+
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return "";
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Boolean validateToken() ">    
+
+    public Boolean validateToken() {
+        try {
+            return tokenServices.validateToken(user, tokenIngresado);
+        } catch (Exception e) {
+            JsfUtil.errorMessage("validateToken()" + e.getLocalizedMessage());
+        }
+        return Boolean.FALSE;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="String remoteCommand()">
+    public String remoteCommand() {
+        return "";
+    }
+// </editor-fold>            
+    // <editor-fold defaultstate="collapsed" desc="String marcarNumero() ">
+
+    /**
+     * Se usa para marcar el numero del tokem
+     *
+     * @param numero
+     * @return
+     */
+    public String marcarNumero(String numero) {
+
+        try {
+            tokenIngresado = tokenServices.marcarToken(numero, tokenIngresado);
+
+        } catch (Exception e) {
+            JsfUtil.errorMessage("marcarNumero() " + e.getLocalizedMessage());
+        }
+        return "";
+    }
+// </editor-fold> 
 }

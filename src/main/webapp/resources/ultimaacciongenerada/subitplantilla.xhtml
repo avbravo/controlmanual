@@ -22,10 +22,10 @@
                     <c:if test="${subirPlantillaController.haveAccionReciente}">
                         <dd class="atm-title-mar01"><strong>#{subirPlantillaController.accionReciente.TITULO}</strong></dd>
                         <!--<dd class="atm-title-mar01"><p:outputLabel value="Evento Agendado:#{subirPlantillaController.accionReciente.MENSAJE}"/></dd>-->
-                        <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{subirPlantillaController.showDate(subirPlantillaController.accionReciente.FECHA)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{subirPlantillaController.showHour(subirPlantillaController.accionReciente.FECHA)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!subirPlantillaController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{subirPlantillaController.showDate(subirPlantillaController.accionReciente.FECHA)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!subirPlantillaController.renderedByEstadoSolicitado()}" value="Hora Ejecución: #{subirPlantillaController.showHour(subirPlantillaController.accionReciente.FECHA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{subirPlantillaController.showDate(subirPlantillaController.accionReciente.FECHAAGENDADA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{subirPlantillaController.showHour(subirPlantillaController.accionReciente.FECHAAGENDADA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!subirPlantillaController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{subirPlantillaController.showDate(subirPlantillaController.accionReciente.FECHAEJECUCION)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!subirPlantillaController.renderedByEstadoSolicitado()}" value="Hora Ejecución: #{subirPlantillaController.showHour(subirPlantillaController.accionReciente.FECHAEJECUCION)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel value="Estado:#{subirPlantillaController.accionReciente.ESTADO}"/></dd>
                     </c:if>
                 </div>

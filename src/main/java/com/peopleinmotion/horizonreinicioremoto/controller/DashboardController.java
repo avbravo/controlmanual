@@ -19,6 +19,7 @@ import com.peopleinmotion.horizonreinicioremoto.repository.AgendaHistorialReposi
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.BancoRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.CajeroRepository;
+import com.peopleinmotion.horizonreinicioremoto.services.AccionRecienteServices;
 import com.peopleinmotion.horizonreinicioremoto.services.AgendaHistorialServices;
 import com.peopleinmotion.horizonreinicioremoto.services.DashboardServices;
 import com.peopleinmotion.horizonreinicioremoto.services.TotalesEstadoBancoServices;
@@ -81,7 +82,6 @@ public class DashboardController implements Serializable {
 
     private TotalesEstadoBanco totalesEstadoBanco = new TotalesEstadoBanco();
 
-
     Banco selectOneMenuBancoValue = new Banco();
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="paginator ">
@@ -90,6 +90,9 @@ public class DashboardController implements Serializable {
 // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="injects() ">
+    
+      @Inject
+    AccionRecienteServices accionRecienteServices;
     @Inject
     AgendaRepository agendaRepository;
     @Inject
@@ -251,10 +254,9 @@ public class DashboardController implements Serializable {
         try {
             banco = (Banco) JmoordbContext.get("banco");
             accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
-            
 
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -367,14 +369,25 @@ public class DashboardController implements Serializable {
         return DateUtil.showHour(date);
     }
     // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String showDate(Date date) ">
+    public String showDateLocalDateTime(java.time.LocalDateTime  date) {
+        return DateUtil.showDateLocalDateTime(date);
+    }
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String showHour(Date date) ">
+
+    public String showHourLocalDateTime(java.time.LocalDateTime  date) {
+        return DateUtil.showHourLocalDateTime(date);
+    }
+    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="onCommandButttonCalcularTotales() ">    
     public String onCommandButttonCalcularTotales() {
         try {
             totalesEstadoBanco = totalesEstadoBancoServices.calcularTotalesDelBanco();
-           
+
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -388,7 +401,7 @@ public class DashboardController implements Serializable {
             }
             return Boolean.FALSE;
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
@@ -399,7 +412,7 @@ public class DashboardController implements Serializable {
         try {
             JmoordbContext.put("index", index);
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -414,16 +427,16 @@ public class DashboardController implements Serializable {
      */
     public Boolean drawRowsAgendamiento() {
         return dashboardServices.drawRowsAgendamiento(accionRecienteList);
-       
+
     }
 // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="String onCommandButtonSelectAccionReciente(AccionReciente accionReciente)">
     public String onCommandButtonSelectAccionReciente(AccionReciente accionReciente, String formularioretorno) {
         try {
-          dashboardServices.onCommandButtonSelectAccionReciente(accionReciente, formularioretorno);
+            dashboardServices.onCommandButtonSelectAccionReciente(accionReciente, formularioretorno);
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "/faces/controlmanual.xhtml";
     }
@@ -436,19 +449,20 @@ public class DashboardController implements Serializable {
 
                 @Override
                 public void loadEvents(LocalDateTime start, LocalDateTime end) {
-                 
+
                     Date DESDE = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(start), 0, 00);
                     Date HASTA = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(end), 23, 59);
                     accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
- 
-                  
+
                     if (accionRecienteScheduleList == null || accionRecienteScheduleList.isEmpty()) {
-                        JsfUtil.successMessage("No hay registros");
+                        JsfUtil.successMessage("No hay registros de acciones recientes");
                     } else {
 
                         accionRecienteScheduleList.forEach((a) -> {
+                            String siglas =dashboardServices.generarSiglas(a);
+                           
                             DefaultScheduleEvent event = DefaultScheduleEvent.builder()
-                                    .title(a.getCAJERO())
+                                    .title(a.getCAJERO() + "(" + siglas + ")")
                                     .startDate(DateUtil.convertToLocalDateTimeViaInstant(a.getFECHAAGENDADA()))
                                     .endDate(DateUtil.convertToLocalDateTimeViaInstant(a.getFECHAAGENDADA()))
                                     .description(a.getESTADO())
@@ -494,7 +508,7 @@ public class DashboardController implements Serializable {
     public String filterAccionReciente(BigInteger bancoId, LocalDateTime start, LocalDateTime end, String activo) {
 
         try {
-            
+
             accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeLocalDate(bancoId, end, start, activo);
 
         } catch (Exception e) {
@@ -507,17 +521,17 @@ public class DashboardController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="String onEventSelect(SelectEvent<ScheduleEvent<?>> selectEvent)">
     public String onEventSelect(SelectEvent<ScheduleEvent<?>> selectEvent) {
         try {
-        
+
             event = selectEvent.getObject();
             String id = event.getId();
 
             Optional<AccionReciente> accionRecienteOptional = accionRecienteRepository.findByAccionRecienteId(JsfUtil.toBigInteger(Integer.parseInt(id)));
             if (!accionRecienteOptional.isPresent()) {
-            
+
                 JsfUtil.warningMessage("No se encontro el codigo de accion reciente");
                 return "";
             }
-         
+
             accionRecienteSelected = accionRecienteOptional.get();
             JmoordbContext.put("accionRecienteDashboard", accionRecienteSelected);
             Optional<Cajero> cajeroOptional = cajeroRepository.findByCajeroId(accionRecienteSelected.getCAJEROID());
@@ -531,12 +545,10 @@ public class DashboardController implements Serializable {
             }
             JmoordbContext.put("formularioRetorno", "dashboard");
 
-
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + ": " + e.getLocalizedMessage());
         }
         return "";
-
 
     }
 
@@ -545,7 +557,7 @@ public class DashboardController implements Serializable {
     public String cancelarAccion() {
         try {
             accionRecienteSelected.setACTIVO("NO");
-            
+
             if (accionRecienteRepository.update(accionRecienteSelected)) {
                 //Actualizar la agenda
                 Optional<Agenda> agendaOptional = agendaRepository.findByAgendaId(accionRecienteSelected.getAGENDAID());
@@ -609,4 +621,11 @@ public class DashboardController implements Serializable {
         return "";
     }
 // </editor-fold>
+    
+      // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoSolicitado()">
+    public Boolean renderedByEstadoSolicitado() {
+        return accionRecienteServices.renderedByEstadoSolicitado(accionRecienteSelected);
+
+    }
+    // </editor-fold>
 }

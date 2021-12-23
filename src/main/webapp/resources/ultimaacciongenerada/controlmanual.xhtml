@@ -22,16 +22,12 @@
                     <c:if test="${controlmanualController.haveAccionReciente}">
                         <dd class="atm-title-mar01"><strong>#{controlmanualController.accionReciente.TITULO}</strong></dd>
                         <!--<dd class="atm-title-mar01"><p:outputLabel value="Evento Agendado:#{controlmanualController.accionReciente.MENSAJE}"/></dd>-->
-                        <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{controlmanualController.showDate(controlmanualController.accionReciente.FECHA)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{controlmanualController.showHour(controlmanualController.accionReciente.FECHA)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{controlmanualController.showDate(controlmanualController.accionReciente.FECHA)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="Hora Ejecución: #{controlmanualController.showHour(controlmanualController.accionReciente.FECHA)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel value="Estado:#{controlmanualController.accionReciente.ESTADO}"/></dd>
-                        <p:datePicker id="time1" 
-
-                                      value="#{controlmanualController.accionReciente.FECHAAGENDADA}" showTime="true">
-
-                        </p:datePicker>
+                        <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{controlmanualController.showDate(controlmanualController.accionReciente.FECHAAGENDADA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{controlmanualController.showHour(controlmanualController.accionReciente.FECHAAGENDADA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{controlmanualController.showDate(controlmanualController.accionReciente.FECHAEJECUCION)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="Hora Ejecución: #{controlmanualController.showHour(controlmanualController.accionReciente.FECHAEJECUCION)}"/></dd>
+                        <dd class="atm-title-mar01"><strong><p:outputLabel value="Estado:#{controlmanualController.accionReciente.ESTADO}"/></strong></dd>
+                     
                     </c:if>
                 </div>
 

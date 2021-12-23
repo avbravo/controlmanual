@@ -169,6 +169,19 @@ public class AccessController implements Serializable {
                 JsfUtil.propertiesBigIntegerToContext(prop, "grupoAccionBajarPlantillaId");
                 JsfUtil.propertiesBigIntegerToContext(prop, "grupoAccionReinicioRemotoId");
                 JsfUtil.propertiesBigIntegerToContext(prop, "grupoAccionEncenderSubirPlantillaId");
+                
+                
+                
+                /**
+                 * Estado
+                 * 
+                 */
+                JsfUtil.propertiesBigIntegerToContext(prop, "estadoEnEsperaDeEjecucionId");
+                JsfUtil.propertiesBigIntegerToContext(prop, "estadoProcesandoId");
+                JsfUtil.propertiesBigIntegerToContext(prop, "estadoFinalizadoId");
+                
+                
+                
                 /**
                  * Banco
                  */

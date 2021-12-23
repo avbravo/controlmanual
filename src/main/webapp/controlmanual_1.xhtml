@@ -14,16 +14,15 @@
         <link rel="stylesheet" href="./resources/css/style.css"/>
         <link rel="stylesheet" href="./resources/css/dash01.css"/>
         <link rel="stylesheet" href="./resources/css/mantenimiento.css"/>
-        <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
+         <link rel="stylesheet" href="./resources/css/dataTables.bootstrap.min.css"/>
         <meta name="referrer" content="no-referrer"/>
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
-        <title>Control Manual</title>     
-        <f:metadata><f:viewAction action="#{f5Detector.checkF5}" onPostback="true" /> </f:metadata>
+        <title>Control Manual</title>         <f:metadata><f:viewAction action="#{f5Detector.checkF5}" onPostback="true" /> </f:metadata>
 
     </h:head>
-    <h:body >
-        <h:form id="form" prependId="false" rendered="#{accessController.loged}">
+    <h:body>
+           <h:form id="form" prependId="false" rendered="#{accessController.loged}">
             <script type="text/javascript">
                 function setDataTableWithPageStart() {
 
@@ -55,8 +54,8 @@
                                 <div class="col-md-12 grid-margin">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <h4 class="text-secondary">CAJERO ENCONTRADO</h4>
-                                            <p:commandLink value="REGRESAR" class="bot-regresar01" action="buscarcajero"/>
+                                            <h4 class="text-secondary">CONTROL MANUAL</h4>
+                                            <p:commandLink value="REGRESAR" class="bot-regresar01" action="#{controlmanualController.regresar()}"/>
 
                                         </div>
                                         <!--                                        <div>
@@ -95,73 +94,63 @@
 
                                                         </div>
                                                         <div class="col-2 col-lg-auto atm-card-marbody01" >
-                                                            <button type="button" class="btn btn-rounded btn-fw text-nowrap btn-secondary btn-sm" data-toggle="modal" data-target="#acciones01">#{cajeroEncontradoController.cajero.CAJERO}</button>
+                                                            <button type="button" class="btn btn-rounded btn-fw text-nowrap btn-secondary btn-sm" data-toggle="modal" data-target="#acciones01">#{controlmanualController.cajero.CAJERO}</button>
                                                         </div>
                                                         <div class="col-8 col-lg-9 atm-card-marbody01 atm-mar02" >
                                                             <dl>
-                                                                <dd class="atm-title-mar01"><strong>#{cajeroEncontradoController.cajero.DIRECCIONCORTA}</strong></dd>
-                                                                <dd class="atm-title-mar01">#{cajeroEncontradoController.cajero.DIRECCION}</dd>
+                                                                <dd class="atm-title-mar01"><strong>#{controlmanualController.cajero.DIRECCIONCORTA}</strong></dd>
+                                                                <dd class="atm-title-mar01">#{controlmanualController.cajero.DIRECCION}</dd>
                                                             </dl>
                                                         </div>
                                                     </div>
                                                 </div>
 
-
-                                                <ultimaacciongenerada:cajeroencontrado id="ultimaacciongeneradacajeroencontrado"  />
-
+                                               
+                                                <ultimaacciongenerada:controlmanual id="ultimaacciongeneradacontrolmanual"  />
+     
                                             </div>
 
                                         </div>
                                     </div>
-
-
-
-
-
-
-
+                                    
                                     <div class="card-body ">
-                                        <div class="row justify-content-center">
-                                            <div class="col-11 col-lg-11">
+					<div class="row justify-content-center">
+						<div class="col-11 col-lg-11">
+					
+							<div class="row justify-content-start">
+                                                            
 
-                                                <div class="row justify-content-start">
-                                                   
+								<div class="col-6 col-lg-auto">
+                                                                    <p:commandButton value="Procesando" class="bot-cancelar01" 
+                                                                                   update=":form:growl"
+                                                                                    styleClass="rounded-button ui-button-danger" 
+                                                                                   rendered="#{controlmanualController.showCommandButtonProcesando}"
+                                                                                   action="#{controlmanualController.onCommandButtonProcesando()}">
+                                                                       <p:confirm header="Confirmación" message="Desea cambiar el estatus a procesando" icon="pi pi-exclamation-triangle"/> 
+                                                                    </p:commandLink>
+									
+								</div>
+								<div class="col-6 col-lg-auto">
+									 <p:commandLink value="Finalizado" class="bot-cancelar01" 
+                                                                                   update=":form:growl"
+                                                                                   rendered="#{!controlmanualController.showCommandButtonFinalizar}"
+                                                                                   action="#{controlmanualController.onCommandButtonFinalizando()}">
+                                                                       <p:confirm header="Confirmación" message="Desea cambiar el estatus a terminado?" icon="pi pi-exclamation-triangle"/> 
+                                                                    </p:commandLink>
+								</div>
+						
+							</div>	
+							
+						</div>
+					</div>
+				</div>
 
-                                                    <div class="col-6 col-lg-auto">
-                                                        <p:commandButton value="Bajar Plantilla"
-                                                                         icon="pi pi-arrow-down-right" 
-                                                                         process="@this" 
-                                                                         action="#{cajeroEncontradoController.onCommandButtonGrupoAccionBajarPlantilla()}"
-                                                                         update=":form:growl"
-                                                                         styleClass="rounded-button ui-button-danger" 
-                                                                         style="margin-right: .5rem">
-
-                                                        </p:commandButton>
-                                                    </div>
-                                                    
-                                                    <div class="col-6 col-lg-auto">
-                                                        <p:commandButton value="IR A CONTROL MANUAL" 
-                                                                         rendered="#{cajeroEncontradoController.haveAccionReciente}"
-                                                                         styleClass="rounded-button ui-button-success" 
-                                                                         style="margin-right: .5rem"
-                                                                          update=":form:growl"
-                                                                         icon="pi pi-caret-right"
-                                                                         action="#{cajeroEncontradoController.onCommandButtonIrControlManual()}">
-
-                                                        </p:commandButton>
-                                                    </div>
-
-                                                </div>	
-
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                   
 
                                 </div>
                             </div>
 
-                            <grupoaccion:grupoaccionmenumodal id="cajeroaccionesmodel"/>
+                           
 
                         </div>
                         <!-- content-wrapper ends -->
@@ -184,17 +173,19 @@
                 </div>
                 <!-- page-body-wrapper ends -->
             </div>
-
+<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+        </p:confirmDialog>
         </h:form>    
-        <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
+         <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">
 
             <template:accesodenegado/>
-
+          
         </h:form>
         <!-- container-scroller -->
-
-        <!-- container-scroller -->
-        <template:script/> 
+     <!-- container-scroller -->
+       <template:script/> 
     </h:body>
 
 </html>

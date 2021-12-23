@@ -223,11 +223,11 @@ public class BajarPlantillaController implements Serializable {
 
  
 
-    // <editor-fold defaultstate="collapsed" desc="method() ">
+    // <editor-fold defaultstate="collapsed" desc="onCommandButtonSendToken() ">
     public String onCommandButtonSendToken() {
-        System.out.println("Test-->voy a invocar..");
+     
         sendToken();
-        System.out.println("Test--> tokenEnviado "+tokenEnviado);
+    
         return "";
     }
 // </editor-fold>

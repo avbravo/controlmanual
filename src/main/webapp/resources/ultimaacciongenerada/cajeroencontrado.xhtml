@@ -22,10 +22,10 @@
                     <c:if test="${cajeroEncontradoController.haveAccionReciente}">
                         <dd class="atm-title-mar01"><strong>#{cajeroEncontradoController.accionReciente.TITULO}</strong></dd>
                         <!--<dd class="atm-title-mar01"><p:outputLabel value="Evento Agendado:#{cajeroEncontradoController.accionReciente.MENSAJE}"/></dd>-->
-                        <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{cajeroEncontradoController.showDate(cajeroEncontradoController.accionReciente.FECHA)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{cajeroEncontradoController.showHour(cajeroEncontradoController.accionReciente.FECHA)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!cajeroEncontradoController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{cajeroEncontradoController.showDate(cajeroEncontradoController.accionReciente.FECHA)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!cajeroEncontradoController.renderedByEstadoSolicitado()}" value="Hora Ejecución: #{cajeroEncontradoController.showHour(cajeroEncontradoController.accionReciente.FECHA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{cajeroEncontradoController.showDate(cajeroEncontradoController.accionReciente.FECHAAGENDADA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{cajeroEncontradoController.showHour(cajeroEncontradoController.accionReciente.FECHAAGENDADA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!cajeroEncontradoController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{cajeroEncontradoController.showDate(cajeroEncontradoController.accionReciente.FECHAEJECUCION)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{!cajeroEncontradoController.renderedByEstadoSolicitado()}" value="Hora Ejecución: #{cajeroEncontradoController.showHour(cajeroEncontradoController.accionReciente.FECHAEJECUCION)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel value="Estado:#{cajeroEncontradoController.accionReciente.ESTADO}"/></dd>
                     </c:if>
                 </div>

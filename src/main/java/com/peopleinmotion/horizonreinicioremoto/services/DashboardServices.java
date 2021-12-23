@@ -26,4 +26,5 @@ public interface DashboardServices {
     public Boolean drawRowsAgendamiento(List<AccionReciente> accionRecienteList);
     
    public String onCommandButtonSelectAccionReciente(AccionReciente accionReciente, String formularioretorno);
+   public String generarSiglas(AccionReciente accionReciente);
 }

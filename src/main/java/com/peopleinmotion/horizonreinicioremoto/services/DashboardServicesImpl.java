@@ -222,4 +222,35 @@ public class DashboardServicesImpl implements DashboardServices {
         return "";
     }
     // </editor-fold>
+
+    @Override
+    public String generarSiglas(AccionReciente accionReciente) {
+        String siglas="";
+        try {
+             if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId"))) {
+                                siglas = "S";
+                            } else {
+                                if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoProcesandoId"))) {
+                                    siglas = "P";
+                                } else {
+                                    if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoFinalizadoId"))) {
+                                        siglas = "F";
+                                    } else {
+                                        if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoAcciónNoSePuedeEjecutarId"))) {
+                                            siglas = "N";
+                                        } else {
+                                            if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoRobotNoDisponibleId"))) {
+                                                siglas = "R";
+                                            } else {
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+        } catch (Exception e) {
+               JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+        }
+        return siglas;
+    }
 }
