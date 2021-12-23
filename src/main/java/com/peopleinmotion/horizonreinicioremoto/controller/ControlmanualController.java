@@ -5,6 +5,7 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.controller;
 
+import com.google.gson.Gson;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
@@ -14,6 +15,7 @@ import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
 import com.peopleinmotion.horizonreinicioremoto.entity.Token;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
+import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbUtil;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaHistorialRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaRepository;
@@ -27,6 +29,7 @@ import com.peopleinmotion.horizonreinicioremoto.services.TokenServices;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,6 +56,7 @@ public class ControlmanualController implements Serializable {
     Usuario user = new Usuario();
     Banco bank = new Banco();
     AccionReciente accionReciente = new AccionReciente();
+    AccionReciente accionRecienteOld = new AccionReciente();
     List<GrupoAccion> grupoAccionList = new ArrayList<>();
     Boolean haveAccionReciente = Boolean.FALSE;
 
@@ -90,10 +94,8 @@ public class ControlmanualController implements Serializable {
     public Boolean getShowCommandButtonProcesando() {
 
         try {
-            
-           
-            if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId"))
-                    ) {
+
+            if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId"))) {
                 showCommandButtonProcesando = Boolean.TRUE;
             } else {
                 showCommandButtonProcesando = Boolean.FALSE;
@@ -131,7 +133,7 @@ public class ControlmanualController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            System.out.println("Test--> init....");
+
             if (JmoordbContext.get("user") == null) {
 
             } else {
@@ -140,7 +142,7 @@ public class ControlmanualController implements Serializable {
                 user = (Usuario) JmoordbContext.get("user");
                 bank = (Banco) JmoordbContext.get("banco");
                 accionReciente = (AccionReciente) JmoordbContext.get("accionRecienteDashboard");
-
+                JsfUtil.copyBeans(accionRecienteOld, accionReciente);
                 cajero = (Cajero) JmoordbContext.get("cajero");
                 haveAccionReciente = Boolean.TRUE;
             }
@@ -245,13 +247,22 @@ public class ControlmanualController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="String onCommandButtonProcesando()">
     public String onCommandButtonProcesando() {
         try {
- if(!tokenEnviado){
+            if (!tokenEnviado) {
                 JsfUtil.warningMessage("Usted debe solicite primero un token");
                 return "";
             }
             if (!validateToken()) {
                 return "";
             }
+            /**
+             * Valida si fue cambiado por otro usuario
+             */
+            if (accionRecienteServices.fueCambiadoPorOtroUsuario(accionRecienteOld,"accionRecienteDashboard")) {
+                   PrimeFaces.current().ajax().update("form:growl", "form");
+                return "";
+            }
+            
+            
             Estado estado = new Estado();
             Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoProcesandoId"));
             if (!optional.isPresent()) {
@@ -259,10 +270,12 @@ public class ControlmanualController implements Serializable {
                 JsfUtil.warningMessage("No se ha encontado el estado predeterminado para asignalor a esta operacion.");
             } else {
                 estado = optional.get();
-
             }
+            
+
             accionReciente.setESTADOID(estado.getESTADOID());
             accionReciente.setESTADO(estado.getESTADO());
+            accionReciente.setFECHA(DateUtil.getFechaHoraActual());
             if (accionRecienteRepository.update(accionReciente)) {
                 //Actualizar la agenda
 
@@ -301,7 +314,22 @@ public class ControlmanualController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="String onCommandButtonFinalizando()">
     public String onCommandButtonFinalizando() {
         try {
-
+            if (!tokenEnviado) {
+                JsfUtil.warningMessage("Usted debe solicite primero un token");
+                return "";
+            }
+            if (!validateToken()) {
+                return "";
+            }
+            /**
+             * Valida si fue cambiado por otro usuario
+             */
+            if (accionRecienteServices.fueCambiadoPorOtroUsuario(accionRecienteOld,"accionRecienteDashboard")) {
+                PrimeFaces.current().ajax().update("form:growl", "form");
+                return "";
+            }
+            
+            
             Estado estado = new Estado();
             Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoFinalizadoId"));
             if (!optional.isPresent()) {
@@ -311,6 +339,7 @@ public class ControlmanualController implements Serializable {
                 estado = optional.get();
 
             }
+            
             accionReciente.setESTADOID(estado.getESTADOID());
             accionReciente.setESTADO(estado.getESTADO());
             if (accionRecienteRepository.update(accionReciente)) {

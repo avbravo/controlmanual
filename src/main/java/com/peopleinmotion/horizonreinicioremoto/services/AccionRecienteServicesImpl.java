@@ -5,6 +5,7 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.services;
 
+import com.google.gson.Gson;
 import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
@@ -12,8 +13,10 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
+import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
+import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -81,4 +84,39 @@ public class AccionRecienteServicesImpl implements AccionRecienteServices {
         return Boolean.FALSE;
     }
 // </editor-fold>
+
+    
+    // <editor-fold defaultstate="collapsed" desc="Boolean fueCambiadoPorOtroUsuario(AccionReciente accionReciente)">
+
+    @Override
+    public Boolean fueCambiadoPorOtroUsuario(AccionReciente accionReciente, String context) {
+        Boolean fueCambiado=Boolean.FALSE;
+        try {
+            /**
+             *
+             * Se usa un objeto JSON PARA COMPARAR
+ *
+             */
+           Optional<AccionReciente> live = accionRecienteRepository.findByAccionRecienteId(accionReciente.getACCIONRECIENTEID());
+            if (!live.isPresent()) {
+                JsfUtil.warningMessage("El registro de accicon reciente no fue encontrado en la base de datos");
+                return Boolean.TRUE;
+            }
+            String jsonAccionRecienteLive = new Gson().toJson(live.get());
+           
+            String jsonAccionReciente = new Gson().toJson(accionReciente);
+          
+            if (!jsonAccionReciente.equals(jsonAccionRecienteLive)) {
+                JsfUtil.warningDialog("Alguien cambio registro ","Otro usuario cambio el estado de la accion reciente.Actualizaremos este valor");
+                JmoordbContext.put(context, live.get());
+                  return Boolean.TRUE;
+            }
+        } catch (Exception e) {
+          JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+        }
+            return fueCambiado;
+       
+    }
+    
+    // </editor-fold>
 }
