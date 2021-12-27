@@ -223,6 +223,9 @@ public class DashboardServicesImpl implements DashboardServices {
     }
     // </editor-fold>
 
+    
+    // <editor-fold defaultstate="collapsed" desc="String generarSiglas(AccionReciente accionReciente)">
+
     @Override
     public String generarSiglas(AccionReciente accionReciente) {
         String siglas="";
@@ -253,4 +256,5 @@ public class DashboardServicesImpl implements DashboardServices {
         }
         return siglas;
     }
+    // </editor-fold>
 }

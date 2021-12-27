@@ -6,6 +6,7 @@
 package com.peopleinmotion.horizonreinicioremoto.facade;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.EmailConfiguration;
+import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.Optional;
 import javax.ejb.Stateless;
@@ -33,6 +34,20 @@ public class EmailConfigurationFacade extends AbstractFacade<EmailConfiguration>
     }
     
     
+    // <editor-fold defaultstate="collapsed" desc="Optional<EmailConfiguration> find(BigInteger id) ">
+
+      public Optional<EmailConfiguration> find(BigInteger id) {
+         try {
+               Query query = em.createNamedQuery("EmailConfiguration.findByEmailConfigurationId");
+        EmailConfiguration emailConfiguration = (EmailConfiguration)query.setParameter("EMAILCONFIGURATIONID",id).getSingleResult();
+         return Optional.of(emailConfiguration);
+         } catch (Exception e) {
+             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    }
+      // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Optional<EmailConfiguration> findByEmailConfigurationId(BigInteger EMAILCONFIGURATIONID) ">
 
       public Optional<EmailConfiguration> findByEmailConfigurationId(BigInteger EMAILCONFIGURATIONID) {

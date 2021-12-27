@@ -10,6 +10,7 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoEstado;
+import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,19 @@ public class EstadoFacade extends AbstractFacade<Estado> {
         super(Estado.class);
     }
 
+    // <editor-fold defaultstate="collapsed" desc="Optional<Estado> find(BigInteger id)">
+    public Optional<Estado> find(BigInteger id) {
+        try {
+            Query query = em.createNamedQuery("Estado.findByEstadoId");
+            Estado estado = (Estado) query.setParameter("ESTADOID", id).getSingleResult();
+            return Optional.of(estado);
+        } catch (Exception e) {
+            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return Optional.empty();
+
+    }
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Optional<Estado> findByEstadoId(BigInteger ACCIONID)">
     public Optional<Estado> findByEstadoId(BigInteger ESTADOID) {
         try {

@@ -35,6 +35,20 @@ public class AgendaFacade extends AbstractFacade<Agenda> {
         super(Agenda.class);
     }
     
+    // <editor-fold defaultstate="collapsed" desc="Optional<Agenda> find(BigInteger id) ">
+
+     public Optional<Agenda> find(BigInteger id) {
+         try {
+               Query query = em.createNamedQuery("Agenda.findByAgendaId");
+        Agenda agenda = (Agenda)query.setParameter("AGENDAID", id).getSingleResult();
+         return Optional.of(agenda);
+         } catch (Exception e) {
+              System.out.println(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    }
+     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Optional<Agenda> findByAgendaId(BigInteger AGENDAID) ">
 
      public Optional<Agenda> findByAgendaId(BigInteger AGENDAID) {
@@ -83,7 +97,7 @@ public class AgendaFacade extends AbstractFacade<Agenda> {
        // <editor-fold defaultstate="collapsed" desc="Long countByBancoIdAndEstadoIdAndActivo(BigInteger BANCOID,BigInteger ESTADOID,String ACTIVO)">    
 
        public int countByBancoIdAndEstadoIdAndActivo(BigInteger BANCOID,BigInteger ESTADOID,String ACTIVO) {
-           // System.out.println("Test>>> AgendaFacade--> BANCOID "+BANCOID + " ESTADOID "+ESTADOID + " ACTIVO "+ACTIVO);
+           
         Query query = em.createQuery("SELECT COUNT(a) FROM Agenda a WHERE a.BANCOID = :BANCOID AND a.ESTADOID = :ESTADOID AND a.ACTIVO = :ACTIVO");
         return ((Long) query.setParameter("BANCOID", BANCOID).setParameter("ESTADOID", ESTADOID).setParameter("ACTIVO", ACTIVO).getSingleResult()).intValue();
         

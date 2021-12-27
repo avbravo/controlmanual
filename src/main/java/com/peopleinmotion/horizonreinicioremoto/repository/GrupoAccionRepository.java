@@ -16,6 +16,7 @@ import java.util.Optional;
  */
 public interface GrupoAccionRepository {
     public List<GrupoAccion> findAll();
+    public Optional<GrupoAccion> find(BigInteger id);
     public Optional<GrupoAccion> findByGrupoAccionId(BigInteger GRUPOACCIONID);
     public Boolean create(GrupoAccion grupoAccion);
     

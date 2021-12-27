@@ -74,6 +74,11 @@ public class AccionRepositoryImpl implements AccionRepository {
          return accionFacade.findByGrupoAccionIdAndPredeterminado(GRUPOACCIONID, PREDETERMINADO);
     }
 
+    @Override
+    public Optional<Accion> find(BigInteger id) {
+       return accionFacade.find(id);
+    }
+
     
     
     

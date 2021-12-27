@@ -46,4 +46,9 @@ public class GrupoAccionRepositoryImpl implements GrupoAccionRepository {
         return false;
     }
 
+    @Override
+    public Optional<GrupoAccion> find(BigInteger id) {
+       return grupoAccionFacade.find(id);
+    }
+
 }

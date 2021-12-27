@@ -18,6 +18,7 @@ import java.util.Optional;
  */
 public interface AccionRecienteRepository {
     public List<AccionReciente> findAll();
+    public Optional<AccionReciente> find(BigInteger id);
     public Optional<AccionReciente> findByAccionRecienteId(BigInteger ACCIONRECIENTEID);
     public List<AccionReciente> findByBancoId(BigInteger BANCOID) ;
     public List<AccionReciente> findByCajeroId(BigInteger CAJEROID);

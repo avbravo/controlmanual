@@ -6,9 +6,14 @@
 package com.peopleinmotion.horizonreinicioremoto.facade;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.Grupo;
+import com.peopleinmotion.horizonreinicioremoto.entity.GrupoEstado;
+import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
+import java.math.BigInteger;
+import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +34,33 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         super(Grupo.class);
     }
     
+      // <editor-fold defaultstate="collapsed" desc="Optional<Grupo> find(BigInteger id)">
+
+         public Optional<Grupo> find(BigInteger id) {
+         try {
+               Query query = em.createNamedQuery("Grupo.findByGrupoId");
+        Grupo grupo = (Grupo)query.setParameter("GRUPOID", id).getSingleResult();
+         return Optional.of(grupo);
+         } catch (Exception e) {
+             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    }
+         // </editor-fold>
+         // <editor-fold defaultstate="collapsed" desc="Optional<Grupo> findByGrupoId(BigInteger GRUPOID)">
+
+
+         public Optional<Grupo> findByGrupoId(BigInteger GRUPOID) {
+         try {
+               Query query = em.createNamedQuery("GrupoEstado.findByGrupoId");
+        Grupo grupo = (Grupo)query.setParameter("GRUPOID", GRUPOID).getSingleResult();
+         return Optional.of(grupo);
+         } catch (Exception e) {
+             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    }
+         // </editor-fold>
 }

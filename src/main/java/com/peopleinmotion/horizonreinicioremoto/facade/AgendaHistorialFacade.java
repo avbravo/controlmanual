@@ -7,6 +7,7 @@ package com.peopleinmotion.horizonreinicioremoto.facade;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
 import com.peopleinmotion.horizonreinicioremoto.entity.AgendaHistorial;
+import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.Optional;
 import javax.ejb.Stateless;
@@ -32,7 +33,24 @@ public class AgendaHistorialFacade extends AbstractFacade<AgendaHistorial> {
     public AgendaHistorialFacade() {
         super(AgendaHistorial.class);
     }
-    
+    // <editor-fold defaultstate="collapsed" desc=" Optional<AgendaHistorial> find(BigInteger id) ">
+
+
+     public Optional<AgendaHistorial> find(BigInteger id) {
+         try {
+               Query query = em.createNamedQuery("Agenda.findByAgendaId");
+        AgendaHistorial agendaHistorial = (AgendaHistorial)query.setParameter("AGENDAHISTORIALID",id).getSingleResult();
+         return Optional.of(agendaHistorial);
+         } catch (Exception e) {
+             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    }
+     // </editor-fold>
+     // <editor-fold defaultstate="collapsed" desc="Optional<AgendaHistorial> findByAgendaHistorialId(BigInteger AGENDAHISTORIALID)">
+
+
      public Optional<AgendaHistorial> findByAgendaHistorialId(BigInteger AGENDAHISTORIALID) {
          try {
                Query query = em.createNamedQuery("Agenda.findByAgendaId");
@@ -43,6 +61,6 @@ public class AgendaHistorialFacade extends AbstractFacade<AgendaHistorial> {
          }
          return Optional.empty();
       
-    }
+    }// </editor-fold>
     
 }

@@ -5,9 +5,8 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.facade;
 
-import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoEstado;
-import com.peopleinmotion.horizonreinicioremoto.entity.GrupoEstado;
+import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,19 +35,35 @@ public class GrupoEstadoFacade extends AbstractFacade<GrupoEstado> {
         super(GrupoEstado.class);
     }
     
-    
+    // <editor-fold defaultstate="collapsed" desc="Optional<GrupoEstado> find(BigInteger id)">
+
+         public Optional<GrupoEstado> find(BigInteger id) {
+         try {
+               Query query = em.createNamedQuery("GrupoEstado.findByGrupoEstadoId");
+        GrupoEstado grupoEstado = (GrupoEstado)query.setParameter("GRUPOESTADOID", id).getSingleResult();
+         return Optional.of(grupoEstado);
+         } catch (Exception e) {
+             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    }
+         // </editor-fold>
+         // <editor-fold defaultstate="collapsed" desc="Optional<GrupoEstado> findByGrupoEstadoId(BigInteger GRUPOESTADOID)">
+
+
          public Optional<GrupoEstado> findByGrupoEstadoId(BigInteger GRUPOESTADOID) {
          try {
                Query query = em.createNamedQuery("GrupoEstado.findByGrupoEstadoId");
         GrupoEstado grupoEstado = (GrupoEstado)query.setParameter("GRUPOESTADOID", GRUPOESTADOID).getSingleResult();
          return Optional.of(grupoEstado);
          } catch (Exception e) {
-             // System.out.println("findByGrupoEstadoId() "+e.getLocalizedMessage());
+             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
          }
          return Optional.empty();
       
     }
-         
+         // </editor-fold>
          
            // <editor-fold defaultstate="collapsed" desc="List<GrupoEstado> findByActivo(String ACTIVO) ">
 public List<GrupoEstado> findByActivo(String ACTIVO) {

@@ -17,6 +17,7 @@ import java.util.Optional;
  */
 public interface EmailConfigurationRepository {
     public List<EmailConfiguration> findAll(); 
+    public Optional<EmailConfiguration> find(BigInteger id);
     public Optional<EmailConfiguration> findByEmailConfigurationId(BigInteger EMAILCONFIGURATIONID);
     public Optional<EmailConfiguration> findByActivo(String ACTIVO);
     public Boolean create(EmailConfiguration emailConfiguration);

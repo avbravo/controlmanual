@@ -37,6 +37,19 @@ public class AccionFacade extends AbstractFacade<Accion> {
         super(Accion.class);
     }
 
+     // <editor-fold defaultstate="collapsed" desc="Optional<Accion> find(BigInteger id)">
+public Optional<Accion> find(BigInteger id) {
+         try {
+               Query query = em.createNamedQuery("Accion.findByAccionId");
+       Accion accion = (Accion)query.setParameter("ACCIONID", id).getSingleResult();
+         return Optional.of(accion);
+         } catch (Exception e) {
+             System.out.println(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    } 
+// </editor-fold>
      // <editor-fold defaultstate="collapsed" desc="Optional<Accion> findByAccionId(BigInteger ACCIONID)">
 public Optional<Accion> findByAccionId(BigInteger ACCIONID) {
          try {

@@ -37,6 +37,19 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
     public AccionRecienteFacade() {
         super(AccionReciente.class);
     }
+// <editor-fold defaultstate="collapsed" desc="Optional<AccionReciente> find(BigInteger id)">
+
+    public Optional<AccionReciente> find(BigInteger id) {
+        try {
+            Query query = em.createNamedQuery("AccionReciente.findByAccionRecienteId");
+            AccionReciente accionReciente = (AccionReciente) query.setParameter("ACCIONRECIENTEID", id).getSingleResult();
+            return Optional.of(accionReciente);
+        } catch (Exception e) {
+ System.out.println(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+        }
+        return Optional.empty();
+
+    }// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Optional<AccionReciente> findByAccionRecienteId(BigInteger ACCIONRECIENTEID)">
 
     public Optional<AccionReciente> findByAccionRecienteId(BigInteger ACCIONRECIENTEID) {
@@ -111,10 +124,9 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
     public Optional<AccionReciente> findByBancoIdAndCajeroIdUltimaAccionDisponible(BigInteger BANCOID, BigInteger CAJEROID) {
 
         try {
-            System.out.println("Test-->AccionRecienteFacade BANCOID "+BANCOID + " CAJEROID "+CAJEROID);
+            
             Query query = em.createQuery("SELECT a FROM AccionReciente a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID AND (a.ESTADOID <= 2) ORDER BY a.AGENDAID DESC");
-     //     Query query = em.createQuery("SELECT a FROM AccionReciente a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID ORDER BY a.AGENDAID DESC");
-            query.setParameter("BANCOID", BANCOID).setParameter("CAJEROID", CAJEROID);
+                 query.setParameter("BANCOID", BANCOID).setParameter("CAJEROID", CAJEROID);
             query.setFirstResult(0);
             query.setMaxResults(1);
             AccionReciente accionReciente = (AccionReciente) query.getSingleResult();

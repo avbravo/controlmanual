@@ -5,14 +5,18 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.repository;
 
+import com.google.gson.Gson;
 import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
+import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.facade.BancoFacade;
+import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.Query;
 
 /**
  *
@@ -36,7 +40,6 @@ public class BancoRepositoryImpl implements BancoRepository {
     }
 
     // <editor-fold defaultstate="collapsed" desc="Boolean create(Banco banco) ">
-
     @Override
     public Boolean create(Banco banco) {
         try {
@@ -50,23 +53,22 @@ public class BancoRepositoryImpl implements BancoRepository {
 // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Optional<Banco> findByEsControlActivo(String ESCONTROL, String ACTIVO) ">
-
     @Override
     public Optional<Banco> findByEsControlAndActivo(String ESCONTROL, String ACTIVO) {
-      return bancoFacade.findByEsControlAndActivo(ESCONTROL, ACTIVO);
+        return bancoFacade.findByEsControlAndActivo(ESCONTROL, ACTIVO);
     }
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Optional<Banco> findByEsControlActivoList(String ESCONTROL, String ACTIVO) ">
 
     @Override
     public List<Banco> findByEsControlAndActivoList(String ESCONTROL, String ACTIVO) {
-      return bancoFacade.findByEsControlAndActivoList(ESCONTROL, ACTIVO);
+        return bancoFacade.findByEsControlAndActivoList(ESCONTROL, ACTIVO);
     }
     // </editor-fold>
 
     @Override
     public Boolean update(Banco banco) {
-     try {
+        try {
             bancoFacade.edit(banco);
             return true;
         } catch (Exception e) {
@@ -77,12 +79,63 @@ public class BancoRepositoryImpl implements BancoRepository {
 
     @Override
     public Boolean delete(Banco banco) {
-          try {
+        try {
             bancoFacade.remove(banco);
             return true;
         } catch (Exception e) {
             // System.out.println("update() " + e.getLocalizedMessage());
         }
         return false;
+    }
+
+    @Override
+    public int queryCount(Query query) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Banco> queryPagination(Query query, Integer pageNumber, Integer rowForPage) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Banco> queryWithOutPagination(Query query) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+// <editor-fold defaultstate="collapsed" desc="Boolean changed(Banco banco)>
+
+    @Override
+    public Boolean changed(Banco banco) {
+        try {
+            /**
+             *
+             * Se usa un objeto JSON PARA COMPARAR
+             *
+             */
+            
+            Optional<Banco> live = bancoFacade.findByBancoId(banco.getBANCOID());
+            if (!live.isPresent()) {
+//No se encontro el registro                
+                return Boolean.TRUE;
+            }
+            String jsonLive = new Gson().toJson(live.get());
+
+            String json = new Gson().toJson(banco);
+
+            if (!json.equals(jsonLive)) {
+                //Otro usuario lo cambio mientras se estaba procesando
+                return Boolean.TRUE;
+
+            }
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return Boolean.FALSE;
+    }
+    // </editor-fold>
+
+    @Override
+    public Optional<Banco> find(BigInteger id) {
+        return bancoFacade.find(id);
     }
 }

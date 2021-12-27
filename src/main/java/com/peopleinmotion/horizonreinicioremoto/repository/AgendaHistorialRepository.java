@@ -16,6 +16,7 @@ import java.util.Optional;
  */
 public interface AgendaHistorialRepository {
     public List<AgendaHistorial> findAll();
+    public Optional<AgendaHistorial> find(BigInteger id);
     public Optional<AgendaHistorial> findByAgendaHistorialId(BigInteger AGENDAHISTORIALID);
     public Boolean create(AgendaHistorial agendaHistorial);
  

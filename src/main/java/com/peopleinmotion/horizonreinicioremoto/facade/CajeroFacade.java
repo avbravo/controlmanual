@@ -35,6 +35,19 @@ public class CajeroFacade extends AbstractFacade<Cajero> {
     public CajeroFacade() {
         super(Cajero.class);
     }
+    // <editor-fold defaultstate="collapsed" desc="Optional<Cajero> find(BigInteger id)">
+public Optional<Cajero> find(BigInteger id) {
+         try {
+               Query query = em.createNamedQuery("Cajero.findByCajeroId");
+       Cajero cajero = (Cajero)query.setParameter("CAJEROID", id).getSingleResult();
+         return Optional.of(cajero);
+         } catch (Exception e) {
+             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    } 
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Optional<Cajero> findByCajeroId(BigInteger CAJEROID)">
 public Optional<Cajero> findByCajeroId(BigInteger CAJEROID) {
          try {

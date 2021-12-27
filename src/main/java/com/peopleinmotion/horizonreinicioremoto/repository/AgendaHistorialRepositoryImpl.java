@@ -48,6 +48,11 @@ public class AgendaHistorialRepositoryImpl implements AgendaHistorialRepository 
         return agendaHistorialFacade.findByAgendaHistorialId(AGENDAHISTORIALID);
     }
 
+    @Override
+    public Optional<AgendaHistorial> find(BigInteger id) {
+        return agendaHistorialFacade.find(id);
+    }
+
     
 
 }

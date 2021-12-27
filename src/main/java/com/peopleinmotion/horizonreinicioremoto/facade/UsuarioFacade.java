@@ -37,6 +37,22 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     public UsuarioFacade() {
         super(Usuario.class);
     }
+// <editor-fold defaultstate="collapsed" desc="Optional<Usuario> find(BigInteger id)  ">
+
+
+    public Optional<Usuario> find(BigInteger id) {
+        try {
+            Query query = em.createNamedQuery("Usuario.findByUsuarioId");
+            Usuario usuario = (Usuario) query.setParameter("USUARIOID", id).getSingleResult();
+            return Optional.of(usuario);
+        } catch (Exception e) {
+            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return Optional.empty();
+
+    }
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Optional<Usuario> findByUsuarioId(BigInteger USUARIOID) ">
 
     public Optional<Usuario> findByUsuarioId(BigInteger USUARIOID) {
         try {
@@ -44,12 +60,12 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             Usuario usuario = (Usuario) query.setParameter("USUARIOID", USUARIOID).getSingleResult();
             return Optional.of(usuario);
         } catch (Exception e) {
-            // System.out.println("findByUsuarioId() " + e.getLocalizedMessage());
+            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Optional.empty();
 
     }
-
+// </editor-fold>
     public List<Usuario> findByUsername(String username) {
         Query query = em.createNamedQuery("Usuario.findByUsername");
         return query.setParameter("USERNAME", username).getResultList();

@@ -55,6 +55,11 @@ public class EmailConfigurationRepositoryImpl implements EmailConfigurationRepos
      return emailConfigurationFacade.findByActivo(ACTIVO);
     }
 
+    @Override
+    public Optional<EmailConfiguration> find(BigInteger id) {
+      return emailConfigurationFacade.find(id);
+    }
+
     
 
 }

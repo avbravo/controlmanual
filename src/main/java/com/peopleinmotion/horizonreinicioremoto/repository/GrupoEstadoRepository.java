@@ -16,6 +16,7 @@ import java.util.Optional;
  */
 public interface GrupoEstadoRepository {
     public List<GrupoEstado> findAll();
+    public Optional<GrupoEstado> find(BigInteger id);
     public Optional<GrupoEstado> findByGrupoEstadoId(BigInteger GRUPOACCIONID);
     public Boolean create(GrupoEstado grupoEstado);
     public List<GrupoEstado> findByActivo(String ACTIVO) ;

@@ -67,4 +67,9 @@ public class EstadoRepositoryImpl implements EstadoRepository {
         return estadoFacade.findByPredeterminadoAndActivo(PREDETERMINADO, ACTIVO);
     }
 
+    @Override
+    public Optional<Estado> find(BigInteger id) {
+       return estadoFacade.find(id);
+    }
+
 }

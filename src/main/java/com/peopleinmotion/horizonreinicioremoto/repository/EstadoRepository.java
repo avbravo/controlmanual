@@ -19,6 +19,7 @@ public interface EstadoRepository {
 
     public List<Estado> findAll();
 
+    public Optional<Estado> find(BigInteger id);
     public Optional<Estado> findByEstadoId(BigInteger ESTADOID);
 
     public List<Estado> findByGrupoEstadoId(GrupoEstado GRUPOESTADOID);

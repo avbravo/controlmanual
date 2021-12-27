@@ -5,10 +5,15 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.facade;
 
+import com.peopleinmotion.horizonreinicioremoto.entity.GrupoUsuario;
 import com.peopleinmotion.horizonreinicioremoto.entity.Historial;
+import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
+import java.math.BigInteger;
+import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +33,18 @@ public class HistorialFacade extends AbstractFacade<Historial> {
     public HistorialFacade() {
         super(Historial.class);
     }
-    
+        // <editor-fold defaultstate="collapsed" desc="Optional<Historial> find(BigInteger id)">
+
+
+    public Optional<Historial> find(BigInteger id) {
+         try {
+               Query query = em.createNamedQuery("Historial.findByHistorialId");
+        Historial historial = (Historial)query.setParameter("HISTORIALID", id).getSingleResult();
+         return Optional.of(historial);
+         } catch (Exception e) {
+             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    }// </editor-fold>
 }

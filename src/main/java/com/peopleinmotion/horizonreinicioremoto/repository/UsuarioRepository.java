@@ -17,6 +17,7 @@ import java.util.Optional;
  */
 public interface UsuarioRepository {
     public List<Usuario> findAll();
+    public Optional<Usuario> find(BigInteger id) ;
     public Optional<Usuario> findByUsuarioId(BigInteger USUARIOID) ;
     public List<Usuario> findByUsername(String USERNAME);
     public List<Usuario> findByBancoIdAndActivo(Banco BANCOID, String ACTIVO);

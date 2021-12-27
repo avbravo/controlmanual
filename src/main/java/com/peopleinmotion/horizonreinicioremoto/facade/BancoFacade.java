@@ -36,6 +36,37 @@ public class BancoFacade extends AbstractFacade<Banco> {
     public BancoFacade() {
         super(Banco.class);
     }
+    // <editor-fold defaultstate="collapsed" desc="Optional<Banco> find(BigInteger BANCOID)">
+/**
+ * Busca por la llave primaria se usa solo el nombre find() para simplificar su uso
+ * @param BANCOID
+ * @return 
+ */
+     public Optional<Banco> find(BigInteger id) {
+         try {
+        Query query = em.createNamedQuery("Banco.findByBancoId");
+        Banco banco = (Banco)query.setParameter("BANCOID", id).getSingleResult();
+         return Optional.of(banco);
+         } catch (Exception e) {
+             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Optional<Banco> findById(BigInteger BANCOID)">
+
+
+     public Optional<Banco> findById(BigInteger BANCOID) {
+         try {
+        Query query = em.createNamedQuery("Banco.findByBancoId");
+        Banco banco = (Banco)query.setParameter("BANCOID", BANCOID).getSingleResult();
+         return Optional.of(banco);
+         } catch (Exception e) {
+             // System.out.println("findByBancoId() "+e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Optional<Banco> findByBancoId(BigInteger BANCOID)">
 
 
@@ -68,12 +99,12 @@ public class BancoFacade extends AbstractFacade<Banco> {
       
     }
      // </editor-fold>
-         // <editor-fold defaultstate="collapsed" desc="Optional<Banco> findByEsControlActivo(String ESCONTROL, String ACTIVO) ">
+         // <editor-fold defaultstate="collapsed" desc="Optional<Banco> findByEsControlActivoList(String ESCONTROL, String ACTIVO) ">
 
      public List<Banco> findByEsControlAndActivoList(String ESCONTROL, String ACTIVO) {
            List<Banco> list = new ArrayList<>();
          try {
-      Query query = em.createQuery("SELECT b FROM Banco b WHERE b.ESCONTROL = :ESCONTROL AND b.ACTIVO = :ACTIVO ORDER BY b.BANCO");
+             Query query = em.createQuery("SELECT b FROM Banco b WHERE b.ESCONTROL = :ESCONTROL AND b.ACTIVO = :ACTIVO ORDER BY b.BANCO");
               list =
           
       list = query.setParameter("ESCONTROL", ESCONTROL).setParameter("ACTIVO", ACTIVO).getResultList();
@@ -85,5 +116,31 @@ public class BancoFacade extends AbstractFacade<Banco> {
       
     }
      // </editor-fold>
+     
+//         // <editor-fold defaultstate="collapsed" desc="List<Banco> queryPagination(Query query,Integer pageNumber,Integer rowForPage)">
+//
+//     public List<Banco> queryPagination(Query query,Integer pageNumber,Integer rowForPage) {
+//           List<Banco> list = new ArrayList<>();
+//         try {
+//     
+//          
+//      list = query.setFirstResult(pageNumber).setMaxResults(rowForPage).getResultList();
+//       
+//         } catch (Exception e) {
+//              System.out.println(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+//         }
+//         return list;
+//      
+//    }
+//     // </editor-fold>
+//     
+//      // <editor-fold defaultstate="collapsed" desc="int queryCount(Query query)">    
+//
+//       public int queryCount(Query query) {
+//        //Query query = em.createQuery("SELECT COUNT(a) FROM Agenda a WHERE a.ESTADOID = :ESTADOID AND a.ACTIVO = :ACTIVO");
+//        return ((Long) query.getSingleResult()).intValue();
+//    }
+//       // </editor-fold>
+
 
 }

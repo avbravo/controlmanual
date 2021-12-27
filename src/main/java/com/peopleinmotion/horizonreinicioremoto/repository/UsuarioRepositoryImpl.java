@@ -55,5 +55,10 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         return usuarioFacade.findByBancoIdAndActivo(BANCOID, ACTIVO);
     }
 
+    @Override
+    public Optional<Usuario> find(BigInteger id) {
+        return usuarioFacade.find(id);
+    }
+
    
 }

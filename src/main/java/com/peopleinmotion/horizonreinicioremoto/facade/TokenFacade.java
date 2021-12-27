@@ -40,6 +40,20 @@ public class TokenFacade extends AbstractFacade<Token> {
     }
 
     
+      // <editor-fold defaultstate="collapsed" desc="Optional<Token> find(BigInteger id) ">
+
+     public Optional<Token> find(BigInteger id) {
+         try {
+               Query query = em.createNamedQuery("Token.findByTokenId");
+       Token token = (Token)query.setParameter("TOKENID", id).getSingleResult();
+         return Optional.of(token);
+         } catch (Exception e) {
+             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    }
+     // </editor-fold>
       // <editor-fold defaultstate="collapsed" desc="Optional<Token> findByTokenId(BigInteger TOKENID) ">
 
      public Optional<Token> findByTokenId(BigInteger TOKENID) {

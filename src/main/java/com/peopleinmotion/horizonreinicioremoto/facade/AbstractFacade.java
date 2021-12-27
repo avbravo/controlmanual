@@ -9,6 +9,7 @@ import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -90,4 +91,25 @@ public abstract class AbstractFacade<T> {
         return ((Long) q.getSingleResult()).intValue();
     }
 
+      // <editor-fold defaultstate="collapsed" desc=" List<T> queryWithOutPagination(Query query)">
+     public List<T> queryWithOutPagination(Query query) {
+          return query.getResultList();
+    }
+      // </editor-fold>
+     
+      // <editor-fold defaultstate="collapsed" desc="List<T> queryPagination(Query query,Integer pageNumber,Integer rowForPage)">
+     public List<T> queryPagination(Query query,Integer pageNumber,Integer rowForPage) {
+         query.setFirstResult(pageNumber).setMaxResults(rowForPage);
+        return query.getResultList();
+    }
+      // </editor-fold>
+     
+     
+      // <editor-fold defaultstate="collapsed" desc="int queryCount(Query query)">    
+
+       public int queryCount(Query query) {
+        //Query query = em.createQuery("SELECT COUNT(a) FROM Agenda a WHERE a.ESTADOID = :ESTADOID AND a.ACTIVO = :ACTIVO");
+        return ((Long) query.getSingleResult()).intValue();
+    }
+       // </editor-fold>
 }

@@ -20,6 +20,7 @@ public interface AccionRepository {
     public List<Accion> findAll();
 
     public Optional<Accion> findByAccionId(BigInteger ACCIONID);
+    public Optional<Accion> find(BigInteger id);
 
     public List<Accion> findByAccionIdAndActivo(BigInteger ACCIONID, String ACTIVO);
 

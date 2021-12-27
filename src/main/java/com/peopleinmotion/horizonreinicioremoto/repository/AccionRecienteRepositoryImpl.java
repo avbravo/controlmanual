@@ -121,6 +121,11 @@ public class AccionRecienteRepositoryImpl implements AccionRecienteRepository {
       return agendaRecienteFacade.findByBancoIdAndActivo(BANCOID, ACTIVO);
     }
 
+    @Override
+    public Optional<AccionReciente> find(BigInteger id) {
+       return agendaRecienteFacade.find(id);
+    }
+
     
 
 }

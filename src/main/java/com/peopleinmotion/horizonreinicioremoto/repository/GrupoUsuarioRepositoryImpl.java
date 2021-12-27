@@ -83,4 +83,9 @@ public class GrupoUsuarioRepositoryImpl implements GrupoUsuarioRepository{
     public List<GrupoUsuario> findByUsuarioIdAndGrupoId(Usuario USUARIOID, Grupo GRUPOID) {
       return grupoUsuarioFacade.findByUsuarioIdAndGrupoId(USUARIOID, GRUPOID);
     }
+
+    @Override
+    public Optional<GrupoUsuario> find(BigInteger id) {
+      return grupoUsuarioFacade.find(id);
+    }
 }

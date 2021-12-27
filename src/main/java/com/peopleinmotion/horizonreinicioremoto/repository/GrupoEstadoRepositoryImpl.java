@@ -53,4 +53,9 @@ public class GrupoEstadoRepositoryImpl implements GrupoEstadoRepository {
         return grupoEstadoFacade.findByActivo(ACTIVO);
     }
 // </editor-fold>
+
+    @Override
+    public Optional<GrupoEstado> find(BigInteger id) {
+      return grupoEstadoFacade.find(id); 
+    }
 }

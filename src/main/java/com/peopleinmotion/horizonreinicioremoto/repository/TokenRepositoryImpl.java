@@ -79,6 +79,11 @@ public class TokenRepositoryImpl implements TokenRepository {
       return tokenFacade.findByActivo(ACTIVO);
     }
 
+    @Override
+    public Optional<Token> find(BigInteger id) {
+        return tokenFacade.find(id);
+    }
+
   
 
 }

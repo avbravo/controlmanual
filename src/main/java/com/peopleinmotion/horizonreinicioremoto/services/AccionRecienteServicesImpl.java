@@ -81,7 +81,7 @@ public class AccionRecienteServicesImpl implements AccionRecienteServices {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Boolean fueCambiadoPorOtroUsuario(AccionReciente accionReciente">
+    // <editor-fold defaultstate="collapsed" desc="Boolean change(AccionReciente accionReciente">
     @Override
     public Boolean changed(AccionReciente accionReciente) {
 

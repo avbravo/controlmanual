@@ -18,6 +18,7 @@ import java.util.Optional;
  */
 public interface GrupoUsuarioRepository {
     public List<GrupoUsuario> findAll();
+    public Optional<GrupoUsuario> find(BigInteger id);
     public Optional<GrupoUsuario> findByGrupoUsuarioId(BigInteger GRUPOUSUARIOID);
     public List<GrupoUsuario> findByUsuarioId(Usuario USUARIOID);
     public List<GrupoUsuario> findByGrupoId(Grupo GRUPOID);

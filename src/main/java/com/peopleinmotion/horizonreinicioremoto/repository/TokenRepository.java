@@ -21,6 +21,7 @@ public interface TokenRepository {
 
     public List<Token> findAll();
 
+    public Optional<Token> find(BigInteger id);
     public Optional<Token> findByTokenId(BigInteger TOKENID);
 
     public Optional<Token> findByCodigoTransaccion(String CODIGOTRANSACCION);

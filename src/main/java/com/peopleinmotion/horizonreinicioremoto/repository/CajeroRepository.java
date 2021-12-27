@@ -20,6 +20,7 @@ public interface CajeroRepository {
 
     public List<Cajero> findAll();
 
+    public Optional<Cajero> find(BigInteger id);
     public Optional<Cajero> findByCajeroId(BigInteger CAJEROID);
 
     public List<Cajero> findByCajeroIdAndActivo(BigInteger CAJEROID, String ACTIVO);

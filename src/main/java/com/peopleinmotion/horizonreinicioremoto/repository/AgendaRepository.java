@@ -18,6 +18,7 @@ public interface AgendaRepository {
 
     public List<Agenda> findAll();
 
+    public Optional<Agenda> find(BigInteger id);
     public Optional<Agenda> findByAgendaId(BigInteger AGENDAID);
 
     public Boolean create(Agenda agenda);

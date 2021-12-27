@@ -85,4 +85,9 @@ public class AgendaRepositoryImpl implements AgendaRepository {
         return agendaFacade.countByBancoIdAndEstadoIdAndActivo(BANCOID, ESTADOID, ACTIVO);
     }
 
+    @Override
+    public Optional<Agenda> find(BigInteger id) {
+return agendaFacade.find(id);
+    }
+
 }

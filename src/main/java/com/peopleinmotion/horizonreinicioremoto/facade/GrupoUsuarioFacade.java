@@ -8,6 +8,7 @@ package com.peopleinmotion.horizonreinicioremoto.facade;
 import com.peopleinmotion.horizonreinicioremoto.entity.Grupo;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoUsuario;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,18 +36,33 @@ public class GrupoUsuarioFacade extends AbstractFacade<GrupoUsuario> {
     public GrupoUsuarioFacade() {
         super(GrupoUsuario.class);
     }
+    // <editor-fold defaultstate="collapsed" desc="Optional<GrupoUsuario> find(BigInteger id)">
+
+
+    public Optional<GrupoUsuario> find(BigInteger id) {
+         try {
+               Query query = em.createNamedQuery("GrupoUsuario.findByGrupoUsuarioId");
+        GrupoUsuario grupoUsuario = (GrupoUsuario)query.setParameter("GRUPOUSUARIOID", id).getSingleResult();
+         return Optional.of(grupoUsuario);
+         } catch (Exception e) {
+             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    }// </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="Optional<GrupoUsuario> findByGrupoUsuarioId(BigInteger GRUPOUSUARIOID)  ">
     public Optional<GrupoUsuario> findByGrupoUsuarioId(BigInteger GRUPOUSUARIOID) {
          try {
                Query query = em.createNamedQuery("GrupoUsuario.findByGrupoUsuarioId");
         GrupoUsuario grupoUsuario = (GrupoUsuario)query.setParameter("GRUPOUSUARIOID", GRUPOUSUARIOID).getSingleResult();
          return Optional.of(grupoUsuario);
          } catch (Exception e) {
-             System.out.println("findByGrupoUsuarioId() "+e.getLocalizedMessage());
+             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
          }
          return Optional.empty();
       
-    }
+    }//editor-fold>
     
      // <editor-fold defaultstate="collapsed" desc="List<GrupoUsuario> findByUsuarioId(Usuario USUARIOID)">
     public List<GrupoUsuario> findByUsuarioId(Usuario USUARIOID) {

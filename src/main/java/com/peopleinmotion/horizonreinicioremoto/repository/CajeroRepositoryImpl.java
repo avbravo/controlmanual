@@ -71,6 +71,11 @@ public class CajeroRepositoryImpl implements CajeroRepository {
       return findByDireccionCortaBancoIdAndActivo(BANCOID, DIRECCIONCORTA,ACTIVO);
     }
 
+    @Override
+    public Optional<Cajero> find(BigInteger id) {
+       return cajeroFacade.find(id);
+    }
+
 
   
     

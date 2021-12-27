@@ -5,11 +5,9 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.facade;
 
-import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
-import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,7 +33,20 @@ public class GrupoAccionFacade extends AbstractFacade<GrupoAccion> {
         super(GrupoAccion.class);
     }
     
-    
+    // <editor-fold defaultstate="collapsed" desc=" Optional<GrupoAccion> find(BigInteger id) ">
+
+     public Optional<GrupoAccion> find(BigInteger id) {
+         try {
+               Query query = em.createNamedQuery("GrupoAccion.findByGrupoAcconId");
+        GrupoAccion grupoAccion = (GrupoAccion)query.setParameter("GRUPOACCIONID", id).getSingleResult();
+         return Optional.of(grupoAccion);
+         } catch (Exception e) {
+             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+         }
+         return Optional.empty();
+      
+    }
+     // </editor-fold>
      public Optional<GrupoAccion> findByGrupoAccionId(BigInteger GRUPOACCIONID) {
          try {
                Query query = em.createNamedQuery("GrupoAccion.findByGrupoAcconId");
