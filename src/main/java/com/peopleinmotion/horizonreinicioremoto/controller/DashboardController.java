@@ -570,7 +570,7 @@ public class DashboardController implements Serializable {
 
                     if (agendaRepository.update(agenda)) {
                         agendaHistorialServices.createHistorial(agendaOptional.get(), "CANCELAR ACCION", user);
-                        JmoordbContext.put("operacionexitosaMensaje", "Cancelar Accion");
+                        JmoordbContext.put("operacionExitosaMensaje", "Cancelar Accion");
                         JmoordbContext.put("accionReciente", accionRecienteSelected);
                         return "operacionexitosa.xhtml";
                     } else {

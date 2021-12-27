@@ -5,7 +5,8 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.controller;
 
-import com.google.gson.Gson;
+
+import com.peopleinmotion.horizonreinicioremoto.domains.MessagesForm;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
@@ -15,7 +16,6 @@ import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
 import com.peopleinmotion.horizonreinicioremoto.entity.Token;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
-import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbUtil;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaHistorialRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaRepository;
@@ -29,7 +29,6 @@ import com.peopleinmotion.horizonreinicioremoto.services.TokenServices;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -64,6 +63,7 @@ public class ControlmanualController implements Serializable {
     private Boolean showCommandButtonProcesando = Boolean.FALSE;
     private String tokenIngresado = "****";
     private Boolean tokenEnviado = Boolean.FALSE;
+    private Boolean updateByOtherUser = Boolean.FALSE;
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="@Inject ">
@@ -133,7 +133,7 @@ public class ControlmanualController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-
+            updateByOtherUser = Boolean.FALSE;
             if (JmoordbContext.get("user") == null) {
 
             } else {
@@ -257,12 +257,22 @@ public class ControlmanualController implements Serializable {
             /**
              * Valida si fue cambiado por otro usuario
              */
-            if (accionRecienteServices.fueCambiadoPorOtroUsuario(accionRecienteOld,"accionRecienteDashboard")) {
-                   PrimeFaces.current().ajax().update("form:growl", "form");
-                return "";
+            if (accionRecienteServices.changed(accionRecienteOld)) {
+                MessagesForm messagesForm = new MessagesForm.Builder()
+                        .id(accionReciente.getCAJERO())
+                        .header("Operación Incompleta")
+                        .header2("La acción no fue completada")
+                        .image("robot01.png")
+                        .libary("images")
+                        .titulo("Cambio de estado a procesando")
+                        .mensaje("Otro usuario modifico este registro mientras usted lo editaba. ")
+                        .returnTo("/faces/buscarcajero.xhtml")
+                        .build();
+                JmoordbContext.put("messagesForm", messagesForm);
+
+                return "messagesform.xhtml";
             }
-            
-            
+
             Estado estado = new Estado();
             Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoProcesandoId"));
             if (!optional.isPresent()) {
@@ -271,7 +281,6 @@ public class ControlmanualController implements Serializable {
             } else {
                 estado = optional.get();
             }
-            
 
             accionReciente.setESTADOID(estado.getESTADOID());
             accionReciente.setESTADO(estado.getESTADO());
@@ -290,10 +299,26 @@ public class ControlmanualController implements Serializable {
 
                     if (agendaRepository.update(agenda)) {
                         agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIO ESTADO A PROCESANDO", user);
-                        JmoordbContext.put("operacionexitosaMensaje", "Cambio Estado a procesando");
+
                         JmoordbContext.put("accionReciente", accionReciente);
                         emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIO ESTADO A PROCESANDO", user, cajero, bank);
-                        return "operacionexitosa.xhtml";
+
+                        /*
+                        *Mensajes exitosos
+                         */
+                         MessagesForm messagesForm = new MessagesForm.Builder()
+                                .id(accionReciente.getCAJERO())
+                                .header("Operación Exitosa")
+                                .header2("La acción se realizo exitosamente")
+                                .image("atm-green01.png")
+                                .libary("images")
+                                .titulo("Cambio de estado a procesado")
+                                .mensaje("Se realizo exitosamente el cambio de estado ")
+                                .returnTo("/faces/dashboard.xhtml")
+                                .build();
+                        JmoordbContext.put("messagesForm", messagesForm);
+
+                        return "messagesform.xhtml";
                     } else {
                         JsfUtil.warningMessage("No se puede actualizar la agenda...");
                         return "";
@@ -313,7 +338,9 @@ public class ControlmanualController implements Serializable {
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="String onCommandButtonFinalizando()">
     public String onCommandButtonFinalizando() {
+
         try {
+            //PrimeFaces.current().executeScript("PF('bancoDialog').hide()");
             if (!tokenEnviado) {
                 JsfUtil.warningMessage("Usted debe solicite primero un token");
                 return "";
@@ -324,11 +351,22 @@ public class ControlmanualController implements Serializable {
             /**
              * Valida si fue cambiado por otro usuario
              */
-            if (accionRecienteServices.fueCambiadoPorOtroUsuario(accionRecienteOld,"accionRecienteDashboard")) {
-                PrimeFaces.current().ajax().update("form:growl", "form");
-                return "";
-            }            
-            
+            if (accionRecienteServices.changed(accionRecienteOld)) {
+                  MessagesForm messagesForm = new MessagesForm.Builder()
+                        .id(accionReciente.getCAJERO())
+                        .header("Operación Incompleta")
+                        .header2("La acción no fue completada")
+                        .image("robot01.png")
+                        .libary("images")
+                        .titulo("Cambio de estado a finalizado")
+                        .mensaje("Otro usuario modifico este registro mientras usted lo editaba. ")
+                        .returnTo("/faces/buscarcajero.xhtml")
+                        .build();
+                JmoordbContext.put("messagesForm", messagesForm);
+
+                return "messagesform.xhtml";
+            }
+
             Estado estado = new Estado();
             Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoFinalizadoId"));
             if (!optional.isPresent()) {
@@ -338,7 +376,7 @@ public class ControlmanualController implements Serializable {
                 estado = optional.get();
 
             }
-            
+
             accionReciente.setESTADOID(estado.getESTADOID());
             accionReciente.setESTADO(estado.getESTADO());
             if (accionRecienteRepository.update(accionReciente)) {
@@ -347,7 +385,7 @@ public class ControlmanualController implements Serializable {
                 Optional<Agenda> agendaOptional = agendaRepository.findByAgendaId(accionReciente.getAGENDAID());
                 if (!agendaOptional.isPresent()) {
                     JsfUtil.warningMessage("No se encontro registros de ese agendamiento");
-                    // System.out.println("Test--> No se encontro registros de ese agendamiento");
+
                     return "";
                 } else {
                     Agenda agenda = agendaOptional.get();
@@ -355,10 +393,24 @@ public class ControlmanualController implements Serializable {
 
                     if (agendaRepository.update(agenda)) {
                         agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIO ESTADO A EJECUTADA", user);
-                        JmoordbContext.put("operacionexitosaMensaje", "Cambio Estado a ejecutada");
+
                         JmoordbContext.put("accionReciente", accionReciente);
                         emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIO ESTADO A EJECUTADA", user, cajero, bank);
-                        return "operacionexitosa.xhtml";
+                        /*
+                        *Mensajes exitosos
+                         */
+                          MessagesForm messagesForm = new MessagesForm.Builder()
+                                .id(accionReciente.getCAJERO())
+                                .header("Operación Exitosa")
+                                .header2("La acción se realizo exitosamente")
+                                .image("atm-green01.png")
+                                .libary("images")
+                                .titulo("Cambio de estado a ejecutado")
+                                .mensaje("Se realizo exitosamente el cambio de estado ")
+                                .returnTo("/faces/dashboard.xhtml")
+                                .build();
+                        JmoordbContext.put("messagesForm", messagesForm);
+                        return "messagesform.xhtml";
                     } else {
                         JsfUtil.warningMessage("No se puede actualizar la agenda...");
                         return "";
@@ -392,7 +444,7 @@ public class ControlmanualController implements Serializable {
 
                     if (agendaRepository.update(agenda)) {
                         agendaHistorialServices.createHistorial(agendaOptional.get(), "CONTROLMANUAL ACCION", user);
-                        JmoordbContext.put("operacionexitosaMensaje", "Control Manual Accion");
+                        JmoordbContext.put("operacionExitosaMensaje", "Control Manual Accion");
                         JmoordbContext.put("accionReciente", accionReciente);
                         emailServices.sendEmailToTecnicosHeader(accionReciente, "CONTROLMANUAL ACCION", user, cajero, bank);
                         return "operacionexitosa.xhtml";

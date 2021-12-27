@@ -30,10 +30,9 @@ public class AccionRecienteServicesImpl implements AccionRecienteServices {
     // <editor-fold defaultstate="collapsed" desc="@Inkect ">
     @Inject
     AccionRecienteRepository accionRecienteRepository;
-    
+
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="AccionReciente createAccionReciente(Agenda agenda, Banco banco, Cajero cajero, Accion accion, GrupoAccion grupoAccion, Estado estado) ">
-
     @Override
     public AccionReciente create(Agenda agenda, Banco banco, Cajero cajero, Accion accion, GrupoAccion grupoAccion, Estado estado) {
         AccionReciente accionReciente = new AccionReciente();
@@ -56,10 +55,9 @@ public class AccionRecienteServicesImpl implements AccionRecienteServices {
             accionReciente.setVISTOTECNICO("NO");
             if (accionRecienteRepository.create(accionReciente)) {
                 //  return Boolean.TRUE;
-            }else{
-                      JsfUtil.warningMessage("No se pudo guardar la acción reciente...");
+            } else {
+                JsfUtil.warningMessage("No se pudo guardar la acción reciente...");
             }
-      
 
         } catch (Exception e) {
             JsfUtil.errorMessage("createAccionReciente()" + e.getLocalizedMessage());
@@ -68,55 +66,51 @@ public class AccionRecienteServicesImpl implements AccionRecienteServices {
     }
     // </editor-fold>
 
-    
     // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoSolicitado(AccionReciente accionReciente) ">
-
     @Override
     public Boolean renderedByEstadoSolicitado(AccionReciente accionReciente) {
         try {
-            if(JsfUtil.contextToBigInteger("grupoEstadoSolicitadoId").equals(accionReciente.getESTADOID())){
-            return Boolean.TRUE;    
+            if (JsfUtil.contextToBigInteger("grupoEstadoSolicitadoId").equals(accionReciente.getESTADOID())) {
+                return Boolean.TRUE;
             }
             return Boolean.FALSE;
         } catch (Exception e) {
-            JsfUtil.errorMessage("renderedByEstadoSolicitado() "+e.getLocalizedMessage());
+            JsfUtil.errorMessage("renderedByEstadoSolicitado() " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
 // </editor-fold>
 
-    
-    // <editor-fold defaultstate="collapsed" desc="Boolean fueCambiadoPorOtroUsuario(AccionReciente accionReciente)">
-
+    // <editor-fold defaultstate="collapsed" desc="Boolean fueCambiadoPorOtroUsuario(AccionReciente accionReciente">
     @Override
-    public Boolean fueCambiadoPorOtroUsuario(AccionReciente accionReciente, String context) {
-        Boolean fueCambiado=Boolean.FALSE;
+    public Boolean changed(AccionReciente accionReciente) {
+
         try {
             /**
              *
              * Se usa un objeto JSON PARA COMPARAR
- *
+             *
              */
-           Optional<AccionReciente> live = accionRecienteRepository.findByAccionRecienteId(accionReciente.getACCIONRECIENTEID());
+            Optional<AccionReciente> live = accionRecienteRepository.findByAccionRecienteId(accionReciente.getACCIONRECIENTEID());
             if (!live.isPresent()) {
-                JsfUtil.warningMessage("El registro de accicon reciente no fue encontrado en la base de datos");
-                return Boolean.TRUE;
+//No se encontro el registro                
+          return Boolean.TRUE;
             }
             String jsonAccionRecienteLive = new Gson().toJson(live.get());
-           
+
             String jsonAccionReciente = new Gson().toJson(accionReciente);
-          
+
             if (!jsonAccionReciente.equals(jsonAccionRecienteLive)) {
-                JsfUtil.warningDialog("Alguien cambio registro ","Otro usuario cambio el estado de la accion reciente.Actualizaremos este valor");
-                JmoordbContext.put(context, live.get());
-                  return Boolean.TRUE;
+                //Otro usuario lo cambio mientras se estaba procesando
+                return Boolean.TRUE;
+         
             }
         } catch (Exception e) {
-          JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-            return fueCambiado;
-       
+        return Boolean.FALSE;
+
     }
-    
+
     // </editor-fold>
 }

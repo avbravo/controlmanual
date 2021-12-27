@@ -5,6 +5,7 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.controller;
 
+import com.peopleinmotion.horizonreinicioremoto.domains.MessagesForm;
 import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
@@ -98,9 +99,6 @@ public class BajarPlantillaController implements Serializable {
     TokenServices tokenServices;
 
 // </editor-fold>
-    
-    
-    
     /**
      * Creates a new instance of CajeroAccionController
      */
@@ -112,7 +110,7 @@ public class BajarPlantillaController implements Serializable {
     public void init() {
         try {
             System.out.println("Test-->Init.....");
-             tokenEnviado = Boolean.FALSE;
+            tokenEnviado = Boolean.FALSE;
             if (JmoordbContext.get("user") == null) {
 
             } else {
@@ -221,13 +219,11 @@ public class BajarPlantillaController implements Serializable {
     }
     // </editor-fold>
 
- 
-
     // <editor-fold defaultstate="collapsed" desc="onCommandButtonSendToken() ">
     public String onCommandButtonSendToken() {
-     
+
         sendToken();
-    
+
         return "";
     }
 // </editor-fold>
@@ -260,17 +256,16 @@ public class BajarPlantillaController implements Serializable {
                 //Envia el token al usuario
                 emailServices.sendTokenToEmail(token, user);
                 JmoordbContext.put("accion", selectOneMenuAccionValue);
-               
-                    JsfUtil.successMessage("Se envio el token a su correo. Reviselo por favor");
-                    tokenEnviado = Boolean.TRUE;
-                 
+
+                JsfUtil.successMessage("Se envio el token a su correo. Reviselo por favor");
+                tokenEnviado = Boolean.TRUE;
 
             } else {
                 JsfUtil.warningMessage("No se pudo generar el token. Repita la acción");
             }
 
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -313,7 +308,7 @@ public class BajarPlantillaController implements Serializable {
      */
     public String onCommandButtonBajarPlantillaProgramarEvento() {
         try {
-            if(!tokenEnviado){
+            if (!tokenEnviado) {
                 JsfUtil.warningMessage("Usted debe solicite primero un token");
                 return "";
             }
@@ -357,14 +352,25 @@ public class BajarPlantillaController implements Serializable {
                          */
 
                         emailServices.sendEmailToTecnicos(accionReciente, accion, user, cajero, bank);
-                        return "/faces/operacionexitosa.xhtml";
+                        MessagesForm messagesForm = new MessagesForm.Builder()
+                                .id(accionReciente.getCAJERO())
+                                .header("Operación Exitosa")
+                                .header2("La acción se realizo exitosamente")
+                                .image("atm-green01.png")
+                                .libary("images")
+                                .titulo("Bajar plantilla Programar evento")
+                                .mensaje("Se realizo exitosamente la baja de plantilla ")
+                                .returnTo("/faces/dashboard.xhtml")
+                                .build();
+                        JmoordbContext.put("messagesForm", messagesForm);
+                        return "/faces/messagesform.xhtml";
                     }
 
                 }
 
             }
         } catch (Exception e) {
-            JsfUtil.errorMessage("onCommandButtonSubirPlantilla()" + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -380,31 +386,30 @@ public class BajarPlantillaController implements Serializable {
         return Boolean.FALSE;
     }
     // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="String remoteCommand()">
 
-    public String remoteCommand(){
+    // <editor-fold defaultstate="collapsed" desc="String remoteCommand()">
+    public String remoteCommand() {
         return "";
     }
 // </editor-fold>            
     // <editor-fold defaultstate="collapsed" desc="String marcarNumero() ">
+
     /**
      * Se usa para marcar el numero del tokem
+     *
      * @param numero
-     * @return 
+     * @return
      */
     public String marcarNumero(String numero) {
-       
+
         try {
             tokenIngresado = tokenServices.marcarToken(numero, tokenIngresado);
-            
-           
+
         } catch (Exception e) {
             JsfUtil.errorMessage("marcarNumero() " + e.getLocalizedMessage());
         }
         return "";
     }
 // </editor-fold> 
-   
 
 }

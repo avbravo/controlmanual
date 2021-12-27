@@ -210,18 +210,17 @@ public class CajeroEncontradoController implements Serializable {
      */
     private String findAccionDisponible(){
         try {
-            System.out.println("Test--> findAccionDisponible()");
+          
             Optional<AccionReciente> accionRecienteOptional = accionRecienteRepository.findByBancoIdAndCajeroIdUltimaAccionDisponible(bank.getBANCOID(), cajero.getCAJEROID());
             if(accionRecienteOptional.isPresent()){
                 accionReciente = accionRecienteOptional.get();
                 haveAccionReciente = Boolean.TRUE;
-                System.out.println("Test--> encontro accion disponible");
-              //  PrimeFaces.current().ajax().update(":form:growl");
+         
+              
    
             }else{
                 System.out.println("Test--> NO encontro accion disponible");
-                //PrimeFaces.current().ajax().update(":form:growl");
-
+              
             }
         } catch (Exception e) {
             System.out.println("Error() "+ JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());

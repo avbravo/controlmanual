@@ -12,6 +12,7 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
+import java.util.Optional;
 
 /**
  *
@@ -20,5 +21,6 @@ import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
 public interface AccionRecienteServices {
     public AccionReciente create(Agenda agenda, Banco banco, Cajero cajero, Accion accion, GrupoAccion grupoAccion, Estado estado);
     public Boolean renderedByEstadoSolicitado(AccionReciente accionReciente);
-    public Boolean fueCambiadoPorOtroUsuario(AccionReciente accionReciente, String context);
+
+    public Boolean changed(AccionReciente accionReciente);
 }
