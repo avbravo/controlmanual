@@ -54,7 +54,6 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     public List<Usuario> findByBancoIdAndActivo(Banco BANCOID, String ACTIVO) {
         return usuarioFacade.findByBancoIdAndActivo(BANCOID, ACTIVO);
     }
-
     @Override
     public Optional<Usuario> find(BigInteger id) {
         return usuarioFacade.find(id);
