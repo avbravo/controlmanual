@@ -2378,6 +2378,30 @@ public class JsfUtil implements Serializable {
     }
    
 // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="BigInteger contextToInteger(String key)">
+    /**
+     * Busca en el context el key y el value lo devuelve como BigInteger
+     * @param key
+     * @return 
+     */
+    public static Integer contextToInteger(String key){
+        Integer i = 0; 
+        try {
+          
+            if(JmoordbContext.get(key) == null){
+               warningMessage("Procesando "+key +"key es null");
+            }else{
+                 String val= String.valueOf(JmoordbContext.get(key));
+              i =Integer.parseInt(val); 
+            }
+            
+        } catch (Exception e) {
+            JsfUtil.errorMessage("contextToInteger() "+e.getLocalizedMessage());
+        }
+        return i;
+    }
+   
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc=" propertiesBigIntegerToContext(Properties properties, String key)">
     /**
      * Lee una propiedad y la asigna al context
@@ -2386,6 +2410,26 @@ public class JsfUtil implements Serializable {
      * @param key 
      */
     public static void propertiesBigIntegerToContext(Properties properties, String key){
+        try {
+             if (properties.getProperty(key) == null) {
+                    JsfUtil.warningMessage("no existe la propiedad" +key);
+                    JmoordbContext.put(key, 0);
+                } else {
+                    Integer value = Integer.parseInt(properties.getProperty(key));
+                    JmoordbContext.put(key,value);
+                }
+        } catch (Exception e) {
+        }
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc=" propertiesBigIntegerToContext(Properties properties, String key)">
+    /**
+     * Lee una propiedad y la asigna al context
+     * 
+     * @param properties
+     * @param key 
+     */
+    public static void propertiesIntegerToContext(Properties properties, String key){
         try {
              if (properties.getProperty(key) == null) {
                     JsfUtil.warningMessage("no existe la propiedad" +key);
@@ -2503,4 +2547,30 @@ public class JsfUtil implements Serializable {
 
         return destino;
     }// </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Integer numberOfPages(Integer rows,Integer rowForPage)">
+    public static Integer numberOfPages(Integer rows, Integer rowForPage) {
+        Integer numberOfPage = 1;
+        try {
+
+            if (rows > 0) {
+                numberOfPage = rows / rowForPage;
+                if ((rows % rowForPage) > 0) {
+                    numberOfPage++;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(
+                    "------------------------------------------------------------------------------------------------");
+            System.out.println(
+                    "Class:" + JsfUtil.nameOfClass() + " Metodo:" + JsfUtil.nameOfMethod());
+            System.out.println("Error " + e.getLocalizedMessage());
+            System.out.println(
+                    "------------------------------------------------------------------------------------------------");
+            JsfUtil.errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return numberOfPage;
+    }
+    // </editor-fold>
+
 }

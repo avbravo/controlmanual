@@ -10,12 +10,14 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.facade.BancoFacade;
+import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 /**
@@ -88,34 +90,15 @@ public class BancoRepositoryImpl implements BancoRepository {
         return false;
     }
 
-    @Override
-    public int queryCount(Query query) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Banco> queryPagination(Query query, Integer pageNumber, Integer rowForPage) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Banco> queryWithOutPagination(Query query) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 // <editor-fold defaultstate="collapsed" desc="Boolean changed(Banco banco)>
 
     @Override
     public Boolean changed(Banco banco) {
         try {
-            /**
-             *
-             * Se usa un objeto JSON PARA COMPARAR
-             *
-             */
             
-            Optional<Banco> live = bancoFacade.findByBancoId(banco.getBANCOID());
+            Optional<Banco> live = bancoFacade.find(banco.getBANCOID());
             if (!live.isPresent()) {
-//No se encontro el registro                
                 return Boolean.TRUE;
             }
             String jsonLive = new Gson().toJson(live.get());
@@ -125,7 +108,6 @@ public class BancoRepositoryImpl implements BancoRepository {
             if (!json.equals(jsonLive)) {
                 //Otro usuario lo cambio mientras se estaba procesando
                 return Boolean.TRUE;
-
             }
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -138,4 +120,24 @@ public class BancoRepositoryImpl implements BancoRepository {
     public Optional<Banco> find(BigInteger id) {
         return bancoFacade.find(id);
     }
+
+    
+    @Override
+    public List<Banco> sql(QuerySQL querySQL) {
+        return bancoFacade.sql(querySQL);
+    }
+    @Override
+    public List<Banco> pagination(QuerySQL querySQL, Integer pageNumber, Integer rowForPage) {
+        return bancoFacade.pagination(querySQL, pageNumber, rowForPage);
+    }
+
+    @Override
+    public int count(QuerySQL querySQL) {
+       return bancoFacade.count(querySQL);
+    }
+
+   
+
+  
+   
 }

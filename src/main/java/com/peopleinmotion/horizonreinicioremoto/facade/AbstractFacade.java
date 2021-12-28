@@ -5,8 +5,11 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.facade;
 
+import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
+import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -27,41 +30,38 @@ public abstract class AbstractFacade<T> {
 
     public void create(T entity) {
         try {
-             getEntityManager().persist(entity);
-        //Agregar esto para persistir los datos en la base de datos
-        getEntityManager().flush();
-        getEntityManager().refresh(entity);
+            getEntityManager().persist(entity);
+            //Agregar esto para persistir los datos en la base de datos
+            getEntityManager().flush();
+            getEntityManager().refresh(entity);
         } catch (Exception e) {
-            JsfUtil.errorMessage("AbstractFacade.create()  "+e.getLocalizedMessage());
+            JsfUtil.errorMessage("AbstractFacade.create()  " + e.getLocalizedMessage());
         }
-       
 
     }
 
     public void edit(T entity) {
         try {
-             getEntityManager().merge(entity);
-        //Agregar esto para persistir los datos en la base de datos
-        getEntityManager().flush();
-       // getEntityManager().refresh(entity);
+            getEntityManager().merge(entity);
+            //Agregar esto para persistir los datos en la base de datos
+            getEntityManager().flush();
+            // getEntityManager().refresh(entity);
         } catch (Exception e) {
-             JsfUtil.errorMessage("AbstractFacade.edit()  "+e.getLocalizedMessage());
+            JsfUtil.errorMessage("AbstractFacade.edit()  " + e.getLocalizedMessage());
         }
-       
-       
+
     }
 
     public void remove(T entity) {
         try {
-              getEntityManager().remove(getEntityManager().merge(entity));
-        //Agregar esto para persistir los datos en la base de datos
-        getEntityManager().flush();
+            getEntityManager().remove(getEntityManager().merge(entity));
+            //Agregar esto para persistir los datos en la base de datos
+            getEntityManager().flush();
 //        getEntityManager().refresh(entity);
         } catch (Exception e) {
-               JsfUtil.errorMessage("AbstractFacade.remove()  "+e.getLocalizedMessage());
+            JsfUtil.errorMessage("AbstractFacade.remove()  " + e.getLocalizedMessage());
         }
-      
-       
+
     }
 
     public T find(Object id) {
@@ -91,25 +91,49 @@ public abstract class AbstractFacade<T> {
         return ((Long) q.getSingleResult()).intValue();
     }
 
-      // <editor-fold defaultstate="collapsed" desc=" List<T> queryWithOutPagination(Query query)">
-     public List<T> queryWithOutPagination(Query query) {
-          return query.getResultList();
-    }
-      // </editor-fold>
-     
-      // <editor-fold defaultstate="collapsed" desc="List<T> queryPagination(Query query,Integer pageNumber,Integer rowForPage)">
-     public List<T> queryPagination(Query query,Integer pageNumber,Integer rowForPage) {
-         query.setFirstResult(pageNumber).setMaxResults(rowForPage);
-        return query.getResultList();
-    }
-      // </editor-fold>
-     
-     
-      // <editor-fold defaultstate="collapsed" desc="int queryCount(Query query)">    
 
-       public int queryCount(Query query) {
-        //Query query = em.createQuery("SELECT COUNT(a) FROM Agenda a WHERE a.ESTADOID = :ESTADOID AND a.ACTIVO = :ACTIVO");
-        return ((Long) query.getSingleResult()).intValue();
+    // <editor-fold defaultstate="collapsed" desc="List<Banco> queryPagination(Query query)">
+    public List<T> sql(QuerySQL querySQL) {
+        List<T> list = new ArrayList<>();
+        try {
+            Query query = getEntityManager().createQuery(querySQL.getQuery());           
+            list = query.getResultList();
+        } catch (Exception e) {
+            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return list;
+
     }
-       // </editor-fold>
+
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="List<Banco> pagination(Query query,Integer pageNumber,Integer rowForPage)">
+    public List<T> pagination(QuerySQL querySQL, Integer pageNumber, Integer rowForPage) {
+        List<T> list = new ArrayList<>();
+        try {
+            Query query = getEntityManager().createQuery(querySQL.getQuery());
+            query.setFirstResult(pageNumber).setMaxResults(rowForPage);
+            list = query.getResultList();
+        } catch (Exception e) {
+            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return list;
+
+    }
+
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="int count(Query query)">    
+    public int count(QuerySQL querySQL) {
+        try {
+           
+            Query query = getEntityManager().createQuery(querySQL.getCount());
+            return ((Long) query.getSingleResult()).intValue();
+
+        } catch (Exception e) {
+            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return 0;
+
+    }
+    // </editor-fold>
+
 }

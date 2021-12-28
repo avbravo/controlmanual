@@ -15,16 +15,33 @@ public class Paginator {
     private String filter;
     private Integer page;
     private String title;
+    private Integer numberOfPage;
     public Paginator() {
     }
 
-    public Paginator(String name, String filter, Integer page, String title) {
+    public Paginator(String name, String filter, Integer page, String title, Integer numberOfPage) {
         this.name = name;
         this.filter = filter;
         this.page = page;
         this.title = title;
+        this.numberOfPage = numberOfPage;
     }
 
+   
+    
+    
+
+    public Integer getNumberOfPage() {
+        return numberOfPage;
+    }
+
+    public void setNumberOfPage(Integer numberOfPage) {
+        this.numberOfPage = numberOfPage;
+    }
+
+    
+    
+    
     public String getName() {
         return name;
     }
@@ -64,6 +81,7 @@ public class Paginator {
     private String  filter;
     private Integer page;
     private String title;
+        private Integer numberOfPage;
     
     
         public Builder name(String name) {
@@ -84,10 +102,14 @@ public Builder page(Integer page) {
             this.page =page;
             return this;
         }
+public Builder numberOfPage(Integer numberOfPagw) {
+            this.numberOfPage =numberOfPage;
+            return this;
+        }
 
 
         public Paginator build() {
-            return new Paginator(name, filter, page, title);
+            return new Paginator(name, filter, page, title, numberOfPage);
 
         }
     }
