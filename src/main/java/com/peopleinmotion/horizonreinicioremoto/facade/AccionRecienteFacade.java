@@ -143,7 +143,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
 
 
 
-// <editor-fold defaultstate="List<AccionReciente> findByCajeroIdAndVistoBanco( BigInteger CAJEROID, String VISTOBANCO)">
+// <editor-fold defaultstate="collapsed" desc="="List<AccionReciente> findByCajeroIdAndVistoBanco( BigInteger CAJEROID, String VISTOBANCO)">
 
     public List<AccionReciente> findByCajeroIdAndVistoBanco(BigInteger CAJEROID, String VISTOBANCO) {
         List<AccionReciente> list = new ArrayList<>();
@@ -175,7 +175,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
         return list;
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="List<AccionReciente> findByBancoIdAndVistoBanco(BigInteger BANCOID, String ACTIVO)">
+    // <editor-fold defaultstate="collapsed" desc="List<AccionReciente> findByBancoIdAndBanco(BigInteger BANCOID, String ACTIVO)">
     public List<AccionReciente> findByBancoIdAndActivo(BigInteger BANCOID, String ACTIVO) {
         List<AccionReciente> list = new ArrayList<>();
         try {

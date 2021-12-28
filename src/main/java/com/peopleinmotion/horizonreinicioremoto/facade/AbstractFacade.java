@@ -92,7 +92,7 @@ public abstract class AbstractFacade<T> {
     }
 
 
-    // <editor-fold defaultstate="collapsed" desc="List<Banco> queryPagination(Query query)">
+    // <editor-fold defaultstate="collapsed" desc="List<T> queryPagination(Query query)">
     public List<T> sql(QuerySQL querySQL) {
         List<T> list = new ArrayList<>();
         try {
@@ -106,7 +106,7 @@ public abstract class AbstractFacade<T> {
     }
 
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="List<Banco> pagination(Query query,Integer pageNumber,Integer rowForPage)">
+    // <editor-fold defaultstate="collapsed" desc="List<T> pagination(Query query,Integer pageNumber,Integer rowForPage)">
     public List<T> pagination(QuerySQL querySQL, Integer pageNumber, Integer rowForPage) {
         List<T> list = new ArrayList<>();
         try {

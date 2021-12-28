@@ -5,8 +5,12 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.repository;
 
+import com.google.gson.Gson;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
+import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.facade.AccionRecienteFacade;
+import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
+import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -126,6 +130,45 @@ public class AccionRecienteRepositoryImpl implements AccionRecienteRepository {
        return agendaRecienteFacade.find(id);
     }
 
+    // <editor-fold defaultstate="collapsed" desc="Boolean changed(Banco banco)>
+
+    @Override
+    public Boolean changed(AccionReciente accionReciente) {
+        try {
+            
+            Optional<AccionReciente> live = agendaRecienteFacade.find(accionReciente.getACCIONRECIENTEID());
+            if (!live.isPresent()) {
+                return Boolean.TRUE;
+            }
+            String jsonLive = new Gson().toJson(live.get());
+
+            String json = new Gson().toJson(accionReciente);
+
+            if (!json.equals(jsonLive)) {
+                //Otro usuario lo cambio mientras se estaba procesando
+                return Boolean.TRUE;
+            }
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return Boolean.FALSE;
+    }
+    // </editor-fold>
+
+   
     
+    @Override
+    public List<AccionReciente> sql(QuerySQL querySQL) {
+        return agendaRecienteFacade.sql(querySQL);
+    }
+    @Override
+    public List<AccionReciente> pagination(QuerySQL querySQL, Integer pageNumber, Integer rowForPage) {
+        return agendaRecienteFacade.pagination(querySQL, pageNumber, rowForPage);
+    }
+
+    @Override
+    public int count(QuerySQL querySQL) {
+       return agendaRecienteFacade.count(querySQL);
+    }
 
 }

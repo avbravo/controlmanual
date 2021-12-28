@@ -10,10 +10,10 @@ import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
-import com.peopleinmotion.horizonreinicioremoto.entity.GrupoEstado;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.paginator.Paginator;
+import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaHistorialRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaRepository;
@@ -35,7 +35,6 @@ import java.util.Map;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.faces.component.UIData;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -163,10 +162,10 @@ public class DashboardController implements Serializable {
                  */
 //                // System.out.println("Test {=========================INIT =======================}");
 //                // System.out.println("Test ===> findBancoIdEntreFechasTypeDate()");
-                paginator = new Paginator.Builder()
-                        .page(1)
-                        .filter("banco")
-                        .build();
+//                paginator = new Paginator.Builder()
+//                        .page(1)
+//                        .filter("banco")
+//                        .build();
 
                 codigoSearch = "";
                 direccionSearch = "";
@@ -253,7 +252,15 @@ public class DashboardController implements Serializable {
     public String fillAccionRecienteList() {
         try {
             banco = (Banco) JmoordbContext.get("banco");
-            accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
+//            accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
+
+         
+QuerySQL querySQL = new QuerySQL.Builder()
+        .query("SELECT a FROM AccionReciente a WHERE a.BANCOID = '"+banco.getBANCOID() +"' AND a.ACTIVO = 'SI' AND a.ESTADOID = '" + JsfUtil.contextToBigInteger("estadoProcesandoId")+"' ORDER BY a.AGENDAID DESC")
+        .count(codigoSearch)
+        .build();
+       accionRecienteList = accionRecienteRepository.sql(querySQL);
+//accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
 
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());

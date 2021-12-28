@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <!-- INTERFACE -->
     <cc:interface>
@@ -12,7 +13,8 @@
     <cc:implementation>
         <p:outputPanel id="outputPanelresumenaccionreciente">
 
-        <p:carousel var="item"  value="#{dashboardController.accionRecienteList}" numVisible="3" >
+        <p:carousel var="item"  value="#{dashboardController.accionRecienteList}" numVisible="3"
+                    responsive="true" circular="true">
          
             <div class="col-12 col-lg-10 grid-margin stretch-card upx" >
 
@@ -66,6 +68,9 @@
 
             </div>
 
+        <f:facet name="footer">
+            Total de acciones pendientes #{dashboardController.accionRecienteList.size()}.
+        </f:facet>
         </p:carousel>
 </p:outputPanel>
     </cc:implementation>

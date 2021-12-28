@@ -6,6 +6,8 @@
 package com.peopleinmotion.horizonreinicioremoto.repository;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
+import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
+import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -37,5 +39,12 @@ public interface AccionRecienteRepository {
    public List<AccionReciente> findBancoIdEntreFechasTypeDate(BigInteger BANCOID, Date DESDE, Date HASTA, String ACTIVO);
     public List<AccionReciente> findBancoIdEntreFechasTypeLocalDate(BigInteger BANCOID, LocalDateTime DESDE, LocalDateTime HASTA, String ACTIVO);
     public List<AccionReciente> findByBancoIdAndActivo(BigInteger BANCOID, String ACTIVO);
-    
+     public Boolean changed(AccionReciente accionReciente);
+
+
+    public List<AccionReciente> sql(QuerySQL querySQL);
+
+    public List<AccionReciente> pagination(QuerySQL querySQL, Integer pageNumber, Integer rowForPage);
+
+    public int count(QuerySQL querySQL);
 }
