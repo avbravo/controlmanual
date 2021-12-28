@@ -181,63 +181,7 @@ public class AccessController implements Serializable {
                  */
                 bancoList = bancoRepository.findByEsControlAndActivoList("NO", "SI");
 
-                /**
-                 * Prbando la paginacion
-                 *
-                 */
-                System.out.println("Test-->pagination inicio");
-                   QuerySQL querySQL0 = new QuerySQL.Builder()
-                        .query("SELECT b FROM Banco b WHERE b.ESCONTROL = 'SI' AND b.ACTIVO = 'SI' ")
-                        .count("SELECT COUNT(b) FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI'")
-                        .build();
-                   
-                   
-                   List<Banco> list0= bancoRepository.sql(querySQL0);
-                   if(list0 == null || list0.isEmpty()){
-                           System.out.println("Test--->No hay banco de control");
-                           }else{
-                       for(Banco b:list0){
-                           System.out.println("Test--> banco de control es "+b.getBANCO());
-                       }
-                   }
-                   
-                System.out.println("Test-->Construyendo QuerySQL para paginacion");
-                QuerySQL querySQL = new QuerySQL.Builder()
-                        .query("SELECT b FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI' ")
-                        .count("SELECT COUNT(b) FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI'")
-                        .build();
-                        
-                System.out.println("Voy a contar cuantos hay");
-
-//                Integer count = bancoRepository.queryCount("NO", "SI");
-                Integer count = bancoRepository.count(querySQL);
-
-                System.out.println("Test--> Hay registors " + count);
-                Integer rowForPage = JsfUtil.contextToInteger("rowForPage");
-                System.out.println("Test-->filas por paginas "+rowForPage);
-
-                Integer numeroPaginas = JsfUtil.numberOfPages(count, rowForPage);
-                System.out.println("Test--->Numero de paginas seran " + numeroPaginas);
-                System.out.println("Test----------> voy a recorrer las paginas usando QuerySQL");
-                for (int i = 0; i < numeroPaginas ; i++) {
-                    System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                    System.out.println("Page (" + i + ")");
-//                    List<Banco> list = bancoRepository.queryPagination("NO", "SI", i, rowForPage);
-                    List<Banco> list = bancoRepository.pagination(querySQL, i, rowForPage);
-                    System.out.println("=========================");
-                    if (list == null || list.isEmpty()) {
-                        System.out.println("No tiene registros...");
-                    } else {
-                        for (Banco b : list) {
-                            System.out.println("Banco " + b.getBANCO());
-                        }
-
-                    }
-
-                }
-
-                System.out.println("Temine la paginacion");
-
+                
             } else {
                 JsfUtil.errorMessage("No se puede cargar el archivo configuration.properties");
             }

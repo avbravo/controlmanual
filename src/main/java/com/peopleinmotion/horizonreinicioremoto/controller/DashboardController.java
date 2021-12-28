@@ -254,13 +254,18 @@ public class DashboardController implements Serializable {
             banco = (Banco) JmoordbContext.get("banco");
 //            accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
 
+String where ="(a.ESTADOID ='"+JsfUtil.contextToBigInteger("estadoProcesandoId")+ "' OR  "
+              +"a.ESTADOID ='"+JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId")+ "' )";
+        
+
          
 QuerySQL querySQL = new QuerySQL.Builder()
-        .query("SELECT a FROM AccionReciente a WHERE a.BANCOID = '"+banco.getBANCOID() +"' AND a.ACTIVO = 'SI' AND a.ESTADOID = '" + JsfUtil.contextToBigInteger("estadoProcesandoId")+"' ORDER BY a.AGENDAID DESC")
+        .query("SELECT a FROM AccionReciente a WHERE a.BANCOID = '"+banco.getBANCOID() +"' AND " +where +" ORDER BY a.AGENDAID DESC")
         .count(codigoSearch)
         .build();
+
        accionRecienteList = accionRecienteRepository.sql(querySQL);
-//accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
+
 
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
