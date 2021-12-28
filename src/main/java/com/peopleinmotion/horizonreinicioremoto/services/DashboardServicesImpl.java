@@ -11,6 +11,8 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoEstado;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
+import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
+import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.CajeroRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.EstadoRepository;
@@ -22,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.Query;
 
 /**
  *
@@ -38,6 +41,8 @@ public class DashboardServicesImpl implements DashboardServices {
     @Inject
     EstadoRepository estadoRepository;
     
+    @Inject
+    AccionRecienteRepository accionRecienteRepository;
     @Inject
     AgendaRepository agendaRepository;
     @Inject
@@ -65,7 +70,14 @@ public class DashboardServicesImpl implements DashboardServices {
                     Integer count = 0;
                     for (Estado e : estadoList) {
                         // Cuenta los estados activos del banco
-                        count = agendaRepository.countByBancoIdAndEstadoIdAndActivo(banco.getBANCOID(), e.getESTADOID(), "SI");
+                        QuerySQL query= new QuerySQL.Builder()
+                                .query("")
+                                .count("SELECT COUNT(a) FROM AccionReciente a WHERE a.BANCOID = '"+banco.getBANCOID() +"' AND a.ESTADOID = '"+ e.getESTADOID()+"' AND a.ACTIVO = 'SI'")                               
+                                .build();
+                        count = accionRecienteRepository.count(query);
+                        
+                        
+                        //count = agendaRepository.countByBancoIdAndEstadoIdAndActivo(banco.getBANCOID(), e.getESTADOID(), "SI");
                         /**
                          * Actualizo los totales del grupo
                          */
@@ -82,7 +94,7 @@ public class DashboardServicesImpl implements DashboardServices {
             }
             
         } catch (Exception e) {
-            JsfUtil.errorMessage("onCommandButttonCalcularTotales()" + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
         }
         return grupoEstadoList;
     }

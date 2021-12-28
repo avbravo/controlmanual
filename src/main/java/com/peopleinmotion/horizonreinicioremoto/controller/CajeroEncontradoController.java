@@ -219,7 +219,7 @@ public class CajeroEncontradoController implements Serializable {
               
    
             }else{
-                System.out.println("Test--> NO encontro accion disponible");
+                
               
             }
         } catch (Exception e) {

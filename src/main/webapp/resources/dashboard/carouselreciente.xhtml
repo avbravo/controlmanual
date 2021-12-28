@@ -11,10 +11,10 @@
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
-        <p:outputPanel id="outputPanelresumenaccionreciente">
+        <p:outputPanel id="outputPanelcarouselreciente">
 
             <p:carousel var="item"  value="#{dashboardController.accionRecienteList}" numVisible="3"
-                        responsive="true" circular="true">
+                        responsive="true" circular="true" id="carrousel">
 
                 <div class="col-12 col-lg-10 grid-margin stretch-card upx" >
 
@@ -45,7 +45,7 @@
                                 <div class="col-10 col-lg-10 atm-card-marbody01">
                                     <dl>
                                         <dd class="atm-title-mar01"><strong>#{item.TITULO}</strong></dd>
-                                        <dd class="atm-title-mar01"><p:outputLabel value="Evento:#{item.MENSAJE}" style="font-size: 12px; color: blue"/></dd>
+                                        <dd class="atm-title-mar01"><p:outputLabel value="Evento:#{item.MENSAJE}" style="font-size: 14px; color: blue"/></dd>
                                         <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{dashboardController.showDate(item.FECHAAGENDADA)}"/></dd>
                                         <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{dashboardController.showHour(item.FECHAAGENDADA)}"/></dd>
                                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{dashboardController.renderedByEstadoSolicitado(item.ESTADOID)}" value="Fecha Ejecución: #{dashboardController.showDate(item.FECHAEJECUCION)}"/></dd>
@@ -68,9 +68,7 @@
 
                 </div>
 
-                <f:facet name="footer">
-                    Total de acciones pendientes #{dashboardController.accionRecienteList.size()}.
-                </f:facet>
+               
             </p:carousel>
         </p:outputPanel>
     </cc:implementation>

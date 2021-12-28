@@ -20,9 +20,9 @@
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
         <title>Control Manual</title>    
+        <f:metadata><f:viewAction action="#{f5Detector.checkF5}" onPostback="true" /> </f:metadata>
 
-
-
+      
 
 
 
@@ -78,7 +78,7 @@
                                                 <p:ajax listener="#{dashboardController.subjectSelectionChanged()}"
                                                         event="change"
                                                         oncomplete="remoteCommand()"
-                                                        update=":form:carousel,:form:dashboardresumenacciontotal:outputPaneltotalFinalizado, :form:dashboardresumenacciontotal:outputPaneltotalEnProceso, :form:dashboardresumenacciontotal:outputPaneltotalSolicitado,:form:dashboardschedule:outputPanelschedule"
+                                                        update=":form:dashboardcarouselreciente:outputPanelcarouselreciente,:form:dashboardresumenacciontotal:outputPaneltotalFinalizado, :form:dashboardresumenacciontotal:outputPaneltotalEnProceso, :form:dashboardresumenacciontotal:outputPaneltotalSolicitado,:form:dashboardschedule:outputPanelschedule"
                                                         />
 
 
@@ -86,7 +86,7 @@
                                             <p:remoteCommand name="remoteCommand" 
                                                              update=":form:dashboardresumenacciontotal:outputPaneltotalFinalizado, :form:dashboardresumenacciontotal:outputPaneltotalEnProceso, :form:dashboardresumenacciontotal:outputPaneltotalSolicitado,:form:dashboardschedule:outputPanelschedule" 
                                                              action="#{dashboardController.remoteCommand()}"
-                                                             />
+/>
                                         </div>
 
                                         <div>
@@ -116,42 +116,9 @@
                                 <dashboard:resumenacciontotal id="dashboardresumenacciontotal"/>
                             </div>
 
-                            <!--<dashboard:carouselreciente id="dashboardcarouselreciente"/>-->
-                            <p:carousel var="item"  value="#{dashboardController.accionRecienteList}" numVisible="3"
-                                        responsive="true" circular="true" id="carousel"
-                                        >
-                                <p:card style="width: 25em">
-                                    <f:facet name="header">
-                                         <p:outputLabel value="#{item.TITULO}"/>
-                                    </f:facet>
-                                    <f:facet name="title">
-                                        <p:commandButton styleClass="rounded-button ui-button-secondary"
-                                                         value="#{item.CAJERO}"
-                                                         update=":form:growl"
-                                                         action="#{dashboardController.onCommandButtonSelectAccionReciente(item,'dashboard')}"/>
+                            <dashboard:carouselreciente id="dashboardcarouselreciente"/>
 
-
-                                    </f:facet>
-                                    <f:facet name="subtitle">
-                                        <dd class="atm-title-mar01"> <p:outputLabel value="#{item.MENSAJE}"/></dd>
-                                    </f:facet>
-                                    <p>
-                                       
-                                        <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{dashboardController.showDate(item.FECHAAGENDADA)}"/></dd>
-                                        <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{dashboardController.showHour(item.FECHAAGENDADA)}"/></dd>
-                                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{dashboardController.renderedByEstadoSolicitado(item.ESTADOID)}" value="Fecha Ejecución: #{dashboardController.showDate(item.FECHAEJECUCION)}"/></dd>
-                                        <dd class="atm-title-mar01"><p:outputLabel rendered="#{dashboardController.renderedByEstadoSolicitado(item.ESTADOID)}" value="Hora Ejecución: #{dashboardController.showHour(item.FECHAEJECUCION)}"/></dd>
-                                        <dd class="atm-title-mar01"><p:outputLabel value="Estado:#{item.ESTADO}"/></dd>
-
-                                    </p>
-                                    <f:facet name="footer">
-
-                                   
-                                    </f:facet>
-                                </p:card>
-                            </p:carousel>
-
-
+                            
 
                         </div>
                         <!-- content-wrapper ends -->

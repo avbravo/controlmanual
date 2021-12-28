@@ -89,8 +89,7 @@ public class DashboardController implements Serializable {
 // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="injects() ">
-    
-      @Inject
+    @Inject
     AccionRecienteServices accionRecienteServices;
     @Inject
     AgendaRepository agendaRepository;
@@ -121,12 +120,17 @@ public class DashboardController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-
+         
             if (JmoordbContext.get("user") == null) {
 
             } else {
 
-                bancoList = bancoRepository.findByEsControlAndActivoList("NO", "SI");
+                QuerySQL querySQL = new QuerySQL.Builder()
+                        .query("SELECT b FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI' ORDER BY b.BANCO ASC ")
+                        .count("SELECT COUNT(b) FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI'")
+                        .build();
+
+                bancoList = bancoRepository.sql(querySQL);
 
                 accionRecienteScheduleList = new ArrayList<>();
                 /**
@@ -137,26 +141,11 @@ public class DashboardController implements Serializable {
 
                 selectOneMenuBancoValue = banco;
 
-                fillAccionRecienteList();
-                /**
-                 * Filtrar Acciones recientes entre fechas
-                 */
+                fillCarouselAccionReciente();
 
-                Date DESDE = DateUtil.setHourToDate(DateUtil.getFechaActual(), 0, 00);
-                Date HASTA = DateUtil.setHourToDate(DateUtil.getFechaActual(), 23, 59);
-                List<AccionReciente> list = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
-
-                if (list == null || list.isEmpty() || list.size() == 0) {
-//                    // System.out.println("Test--> no hay eventos para hoy");
-                } else {
-                    for (AccionReciente a : list) {
-//                        // System.out.println("Test --> Accion :" + a.getCAJERO() + " Fecha agendada " + a.getFECHAAGENDADA());
-                    }
-                }
                 /**
                  * Mes
                  */
-
                 /**
                  * Muestro las acciones Recientes
                  */
@@ -166,10 +155,9 @@ public class DashboardController implements Serializable {
 //                        .page(1)
 //                        .filter("banco")
 //                        .build();
-
                 codigoSearch = "";
                 direccionSearch = "";
-                onCommandButttonCalcularTotales();
+              calcularTotales();
                 loadSchedule();
                 cajeroList = cajeroRepository.findByBancoId(banco);
 
@@ -248,25 +236,23 @@ public class DashboardController implements Serializable {
     }
 
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="String fillAccionRecienteList(">
-    public String fillAccionRecienteList() {
+    // <editor-fold defaultstate="collapsed" desc="String fillCarouselAccionReciente()">
+    public String fillCarouselAccionReciente() {
         try {
-            banco = (Banco) JmoordbContext.get("banco");
-//            accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
-
-String where ="(a.ESTADOID ='"+JsfUtil.contextToBigInteger("estadoProcesandoId")+ "' OR  "
-              +"a.ESTADOID ='"+JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId")+ "' )";
         
+            banco = (Banco) JmoordbContext.get("banco");
 
-         
-QuerySQL querySQL = new QuerySQL.Builder()
-        .query("SELECT a FROM AccionReciente a WHERE a.BANCOID = '"+banco.getBANCOID() +"' AND " +where +" ORDER BY a.AGENDAID DESC")
-        .count(codigoSearch)
-        .build();
+            String where = "(a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoProcesandoId") + "' OR  "
+                    + "a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId") + "' )";
 
-       accionRecienteList = accionRecienteRepository.sql(querySQL);
+            QuerySQL querySQL = new QuerySQL.Builder()
+                    .query("SELECT a FROM AccionReciente a WHERE a.BANCOID = '" + banco.getBANCOID() + "' AND " + where + " ORDER BY a.FECHA DESC")
+                    .count("")
+                    .build();
+            
+            accionRecienteList = accionRecienteRepository.sql(querySQL);
 
-
+          
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
@@ -380,21 +366,22 @@ QuerySQL querySQL = new QuerySQL.Builder()
     public String showHour(Date date) {
         return DateUtil.showHour(date);
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="String showDate(Date date) ">
-    public String showDateLocalDateTime(java.time.LocalDateTime  date) {
+    public String showDateLocalDateTime(java.time.LocalDateTime date) {
         return DateUtil.showDateLocalDateTime(date);
     }
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="String showHour(Date date) ">
 
-    public String showHourLocalDateTime(java.time.LocalDateTime  date) {
+    public String showHourLocalDateTime(java.time.LocalDateTime date) {
         return DateUtil.showHourLocalDateTime(date);
     }
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="onCommandButttonCalcularTotales() ">    
-    public String onCommandButttonCalcularTotales() {
+    public String calcularTotales() {
         try {
             totalesEstadoBanco = totalesEstadoBancoServices.calcularTotalesDelBanco();
 
@@ -471,8 +458,8 @@ QuerySQL querySQL = new QuerySQL.Builder()
                     } else {
 
                         accionRecienteScheduleList.forEach((a) -> {
-                            String siglas =dashboardServices.generarSiglas(a);
-                           
+                            String siglas = dashboardServices.generarSiglas(a);
+
                             DefaultScheduleEvent event = DefaultScheduleEvent.builder()
                                     .title(a.getCAJERO() + "(" + siglas + ")")
                                     .startDate(DateUtil.convertToLocalDateTimeViaInstant(a.getFECHAAGENDADA()))
@@ -617,8 +604,8 @@ QuerySQL querySQL = new QuerySQL.Builder()
         try {
 
             JmoordbContext.put("banco", selectOneMenuBancoValue);
-            onCommandButttonCalcularTotales();
-            fillAccionRecienteList();
+            calcularTotales();
+            fillCarouselAccionReciente();
             loadSchedule();
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -633,8 +620,8 @@ QuerySQL querySQL = new QuerySQL.Builder()
         return "";
     }
 // </editor-fold>
-    
-      // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoSolicitado()">
+
+    // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoSolicitado()">
     public Boolean renderedByEstadoSolicitado() {
         return accionRecienteServices.renderedByEstadoSolicitado(accionRecienteSelected);
 

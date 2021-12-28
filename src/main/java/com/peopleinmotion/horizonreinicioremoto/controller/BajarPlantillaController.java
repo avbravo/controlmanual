@@ -109,7 +109,7 @@ public class BajarPlantillaController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            System.out.println("Test-->Init.....");
+            
             tokenEnviado = Boolean.FALSE;
             if (JmoordbContext.get("user") == null) {
 
@@ -231,7 +231,7 @@ public class BajarPlantillaController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="String sendToken()">
     public String sendToken() {
         try {
-            System.out.println("Test--> llego a sendToken.....");
+            
             tokenEnviado = Boolean.FALSE;
             if (selectOneMenuAccionValue == null) {
                 JsfUtil.warningMessage("Seleccione la acción a ejecutar..");
@@ -321,7 +321,7 @@ public class BajarPlantillaController implements Serializable {
             } else {
 
                 Date fechahoraBaja = (Date) JmoordbContext.get("fechahoraBaja");
-                // System.out.println("Test--> fechahoraBaja "+fechahoraBaja);
+               
                 Agenda agenda = new Agenda();
                 agenda.setACTIVO("SI");
                 agenda.setCODIGOTRANSACCION(JsfUtil.generateUniqueID());
