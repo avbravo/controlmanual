@@ -15,16 +15,16 @@
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            4
         </session-timeout>
     </session-config>
-<!--    <welcome-file-list>
+    <!--    <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>-->
-  <welcome-file-list>
+    <welcome-file-list>
         <welcome-file>faces/login.xhtml</welcome-file>
     </welcome-file-list>
-<!--    <welcome-file-list>
+    <!--    <welcome-file-list>
         <welcome-file>faces/login_test.xhtml</welcome-file>
     </welcome-file-list>-->
     
@@ -36,7 +36,9 @@
     
     
      
-<!--    <error-page>
+
+    
+    <error-page>
         <error-code>404</error-code>
         <location>/faces/pages/page-404.xhtml</location>
     </error-page>
@@ -45,7 +47,7 @@
         <location>/faces/pages/page-403.xhtml</location>
     </error-page>
     <error-page>
-        <error-code>403</error-code>
+        <error-code>405</error-code>
         <location>/faces/pages/page-405.xhtml</location>
     </error-page>
 
@@ -54,6 +56,7 @@
         <location>/faces/pages/page-500.xhtml</location>
     </error-page>
 
+    
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
         <location>/faces/pages/error.xhtml</location>
@@ -62,12 +65,21 @@
         <exception-type>java.lang.Throwable</exception-type>
         <location>/faces/pages/error.xhtml</location>
     </error-page>
-    <error-page>
-
+    
+    
+    <error-page>     
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-
         <location>/faces/login.xhtml</location>
-        <location>/faces/expired.xhtml</location>
+    </error-page>
+    <context-param>
+        <param-name>com.sun.faces.enableRestoreView11Compatibility</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <listener>
 
-    </error-page>-->
+        <listener-class>
+            com.peopleinmotion.horizonreinicioremoto.security.SecuritySessionListener
+        </listener-class>
+
+    </listener>
 </web-app>

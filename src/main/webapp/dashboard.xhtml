@@ -30,13 +30,50 @@
     <h:body >
         <h:form id="form" prependId="false" rendered="#{accessController.loged}">
 
-
+            <p:ajaxStatus onsuccess="limpiartiempo()" />
+            <p:remoteCommand name="ejecutarbean" action="#{accessController.inicializa()}" oncomplete="redireccionar()" />
             <script type="text/javascript">
                 function setDataTableWithPageStart() {
 
                     widgetVardataTable.getPaginator().setPage(0);
                     alert("ejecutado la funcion setDataTableWithPageStart()")
                 }
+
+
+            </script>
+
+            <script>
+                var redirectToExpired = function () {
+                    // console.log("redireccionando ");
+                    alert('Su sesión ha finalizado. Sera dirigido al login.');
+                    ejecutarbean();
+
+                };
+                //console.log("Hi ");
+                //                var expireTimeMillis = 355000;
+
+                var expireTimeMillis = #{accessController.getMaxInactiveInterval()} * 1000 - 15000;
+                console.log(expireTimeMillis);
+
+                console.log("expireTimeMillis " + expireTimeMillis);
+                window.redirectOnExpire = setTimeout(redirectToExpired, expireTimeMillis);
+
+                function limpiartiempo() {
+                    // alert('mmmmm');
+                    // console.log("Limpiando tiempo");
+                    clearTimeout(window.redirectOnExpire);
+                    window.redirectOnExpire = setTimeout(redirectToExpired, expireTimeMillis);
+
+                }
+                ;
+
+                function redireccionar() {
+                    // console.log('entrando metodo redireccionar');
+                    window.location = '#{request.contextPath}/#{accessController.expired()}';
+                        }
+                        ;
+
+                        //               
             </script>
 
             <p:growl id='growl' widgetVar="widgetVarGrowl"/>
@@ -122,7 +159,7 @@
                                         >
                                 <p:card style="width: 25em">
                                     <f:facet name="header">
-                                         <p:outputLabel value="#{item.TITULO}"/>
+                                        <p:outputLabel value="#{item.TITULO}"/>
                                     </f:facet>
                                     <f:facet name="title">
                                         <p:commandButton styleClass="rounded-button ui-button-secondary"
@@ -136,7 +173,7 @@
                                         <dd class="atm-title-mar01"> <p:outputLabel value="#{item.MENSAJE}"/></dd>
                                     </f:facet>
                                     <p>
-                                       
+
                                         <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{dashboardController.showDate(item.FECHAAGENDADA)}"/></dd>
                                         <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{dashboardController.showHour(item.FECHAAGENDADA)}"/></dd>
                                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{dashboardController.renderedByEstadoSolicitado(item.ESTADOID)}" value="Fecha Ejecución: #{dashboardController.showDate(item.FECHAEJECUCION)}"/></dd>
@@ -146,7 +183,7 @@
                                     </p>
                                     <f:facet name="footer">
 
-                                   
+
                                     </f:facet>
                                 </p:card>
                             </p:carousel>

@@ -18,8 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import lombok.Data;
 
 /**
@@ -122,4 +124,29 @@ public class AccessController implements Serializable {
 //      return "/faces/buscarcajero.xhtml";
     }
 // </editor-fold>
+    
+      public String expired() {
+          System.out.println("Test-->epired ,,,,,,,");
+        return "faces/login.xhtml";
+    }// </editor-fold>
+      
+       // <editor-fold defaultstate="collapsed" desc="int getMaxInactiveInterval()">
+    public int getMaxInactiveInterval() {
+        int tiempo = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())
+                .getSession().getMaxInactiveInterval();
+        System.out.println("Test..>  getMaxInactiveInterval() "+tiempo);
+        return tiempo;
+    }
+    // </editor-fold>
+    
+      // <editor-fold defaultstate="collapsed" desc="String inicializa()">
+    public String inicializa() {
+
+        username = "";
+       
+        loged = false;
+
+        return "";
+    }
+    // </editor-fold>
 }
