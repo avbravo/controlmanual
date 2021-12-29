@@ -13,7 +13,7 @@ import javax.faces.view.ViewScoped;
  *
  * @author avbravo
  */
-@Named(value = "navigatorContoller")
+@Named
 @ViewScoped
 public class NavigatorContoller implements Serializable{
 
