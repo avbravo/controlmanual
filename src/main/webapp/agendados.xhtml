@@ -23,6 +23,8 @@
     </h:head>
     <h:body>
         <h:form id="form" prependId="false" rendered="#{accessController.loged}">
+              <p:ajaxStatus onsuccess="limpiartiempo()" />
+            <p:remoteCommand name="ejecutarbean" action="#{accessController.inicializa()}" oncomplete="redireccionar()" />
             <style type="text/css">
                 .ui-filter-column .ui-column-customfilter .custom-filter {
                     width: 100%;

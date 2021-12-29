@@ -1,44 +1,75 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:composite="http://java.sun.com/jsf/composite"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:jsf="http://xmlns.jcp.org/jsf">
-    <composite:interface >
-        <composite:attribute name="action" />
-    </composite:interface>
-    <composite:implementation>
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-        <!-- Diseño del sidebar -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-            <ul class="nav">
-                <li class="nav-item">         
-                    <p:commandLink class="nav-link" action="#{navigatorContoller.go('dashboard.xhtml')}" >
-                        <i class="ti-shield menu-icon"></i>
-                        <span class="menu-title">Dashboard</span>
-                    </p:commandLink>
-                </li>
-                <li class="nav-item"> 
-                    <p:commandLink class="nav-link"  action="#{navigatorContoller.go('buscarcajero.xhtml')}" >
-                        <i class="ti-search menu-icon"/>
-                        <span class="menu-title">Buscar</span>
-                    </p:commandLink>
-                </li>
-                <li class="nav-item"> 
-                    <p:commandLink class="nav-link" action="#{navigatorContoller.go('agendados.xhtml')}" >
-                        <i class="menu-icon ti-calendar"></i>
-                        <span class="menu-title">Agendados</span>
-                    </p:commandLink>
-                </li>
-                <li class="nav-item"> 
-                    <p:commandLink class="nav-link" action="#{navigatorContoller.go('totalestadobanco.xhtml')}" >
-                        <i class="menu-icon ti-agenda"></i>
-                        <span class="menu-title">Totales por banco</span>
-                    </p:commandLink>
-                </li>
-            </ul>
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <script>
+            var redirectToExpired = function () {
+
+                alert('Su sesión ha finalizado. Sera dirigido al login.');
+                ejecutarbean();
+
+            };
+
+
+            var expireTimeMillis = #{accessController.getMaxInactiveInterval()} * 1000 - 15000;
+            console.log(expireTimeMillis);
+
+            console.log("expireTimeMillis " + expireTimeMillis);
+            window.redirectOnExpire = setTimeout(redirectToExpired, expireTimeMillis);
+
+            function limpiartiempo() {
+                clearTimeout(window.redirectOnExpire);
+                window.redirectOnExpire = setTimeout(redirectToExpired, expireTimeMillis);
+
+            }
+            ;
+
+            function redireccionar() {
+                window.location = '#{request.contextPath}/#{accessController.expired()}';
+                    }
+                    ;
+
+        </script>
+
+
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row shadow-none">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo mr-5" href="catalogos.xhtml">
+
+                    <p:graphicImage name="telered-logo01-03.png" library="images" alt="logo" class="mr-2" />
+                </a>
+                <a class="navbar-brand brand-logo-mini" href="catalogos.xhtml">
+                    <p:graphicImage name="telered-icon01-04.png" library="images" alt="logo" />
+
+                </a>
+
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="ti-menu"></span>
+                </button>
+                <ul class="navbar-nav navbar-nav-right">	
+                    <li class="nav-item">
+
+                        <h:button  class="btn btn-block btn-danger btn-sm font-weight-medium auth-form-btn rounded-pill" outcome="login" value="CERRAR SESIÓN" ></h:button>
+
+
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="ti-view-list"></span>
+                </button>
+            </div>
         </nav>
-
-    </composite:implementation>
+    </cc:implementation>
 </html>

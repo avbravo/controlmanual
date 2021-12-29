@@ -42,39 +42,7 @@
 
             </script>
 
-            <script>
-                var redirectToExpired = function () {
-                    // console.log("redireccionando ");
-                    alert('Su sesión ha finalizado. Sera dirigido al login.');
-                    ejecutarbean();
-
-                };
-                //console.log("Hi ");
-                //                var expireTimeMillis = 355000;
-
-                var expireTimeMillis = #{accessController.getMaxInactiveInterval()} * 1000 - 15000;
-                console.log(expireTimeMillis);
-
-                console.log("expireTimeMillis " + expireTimeMillis);
-                window.redirectOnExpire = setTimeout(redirectToExpired, expireTimeMillis);
-
-                function limpiartiempo() {
-                    // alert('mmmmm');
-                    // console.log("Limpiando tiempo");
-                    clearTimeout(window.redirectOnExpire);
-                    window.redirectOnExpire = setTimeout(redirectToExpired, expireTimeMillis);
-
-                }
-                ;
-
-                function redireccionar() {
-                    // console.log('entrando metodo redireccionar');
-                    window.location = '#{request.contextPath}/#{accessController.expired()}';
-                        }
-                        ;
-
-                        //               
-            </script>
+   
 
             <p:growl id='growl' widgetVar="widgetVarGrowl"/>
             <div class="container-scroller">
