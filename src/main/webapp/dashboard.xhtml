@@ -75,7 +75,7 @@
                                                                var="var" 
                                                                itemValue="#{var}" itemLabel="#{var.BANCO} " />
 
-                                                <p:ajax listener="#{dashboardController.subjectSelectionChanged()}"
+                                                <p:ajax listener="#{dashboardController.selectOneMenuBancoChanged()}"
                                                         event="change"
                                                         oncomplete="remoteCommand()"
                                                         update=":form:carousel,:form:dashboardresumenacciontotal:outputPaneltotalFinalizado, :form:dashboardresumenacciontotal:outputPaneltotalEnProceso, :form:dashboardresumenacciontotal:outputPaneltotalSolicitado,:form:dashboardschedule:outputPanelschedule"

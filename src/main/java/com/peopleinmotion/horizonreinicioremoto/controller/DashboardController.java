@@ -63,13 +63,12 @@ public class DashboardController implements Serializable {
     private static final long serialVersionUID = 1L;
     private ScheduleEvent<?> event = new DefaultScheduleEvent<>();
     private Integer rowForPage = 5;
-    private String codigoSearch;
-    private String direccionSearch;
+   
     private Cajero cajeroSelected = new Cajero();
     AccionReciente accionRecienteSelected = new AccionReciente();
     List<Cajero> cajeroList = new ArrayList<>();
     List<Cajero> cajeroSelectedList = new ArrayList<>();
-    private LazyDataModel<Cajero> lazyDataModelCajero;
+   
     private ScheduleModel lazyEventModel;
 
     Usuario user = new Usuario();
@@ -124,7 +123,6 @@ public class DashboardController implements Serializable {
             if (JmoordbContext.get("user") == null) {
 
             } else {
-
                 QuerySQL querySQL = new QuerySQL.Builder()
                         .query("SELECT b FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI' ORDER BY b.BANCO ASC ")
                         .count("SELECT COUNT(b) FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI'")
@@ -143,90 +141,10 @@ public class DashboardController implements Serializable {
 
                 fillCarouselAccionReciente();
 
-                /**
-                 * Mes
-                 */
-                /**
-                 * Muestro las acciones Recientes
-                 */
-//                // System.out.println("Test {=========================INIT =======================}");
-//                // System.out.println("Test ===> findBancoIdEntreFechasTypeDate()");
-//                paginator = new Paginator.Builder()
-//                        .page(1)
-//                        .filter("banco")
-//                        .build();
-                codigoSearch = "";
-                direccionSearch = "";
               calcularTotales();
                 loadSchedule();
                 cajeroList = cajeroRepository.findByBancoId(banco);
-
-                this.lazyDataModelCajero = new LazyDataModel<Cajero>() {
-//                    @Override
-//            public int count(Map<String, FilterMeta> filterBy) {
-//                Integer totalElements=5;
-//                // logical row count based on a count query taking filter into account
-//                return totalElements;
-//            }
-                    @Override
-                    public List<Cajero> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
-
-                        /**
-                         * Contar la cantidad de registros
-                         */
-                        Integer totalRecords = 0;
-
-                        /**
-                         * Calcular la pagina donde se debe iniciar
-                         */
-//                       Integer page=0;
-//                        if (offset == 0) {
-//                            page=1;
-//                        }else{
-//                              page= ((offset / rowForPage) + 1);
-//                        }
-//                
-//                        String filter =(String)JmoordbContext.get("filter");
-                        List<Cajero> result = new ArrayList<>();
-//                    result = cajeroRepository.findAll();
-//            result = cajeroRepository.findByBancoIdAndActivo(banco);
-                        result = cajeroRepository.findByBancoId(banco);
-                        totalRecords = result.size();
-//                        switch(paginator.getFilter()){
-//                            case "banco":
-//                                totalRecords =   cajeroFacade.countBYBanco(banco.getBANCOID());
-//                          processLazyDataModel(offset,  rowForPage, totalRecords);
-//                      
-////                                result= cajeroFacade.findByBancoPagination(bank.getBancoId(),page,pageSize);
-//                                result= cajeroFacade.findByBancoPagination(banco.getBANCOID(),paginator.getPage(),pageSize);
-//                                   break;
-//                            case "bancoCajero":
-//                                totalRecords =   cajeroFacade.countBYBancoCajero(banco.getBANCOID(), codigoSearch);
-//                                 processLazyDataModel(offset,  rowForPage, totalRecords);
-////                                 result= cajeroFacade.findByBancoCajeroPagination(bank.getBancoId(),codigoSearch,page,pageSize);
-//                                 result= cajeroFacade.findByBancoCajeroPagination(banco.getBANCOID(),codigoSearch,paginator.getPage(),pageSize);
-//                                 break;
-//                            case "bancoDireccion":
-//                                 totalRecords =   cajeroFacade.countBYBancoDireccion(banco.getBANCOID(), direccionSearch);
-//                                  processLazyDataModel(offset,  rowForPage, totalRecords);
-////                                 result= cajeroFacade.findByBancoCajeroPagination(bank.getBancoId(),direccionSearch,page,pageSize);
-//                                 result= cajeroFacade.findByBancoCajeroPagination(bank.getBancoId(),direccionSearch,paginator.getPage(),pageSize);
-//                                 break;
-//                            default:
-//                                // System.out.println("Filter  no encotrado "+paginator.getFilter());
-//                                
-//                        }
-
-                        lazyDataModelCajero.setRowCount(totalRecords);
-                        PrimeFaces.current().executeScript("setDataTableWithPageStart()");
-                        if (paginator.getPage().equals(1)) {
-//                        DataTable dataTable = (DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("widgetVardataTable");
-//         dataTable.setFirst(0);
-                        }
-                        return result;
-                    }
-
-                };
+              
             }
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
@@ -273,89 +191,11 @@ public class DashboardController implements Serializable {
         return "/faces/cajeroencontrado.xhtml";
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="String onCommandButtonSearchCajero() ">
 
-    public String onCommandButtonSearchCajero() {
 
-        try {
-            if (codigoSearch == null || codigoSearch.equals("")) {
-                codigoSearch = "";
-            } else {
-                if (!codigoSearch.equals("")) {
-                    direccionSearch = "";
-                    paginator = new Paginator.Builder()
-                            .page(1)
-                            .filter("bancoCajero")
-                            .build();
+   
 
-                    JsfUtil.warningDialog("Mensaje ", "Buscar codigo " + codigoSearch);
-                } else {
-                    if (direccionSearch == null || direccionSearch.equals("")) {
-                        direccionSearch = "";
-                        paginator = new Paginator.Builder()
-                                .page(1)
-                                .filter("banco")
-                                .build();
-                        JsfUtil.warningDialog("Mensaje ", "Ingrese un codigo o una dirección a buscar");
-                        return "";
-                    } else {
-                        codigoSearch = "";
-                        paginator = new Paginator.Builder()
-                                .page(1)
-                                .filter("bancoDireccion")
-                                .build();
-                        JsfUtil.warningDialog("Mensaje ", "Buscar direccion " + direccionSearch);
-                    }
-                }
-
-            }
-
-        } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " : " + e.getLocalizedMessage());
-        }
-        return "";
-    }
-// </editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="List<Paginator> processLazyDataModel(Paginator paginator, Paginator paginatorOld, int offset, Integer rowPage, Integer totalRecords)  ">
-    public void processLazyDataModel(int offset, Integer rowPage, Integer totalRecords) {
-
-        try {
-
-            if (paginatorOld.getFilter() == null || paginatorOld.getFilter().equals("")) {
-                paginatorOld = new Paginator.Builder()
-                        .page(paginator.getPage())
-                        .filter(paginator.getFilter())
-                        .build();
-
-            }
-            if (offset == 0) {
-                paginator.setPage(1);
-            } else {
-                if (paginatorOld.getFilter().equals(paginator.getFilter())) {
-                    paginator.setPage((offset / rowPage) + 1);
-
-                } else {
-                    paginatorOld = new Paginator.Builder()
-                            .page(paginator.getPage())
-                            .filter(paginator.getFilter())
-                            .build();
-                    paginator.setPage(1);
-                }
-
-            }
-        } catch (Exception e) {
-            // System.out.println("processLazyDataModel() " + e.getLocalizedMessage());
-        }
-
-    }
-// </editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="updateRow(UIData table, int index)  ">
-    public void updateRow(UIData table, int index) {
-//        org.omnifaces.util.Ajax.updateRow(table, index);
-    }// </editor-fold>
-
+  
     // <editor-fold defaultstate="collapsed" desc="String showDate(Date date) ">
     public String showDate(Date date) {
         return DateUtil.showDate(date);
@@ -368,19 +208,19 @@ public class DashboardController implements Serializable {
     }
 
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="String showDate(Date date) ">
+    // <editor-fold defaultstate="collapsed" desc="String showDateLocalDateTime(java.time.LocalDateTime date)">
     public String showDateLocalDateTime(java.time.LocalDateTime date) {
         return DateUtil.showDateLocalDateTime(date);
     }
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="String showHour(Date date) ">
+    // <editor-fold defaultstate="collapsed" desc="String showHourLocalDateTime(java.time.LocalDateTime date)">
 
     public String showHourLocalDateTime(java.time.LocalDateTime date) {
         return DateUtil.showHourLocalDateTime(date);
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="onCommandButttonCalcularTotales() ">    
+    // <editor-fold defaultstate="collapsed" desc="String calcularTotales()">    
     public String calcularTotales() {
         try {
             totalesEstadoBanco = totalesEstadoBancoServices.calcularTotalesDelBanco();
@@ -503,12 +343,9 @@ public class DashboardController implements Serializable {
 // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="String filterAccionReciente(Date start, Date end) ">
-//    public String filterAccionReciente(BigInteger bancoId, Date start, Date end, String activo) {
     public String filterAccionReciente(BigInteger bancoId, LocalDateTime start, LocalDateTime end, String activo) {
-
         try {
-
-            accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeLocalDate(bancoId, end, start, activo);
+           accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeLocalDate(bancoId, end, start, activo);
 
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + ": " + e.getLocalizedMessage());
@@ -552,55 +389,20 @@ public class DashboardController implements Serializable {
     }
 
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="cancelarAccion() ">
-    public String cancelarAccion() {
-        try {
-            accionRecienteSelected.setACTIVO("NO");
-
-            if (accionRecienteRepository.update(accionRecienteSelected)) {
-                //Actualizar la agenda
-                Optional<Agenda> agendaOptional = agendaRepository.findByAgendaId(accionRecienteSelected.getAGENDAID());
-                if (!agendaOptional.isPresent()) {
-                    JsfUtil.warningMessage("No se encontro registros de ese agendamiento");
-                    return "";
-                } else {
-                    Agenda agenda = agendaOptional.get();
-                    agenda.setACTIVO("NO");
-
-                    if (agendaRepository.update(agenda)) {
-                        agendaHistorialServices.createHistorial(agendaOptional.get(), "CANCELAR ACCION", user);
-                        JmoordbContext.put("operacionExitosaMensaje", "Cancelar Accion");
-                        JmoordbContext.put("accionReciente", accionRecienteSelected);
-                        return "operacionexitosa.xhtml";
-                    } else {
-                        JsfUtil.warningMessage("No se puede actualizar la agenda...");
-                        return "";
-                    }
-
-                }
-            } else {
-                JsfUtil.warningMessage("No se pudo actualizar la agenda reciente");
-            }
-        } catch (Exception e) {
-            JsfUtil.errorMessage("cancelarAccion() " + e.getLocalizedMessage());
-        }
-        return "";
-    }
-
-// </editor-fold>
+   
     // <editor-fold defaultstate="collapsed" desc="String onCommnandButtonGoBuscarCajero() ">
     public String onCommnandButtonGoBuscarCajero() {
         return "faces/buscarcajero.xhtml";
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="String subjectSelectionChanged() ">
+    // <editor-fold defaultstate="collapsed" desc="String selectOneMenuBancoChanged() ">
     /**
      * Cuando cambia el banco
      *
      * @return
      */
-    public String subjectSelectionChanged() {
+    public String selectOneMenuBancoChanged() {
         try {
 
             JmoordbContext.put("banco", selectOneMenuBancoValue);
