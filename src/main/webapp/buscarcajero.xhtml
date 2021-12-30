@@ -7,6 +7,10 @@
       xmlns:ultimaacciongenerada="http://xmlns.jcp.org/jsf/composite/ultimaacciongenerada"
       xmlns:grupoaccion="http://xmlns.jcp.org/jsf/composite/grupoaccion"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <f:metadata>
+        <f:viewAction action="#{f5Detector.checkF5}" onPostback="true"/>
+    </f:metadata>
     <h:head>
         <link rel="stylesheet" href="./resources/vendors/ti-icons/css/themify-icons.css"/>
         <link rel="stylesheet" href="./resources/vendors/base/vendor.bundle.base.css"/>
@@ -19,12 +23,12 @@
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
         <title>Control Manual</title>       
-        <f:metadata><f:viewAction action="#{f5Detector.checkF5}" onPostback="true" /> </f:metadata>
+
 
     </h:head>
     <h:body >
         <h:form id="form" prependId="false" rendered="#{accessController.loged}">
-              <p:ajaxStatus onsuccess="limpiartiempo()" />
+            <p:ajaxStatus onsuccess="limpiartiempo()" />
             <p:remoteCommand name="ejecutarbean" action="#{accessController.inicializa()}" oncomplete="redireccionar()" />
             <script type="text/javascript">
                 function setDataTableWithPageStart() {
@@ -90,7 +94,7 @@
                                                      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                                      tableStyleClass="table table-hover"
                                                      >
- <f:facet name="header">
+                                            <f:facet name="header">
                                                 <div class="products-table-header">
                                                     <span style="font-weight: bold">BUSCAR</span>
 

@@ -33,6 +33,7 @@ public class AccesServicesImpl implements AccessServices {
     AccessServices accessServices;
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="String loadConfigurationPropeties()">
+
     @Override
     public String loadConfigurationPropeties() {
         String version = "";
@@ -82,20 +83,19 @@ public class AccesServicesImpl implements AccessServices {
     // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Boolean validateCredentials(Usuario usuario, String username, String password, Banco banco) ">
 
-
     @Override
     public Boolean validateCredentials(Usuario usuario, String username, String password, Banco banco) {
         try {
-if (banco == null || banco.getBANCOID() == null) {
+            if (banco == null || banco.getBANCOID() == null) {
                 JsfUtil.warningMessage("Seleccione un banco");
-               return Boolean.FALSE;
+                return Boolean.FALSE;
             }
 
             List<Usuario> list = usuarioRepository.findByUsername(username);
             if (list == null || list.isEmpty()) {
 
                 JsfUtil.warningMessage("Username no esta registrado");
-               return Boolean.FALSE;
+                return Boolean.FALSE;
             }
             Usuario u = list.get(0);
 
@@ -110,7 +110,40 @@ if (banco == null || banco.getBANCOID() == null) {
              */
             JmoordbContext.put("user", usuario);
             JmoordbContext.put("banco", banco);
- return Boolean.TRUE;
+            return Boolean.TRUE;
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return Boolean.FALSE;
+    }
+    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="Boolean validateCredentials(Usuario usuario, String username, String password, Banco banco) ">
+    @Override
+    public Boolean validateCredentials(Usuario usuario, String username, String password) {
+      try {
+            
+
+            List<Usuario> list = usuarioRepository.findByUsername(username);
+            if (list == null || list.isEmpty()) {
+
+                JsfUtil.warningMessage("Username no esta registrado");
+                return Boolean.FALSE;
+            }
+            Usuario u = list.get(0);
+
+            if (!JsfUtil.desencriptar(u.getPASSWORD()).equals(password)) {
+                JsfUtil.successMessage("El password no valido");
+                return Boolean.FALSE;
+            }
+
+            usuario = u;
+            /**
+             * Guardar el context
+             */
+            JmoordbContext.put("user", usuario);
+         
+            return Boolean.TRUE;
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());

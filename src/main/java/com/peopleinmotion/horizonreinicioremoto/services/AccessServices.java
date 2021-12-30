@@ -18,4 +18,5 @@ import javax.inject.Inject;
 public interface AccessServices {
 public String loadConfigurationPropeties();
 public Boolean validateCredentials(Usuario usuario, String username, String password, Banco banco);
+public Boolean validateCredentials(Usuario usuario, String username, String password);
 }
