@@ -188,7 +188,13 @@ public class Banco implements Serializable {
 
     @Override
     public String toString() {
-        return "com.avbravo.prueba.controller.newentity.Banco[ BANCOID=" + BANCOID + " ]";
+        return "Banco{" + "BANCOID=" + BANCOID + ", BANCO=" + BANCO + ", SIGLAS=" + SIGLAS + ", ACTIVO=" + ACTIVO + ", DESCRIPCION=" + DESCRIPCION + ", ORDEN=" + ORDEN + ", ESCONTROL=" + ESCONTROL + '}';
     }
+  
+    public String toJSON() {
+        return "{" + "\"BANCOID\":\"" + BANCOID + "\", \"BANCO\":\"" + BANCO + "\", \"SIGLAS\":\"" + SIGLAS + "\", \"ACTIVO\":\"" + ACTIVO + "\", \"DESCRIPCION\":\"" + DESCRIPCION + "\", \"ORDEN\":\"" + ORDEN + "\", \"ESCONTROL\":\"" + ESCONTROL + "\"}";
+    }
+
+   
 
 }

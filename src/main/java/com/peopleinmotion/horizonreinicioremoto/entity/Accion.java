@@ -156,7 +156,9 @@ public class Accion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.avbravo.prueba.controller.newentity.Accion[ ACCIONID=" + ACCIONID + " ]";
+        return "Accion{" + "ACCIONID=" + ACCIONID + ", ACCION=" + ACCION + ", ACTIVO=" + ACTIVO + ", PREDETERMINADO=" + PREDETERMINADO + ", ORDEN=" + ORDEN + ", GRUPOACCIONID=" + GRUPOACCIONID + '}';
     }
+
+    
     
 }

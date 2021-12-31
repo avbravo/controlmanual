@@ -5,12 +5,21 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
+import com.peopleinmotion.horizonreinicioremoto.entity.Historial;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import com.peopleinmotion.horizonreinicioremoto.repository.BancoRepository;
+import com.peopleinmotion.horizonreinicioremoto.repository.HistorialRepository;
 import com.peopleinmotion.horizonreinicioremoto.services.AccessServices;
+import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 
 import java.io.Serializable;
@@ -52,6 +61,9 @@ public class AccessController implements Serializable {
    
     @Inject
     AccessServices accessServices;
+    
+     @Inject
+    HistorialRepository historialRepository;
 // </editor-fold>
 
 
@@ -99,7 +111,31 @@ public class AccessController implements Serializable {
             if (accessServices.validateCredentials(usuario, username, password, selectOneMenuBancoValue)) {
                 setLoged(Boolean.TRUE);
                 JsfUtil.successMessage("Bienvenido " + usuario.getNOMBRE());
-                return "dashboard.xhtml";
+               
+                usuario = (Usuario)JmoordbContext.get("user");
+              
+                Historial historial = new Historial.Builder()
+                        .EVENTO("Login")
+                        .FECHA(DateUtil.fechaHoraActual())
+                        .MODULO("AccessController")
+                        .TABLA("USUARIO")
+                        .CONTENIDO(usuario.toJSON())
+                        .USUARIOID(usuario.getUSUARIOID())
+
+                        .build();
+                
+                
+           
+                 
+               if( !historialRepository.create(historial)){
+                 
+               }
+      
+                 
+                 
+                 
+                        
+                        return "dashboard.xhtml";
             }
            
         } catch (Exception e) {
@@ -121,7 +157,7 @@ public class AccessController implements Serializable {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
-//      return "/faces/buscarcajero.xhtml";
+
     }
 // </editor-fold>
     
@@ -136,7 +172,7 @@ public class AccessController implements Serializable {
     public int getMaxInactiveInterval() {
         int tiempo = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())
                 .getSession().getMaxInactiveInterval();
-        System.out.println("Test..>  getMaxInactiveInterval() "+tiempo);
+  
         return tiempo;
     }
     // </editor-fold>

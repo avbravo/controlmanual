@@ -156,7 +156,9 @@ public class Estado implements Serializable {
 
     @Override
     public String toString() {
-        return "com.avbravo.prueba.controller.newentity.Accion[ ESTADOID=" + ESTADOID + " ]";
+        return "Estado{" + "ESTADOID=" + ESTADOID + ", ESTADO=" + ESTADO + ", ACTIVO=" + ACTIVO + ", PREDETERMINADO=" + PREDETERMINADO + ", ORDEN=" + ORDEN + ", GRUPOESTADOID=" + GRUPOESTADOID + '}';
     }
+
+   
     
 }

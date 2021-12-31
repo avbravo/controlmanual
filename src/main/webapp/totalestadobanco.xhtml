@@ -18,7 +18,7 @@
         <meta name="referrer" content="no-referrer"/>
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
-        <title>Control Manual</title>         <f:metadata><f:viewAction action="#{f5Detector.checkF5}" onPostback="true" /> </f:metadata>
+        <title>Control Manual</title>       
 
     </h:head>
     <h:body>
@@ -61,10 +61,10 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h4 class="text-secondary">TOTALES DE ESTADO </h4>
-                                          
+
 
                                         </div>
-                                      
+
                                     </div>
                                 </div>
                             </div>
@@ -102,10 +102,10 @@
 
                                                 </div>
                                             </f:facet>
-                                          
+
                                             <p:column headerText="Banco"  filterBy="#{item.banco.BANCO}">
                                                 <label class="text-black">#{item.banco.BANCO}</label>
-                                             
+
                                             </p:column>
 
 
@@ -118,11 +118,11 @@
 
                                             </p:column>
                                             <p:column headerText="Finalizado" >
-                                              <label class="text-black">#{item.totalFinalizado}</label>
+                                                <label class="text-black">#{item.totalFinalizado}</label>
 
                                             </p:column>
 
-                                           
+
 
                                         </p:dataTable>
 

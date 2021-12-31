@@ -285,7 +285,9 @@ public class AgendaHistorial implements Serializable {
 
     @Override
     public String toString() {
-        return "com.avbravo.prueba.controller.newentity.Cajero[ CAJEROID=" + CAJEROID + " ]";
+        return "AgendaHistorial{" + "AGENDAHISTORIALID=" + AGENDAHISTORIALID + ", AGENDAID=" + AGENDAID + ", BANCOID=" + BANCOID + ", CAJERO=" + CAJERO + ", CAJEROID=" + CAJEROID + ", ESTADOID=" + ESTADOID + ", ACCIONID=" + ACCIONID + ", FECHA=" + FECHA + ", FECHAAGENDADA=" + FECHAAGENDADA + ", FECHAEJECUCION=" + FECHAEJECUCION + ", USUARIOIDSOLICITA=" + USUARIOIDSOLICITA + ", USUARIOIDATIENDE=" + USUARIOIDATIENDE + ", ACTIVO=" + ACTIVO + ", EVENTOOCURRIDO=" + EVENTOOCURRIDO + ", FECHAEVENTO=" + FECHAEVENTO + ", USUARIOEVENTO=" + USUARIOEVENTO + '}';
     }
+
+  
     
 }

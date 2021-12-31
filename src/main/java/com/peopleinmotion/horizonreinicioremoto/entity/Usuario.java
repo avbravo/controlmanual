@@ -6,10 +6,8 @@
 package com.peopleinmotion.horizonreinicioremoto.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,8 +22,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -108,6 +104,7 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "BANCOID", referencedColumnName = "BANCOID")
     @ManyToOne(optional = false)
     private Banco BANCOID;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "USUARIOID")
     private Collection<GrupoUsuario> grupoUsuarioCollection;
 
@@ -240,7 +237,12 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "com.avbravo.prueba.controller.newentity.Usuario[ USUARIOID=" + USUARIOID + " ]";
+        return "Usuario{" + "USUARIOID=" + USUARIOID + ", USERNAME=" + USERNAME + ", PASSWORD=" + PASSWORD + ", NOMBRE=" + NOMBRE + ", CEDULA=" + CEDULA + ", EMAIL=" + EMAIL + ", TELEFONO=" + TELEFONO + ", CELULAR=" + CELULAR + ", ACTIVO=" + ACTIVO + ", ORDEN=" + ORDEN + ", BANCOID=" + BANCOID + ", grupoUsuarioCollection=" + grupoUsuarioCollection + '}';
     }
-    
+
+    public String toJSON(){
+   
+        return "{" + "\"USUARIOID\":\"" + USUARIOID + "\", \"USERNAME\":\"" + USERNAME + "\",\"PASSWORD\":\"" + PASSWORD + "\", \"NOMBRE\":\"" + NOMBRE + "\", \"CEDULA\":\"" + CEDULA + "\", \"EMAIL\":\"" + EMAIL + "\", \"TELEFONO\":\"" + TELEFONO + "\", \"CELULAR\":\"" + CELULAR + "\", \"ACTIVO\":\"" + ACTIVO + "\", \"ORDEN\":\"" + ORDEN + "\", \"BANCOID\":" + BANCOID.toJSON() + "}";
+     
+    }
 }

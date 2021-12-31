@@ -297,7 +297,7 @@ public class Agenda implements Serializable {
     
 //    @Override
 //    public String toString() {
-//        return "com.avbravo.prueba.controller.newentity.Cajero[ CAJEROID=" + CAJEROID + " ]";
+//        return " Cajero[ CAJEROID=" + CAJEROID + " ]";
 //    }
 //    
 
@@ -305,5 +305,10 @@ public class Agenda implements Serializable {
 //    public String toString() {
 //        return "Agenda{" + "AGENDAID=" + AGENDAID + ", CAJEROID=" + CAJEROID + ", ESTADOID=" + ESTADOID + ", ACCIONID=" + ACCIONID + ", FECHA=" + FECHA + ", FECHAAGENDADA=" + FECHAAGENDADA + ", USUARIOIDSOLICITA=" + USUARIOIDSOLICITA + ", USUARIOIDATIENDE=" + USUARIOIDATIENDE + ", ACTIVO=" + ACTIVO + '}';
 //    }
+
+    @Override
+    public String toString() {
+        return "Agenda{" + "AGENDAID=" + AGENDAID + ", BANCOID=" + BANCOID + ", CAJERO=" + CAJERO + ", CAJEROID=" + CAJEROID + ", ESTADOID=" + ESTADOID + ", ACCIONID=" + ACCIONID + ", FECHA=" + FECHA + ", FECHAAGENDADA=" + FECHAAGENDADA + ", FECHAEJECUCION=" + FECHAEJECUCION + ", USUARIOIDSOLICITA=" + USUARIOIDSOLICITA + ", USUARIOIDATIENDE=" + USUARIOIDATIENDE + ", CODIGOTRANSACCION=" + CODIGOTRANSACCION + ", ACTIVO=" + ACTIVO + '}';
+    }
 }
  

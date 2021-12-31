@@ -183,7 +183,9 @@ public class EmailConfiguration implements Serializable {
 
     @Override
     public String toString() {
-        return "com.avbravo.prueba.controller.newentity.Accion[ EMAILCONFIGURATIONID=" + EMAILCONFIGURATIONID + " ]";
+        return "EmailConfiguration{" + "EMAILCONFIGURATIONID=" + EMAILCONFIGURATIONID + ", EMAIL=" + EMAIL + ", PASSWORD=" + PASSWORD + ", MAILSMTPHOST=" + MAILSMTPHOST + ", MAILSMTPAUTH=" + MAILSMTPAUTH + ", MAILSMTPPORT=" + MAILSMTPPORT + ", MAILSMTPSTARTTLSENABLE=" + MAILSMTPSTARTTLSENABLE + ", ACTIVO=" + ACTIVO + ", ORDEN=" + ORDEN + '}';
     }
+
+ 
     
 }

@@ -178,7 +178,9 @@ public class Cajero implements Serializable {
 
     @Override
     public String toString() {
-        return "com.avbravo.prueba.controller.newentity.Cajero[ CAJEROID=" + CAJEROID + " ]";
+        return "Cajero{" + "CAJEROID=" + CAJEROID + ", CAJERO=" + CAJERO + ", ACTIVO=" + ACTIVO + ", DESCRIPCION=" + DESCRIPCION + ", DIRECCION=" + DIRECCION + ", DIRECCIONCORTA=" + DIRECCIONCORTA + ", ORDEN=" + ORDEN + ", BANCOID=" + BANCOID + '}';
     }
+
+   
     
 }

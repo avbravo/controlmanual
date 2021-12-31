@@ -257,6 +257,7 @@ public class ControlmanualController implements Serializable {
             /**
              * Valida si fue cambiado por otro usuario
              */
+            
             if (accionRecienteServices.changed(accionRecienteOld)) {
                 MessagesForm messagesForm = new MessagesForm.Builder()
                         .id(accionReciente.getCAJERO())

@@ -137,7 +137,9 @@ public class GrupoAccion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.avbravo.prueba.controller.newentity.GrupoAccion[ GRUPOACCIONID=" + GRUPOACCIONID + " ]";
+        return "GrupoAccion{" + "GRUPOACCIONID=" + GRUPOACCIONID + ", GRUPOACCION=" + GRUPOACCION + ", ACTIVO=" + ACTIVO + ", ORDEN=" + ORDEN + ", ACCIONCollection=" + ACCIONCollection + '}';
     }
+
+    
     
 }

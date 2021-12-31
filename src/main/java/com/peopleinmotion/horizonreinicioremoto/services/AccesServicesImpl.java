@@ -31,6 +31,7 @@ public class AccesServicesImpl implements AccessServices {
     UsuarioRepository usuarioRepository;
     @Inject
     AccessServices accessServices;
+
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="String loadConfigurationPropeties()">
 
@@ -110,6 +111,8 @@ public class AccesServicesImpl implements AccessServices {
              */
             JmoordbContext.put("user", usuario);
             JmoordbContext.put("banco", banco);
+
+
             return Boolean.TRUE;
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -118,7 +121,7 @@ public class AccesServicesImpl implements AccessServices {
         return Boolean.FALSE;
     }
     // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean validateCredentials(Usuario usuario, String username, String password, Banco banco) ">
+// <editor-fold defaultstate="collapsed" desc="Boolean validateCredentials(Usuario usuario, String username, String password) ">
     @Override
     public Boolean validateCredentials(Usuario usuario, String username, String password) {
       try {
@@ -142,7 +145,8 @@ public class AccesServicesImpl implements AccessServices {
              * Guardar el context
              */
             JmoordbContext.put("user", usuario);
-         
+            
+            
             return Boolean.TRUE;
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());

@@ -5,6 +5,7 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.entity;
 
+import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
@@ -29,7 +30,7 @@ import javax.validation.constraints.Size;
  * @author avbravo
  */
 @Entity
-@Table(name = "HISTORIAL") 
+@Table(name = "HISTORIAL")
 @NamedQueries({
     @NamedQuery(name = "Historial.findAll", query = "SELECT h FROM Historial h"),
     @NamedQuery(name = "Historial.findByHistorialId", query = "SELECT h FROM Historial h WHERE h.HISTORIALID = :HISTORIALID"),
@@ -42,8 +43,8 @@ public class Historial implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-   @Id
-    @SequenceGenerator(name = "HISTORIAL_GEN", sequenceName = "HISTORIAL_SEQ",allocationSize = 1)
+    @Id
+    @SequenceGenerator(name = "HISTORIAL_GEN", sequenceName = "HISTORIAL_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HISTORIAL_GEN")
     @NotNull
     @Column(name = "HISTORIALID")
@@ -79,7 +80,16 @@ public class Historial implements Serializable {
     public Historial() {
     }
 
-    public Historial(BigInteger  HISTORIALID) {
+    public Historial(String TABLA, String MODULO, String EVENTO, String CONTENIDO, BigInteger USUARIOID, Date FECHA) {
+        this.TABLA = TABLA;
+        this.MODULO = MODULO;
+        this.EVENTO = EVENTO;
+        this.CONTENIDO = CONTENIDO;
+        this.USUARIOID = USUARIOID;
+        this.FECHA = FECHA;
+    }
+
+    public Historial(BigInteger HISTORIALID) {
         this.HISTORIALID = HISTORIALID;
     }
 
@@ -139,10 +149,6 @@ public class Historial implements Serializable {
         this.FECHA = FECHA;
     }
 
-    
-    
-    
-   
     @Override
     public int hashCode() {
         int hash = 0;
@@ -165,7 +171,68 @@ public class Historial implements Serializable {
 
     @Override
     public String toString() {
-        return "com.avbravo.prueba.controller.newentity.Historial[ HISTORIALID=" + HISTORIALID + " ]";
+        StringBuilder sb = new StringBuilder();
+        sb.append("Historial{HISTORIALID=").append(HISTORIALID);
+        sb.append(", TABLA=").append(TABLA);
+        sb.append(", MODULO=").append(MODULO);
+        sb.append(", EVENTO=").append(EVENTO);
+        sb.append(", CONTENIDO=").append(CONTENIDO);
+        sb.append(", USUARIOID=").append(USUARIOID);
+        sb.append(", FECHA=").append(FECHA);
+        sb.append('}');
+        return sb.toString();
     }
+
+ 
     
+    
+    
+    public static class Builder {
+
+        private String TABLA;
+
+        private String MODULO;
+
+        private String EVENTO;
+
+        private String CONTENIDO;
+
+        private BigInteger USUARIOID;
+        private Date FECHA;
+
+        public Builder TABLA(String TABLA) {
+            this.TABLA = TABLA;
+            return this;
+        }
+
+        public Builder MODULO(String MODULO) {
+            this.MODULO = MODULO;
+            return this;
+        }
+
+        public Builder EVENTO(String EVENTO) {
+            this.EVENTO = EVENTO;
+            return this;
+        }
+        public Builder CONTENIDO(String CONTENIDO) {
+            this.CONTENIDO = CONTENIDO;
+            return this;
+        }
+
+        public Builder USUARIOID(BigInteger USUARIOID) {
+            this.USUARIOID = USUARIOID;
+            return this;
+        }
+
+        public Builder FECHA(Date FECHA) {
+            this.FECHA = FECHA;
+            return this;
+        }
+
+        public Historial build() {
+            return new Historial(TABLA, MODULO, EVENTO, CONTENIDO, USUARIOID, FECHA);
+
+        }
+
+    }
 }

@@ -5,7 +5,6 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.services;
 
-import com.google.gson.Gson;
 import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
@@ -13,7 +12,6 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
-import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.util.Optional;
@@ -94,16 +92,17 @@ public class AccionRecienteServicesImpl implements AccionRecienteServices {
             Optional<AccionReciente> live = accionRecienteRepository.findByAccionRecienteId(accionReciente.getACCIONRECIENTEID());
             if (!live.isPresent()) {
 //No se encontro el registro                
-          return Boolean.TRUE;
+                return Boolean.TRUE;
             }
-            String jsonAccionRecienteLive = new Gson().toJson(live.get());
+            String jsonAccionRecienteLive = live.get().toJSON();
 
-            String jsonAccionReciente = new Gson().toJson(accionReciente);
+
+            String jsonAccionReciente = accionReciente.toJSON();
 
             if (!jsonAccionReciente.equals(jsonAccionRecienteLive)) {
                 //Otro usuario lo cambio mientras se estaba procesando
                 return Boolean.TRUE;
-         
+
             }
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());

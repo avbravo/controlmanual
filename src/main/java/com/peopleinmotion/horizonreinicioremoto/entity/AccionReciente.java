@@ -277,13 +277,22 @@ public class AccionReciente implements Serializable {
 
 //    @Override
 //    public String toString() {
-//        return "com.avbravo.prueba.controller.newentity.Accion[ ACCIONID=" + ACCIONID + " ]";
+//        return " Accion[ ACCIONID=" + ACCIONID + " ]";
 //    }
 
     @Override
     public String toString() {
         return "AccionReciente{" + "ACCIONRECIENTEID=" + ACCIONRECIENTEID + ", ACCIONID=" + ACCIONID + ", ESTADOID=" + ESTADOID + ", ESTADO=" + ESTADO + ", BANCOID=" + BANCOID + ", CAJEROID=" + CAJEROID + ", CAJERO=" + CAJERO + ", AGENDAID=" + AGENDAID + ", TITULO=" + TITULO + ", MENSAJE=" + MENSAJE + ", ACTIVO=" + ACTIVO + ", VISTOBANCO=" + VISTOBANCO + ", VISTOTECNICO=" + VISTOTECNICO + ", FECHA=" + FECHA + ", FECHAAGENDADA=" + FECHAAGENDADA + ", FECHAEJECUCION=" + FECHAEJECUCION + '}';
     }
+  
+    public String toJSON() {
+        return "{" + "\"ACCIONRECIENTEID\":\"" + ACCIONRECIENTEID + "\", \" ACCIONID\":\"" + ACCIONID + "\", \"ESTADOID\":\"" + ESTADOID + "\", \" ESTADO\":\"" + ESTADO + "\", \"BANCOID\":\"" + BANCOID + "\", \" CAJEROID=" + CAJEROID + "\", \"CAJERO\":\"" + CAJERO + "\", \" AGENDAID\":\"" + AGENDAID + "\", \" TITULO\":\"" + TITULO + "\", \" MENSAJE\":\"" + MENSAJE + "\", \" ACTIVO\":\"" + ACTIVO + ", VISTOBANCO\":\"" + VISTOBANCO + "\", \"VISTOTECNICO\":\"" + VISTOTECNICO + "\", \" FECHA\":\"" + FECHA + "\", \" FECHAAGENDADA\":\"" + FECHAAGENDADA + "\", \"FECHAEJECUCION=\":\"" + FECHAEJECUCION + "\"}";
+    }
+
+  
+   
+
+  
 
     
     

@@ -194,7 +194,9 @@ public class Token implements Serializable {
 
     @Override
     public String toString() {
-        return "com.avbravo.prueba.controller.newentity.Token.[ TOKENID=" + TOKENID + " ]";
+        return "Token{" + "TOKENID=" + TOKENID + ", TOKEN=" + TOKEN + ", ACTIVO=" + ACTIVO + ", USADO=" + USADO + ", CODIGOTRANSACCION=" + CODIGOTRANSACCION + ", VENCIDO=" + VENCIDO + ", USUARIOID=" + USUARIOID + ", FECHAGENERACION=" + FECHAGENERACION + ", FECHAVENCIMIENTO=" + FECHAVENCIMIENTO + '}';
     }
+
+   
 
 }

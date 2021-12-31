@@ -119,7 +119,9 @@ public class GrupoUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "com.avbravo.prueba.controller.newentity.GrupoUsuario[ GRUPOUSUARIOID=" + GRUPOUSUARIOID + " ]";
+        return "GrupoUsuario{" + "GRUPOUSUARIOID=" + GRUPOUSUARIOID + ", ACTIVO=" + ACTIVO + ", GRUPOID=" + GRUPOID + ", USUARIOID=" + USUARIOID + '}';
     }
+
+  
     
 }

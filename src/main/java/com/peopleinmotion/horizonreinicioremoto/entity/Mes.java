@@ -120,7 +120,8 @@ public class Mes implements Serializable {
 
     @Override
     public String toString() {
-        return "com.avbravo.prueba.controller.newentity.Mes[ MESID=" + MESID + " ]";
+        return "Mes{" + "MESID=" + MESID + ", MES=" + MES + ", ACTIVO=" + ACTIVO + ", ORDEN=" + ORDEN + '}';
     }
-    
+
+
 }
