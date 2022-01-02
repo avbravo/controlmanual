@@ -44,9 +44,6 @@ public interface BancoRepository {
 //    public List<Banco> queryWithOutPagination(Query query); 
     public Boolean changed(Banco banco);
 
-
-    
-
     public List<Banco> sql(QuerySQL querySQL);
 
     public List<Banco> pagination(QuerySQL querySQL, Integer pageNumber, Integer rowForPage);

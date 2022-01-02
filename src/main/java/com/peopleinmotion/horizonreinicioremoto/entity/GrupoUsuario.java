@@ -119,9 +119,21 @@ public class GrupoUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "GrupoUsuario{" + "GRUPOUSUARIOID=" + GRUPOUSUARIOID + ", ACTIVO=" + ACTIVO + ", GRUPOID=" + GRUPOID + ", USUARIOID=" + USUARIOID + '}';
+        return "GrupoUsuario{" + "GRUPOUSUARIOID=" +
+                GRUPOUSUARIOID + ", ACTIVO=" + ACTIVO + ", "
+                + "GRUPOID=" + GRUPOID + ", USUARIOID=" +
+                USUARIOID + '}';
     }
-
+ public String toJSON() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append("\"GRUPOUSUARIOID\":\"").append(GRUPOUSUARIOID);
+        sb.append("\", \"GRUPOID\":\"").append(GRUPOID.toJSON());
+        sb.append("\", \"USUARIOID\":\"").append(USUARIOID.toJSON());
+     
+        sb.append("\"}");
+        return sb.toString();
+    }
   
     
 }

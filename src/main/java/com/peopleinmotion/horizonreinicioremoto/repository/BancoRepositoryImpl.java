@@ -5,9 +5,6 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.repository;
 
-import com.google.gson.Gson;
-import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
-import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.facade.BancoFacade;
 import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
@@ -17,8 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 /**
  *
@@ -101,9 +96,9 @@ public class BancoRepositoryImpl implements BancoRepository {
             if (!live.isPresent()) {
                 return Boolean.TRUE;
             }
-            String jsonLive = new Gson().toJson(live.get());
+            String jsonLive = live.get().toJSON();
 
-            String json = new Gson().toJson(banco);
+            String json =banco.toJSON();
 
             if (!json.equals(jsonLive)) {
                 //Otro usuario lo cambio mientras se estaba procesando

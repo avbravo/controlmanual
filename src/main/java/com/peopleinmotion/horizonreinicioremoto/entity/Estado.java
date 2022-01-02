@@ -70,8 +70,6 @@ public class Estado implements Serializable {
     private GrupoEstado GRUPOESTADOID;
     
 
-//    @OneToMany(mappedBy = "GRUPOESTADOID")
-//    private Collection<GrupoEstado> GRUPOESTADOCollection;
 
     public Estado() {
     }

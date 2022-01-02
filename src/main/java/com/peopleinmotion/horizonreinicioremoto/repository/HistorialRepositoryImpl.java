@@ -5,7 +5,7 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.repository;
 
-import com.google.gson.Gson;
+
 import com.peopleinmotion.horizonreinicioremoto.entity.Historial;
 import com.peopleinmotion.horizonreinicioremoto.facade.HistorialFacade;
 import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
@@ -81,9 +81,9 @@ public class HistorialRepositoryImpl implements HistorialRepository {
             if (!live.isPresent()) {
                 return Boolean.TRUE;
             }
-            String jsonLive = new Gson().toJson(live.get());
+            String jsonLive =live.get().toJSON();
 
-            String json = new Gson().toJson(historial);
+            String json = historial.toJSON();
 
             if (!json.equals(jsonLive)) {
                 //Otro usuario lo cambio mientras se estaba procesando

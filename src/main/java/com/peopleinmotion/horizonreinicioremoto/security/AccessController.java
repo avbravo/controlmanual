@@ -5,11 +5,6 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Historial;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
@@ -113,7 +108,13 @@ public class AccessController implements Serializable {
                 JsfUtil.successMessage("Bienvenido " + usuario.getNOMBRE());
                
                 usuario = (Usuario)JmoordbContext.get("user");
-              
+                System.out.println("*****************TO STRING**************");
+                System.out.println("-->"+usuario.toString());
+                System.out.println("===============USUARIO.TOJSON()===================================");
+                System.out.println(usuario.toJSON());
+                System.out.println("==================================================");
+                
+                
                 Historial historial = new Historial.Builder()
                         .EVENTO("Login")
                         .FECHA(DateUtil.fechaHoraActual())

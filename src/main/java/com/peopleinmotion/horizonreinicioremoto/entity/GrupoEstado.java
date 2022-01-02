@@ -13,6 +13,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -61,7 +62,7 @@ public class GrupoEstado implements Serializable {
      @Transient
      private BigInteger TOTAL;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "GRUPOESTADOID")
+    @OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "GRUPOESTADOID")
     private Collection<Estado> ESTADOCollection;
     
 

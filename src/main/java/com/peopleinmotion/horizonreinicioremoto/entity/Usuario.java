@@ -7,11 +7,14 @@ package com.peopleinmotion.horizonreinicioremoto.entity;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Collection;
+import static java.util.stream.Collectors.toCollection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +33,7 @@ import javax.validation.constraints.Size;
  * @author avbravo
  */
 @Entity
-@Table(name = "USUARIO") 
+@Table(name = "USUARIO")
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "Usuario.findByUsuarioId", query = "SELECT u FROM Usuario u WHERE u.USUARIOID = :USUARIOID"),
@@ -50,7 +53,7 @@ public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @SequenceGenerator(name = "USUARIO_GEN", sequenceName = "USUARIO_SEQ",allocationSize = 1)
+    @SequenceGenerator(name = "USUARIO_GEN", sequenceName = "USUARIO_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_GEN")
     @NotNull
     @Column(name = "USUARIOID")
@@ -93,19 +96,19 @@ public class Usuario implements Serializable {
     private String CELULAR;
     @Basic(optional = false)
     @NotNull
-     
+
     @Column(name = "ACTIVO")
     private String ACTIVO;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ORDEN")
     private BigInteger ORDEN;
-   
+
     @JoinColumn(name = "BANCOID", referencedColumnName = "BANCOID")
     @ManyToOne(optional = false)
     private Banco BANCOID;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "USUARIOID")
+
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "USUARIOID")
     private Collection<GrupoUsuario> grupoUsuarioCollection;
 
     public Usuario() {
@@ -211,10 +214,6 @@ public class Usuario implements Serializable {
         this.grupoUsuarioCollection = grupoUsuarioCollection;
     }
 
-   
-    
-    
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -240,9 +239,22 @@ public class Usuario implements Serializable {
         return "Usuario{" + "USUARIOID=" + USUARIOID + ", USERNAME=" + USERNAME + ", PASSWORD=" + PASSWORD + ", NOMBRE=" + NOMBRE + ", CEDULA=" + CEDULA + ", EMAIL=" + EMAIL + ", TELEFONO=" + TELEFONO + ", CELULAR=" + CELULAR + ", ACTIVO=" + ACTIVO + ", ORDEN=" + ORDEN + ", BANCOID=" + BANCOID + ", grupoUsuarioCollection=" + grupoUsuarioCollection + '}';
     }
 
-    public String toJSON(){
-   
-        return "{" + "\"USUARIOID\":\"" + USUARIOID + "\", \"USERNAME\":\"" + USERNAME + "\",\"PASSWORD\":\"" + PASSWORD + "\", \"NOMBRE\":\"" + NOMBRE + "\", \"CEDULA\":\"" + CEDULA + "\", \"EMAIL\":\"" + EMAIL + "\", \"TELEFONO\":\"" + TELEFONO + "\", \"CELULAR\":\"" + CELULAR + "\", \"ACTIVO\":\"" + ACTIVO + "\", \"ORDEN\":\"" + ORDEN + "\", \"BANCOID\":" + BANCOID.toJSON() + "}";
-     
+    public String toJSON() {
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append("\n  \"USUARIOID\":\"").append(USUARIOID).append("\"");
+        sb.append("\n, \"USERNAME\":\"").append(USERNAME).append("\"");
+        sb.append("\n, \"PASSWORD\":\"").append(PASSWORD).append("\"");
+        sb.append("\n, \"NOMBRE\":\"").append(NOMBRE).append("\"");
+        sb.append("\n, \"CEDULA\":\"").append(CEDULA).append("\"");
+        sb.append("\n, \"EMAIL\":\"").append(EMAIL).append("\"");
+        sb.append("\n, \"TELEFONO\":\"").append(TELEFONO).append("\"");
+        sb.append("\n, \"CELULAR\":\"").append(CELULAR).append("\"");
+        sb.append("\n, \"ACTIVO\":\"").append(ACTIVO).append("\"");
+        sb.append("\n, \"ORDEN\":\"").append(ORDEN).append("\"");
+        sb.append("\n, \"BANCOID\":").append(BANCOID.toJSON());
+        sb.append("\n}");
+        return sb.toString();
     }
 }

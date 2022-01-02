@@ -5,9 +5,8 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.repository;
 
-import com.google.gson.Gson;
+
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
-import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.facade.AccionRecienteFacade;
 import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
@@ -140,9 +139,9 @@ public class AccionRecienteRepositoryImpl implements AccionRecienteRepository {
             if (!live.isPresent()) {
                 return Boolean.TRUE;
             }
-            String jsonLive = new Gson().toJson(live.get());
+            String jsonLive =live.get().toJSON() ;
 
-            String json = new Gson().toJson(accionReciente);
+            String json = accionReciente.toJSON();
 
             if (!json.equals(jsonLive)) {
                 //Otro usuario lo cambio mientras se estaba procesando

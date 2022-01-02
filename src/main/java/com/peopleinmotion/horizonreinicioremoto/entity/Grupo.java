@@ -6,14 +6,13 @@
 package com.peopleinmotion.horizonreinicioremoto.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,8 +21,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -71,7 +68,7 @@ public class Grupo implements Serializable {
     @Column(name = "ORDEN")
     private BigInteger ORDEN;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "GRUPOID")
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "GRUPOID")
     private Collection<GrupoUsuario> grupoUsuarioCollection;
 
     public Grupo() {
@@ -154,9 +151,22 @@ public class Grupo implements Serializable {
 
     @Override
     public String toString() {
-        return "Grupo{" + "GRUPOID=" + GRUPOID + ", GRUPO=" + GRUPO + ", ACTIVO=" + ACTIVO + ", DESCRIPCION=" + DESCRIPCION + ", ORDEN=" + ORDEN + '}';
+        return "Grupo{" + "GRUPOID=" + GRUPOID + ", GRUPO=" + GRUPO + ", ACTIVO=" + ACTIVO + ", DESCRIPCION=" +
+                DESCRIPCION + ", ORDEN=" + ORDEN + '}';
     }
 
-   
+    public String toJSON() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append("\"GRUPOID\":\"").append(GRUPOID);
+        sb.append("\", \"GRUPO\":\"").append(GRUPO);
+        sb.append("\", \"ACTIVO\":\"").append(ACTIVO);
+        sb.append("\", \"DESCRIPCION\":\"").append(DESCRIPCION);
+        sb.append("\", \"ORDEN\":\"").append(ORDEN);
+
+        sb.append("\"}");
+        return sb.toString();
+    }
+    
     
 }

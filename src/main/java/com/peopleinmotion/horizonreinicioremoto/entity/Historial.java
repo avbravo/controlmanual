@@ -182,6 +182,22 @@ public class Historial implements Serializable {
         sb.append('}');
         return sb.toString();
     }
+    
+    
+
+    public String toJSON() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append("\n  \"HISTORIALID\":\"").append(HISTORIALID).append("\"");
+        sb.append("\n, \"TABLA\":\"").append(TABLA).append("\"");
+        sb.append("\n, \"MODULO\":\"").append(MODULO).append("\"");
+        sb.append("\n, \"EVENTO\":\"").append(EVENTO).append("\"");
+        sb.append("\n, \"CONTENIDO\":\"").append(CONTENIDO).append("\"");
+        sb.append("\n, \" USUARIOID\":\"").append(USUARIOID).append("\"");
+        sb.append("\n, \"FECHA\":\"").append(FECHA).append("\"");
+        sb.append("\n}");
+        return sb.toString();
+    }
 
  
     
