@@ -8,7 +8,10 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:agendados="http://xmlns.jcp.org/jsf/composite/agendados"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+    <f:metadata>
+        <f:event type="preRenderView" rendered="#{facesContext.postBack}"  listener="#{facesContext.externalContext.response.setHeader('Cache-Control', 'no-cache, no-store')}" />
+    </f:metadata>
+
 
     <h:head>
         <link rel="stylesheet" href="./resources/vendors/ti-icons/css/themify-icons.css"/>
@@ -23,27 +26,26 @@
 
         <title>Control Manual</title>    
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 
-
- 
 
     </h:head>
     <h:body >
         <h:form id="form" prependId="false" rendered="#{accessController.loged}"
-             >
-<!--<script type = "text/javascript">
-    $(window).bind('beforeunload', function(event) {
-alert('event '+event.keyCode)
-   
-        if (event.keyCode == 116) {
-            alert(" kode 116")
-         event.preventDefault();
-         return false;
-      
-    }
-});
-</script>-->
+                >
+            <!--<script type = "text/javascript">
+                $(window).bind('beforeunload', function(event) {
+            alert('event '+event.keyCode)
+               
+                    if (event.keyCode == 116) {
+                        alert(" kode 116")
+                     event.preventDefault();
+                     return false;
+                  
+                }
+            });
+            </script>-->
             <p:ajaxStatus onsuccess="limpiartiempo()" />
             <p:remoteCommand name="ejecutarbean" action="#{accessController.inicializa()}" oncomplete="redireccionar()" />
             <script type="text/javascript">
@@ -55,8 +57,39 @@ alert('event '+event.keyCode)
 
 
             </script>
+            <script type="text/javascript">
 
-   
+
+
+                $(document).ready(function () {
+
+                    $(window).keydown(function (event) {
+                        alert("key" +event.keyCode );
+
+                        if (event.keyCode == 116) {
+alert("F5");
+                            event.preventDefault();
+
+                            return false;
+
+                        }else{
+                          if (event.keyCode == 13) {
+alert("F5");
+                            event.preventDefault();
+
+                            return false;
+
+                        }
+                        }
+
+                    });
+
+                });
+
+
+
+            </script>
+
 
             <p:growl id='growl' widgetVar="widgetVarGrowl"/>
             <div class="container-scroller">

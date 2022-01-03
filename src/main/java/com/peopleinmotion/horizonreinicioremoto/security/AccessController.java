@@ -108,11 +108,7 @@ public class AccessController implements Serializable {
                 JsfUtil.successMessage("Bienvenido " + usuario.getNOMBRE());
                
                 usuario = (Usuario)JmoordbContext.get("user");
-                System.out.println("*****************TO STRING**************");
-                System.out.println("-->"+usuario.toString());
-                System.out.println("===============USUARIO.TOJSON()===================================");
-                System.out.println(usuario.toJSON());
-                System.out.println("==================================================");
+             
                 
                 
                 Historial historial = new Historial.Builder()
