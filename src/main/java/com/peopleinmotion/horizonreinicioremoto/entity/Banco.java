@@ -77,8 +77,8 @@ public class Banco implements Serializable {
     @Column(name = "ESCONTROL")
     private String ESCONTROL;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "BANCOID")
-    private Collection<Usuario> usuarioCollection;
+//    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "USUARIOID")
+//    private Collection<Usuario> usuarioCollection;
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "BANCOID")
     private Collection<Cajero> cajeroCollection;
 
@@ -147,14 +147,7 @@ public class Banco implements Serializable {
         this.ESCONTROL = ESCONTROL;
     }
 
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
-    }
-
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
-    }
-
+   
     public Collection<Cajero> getCajeroCollection() {
         return cajeroCollection;
     }
@@ -191,6 +184,7 @@ public class Banco implements Serializable {
   
 
    public String toJSON() {
+    
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         sb.append("\n  \"BANCOID\":\"").append(BANCOID).append("\"");

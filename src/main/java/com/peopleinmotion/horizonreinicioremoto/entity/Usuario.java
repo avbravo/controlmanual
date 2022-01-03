@@ -108,9 +108,6 @@ public class Usuario implements Serializable {
     @ManyToOne(optional = false)
     private Banco BANCOID;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "USUARIOID")
-    private Collection<GrupoUsuario> grupoUsuarioCollection;
-
     public Usuario() {
     }
 
@@ -206,14 +203,7 @@ public class Usuario implements Serializable {
         this.BANCOID = BANCOID;
     }
 
-    public Collection<GrupoUsuario> getGrupoUsuarioCollection() {
-        return grupoUsuarioCollection;
-    }
-
-    public void setGrupoUsuarioCollection(Collection<GrupoUsuario> grupoUsuarioCollection) {
-        this.grupoUsuarioCollection = grupoUsuarioCollection;
-    }
-
+  
     @Override
     public int hashCode() {
         int hash = 0;
@@ -236,11 +226,13 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "USUARIOID=" + USUARIOID + ", USERNAME=" + USERNAME + ", PASSWORD=" + PASSWORD + ", NOMBRE=" + NOMBRE + ", CEDULA=" + CEDULA + ", EMAIL=" + EMAIL + ", TELEFONO=" + TELEFONO + ", CELULAR=" + CELULAR + ", ACTIVO=" + ACTIVO + ", ORDEN=" + ORDEN + ", BANCOID=" + BANCOID + ", grupoUsuarioCollection=" + grupoUsuarioCollection + '}';
+        return "Usuario{" + "USUARIOID=" + USUARIOID + ", USERNAME=" + USERNAME + ", PASSWORD=" + PASSWORD + ", NOMBRE=" + NOMBRE + ", CEDULA=" + CEDULA + ", EMAIL=" + EMAIL + ", TELEFONO=" + TELEFONO + ", CELULAR=" + CELULAR + ", ACTIVO=" + ACTIVO + ", ORDEN=" + ORDEN + ", BANCOID=" + BANCOID + '}';
     }
 
+   
+
     public String toJSON() {
-        
+ 
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         sb.append("\n  \"USUARIOID\":\"").append(USUARIOID).append("\"");
@@ -254,6 +246,10 @@ public class Usuario implements Serializable {
         sb.append("\n, \"ACTIVO\":\"").append(ACTIVO).append("\"");
         sb.append("\n, \"ORDEN\":\"").append(ORDEN).append("\"");
         sb.append("\n, \"BANCOID\":").append(BANCOID.toJSON());
+        
+      
+        //
+        
         sb.append("\n}");
         return sb.toString();
     }

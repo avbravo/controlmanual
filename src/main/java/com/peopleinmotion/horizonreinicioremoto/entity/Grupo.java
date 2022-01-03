@@ -156,6 +156,7 @@ public class Grupo implements Serializable {
     }
 
     public String toJSON() {
+        System.out.println(">>>> grupo.java toJSON()......");
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         sb.append("\"GRUPOID\":\"").append(GRUPOID);

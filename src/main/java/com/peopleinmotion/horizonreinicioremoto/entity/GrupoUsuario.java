@@ -125,6 +125,7 @@ public class GrupoUsuario implements Serializable {
                 USUARIOID + '}';
     }
  public String toJSON() {
+  
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         sb.append("\"GRUPOUSUARIOID\":\"").append(GRUPOUSUARIOID);
