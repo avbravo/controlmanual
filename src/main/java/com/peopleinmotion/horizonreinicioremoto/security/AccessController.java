@@ -118,7 +118,6 @@ public class AccessController implements Serializable {
                         .TABLA("USUARIO")
                         .CONTENIDO(usuario.toJSON())
                         .USUARIOID(usuario.getUSUARIOID())
-
                         .build();
                 
                 
@@ -129,8 +128,8 @@ public class AccessController implements Serializable {
                }
       
                  
-                 
-                 
+                 System.out.println("Test>>> put dashboard.xhtml....");
+                 JmoordbContext.put("pageInView","dashboard.xhtml");
                         
                         return "dashboard.xhtml";
             }
@@ -161,7 +160,7 @@ public class AccessController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="expired()">
 
       public String expired() {
-    
+     JmoordbContext.put("pageInView","faces/login.xhtml");
         return "faces/login.xhtml";
     }// </editor-fold>
       
@@ -182,6 +181,26 @@ public class AccessController implements Serializable {
         loged = false;
 
         return "";
+    }
+    // </editor-fold>
+    
+        
+    
+        // <editor-fold defaultstate="collapsed" desc="String browserEvent()">
+    public String browserEvent() {
+        System.out.println("Test---> browserEvent() "+DateUtil.fechaHoraActual());
+        String pageInView = "";
+        try {
+          
+                pageInView = (String) JmoordbContext.get("pageInView");
+            System.out.println("PageInView "+pageInView);
+                pageInView = (pageInView == null ? (loged ?"/faces/index.xhtml":"/faces/login.xhtml" ): pageInView);
+                      System.out.println("PageInView changed"+pageInView);
+                return pageInView;
+            
+        } catch (Exception e) {
+        }
+        return pageInView;
     }
     // </editor-fold>
 }

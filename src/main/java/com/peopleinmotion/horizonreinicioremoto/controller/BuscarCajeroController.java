@@ -118,7 +118,7 @@ public class BuscarCajeroController implements Serializable {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
         }
-
+  JmoordbContext.put("pageInView","/faces/cajeroencontrado.xhtml");
         return "/faces/cajeroencontrado.xhtml";
     }
 // </editor-fold>

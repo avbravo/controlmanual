@@ -143,7 +143,7 @@ public class CajeroAccionController implements Serializable {
               
                 
                 if (accionList == null || accionList.isEmpty()) {
-                    // System.out.println("...... no encontre ninguna accion de ese grupo");
+                  
                     JsfUtil.warningMessage("No acciones para el grupo seleccionado");
                 } 
                
@@ -151,9 +151,9 @@ public class CajeroAccionController implements Serializable {
              }
 
         } catch (Exception e) {
-            // System.out.println("init() " + e.getLocalizedMessage());
+   
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
-            JsfUtil.errorDialog("init()", e.getLocalizedMessage());
+           
 
         }
 
@@ -170,12 +170,12 @@ public class CajeroAccionController implements Serializable {
                 JsfUtil.infoDialog("onAccionChangee()"," Nada Seleccionado");
             }else{
                 JsfUtil.infoDialog("onAccionChangee() ", selectOneMenuAccionValue.getACCION());
-                // System.out.println("onAccionChange "+selectOneMenuAccionValue.getACCION());
+                
                 JmoordbContext.put("accion", selectOneMenuAccionValue);
             }
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("onAccionChange() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }

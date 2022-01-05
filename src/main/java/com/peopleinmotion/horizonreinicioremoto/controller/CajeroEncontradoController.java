@@ -137,14 +137,15 @@ public class CajeroEncontradoController implements Serializable {
             JmoordbContext.put("grupoAccion", grupoAccion);
             
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionEncenderSubirPlantillaId"))) {
+                JmoordbContext.put("pageInView", "/faces/subirplantilla.xhtml");
                 return "/faces/subirplantilla.xhtml";
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionReinicioRemotoId"))) {
-                
+              JmoordbContext.put("pageInView", "/faces/reinicioremoto.xhtml");   
                 return "/faces/reinicioremoto.xhtml";
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionBajarPlantillaId"))) {
-                
+                  JmoordbContext.put("pageInView", "/faces/bajarplantilla.xhtml"); 
                 return "/faces/bajarplantilla.xhtml";
             }
             JsfUtil.warningMessage("No se identifico el grupo de accion para continuar esta operación");
@@ -167,6 +168,7 @@ public class CajeroEncontradoController implements Serializable {
     public String onCommandButtonGrupoAccionBajarPlantilla() {
         try {
             JmoordbContext.put("grupoAccion", grupoAccionBajarPlantilla);
+            JmoordbContext.put("pageInView", "/faces/bajarplantilla.xhtml");
              return "/faces/bajarplantilla.xhtml";
            
           
@@ -258,6 +260,7 @@ public class CajeroEncontradoController implements Serializable {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
         }
+        JmoordbContext.put("pageInView", "/faces/controlmanual.xhtml");
         return "controlmanual.xhtml";
     }
     

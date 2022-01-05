@@ -160,7 +160,7 @@ public class ControlmanualController implements Serializable {
         try {
             grupoAccionList = grupoAccionRepository.findAll();
         } catch (Exception e) {
-            JsfUtil.errorMessage("fillSelectOneMenuGrupoAccion() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+" " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -178,20 +178,22 @@ public class ControlmanualController implements Serializable {
             JmoordbContext.put("grupoAccion", grupoAccion);
 
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionEncenderSubirPlantillaId"))) {
+                JmoordbContext.put("pageInView", "/faces/subirplantilla.xhtml");
+                        
                 return "/faces/subirplantilla.xhtml";
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionReinicioRemotoId"))) {
-
+                JmoordbContext.put("pageInView", "/faces/reinicioremoto.xhtml");
                 return "/faces/reinicioremoto.xhtml";
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionBajarPlantillaId"))) {
-
+                JmoordbContext.put("pageInView","/faces/bajarplantilla.xhtml");
                 return "/faces/bajarplantilla.xhtml";
             }
             JsfUtil.warningMessage("No se identifico el grupo de accion para continuar esta operación");
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("onCommandButtonGrupoAccion() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
         }
         return "";
     }
@@ -217,7 +219,7 @@ public class ControlmanualController implements Serializable {
 
             }
         } catch (Exception e) {
-            JsfUtil.errorMessage("findAccionReciente()" + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " "+ e.getLocalizedMessage());
             PrimeFaces.current().ajax().update("form:growl");
 
         }
@@ -270,7 +272,7 @@ public class ControlmanualController implements Serializable {
                         .returnTo("/faces/buscarcajero.xhtml")
                         .build();
                 JmoordbContext.put("messagesForm", messagesForm);
-
+                JmoordbContext.put("pageInView", "/faces/messagesform.xhtml");
                 return "messagesform.xhtml";
             }
 
@@ -318,7 +320,7 @@ public class ControlmanualController implements Serializable {
                                 .returnTo("/faces/dashboard.xhtml")
                                 .build();
                         JmoordbContext.put("messagesForm", messagesForm);
-
+                        JmoordbContext.put("pageInView", "/faces/messagesform.xhtml");
                         return "messagesform.xhtml";
                     } else {
                         JsfUtil.warningMessage("No se puede actualizar la agenda...");
@@ -364,7 +366,7 @@ public class ControlmanualController implements Serializable {
                         .returnTo("/faces/buscarcajero.xhtml")
                         .build();
                 JmoordbContext.put("messagesForm", messagesForm);
-
+                JmoordbContext.put("pageInView", "/faces/messagesform.xhtml");
                 return "messagesform.xhtml";
             }
 
@@ -411,6 +413,7 @@ public class ControlmanualController implements Serializable {
                                 .returnTo("/faces/dashboard.xhtml")
                                 .build();
                         JmoordbContext.put("messagesForm", messagesForm);
+                        JmoordbContext.put("pageInView", "/faces/messagesform.xhtml");
                         return "messagesform.xhtml";
                     } else {
                         JsfUtil.warningMessage("No se puede actualizar la agenda...");
@@ -448,7 +451,22 @@ public class ControlmanualController implements Serializable {
                         JmoordbContext.put("operacionExitosaMensaje", "Control Manual Accion");
                         JmoordbContext.put("accionReciente", accionReciente);
                         emailServices.sendEmailToTecnicosHeader(accionReciente, "CONTROLMANUAL ACCION", user, cajero, bank);
-                        return "operacionexitosa.xhtml";
+                        /*
+                        *Mensajes exitosos
+                         */
+                          MessagesForm messagesForm = new MessagesForm.Builder()
+                                .id(accionReciente.getCAJERO())
+                                .header("Operación Exitosa")
+                                .header2("La acción se realizo exitosamente")
+                                .image("atm-green01.png")
+                                .libary("images")
+                                .titulo("Reagendar accion")
+                                .mensaje("Se realizo exitosamente el reagendamiento ")
+                                .returnTo("/faces/dashboard.xhtml")
+                                .build();
+                        JmoordbContext.put("messagesForm", messagesForm);
+                        JmoordbContext.put("pageInView", "/faces/messagesform.xhtml");
+                        return "messagesform.xhtml";
                     } else {
                         JsfUtil.warningMessage("No se puede actualizar la agenda...");
                         return "";
@@ -459,7 +477,7 @@ public class ControlmanualController implements Serializable {
                 JsfUtil.warningMessage("No se pudo actualizar la agenda reciente");
             }
         } catch (Exception e) {
-            JsfUtil.errorMessage("cancelarAccion() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -473,9 +491,10 @@ public class ControlmanualController implements Serializable {
                 return "";
             }
             String retorno = (String) JmoordbContext.get("formularioRetorno");
+            JmoordbContext.put("pageInView", retorno);
             return retorno;
         } catch (Exception e) {
-            JsfUtil.errorMessage("regresar() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " "+ e.getLocalizedMessage());
         }
         return "";
     }
@@ -529,7 +548,7 @@ public class ControlmanualController implements Serializable {
         try {
             return tokenServices.validateToken(user, tokenIngresado);
         } catch (Exception e) {
-            JsfUtil.errorMessage("validateToken()" + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
@@ -554,7 +573,7 @@ public class ControlmanualController implements Serializable {
             tokenIngresado = tokenServices.marcarToken(numero, tokenIngresado);
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("marcarNumero() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " "+ e.getLocalizedMessage());
         }
         return "";
     }

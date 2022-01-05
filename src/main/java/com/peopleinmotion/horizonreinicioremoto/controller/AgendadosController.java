@@ -195,6 +195,8 @@ public class AgendadosController implements Serializable {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
+        
+       JmoordbContext.put("pageInView", "/faces/controlmanual.xhtml");
         return "/faces/controlmanual.xhtml";
     }
 // </editor-fold>

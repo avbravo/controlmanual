@@ -176,13 +176,12 @@ public class Banco implements Serializable {
         return true;
     }
 
+    
     @Override
     public String toString() {
         return "Banco{" + "BANCOID=" + BANCOID + ", BANCO=" + BANCO + ", SIGLAS=" + SIGLAS + ", ACTIVO=" + ACTIVO + ", DESCRIPCION=" + DESCRIPCION + ", ORDEN=" + ORDEN + ", ESCONTROL=" + ESCONTROL + '}';
     }
   
-  
-
    public String toJSON() {
     
         StringBuilder sb = new StringBuilder();
@@ -197,5 +196,8 @@ public class Banco implements Serializable {
         sb.append("\n}");
         return sb.toString();
     }
+
+
+   
 
 }

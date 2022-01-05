@@ -119,7 +119,7 @@ public class DashboardController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-         
+            System.out.println("Test--> llego al DashboardController "+DateUtil.fechaHoraActual());
             if (JmoordbContext.get("user") == null) {
 
             } else {
@@ -144,7 +144,7 @@ public class DashboardController implements Serializable {
               calcularTotales();
                 loadSchedule();
                 cajeroList = cajeroRepository.findByBancoId(banco);
-              
+                System.out.println("Test-->"+ JmoordbContext.get("pageInView"));
             }
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
@@ -181,13 +181,14 @@ public class DashboardController implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="onCommandButtonSelectCajero ">
     public String onCommandButtonSelectCajero(Cajero cajero) {
         try {
+            System.out.println("Test--> onCommandButtonSelectCajero");
             JmoordbContext.put("cajero", cajero);
 
             JsfUtil.infoDialog("Selecciono el cajero ", cajero.getCAJEROID().toString());
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-
+   JmoordbContext.put("pageInView", "/faces/cajeroencontrado.xhtml");
         return "/faces/cajeroencontrado.xhtml";
     }
 // </editor-fold>
@@ -277,6 +278,7 @@ public class DashboardController implements Serializable {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
+           JmoordbContext.put("pageInView", "/faces/controlmanual.xhtml");
         return "/faces/controlmanual.xhtml";
     }
 // </editor-fold>
@@ -392,7 +394,8 @@ public class DashboardController implements Serializable {
    
     // <editor-fold defaultstate="collapsed" desc="String onCommnandButtonGoBuscarCajero() ">
     public String onCommnandButtonGoBuscarCajero() {
-        return "faces/buscarcajero.xhtml";
+           JmoordbContext.put("pageInView", "/faces/buscarcajero.xhtml");
+        return "/faces/buscarcajero.xhtml";
     }
 // </editor-fold>
 

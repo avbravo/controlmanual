@@ -10,11 +10,14 @@
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>PrimeFaces</title>
             </f:facet>
+            <f:metadata>
+             <f:viewAction action="#{accessController.browserEvent()}"/>
+        </f:metadata>º
         </h:head>
     <h:body>
         Hello from Facelets
            <h:form id="form" prependId="false">
-                                    <p:growl autoUpdate="true" id="growl"/>
+                                    <p:growl  id="growl"/>
 
                                     <p:dataTable var="item"
                                                  value="#{usuarioController.usuarioList}"

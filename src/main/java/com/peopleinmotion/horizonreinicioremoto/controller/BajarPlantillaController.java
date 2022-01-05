@@ -363,6 +363,8 @@ public class BajarPlantillaController implements Serializable {
                                 .returnTo("/faces/dashboard.xhtml")
                                 .build();
                         JmoordbContext.put("messagesForm", messagesForm);
+                        
+                        JmoordbContext.put("pageInView", "/faces/messagesform.xhtml");
                         return "/faces/messagesform.xhtml";
                     }
 
@@ -381,7 +383,7 @@ public class BajarPlantillaController implements Serializable {
         try {
             return tokenServices.validateToken(user, tokenIngresado);
         } catch (Exception e) {
-            JsfUtil.errorMessage("validateToken()" + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+  "  " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
@@ -406,7 +408,7 @@ public class BajarPlantillaController implements Serializable {
             tokenIngresado = tokenServices.marcarToken(numero, tokenIngresado);
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("marcarNumero() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
         }
         return "";
     }
