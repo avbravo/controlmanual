@@ -60,7 +60,7 @@ public class AccessController implements Serializable {
     
      @Inject
     HistorialRepository historialRepository;
-//     @Inject
+    @Inject
      BrowserUtil browserUtil;
 // </editor-fold>
 
@@ -211,6 +211,7 @@ public class AccessController implements Serializable {
     public String browserEvent(){
         String pageInView="";
            try {         
+               System.out.println("Test-->"+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
 //        
 //        System.out.println("==================================================");
 //         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -225,6 +226,7 @@ public class AccessController implements Serializable {
             
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+               System.out.println(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
         }
         return pageInView;
     }

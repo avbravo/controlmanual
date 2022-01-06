@@ -4,7 +4,7 @@
 
     <groupId>com.people-inmotion</groupId>
     <artifactId>controlmanual</artifactId>
-    <version>0.2.507</version>
+    <version>0.2.508</version>
     <packaging>war</packaging>
 
     <name>controlmanual</name>

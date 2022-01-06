@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author avbravo
  */
-
+@Stateless
 public class BrowserUtilImpl implements BrowserUtil {
 
     // <editor-fold defaultstate="collapsed" desc="String url() ">
@@ -60,7 +60,7 @@ public class BrowserUtilImpl implements BrowserUtil {
             if(value.indexOf(textToRemove) == -1){
                 
             }else{
-                value = value.substring(textToRemove.length(),value.length());
+                value = value.substring(textToRemove.length()+1,value.length());
             }
          
         } catch (Exception e) {

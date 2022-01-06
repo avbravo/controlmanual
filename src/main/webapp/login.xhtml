@@ -15,11 +15,12 @@
         <!--<h:outputStylesheet library="css" name="styles.css"/>-->
         <meta name="referrer" content="no-referrer"/>
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
-        <f:metadata>
-            <f:viewAction action="#{accessController.browserEvent()}"/>
+         <f:metadata>
+             <f:viewAction action="#{accessController.browserEvent()}"/>
         </f:metadata>
     </h:head>
     <h:body>
+           
         <div class="container-scroller">
             <div class="container-fluid page-body-wrapper full-page-wrapper">
                 <div class="content-wrapper d-flex align-items-center auth px-0">
@@ -47,6 +48,36 @@
                                 <h4 class="text-center">Control Manual</h4>
                                 <h6 class="font-weight-light text-center">Ingrese credenciales </h6>
                                 <h:form id="form" prependId="false" class="pt-3">
+                                    
+                                     <p:remoteCommand name="remoteCommnadBrowserEvent" 
+                                     action="#{accessController.browserEvent()}"  />
+
+                    <script type="text/javascript">
+                        window.addEventListener('beforeunload', function (e) {
+                            e.preventDefault();
+                            remoteCommnadBrowserEvent();
+                            e.returnValue = '';
+                        });
+
+
+                        $(document).ready(function () {
+                            $(window).keydown(function (event) {
+                         
+
+                                if (event.keyCode == 116) {
+                                    alert("F5");
+                                    event.preventDefault();
+                                    return false;
+                                } else {
+                                    if (event.keyCode == 13) {
+                                        alert("F5");
+                                        event.preventDefault();
+                                        return false;
+                                    }
+                                }
+                            });
+                        });
+                    </script>
                                     <p:growl  id="growl" >
                                         <p:autoUpdate/>
                                     </p:growl>

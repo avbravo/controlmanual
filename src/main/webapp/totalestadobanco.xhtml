@@ -19,12 +19,40 @@
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
         <title>Control Manual</title>       
- <f:metadata>
-             <f:viewAction action="#{accessController.browserEvent()}"/>
-        </f:metadata>
+
     </h:head>
     <h:body>
         <h:form id="form" prependId="false" rendered="#{accessController.loged}">
+            
+                <p:remoteCommand name="remoteCommnadBrowserEvent" 
+                                     actionListener="#{accessController.browserEvent()}" async="false" />
+
+                    <script type="text/javascript">
+                        window.addEventListener('beforeunload', function (e) {
+                            e.preventDefault();
+                            remoteCommnadBrowserEvent();
+                            e.returnValue = '';
+                        });
+
+
+                        $(document).ready(function () {
+                            $(window).keydown(function (event) {
+                                alert("key" + event.keyCode);
+
+                                if (event.keyCode == 116) {
+                                    alert("F5");
+                                    event.preventDefault();
+                                    return false;
+                                } else {
+                                    if (event.keyCode == 13) {
+                                        alert("F5");
+                                        event.preventDefault();
+                                        return false;
+                                    }
+                                }
+                            });
+                        });
+                    </script>
             <style type="text/css">
                 .ui-filter-column .ui-column-customfilter .custom-filter {
                     width: 100%;
