@@ -163,7 +163,7 @@ public class AccessController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="expired()">
 
       public String expired() {
-     JmoordbContext.put("pageInView","faces/login.xhtml");
+
         return "faces/login.xhtml";
     }// </editor-fold>
       
@@ -188,45 +188,21 @@ public class AccessController implements Serializable {
     // </editor-fold>
     
         
-    
-//        // <editor-fold defaultstate="collapsed" desc="String browserEvent()">
-//    public String browserEvent() {
-//        System.out.println("Test---> browserEvent() "+DateUtil.fechaHoraActual());
-//        String pageInView = "";
-//        try {
-//          
-//                pageInView = (String) JmoordbContext.get("pageInView");
-//            System.out.println("PageInView "+pageInView);
-//                pageInView = (pageInView == null ? (loged ?"/faces/index.xhtml":"/faces/login.xhtml" ): pageInView);
-//                      System.out.println("PageInView changed"+pageInView);
-//                return pageInView;
-//            
-//        } catch (Exception e) {
-//        }
-//        return pageInView;
-//    }
-//    // </editor-fold>
-    
-       // <editor-fold defaultstate="collapsed" desc="String browserEvent()">
-    public String browserEvent(){
-        String pageInView="";
-           try {         
-               System.out.println("Test-->"+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
-//        
-//        System.out.println("==================================================");
-//         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-//    String url = request.getRequestURL().toString();
-//    String uri = request.getRequestURI();
-        System.out.println("url " +browserUtil.url());
-        System.out.println("uri "+browserUtil.uri());
-        pageInView = browserUtil.uri("controlmanual");
-               System.out.println("PageInView "+pageInView);
-        
-       
-            
+ // <editor-fold defaultstate="collapsed" desc="String browserEvent()">
+    public String browserEvent(String from) {
+
+        String pageInView = "";
+        try {
+            System.out.println("Test-->browserEvent from "+from + " at "+DateUtil.fechaHoraActual());
+            pageInView = (String) JmoordbContext.get("pageInView");
+            System.out.println("pageInView: " + pageInView);
+            pageInView = (pageInView == null ? (loged ? "/faces/index.xhtml" : "/faces/login.xhtml") : pageInView);
+            System.out.println("pageInView Changed " + pageInView);
+            return pageInView;
+
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
-               System.out.println(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+            System.out.println(JsfUtil.nameOfMethod() + " "
+                    + e.getLocalizedMessage());
         }
         return pageInView;
     }

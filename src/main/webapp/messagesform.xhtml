@@ -26,35 +26,7 @@
     </h:head>
     <h:body>
            <h:form id="form" prependId="false" rendered="#{accessController.loged}">
-                   <p:remoteCommand name="remoteCommnadBrowserEvent" 
-                                     actionListener="#{accessController.browserEvent()}" async="false" />
-
-                    <script type="text/javascript">
-                        window.addEventListener('beforeunload', function (e) {
-                            e.preventDefault();
-                            remoteCommnadBrowserEvent();
-                            e.returnValue = '';
-                        });
-
-
-                        $(document).ready(function () {
-                            $(window).keydown(function (event) {
-                                alert("key" + event.keyCode);
-
-                                if (event.keyCode == 116) {
-                                    alert("F5");
-                                    event.preventDefault();
-                                    return false;
-                                } else {
-                                    if (event.keyCode == 13) {
-                                        alert("F5");
-                                        event.preventDefault();
-                                        return false;
-                                    }
-                                }
-                            });
-                        });
-                    </script>
+                 
   <p:ajaxStatus onsuccess="limpiartiempo()" />
             <p:remoteCommand name="ejecutarbean" action="#{accessController.inicializa()}" oncomplete="redireccionar()" />
             <script type="text/javascript">
