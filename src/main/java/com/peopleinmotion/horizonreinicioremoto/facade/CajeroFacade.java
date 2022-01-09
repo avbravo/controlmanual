@@ -7,6 +7,7 @@ package com.peopleinmotion.horizonreinicioremoto.facade;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public Optional<Cajero> find(BigInteger id) {
        Cajero cajero = (Cajero)query.setParameter("CAJEROID", id).getSingleResult();
          return Optional.of(cajero);
          } catch (Exception e) {
-             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+              ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
          }
          return Optional.empty();
       
@@ -85,8 +86,7 @@ public Optional<Cajero> findByCajeroId(BigInteger CAJEROID) {
             list = query.setParameter("BANCOID", BANCOID).setParameter("ACTIVO", ACTIVO).getResultList();
             
         } catch (Exception ex) {
-            // System.out.println("findByBancoIdAndActivo() " + ex.getLocalizedMessage());
-            JsfUtil.errorMessage("findByBancoIdAndActivo() "+ex.getLocalizedMessage());
+                JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
         }
         return list;
     }

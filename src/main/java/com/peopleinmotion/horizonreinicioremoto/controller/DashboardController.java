@@ -7,10 +7,10 @@ package com.peopleinmotion.horizonreinicioremoto.controller;
 
 import com.peopleinmotion.horizonreinicioremoto.domains.TotalesEstadoBanco;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
-import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.paginator.Paginator;
 import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
@@ -23,6 +23,7 @@ import com.peopleinmotion.horizonreinicioremoto.services.AccionRecienteServices;
 import com.peopleinmotion.horizonreinicioremoto.services.AgendaHistorialServices;
 import com.peopleinmotion.horizonreinicioremoto.services.DashboardServices;
 import com.peopleinmotion.horizonreinicioremoto.services.TotalesEstadoBancoServices;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
@@ -31,33 +32,27 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
-import javax.faces.component.UIData;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import lombok.Data;
-import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.FilterMeta;
-import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
-import org.primefaces.model.SortMeta;
 
 /**
  *
  * @author avbravo
  */
-//@Named(value = "dashboardController")
+
 @Named
 @ViewScoped
 @Data
-public class DashboardController implements Serializable {
+public class DashboardController implements Serializable, Page {
 
 // <editor-fold defaultstate="collapsed" desc="field ">
     private static final long serialVersionUID = 1L;
@@ -119,7 +114,8 @@ public class DashboardController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            System.out.println("Test--> llego al DashboardController "+DateUtil.fechaHoraActual());
+            ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
+            
             if (JmoordbContext.get("user") == null) {
 
             } else {
@@ -144,7 +140,7 @@ public class DashboardController implements Serializable {
               calcularTotales();
                 loadSchedule();
                 cajeroList = cajeroRepository.findByBancoId(banco);
-                System.out.println("Test-->"+ JmoordbContext.get("pageInView"));
+               ConsoleUtil.greenBackground(""+ JmoordbContext.get("pageInView"));
             }
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
@@ -181,7 +177,7 @@ public class DashboardController implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="onCommandButtonSelectCajero ">
     public String onCommandButtonSelectCajero(Cajero cajero) {
         try {
-            System.out.println("Test--> onCommandButtonSelectCajero");
+           ConsoleUtil.greenBackground(" onCommandButtonSelectCajero");
             JmoordbContext.put("cajero", cajero);
 
             JsfUtil.infoDialog("Selecciono el cajero ", cajero.getCAJEROID().toString());
@@ -430,6 +426,39 @@ public class DashboardController implements Serializable {
     public Boolean renderedByEstadoSolicitado() {
         return accionRecienteServices.renderedByEstadoSolicitado(accionRecienteSelected);
 
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="String browserEvent()">
+    public String browserEvent(String from) {
+
+        String pageInView = "";
+        try {
+             ConsoleUtil.greenBackground("..............................................");
+            ConsoleUtil.greenBackground("........" +JsfUtil.nameOfMethod()+ "+from "+ from+" at "+DateUtil.fechaHoraActual());
+            pageInView = (String) JmoordbContext.get("pageInView");
+              System.out.println("pageInView: " + pageInView);
+            if(pageInView == null){
+                pageInView ="";
+            }else{
+                
+                Boolean loged= Boolean.FALSE;
+               if (JmoordbContext.get("user") != null) {
+                   loged= Boolean.TRUE;
+               }
+                  pageInView = (pageInView == null ? (loged ? "" : "/faces/login.xhtml") : pageInView);
+            System.out.println("pageInView Changed " + pageInView);
+            }
+          
+           ConsoleUtil.greenBackground("........ pageInView result: "+pageInView);
+           ConsoleUtil.greenBackground("..............................................");
+            return pageInView;
+
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return pageInView;
     }
     // </editor-fold>
 }

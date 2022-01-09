@@ -15,7 +15,6 @@ import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -23,6 +22,8 @@ import javax.inject.Inject;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.CajeroRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.GrupoAccionRepository;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
+import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 
 /**
  *
@@ -116,7 +117,7 @@ public class CajeroAccionController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            
+            ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
              if(JmoordbContext.get("user")==null){
                 
             }else{

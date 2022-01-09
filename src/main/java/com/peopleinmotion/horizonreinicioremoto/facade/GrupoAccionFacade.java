@@ -6,6 +6,7 @@
 package com.peopleinmotion.horizonreinicioremoto.facade;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.Optional;
@@ -41,7 +42,7 @@ public class GrupoAccionFacade extends AbstractFacade<GrupoAccion> {
         GrupoAccion grupoAccion = (GrupoAccion)query.setParameter("GRUPOACCIONID", id).getSingleResult();
          return Optional.of(grupoAccion);
          } catch (Exception e) {
-             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+              ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
          }
          return Optional.empty();
       

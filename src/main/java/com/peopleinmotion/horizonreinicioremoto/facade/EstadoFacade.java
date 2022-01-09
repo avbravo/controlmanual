@@ -5,11 +5,9 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.facade;
 
-import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
-import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
-import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoEstado;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -46,7 +44,7 @@ public class EstadoFacade extends AbstractFacade<Estado> {
             Estado estado = (Estado) query.setParameter("ESTADOID", id).getSingleResult();
             return Optional.of(estado);
         } catch (Exception e) {
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Optional.empty();
 

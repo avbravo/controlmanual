@@ -9,10 +9,10 @@
                 return "";
             }
             String jsonAccionRecienteLive = new Gson().toJson(live.get());
-            System.out.println("Test--> jsonAccionRecienteLive  " + jsonAccionRecienteLive);
+           ConsoleUtil.greenBackground(" jsonAccionRecienteLive  " + jsonAccionRecienteLive);
 
             String jsonAccionReciente = new Gson().toJson(accionReciente);
-            System.out.println("Test--> jsonAccionReciente  " + jsonAccionRecienteLive);
+           ConsoleUtil.greenBackground(" jsonAccionReciente  " + jsonAccionRecienteLive);
             if (!jsonAccionReciente.equals(jsonAccionRecienteLive)) {
                 JsfUtil.warningMessage("Otro usuario cambio el estado de la accion reciente.Actualizaremos este valor");
                 JmoordbContext.put("accionRecienteDashboard", live.get());

@@ -17,6 +17,8 @@ import com.peopleinmotion.horizonreinicioremoto.repository.BancoRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.CajeroRepository;
 import com.peopleinmotion.horizonreinicioremoto.services.AgendaHistorialServices;
 import com.peopleinmotion.horizonreinicioremoto.services.DashboardServices;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
+import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -85,6 +87,7 @@ public class BuscarCajeroController implements Serializable {
     public void init() {
         try {
            
+           ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
             if (JmoordbContext.get("user") == null) {
 
             } else {

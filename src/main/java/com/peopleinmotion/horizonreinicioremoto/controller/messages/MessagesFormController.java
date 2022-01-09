@@ -109,6 +109,7 @@ public class MessagesFormController implements Serializable {
      */
     public String onCommandButtonReturn() {
         try {
+                 JmoordbContext.put("pageInView", messagesForm.getReturnTo());
              return messagesForm.getReturnTo();
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());

@@ -73,7 +73,7 @@ public Optional<Accion> findByAccionId(BigInteger ACCIONID) {
             list = query.setParameter("GRUPOACCIONID", GRUPOACCIONID).getResultList();
         } catch (Exception ex) {
             // System.out.println("findByGrupoAccionId() " + ex.getLocalizedMessage());
-            JsfUtil.errorMessage("findByGrupoAccionId() "+ex.getLocalizedMessage());
+               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
         }
         return list;
     }

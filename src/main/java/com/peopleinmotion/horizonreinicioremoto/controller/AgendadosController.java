@@ -6,7 +6,6 @@
 package com.peopleinmotion.horizonreinicioremoto.controller;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
-import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoEstado;
@@ -20,32 +19,24 @@ import com.peopleinmotion.horizonreinicioremoto.repository.BancoRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.CajeroRepository;
 import com.peopleinmotion.horizonreinicioremoto.services.AgendaHistorialServices;
 import com.peopleinmotion.horizonreinicioremoto.services.DashboardServices;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
-import javax.faces.component.UIData;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import lombok.Data;
-import org.primefaces.PrimeFaces;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
-import org.primefaces.model.SortMeta;
 
 /**
  *
@@ -118,7 +109,7 @@ public class AgendadosController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-         
+         ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
             if (JmoordbContext.get("user") == null) {
 
             } else {

@@ -10,6 +10,7 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.repository.BancoRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.UsuarioRepository;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.InputStream;
 import java.util.List;
@@ -22,7 +23,7 @@ import javax.inject.Inject;
  * @author avbravo
  */
 @Stateless
-public class AccesServicesImpl implements AccessServices {
+public class AccessServicesImpl implements AccessServices {
 // <editor-fold defaultstate="collapsed" desc="inject() ">
 
     @Inject
@@ -72,12 +73,13 @@ public class AccesServicesImpl implements AccessServices {
                 JsfUtil.propertiesBigIntegerToContext(prop, "estadoEnEsperaDeEjecucionId");
                 JsfUtil.propertiesBigIntegerToContext(prop, "estadoProcesandoId");
                 JsfUtil.propertiesBigIntegerToContext(prop, "estadoFinalizadoId");
+                JsfUtil.propertiesStringToContext(prop, "prefijo");
             } else {
                 JsfUtil.errorMessage("No se puede cargar el archivo configuration.properties");
             }
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return version;
     }
@@ -116,7 +118,7 @@ public class AccesServicesImpl implements AccessServices {
             return Boolean.TRUE;
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
@@ -150,7 +152,7 @@ public class AccesServicesImpl implements AccessServices {
             return Boolean.TRUE;
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }

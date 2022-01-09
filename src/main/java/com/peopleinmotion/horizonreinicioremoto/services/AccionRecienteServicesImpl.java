@@ -58,7 +58,7 @@ public class AccionRecienteServicesImpl implements AccionRecienteServices {
             }
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("createAccionReciente()" + e.getLocalizedMessage());
+               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return accionReciente;
     }
@@ -73,7 +73,7 @@ public class AccionRecienteServicesImpl implements AccionRecienteServices {
             }
             return Boolean.FALSE;
         } catch (Exception e) {
-            JsfUtil.errorMessage("renderedByEstadoSolicitado() " + e.getLocalizedMessage());
+               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }

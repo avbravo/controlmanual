@@ -286,7 +286,7 @@ public class DateUtil implements Serializable {
 
             h = dateFormatToString(fecha, f);
         } catch (Exception e) {
-            JsfUtil.errorMessage("hourFromDateToString() " + e.getLocalizedMessage());
+           JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return h;
 
@@ -313,7 +313,7 @@ public class DateUtil implements Serializable {
 
             h = dateFormatLocalDateTimeToString(fecha, f);
         } catch (Exception e) {
-            JsfUtil.errorMessage("hourFromDateToString() " + e.getLocalizedMessage());
+        JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return h;
 
@@ -1608,7 +1608,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
         try {
             h =  dateFormatToString(date, "dd/MM/yyyy");
         } catch (Exception e) {
-            JsfUtil.errorMessage("showDate() " + e.getLocalizedMessage());
+              JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return h;
     }// </editor-fold>
@@ -1619,7 +1619,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
         try {
             h =  dateFormatLocalDateTimeToString(date, "dd/MM/yyyy");
         } catch (Exception e) {
-            JsfUtil.errorMessage("showDate() " + e.getLocalizedMessage());
+                 JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return h;
     }// </editor-fold>
@@ -1630,7 +1630,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
         try {
             h =  hourFromDateToString(date);
         } catch (Exception e) {
-            JsfUtil.errorMessage("showHour() " + e.getLocalizedMessage());
+                JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return h;
     }// </editor-fold>
@@ -1640,7 +1640,7 @@ public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConve
         try {
             h =  hourFromDateLocalDateTimeToString(date);
         } catch (Exception e) {
-            JsfUtil.errorMessage("showHour() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return h;
     }// </editor-fold>

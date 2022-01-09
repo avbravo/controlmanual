@@ -16,7 +16,7 @@ import javax.faces.view.ViewScoped;
  */
 @Named
 @ViewScoped
-public class NavigatorContoller implements Serializable{
+public class NavigatorController implements Serializable{
 
     // <editor-fold defaultstate="collapsed" desc="fields ">
         private static final long serialVersionUID = 1L;
@@ -24,7 +24,7 @@ public class NavigatorContoller implements Serializable{
     /**
      * Creates a new instance of NavigatorContoller
      */
-    public NavigatorContoller() {
+    public NavigatorController() {
     }
     
     public String go(String url){

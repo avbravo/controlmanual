@@ -52,7 +52,7 @@ public class AgendaHistorialServicesImpl implements AgendaHistorialServices {
             JsfUtil.warningMessage("No se guardo el historial de la agenda");
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("createHistorial()" + e.getLocalizedMessage());
+                JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }

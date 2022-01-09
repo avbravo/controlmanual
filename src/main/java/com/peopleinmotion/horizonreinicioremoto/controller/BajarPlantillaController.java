@@ -37,6 +37,7 @@ import com.peopleinmotion.horizonreinicioremoto.services.AccionRecienteServices;
 import com.peopleinmotion.horizonreinicioremoto.services.AgendaHistorialServices;
 import com.peopleinmotion.horizonreinicioremoto.services.EmailServices;
 import com.peopleinmotion.horizonreinicioremoto.services.TokenServices;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import java.util.Date;
 import lombok.Data;
@@ -109,7 +110,7 @@ public class BajarPlantillaController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            
+            ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
             tokenEnviado = Boolean.FALSE;
             if (JmoordbContext.get("user") == null) {
 
@@ -171,7 +172,9 @@ public class BajarPlantillaController implements Serializable {
             }
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("onSelectOneMenuAccionChange() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+
+            
         }
         return "";
     }
@@ -278,7 +281,7 @@ public class BajarPlantillaController implements Serializable {
             PrimeFaces.current().executeScript("PF('widgetVarEditDialog').hide()");
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("sendToken() " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }

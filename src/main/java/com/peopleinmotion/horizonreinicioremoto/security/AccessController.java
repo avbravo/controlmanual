@@ -15,6 +15,7 @@ import com.peopleinmotion.horizonreinicioremoto.repository.BancoRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.HistorialRepository;
 import com.peopleinmotion.horizonreinicioremoto.services.AccessServices;
 import com.peopleinmotion.horizonreinicioremoto.utils.BrowserUtil;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 
@@ -77,7 +78,7 @@ public class AccessController implements Serializable {
         loged = false;
 
         try {
-
+ ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
             /**
              * Lee las configuraciones iniciales
              */
@@ -94,8 +95,7 @@ public class AccessController implements Serializable {
             bancoList = bancoRepository.sql(querySQL);
 
         } catch (Exception e) {
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JsfUtil.errorMessage("No se puede cargar el archivo microservices.properties");
+              JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
 
     }
@@ -187,22 +187,45 @@ public class AccessController implements Serializable {
     }
     // </editor-fold>
     
+    
+    // <editor-fold defaultstate="collapsed" desc="method() ">
+    public String showPageInView(){
+        try {
+              String pageInView = (String) JmoordbContext.get("pageInView");
+              return pageInView;
+         } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+      return "";
+       
+    }
+// </editor-fold>
         
  // <editor-fold defaultstate="collapsed" desc="String browserEvent()">
     public String browserEvent(String from) {
 
         String pageInView = "";
         try {
-            System.out.println("Test-->browserEvent from "+from + " at "+DateUtil.fechaHoraActual());
+             ConsoleUtil.greenBackground("..............................................");
+            ConsoleUtil.greenBackground("........" +JsfUtil.nameOfMethod()+ "+from "+ from+" at "+DateUtil.fechaHoraActual());
             pageInView = (String) JmoordbContext.get("pageInView");
-            System.out.println("pageInView: " + pageInView);
-            pageInView = (pageInView == null ? (loged ? "/faces/index.xhtml" : "/faces/login.xhtml") : pageInView);
+              System.out.println("pageInView: " + pageInView);
+            if(pageInView == null){
+                pageInView ="";
+            }else{
+//                  pageInView = (pageInView == null ? (loged ? "/faces/index.xhtml" : "/faces/login.xhtml") : pageInView);
+                  pageInView = (pageInView == null ? (loged ? "/faces/dashboard.xhtml" : "") : pageInView);
             System.out.println("pageInView Changed " + pageInView);
+            }
+          
+           ConsoleUtil.greenBackground("........ pageInView result: "+pageInView);
+           ConsoleUtil.greenBackground("..............................................");
             return pageInView;
 
         } catch (Exception e) {
-            System.out.println(JsfUtil.nameOfMethod() + " "
-                    + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return pageInView;
     }

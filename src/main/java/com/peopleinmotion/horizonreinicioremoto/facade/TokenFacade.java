@@ -5,10 +5,8 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.facade;
 
-import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
-import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
-import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
 import com.peopleinmotion.horizonreinicioremoto.entity.Token;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -48,7 +46,7 @@ public class TokenFacade extends AbstractFacade<Token> {
        Token token = (Token)query.setParameter("TOKENID", id).getSingleResult();
          return Optional.of(token);
          } catch (Exception e) {
-             System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+              ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
          }
          return Optional.empty();
       
@@ -107,8 +105,7 @@ public class TokenFacade extends AbstractFacade<Token> {
             Query query = em.createQuery("SELECT t FROM Token t WHERE t.USUARIOID = :USUARIOID AND t.ACTIVO = :ACTIVO ORDER BY t.TOKENID DESC");
             list = query.setParameter("USUARIOID", USUARIOID).setParameter("ACTIVO", ACTIVO).getResultList();
         } catch (Exception ex) {
-            // System.out.println("findByUsuarioIdAndActivo() " + ex.getLocalizedMessage());
-            JsfUtil.errorMessage("findByUsuarioIdAndActivo() " + ex.getLocalizedMessage());
+                JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
         }
         return list;
     }
@@ -121,8 +118,7 @@ public class TokenFacade extends AbstractFacade<Token> {
             Query query = em.createQuery("SELECT t FROM Token t WHERE t.USUARIOID = :USUARIOID AND t.ACTIVO = :ACTIVO AND t.TOKEN = :TOKEN ORDER BY t.TOKENID DESC");
             list = query.setParameter("USUARIOID", USUARIOID).setParameter("ACTIVO", ACTIVO).setParameter("TOKEN", TOKEN).getResultList();
         } catch (Exception ex) {
-            // System.out.println("findByUsuarioIdAndActivo() " + ex.getLocalizedMessage());
-            JsfUtil.errorMessage("findByUsuarioIdAndActivo() " + ex.getLocalizedMessage());
+                JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
         }
         return list;
     }

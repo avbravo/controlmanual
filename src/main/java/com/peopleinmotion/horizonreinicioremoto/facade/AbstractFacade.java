@@ -7,6 +7,7 @@ package com.peopleinmotion.horizonreinicioremoto.facade;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public abstract class AbstractFacade<T> {
             getEntityManager().flush();
             getEntityManager().refresh(entity);
         } catch (Exception e) {
-            JsfUtil.errorMessage("AbstractFacade.create()  " + e.getLocalizedMessage());
+                JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
 
     }
@@ -47,7 +48,7 @@ public abstract class AbstractFacade<T> {
             getEntityManager().flush();
             // getEntityManager().refresh(entity);
         } catch (Exception e) {
-            JsfUtil.errorMessage("AbstractFacade.edit()  " + e.getLocalizedMessage());
+                 JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
 
     }
@@ -59,7 +60,7 @@ public abstract class AbstractFacade<T> {
             getEntityManager().flush();
 //        getEntityManager().refresh(entity);
         } catch (Exception e) {
-            JsfUtil.errorMessage("AbstractFacade.remove()  " + e.getLocalizedMessage());
+       JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
 
     }
@@ -99,7 +100,8 @@ public abstract class AbstractFacade<T> {
             Query query = getEntityManager().createQuery(querySQL.getQuery());           
             list = query.getResultList();
         } catch (Exception e) {
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return list;
 
@@ -114,7 +116,7 @@ public abstract class AbstractFacade<T> {
             query.setFirstResult(pageNumber).setMaxResults(rowForPage);
             list = query.getResultList();
         } catch (Exception e) {
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return list;
 
@@ -129,7 +131,7 @@ public abstract class AbstractFacade<T> {
             return ((Long) query.getSingleResult()).intValue();
 
         } catch (Exception e) {
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return 0;
 

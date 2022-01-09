@@ -14,6 +14,7 @@ import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.GrupoAccionRepository;
 import com.peopleinmotion.horizonreinicioremoto.services.AccionRecienteServices;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
@@ -69,6 +70,7 @@ public class CajeroEncontradoController implements Serializable {
     @PostConstruct
     public void init() {
         try {
+            ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
              if(JmoordbContext.get("user")==null){
                 
             }else{
@@ -85,7 +87,7 @@ public class CajeroEncontradoController implements Serializable {
          fillSelectOneMenuGrupoAccionBajarPlantilla();
              }
         } catch (Exception e) {
-            JsfUtil.errorMessage("init() " + e.getLocalizedMessage());
+          JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
 
         }
 
@@ -169,6 +171,7 @@ public class CajeroEncontradoController implements Serializable {
         try {
             JmoordbContext.put("grupoAccion", grupoAccionBajarPlantilla);
             JmoordbContext.put("pageInView", "/faces/bajarplantilla.xhtml");
+            JmoordbContext.put("pageInView", JmoordbContext.get("prefijo")+"/faces/bajarplantilla.xhtml");
              return "/faces/bajarplantilla.xhtml";
            
           

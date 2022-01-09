@@ -15,7 +15,7 @@
     </servlet-mapping>
     <session-config>
         <session-timeout>
-     35
+            35
         </session-timeout>
     </session-config>
     <!--    <welcome-file-list>
@@ -82,4 +82,23 @@
         </listener-class>
 
     </listener>
+    
+
+
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>application/x-font-ttf</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>application/x-font-woff</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff2</extension>
+        <mime-type>application/x-font-woff2</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>application/x-font-eot</mime-type>
+    </mime-mapping>
 </web-app>

@@ -26,7 +26,7 @@ public class BrowserUtilImpl implements BrowserUtil {
             value = request.getRequestURL().toString();
 
         } catch (Exception e) {
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return value;
     }
@@ -42,7 +42,7 @@ public class BrowserUtilImpl implements BrowserUtil {
 
             value = request.getRequestURI();
         } catch (Exception e) {
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return value;
     }// </editor-fold>
@@ -64,7 +64,7 @@ public class BrowserUtilImpl implements BrowserUtil {
             }
          
         } catch (Exception e) {
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return value;
     }

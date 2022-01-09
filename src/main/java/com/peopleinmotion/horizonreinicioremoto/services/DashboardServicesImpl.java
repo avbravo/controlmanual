@@ -115,7 +115,7 @@ public class DashboardServicesImpl implements DashboardServices {
             }
             
         } catch (Exception e) {
-            JsfUtil.errorMessage("totalEnProceso()" + e.getLocalizedMessage());
+          JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return total;
     }
@@ -133,7 +133,7 @@ public class DashboardServicesImpl implements DashboardServices {
                 }
             }
         } catch (Exception e) {
-            JsfUtil.errorMessage("totalEnProceso()" + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return total;
     }
@@ -151,7 +151,7 @@ public class DashboardServicesImpl implements DashboardServices {
                 }
             }
         } catch (Exception e) {
-            JsfUtil.errorMessage("totalFinalizado()" + e.getLocalizedMessage());
+         JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return total;
     }
@@ -169,14 +169,14 @@ public class DashboardServicesImpl implements DashboardServices {
                 }
             }
         } catch (Exception e) {
-            JsfUtil.errorMessage("totalNoSePuedeEjecutar()" + e.getLocalizedMessage());
+        JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return total;
     }
     // </editor-fold>
 
-    
-    // <editor-fold defaultstate="collapsed" desc="method() ">
+   
+    // <editor-fold defaultstate="collapsed" desc=Boolean drawRowsAgendamiento(List<AccionReciente> accionRecienteList) ">
 
     @Override
     public Boolean drawRowsAgendamiento(List<AccionReciente> accionRecienteList) {

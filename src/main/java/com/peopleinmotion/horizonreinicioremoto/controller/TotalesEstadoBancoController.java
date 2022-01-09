@@ -11,6 +11,8 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.paginator.Paginator;
 import com.peopleinmotion.horizonreinicioremoto.services.TotalesEstadoBancoServices;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
+import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -66,6 +68,7 @@ public class TotalesEstadoBancoController implements Serializable {
     @PostConstruct
     public void init() {
         try {
+            ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
             totalesEstadoBancoList = new ArrayList<>();
             if (JmoordbContext.get("user") == null) {
 

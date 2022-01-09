@@ -62,8 +62,7 @@ public class Planificador {
                
            }
         } catch (Exception e) {
-              JsfUtil.errorMessage("downToken() "+e.getLocalizedMessage());
-            // System.out.println("rdownToken()()" + e.getLocalizedMessage());
+                JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
       // System.out.println("Planificador finalizado.....");
     }

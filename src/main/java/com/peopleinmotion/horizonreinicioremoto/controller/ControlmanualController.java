@@ -26,6 +26,7 @@ import com.peopleinmotion.horizonreinicioremoto.services.AccionRecienteServices;
 import com.peopleinmotion.horizonreinicioremoto.services.AgendaHistorialServices;
 import com.peopleinmotion.horizonreinicioremoto.services.EmailServices;
 import com.peopleinmotion.horizonreinicioremoto.services.TokenServices;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
@@ -133,6 +134,7 @@ public class ControlmanualController implements Serializable {
     @PostConstruct
     public void init() {
         try {
+            ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
             updateByOtherUser = Boolean.FALSE;
             if (JmoordbContext.get("user") == null) {
 
@@ -148,7 +150,7 @@ public class ControlmanualController implements Serializable {
             }
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("init() " + e.getLocalizedMessage());
+     JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
 
         }
 

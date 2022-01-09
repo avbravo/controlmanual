@@ -7,6 +7,8 @@ package com.peopleinmotion.horizonreinicioremoto.controller;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.facade.UsuarioFacade;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
+import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 
 import java.io.Serializable;
@@ -67,7 +69,7 @@ public class UsuarioController implements Serializable{
     public void init(){
         try {
 
-        
+        ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
            
             /**
              * Voy a agregar uno nuevo
@@ -84,7 +86,7 @@ public class UsuarioController implements Serializable{
    JsfUtil.successMessage("init "+ "llamando findAll()");
             usuarioList= usuarioFacade.findAll();
         } catch (Exception e) {
-            JsfUtil.errorMessage("init "+ e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             // System.out.println("init.... "+e.getLocalizedMessage());
         }
         
@@ -95,7 +97,7 @@ public class UsuarioController implements Serializable{
         JsfUtil.successMessage("save()"+"Voy a guardar");
         usuarioFacade.create(usuario);
         } catch (Exception e) {
-            JsfUtil.errorMessage("save "+ e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " "+ e.getLocalizedMessage());
             // System.out.println("init.... "+e.getLocalizedMessage());
         }
         return "";

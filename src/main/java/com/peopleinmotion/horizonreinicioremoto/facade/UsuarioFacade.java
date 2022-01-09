@@ -6,9 +6,8 @@
 package com.peopleinmotion.horizonreinicioremoto.facade;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
-import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
-import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             Usuario usuario = (Usuario) query.setParameter("USUARIOID", id).getSingleResult();
             return Optional.of(usuario);
         } catch (Exception e) {
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Optional.empty();
 
@@ -60,7 +59,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             Usuario usuario = (Usuario) query.setParameter("USUARIOID", USUARIOID).getSingleResult();
             return Optional.of(usuario);
         } catch (Exception e) {
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Optional.empty();
 

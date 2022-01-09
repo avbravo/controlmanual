@@ -6,7 +6,7 @@
 package com.peopleinmotion.horizonreinicioremoto.facade;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
-import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -16,7 +16,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import lombok.Data;
 
 /**
  *
@@ -52,7 +51,7 @@ public class BancoFacade extends AbstractFacade<Banco> {
             Banco banco = (Banco) query.setParameter("BANCOID", id).getSingleResult();
             return Optional.of(banco);
         } catch (Exception e) {
-            System.out.println(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Optional.empty();
 

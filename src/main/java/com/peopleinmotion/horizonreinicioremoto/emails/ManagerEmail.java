@@ -133,7 +133,7 @@ public class ManagerEmail {
             Transport.send(message);
             sending = true;
         } catch (Exception ex) {
-            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
+        JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
             // System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
@@ -225,8 +225,7 @@ public class ManagerEmail {
             Transport.send(message);
             sending = true;
         } catch (Exception ex) {
-            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
-            // System.out.println("send() " + ex.getLocalizedMessage());
+             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
@@ -287,8 +286,7 @@ public class ManagerEmail {
             Transport.send(message);
             sending = true;
         } catch (Exception ex) {
-            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
-            // System.out.println("send() " + ex.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
@@ -383,8 +381,7 @@ public class ManagerEmail {
             Transport.send(message);
             sending = true;
         } catch (Exception ex) {
-            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
-            // System.out.println("send() " + ex.getLocalizedMessage());
+             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
@@ -439,8 +436,7 @@ public class ManagerEmail {
             Transport.send(message);
             sending = true;
         } catch (Exception ex) {
-            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
-            // System.out.println("send() " + ex.getLocalizedMessage());
+              JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
@@ -501,8 +497,7 @@ public class ManagerEmail {
             Transport.send(message);
             sending = true;
         } catch (Exception ex) {
-            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
-            // System.out.println("send() " + ex.getLocalizedMessage());
+             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
         }
         return sending;
     }// </editor-fold>
@@ -556,8 +551,7 @@ public class ManagerEmail {
             store.close();
             sending = true;
         } catch (Exception ex) {
-            JsfUtil.errorMessage("send() " + ex.getLocalizedMessage());
-            // System.out.println("send() " + ex.getLocalizedMessage());
+                JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
         }
         return sending;
     }

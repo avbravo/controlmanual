@@ -79,7 +79,7 @@ public class TokenServicesImpl implements TokenServices {
             tokenIngresado = pos0 + pos1 + pos2 + pos3;
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("marcarNumero() " + e.getLocalizedMessage());
+             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return tokenIngresado;
     }
@@ -130,7 +130,7 @@ public class TokenServicesImpl implements TokenServices {
             }
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("validateToken() " + e.getLocalizedMessage());
+           JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }

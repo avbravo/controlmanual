@@ -6,7 +6,16 @@
 package com.peopleinmotion.horizonreinicioremoto.utils;
 // <editor-fold defaultstate="collapsed" desc="import">  
 
-
+import static com.diogonunes.jcolor.Ansi.colorize;
+import com.diogonunes.jcolor.AnsiFormat;
+import static com.diogonunes.jcolor.Attribute.BLUE_BACK;
+import static com.diogonunes.jcolor.Attribute.BOLD;
+import static com.diogonunes.jcolor.Attribute.BRIGHT_YELLOW_TEXT;
+import static com.diogonunes.jcolor.Attribute.CYAN_TEXT;
+import static com.diogonunes.jcolor.Attribute.GREEN_BACK;
+import static com.diogonunes.jcolor.Attribute.GREEN_TEXT;
+import static com.diogonunes.jcolor.Attribute.RED_BACK;
+import static com.diogonunes.jcolor.Attribute.YELLOW_TEXT;
 import com.peopleinmotion.horizonreinicioremoto.emails.EmailRecipients;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.utils.crypto.CryptoConverter;
@@ -65,7 +74,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import javax.faces.component.UIViewRoot;
 import org.apache.commons.beanutils.BeanUtils;
-
 
 // </editor-fold>
 /**
@@ -136,8 +144,9 @@ public class JsfUtil implements Serializable {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 msg, msg);
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-        
-       // LOG.warning(msg);
+        ConsoleUtil.error(msg);
+
+        // LOG.warning(msg);
     }    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="testMessage"> 
@@ -163,13 +172,13 @@ public class JsfUtil implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="warningMessage(String msg, Exception e)"> 
 
     public static void warningMessage(String msg, Exception e) {
-        String msgExtra=""; 
-        if(e==null){
-                
-                }else{
-                   msgExtra =e.getLocalizedMessage();
-                }
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, msg + " "+msgExtra, ""));
+        String msgExtra = "";
+        if (e == null) {
+
+        } else {
+            msgExtra = e.getLocalizedMessage();
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, msg + " " + msgExtra, ""));
         LOG.warning(msg);
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="fatalMessage"> 
@@ -197,7 +206,7 @@ public class JsfUtil implements Serializable {
     public static void infoDialog(String titulo, String texto) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, titulo,
                 texto);
-     //   PrimeFaces.current().dialog().showMessageDynamic(message);
+        //   PrimeFaces.current().dialog().showMessageDynamic(message);
     }
 
     // </editor-fold>
@@ -207,21 +216,20 @@ public class JsfUtil implements Serializable {
                 texto);
 
 //        PrimeFaces.current().dialog().showMessageDynamic(message);
-
     }    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="warningDialog(String titulo, String texto, Exception e)"> 
+
     public static void warningDialog(String titulo, String texto, Exception e) {
-        String msgExtra=""; 
-        if(e==null){
-                
-                }else{
-                   msgExtra =e.getLocalizedMessage();
-                }
+        String msgExtra = "";
+        if (e == null) {
+
+        } else {
+            msgExtra = e.getLocalizedMessage();
+        }
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, titulo,
-                texto+ " "+msgExtra);
+                texto + " " + msgExtra);
 
 //        PrimeFaces.current().dialog().showMessageDynamic(message);
-
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="fatalDialog"> 
 
@@ -240,14 +248,14 @@ public class JsfUtil implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="errorDialog(String titulo, String texto, Exception e)"> 
 
     public static void errorDialog(String titulo, String texto, Exception e) {
-          String msgExtra=""; 
-        if(e==null){
-                
-                }else{
-                   msgExtra =e.getLocalizedMessage();
-                }
+        String msgExtra = "";
+        if (e == null) {
+
+        } else {
+            msgExtra = e.getLocalizedMessage();
+        }
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                titulo, texto +" "+msgExtra);
+                titulo, texto + " " + msgExtra);
 //        PrimeFaces.current().dialog().showMessageDynamic(message);
     }    // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="converterDate"> 
@@ -379,7 +387,7 @@ public class JsfUtil implements Serializable {
         try {
             return texto.substring(texto.indexOf("."), texto.length());
         } catch (Exception e) {
-            JsfUtil.errorMessage("getExtension() " + e.getLocalizedMessage());
+       errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -412,7 +420,7 @@ public class JsfUtil implements Serializable {
 
             return true;
         } catch (IOException e) {
-            JsfUtil.errorMessage("copyFile() " + e.getLocalizedMessage());
+         errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return false;
     }
@@ -700,9 +708,6 @@ public class JsfUtil implements Serializable {
         return myip;
     }// </editor-fold>
 
-
-
- 
     /**
      * Encripta un texto en base a una llave
      *
@@ -710,9 +715,9 @@ public class JsfUtil implements Serializable {
      * @param texto: myclavepersonal
      * @param key : mykey
      * @return
-   
-    // <editor-fold defaultstate="collapsed" desc="getSession">  
-    /**
+     *
+     * // <editor-fold defaultstate="collapsed" desc="getSession">
+     * /**
      * devuelve Un objeto Session correspondiente a la sesion local
      *
      * @return
@@ -1147,8 +1152,6 @@ public class JsfUtil implements Serializable {
         return numero == null || numero.equals("") || numero < 0;
     }// </editor-fold>
 
-   
-
     // <editor-fold defaultstate="collapsed" desc="primercaracter()">
     public static String primerCaracter(String texto) {
         try {
@@ -1157,7 +1160,8 @@ public class JsfUtil implements Serializable {
             }
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("primerCaracter() " + e.getLocalizedMessage());
+   
+            errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return texto;
     }
@@ -1237,9 +1241,6 @@ public class JsfUtil implements Serializable {
      * @param fuente
      * @return
      */
-   
-
-    
     /**
      * Agrega una lista a un TreeMap con duplicados
      *
@@ -1255,8 +1256,8 @@ public class JsfUtil implements Serializable {
      * JsfUtil.addListToMapWithDuplicated(treeMap, 55, 3020); treeMap.put(20,
      * new ArrayList<>()); JsfUtil.addListToMapWithDuplicated(treeMap, 20,
      * 3020); JsfUtil.addListToMapWithDuplicated(treeMap, 20, 500);
-     * JsfUtil.addListToMapWithDuplicated(treeMap, 20, 1000);
-     * // System.out.println("Lista " + treeMap);
+     * JsfUtil.addListToMapWithDuplicated(treeMap, 20, 1000); //
+     * System.out.println("Lista " + treeMap);
      *
      * Salida Lista {20=[3020, 500, 1000], 55=[55, 438, 900, 1025, 3020]}
      */
@@ -1775,7 +1776,6 @@ public class JsfUtil implements Serializable {
                     } else {
 
                         // System.out.println("Extracting file: " + destinationPath);
-
                         BufferedInputStream bis = new BufferedInputStream(zipFile.getInputStream(entry));
 
                         int b;
@@ -1882,33 +1882,26 @@ public class JsfUtil implements Serializable {
      *
      * @return
      */
-    
 // </editor-fold>    
     // <editor-fold defaultstate="collapsed" desc="Boolean appendTextToLogErrorFile(String filePath, String nameOfClass, String nameOfMethod, String text, Exception exception, Boolean generateDailyFile) {">
     /**
      *
      * @return
      */
-    
-
     // </editor-fold>    
     // <editor-fold defaultstate="collapsed" desc="Boolean appendTextToLogErrorFile(String filePath, String nameOfClass, String nameOfMethod, String text, Exception exception, Boolean generateDailyFile) {">
     /**
      *
      * @return
      */
-    
-
     // </editor-fold>    
     // <editor-fold defaultstate="collapsed" desc="Boolean appendTextToLogJson(String filePath, String titulo, String text)">
     /**
      *
      * @return
      */
-    
     // </editor-fold>    
     // <editor-fold defaultstate="collapsed" desc="Boolean existFile(String filePath) ">
-
     public static Boolean existFile(String filePath) {
         try {
             File file = new File(filePath);
@@ -2198,7 +2191,6 @@ public class JsfUtil implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="PasswordInfo passwordInformacion(String password)">
     // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Boolean validatePasswordContainsUpperLowerNumber( String password) ">
     /**
      * Valida un password que contenga minimo 8 caracteres, letra mayusculas y
@@ -2261,17 +2253,13 @@ public class JsfUtil implements Serializable {
      * @param list
      * @return
      */
-
     // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="void printEmailRecipients(EmailRecipients emailRecipients) ">
     /**
      * iprime el contenido de emails recipients
      *
      * @param emailRecipients
      */
-
-
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="long secondsToNanoseconds(Double seconds)">
     /**
@@ -2324,7 +2312,6 @@ public class JsfUtil implements Serializable {
      * @return
      */
     // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="long bytesToMegabytes(long bytes)">
     public static long bytesToMegabytes(long bytes) {
         return bytes / MEGABYTE;
@@ -2337,113 +2324,130 @@ public class JsfUtil implements Serializable {
         return l;
     } // </editor-fold>
 
-  
-  
-    
-     // <editor-fold defaultstate="collapsed" desc="BigInteger toBigInteger(Integer number)>  
-            
-    public static BigInteger toBigInteger(Integer number){
+    // <editor-fold defaultstate="collapsed" desc="BigInteger toBigInteger(Integer number)>  
+    public static BigInteger toBigInteger(Integer number) {
         return BigInteger.valueOf(number);
     }
 // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc=" int longToInteger(Long n)">    
-    
-    public static int longToInteger(Long n){
-     return  n.intValue();
+    public static int longToInteger(Long n) {
+        return n.intValue();
     }
 // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="BigInteger contextToBigInteger(String key)">
     /**
      * Busca en el context el key y el value lo devuelve como BigInteger
+     *
      * @param key
-     * @return 
+     * @return
      */
-    public static BigInteger contextToBigInteger(String key){
-         BigInteger i = new BigInteger("0"); 
+    public static BigInteger contextToBigInteger(String key) {
+        BigInteger i = new BigInteger("0");
         try {
-          
-            if(JmoordbContext.get(key) == null){
-               warningMessage("Procesando "+key +"key es null");
-            }else{
-                 String val= String.valueOf(JmoordbContext.get(key));
-              i = new BigInteger(val); 
+
+            if (JmoordbContext.get(key) == null) {
+                warningMessage("Procesando " + key + "key es null");
+            } else {
+                String val = String.valueOf(JmoordbContext.get(key));
+                i = new BigInteger(val);
             }
-            
+
         } catch (Exception e) {
-            JsfUtil.errorMessage("contextToBigInteger() "+e.getLocalizedMessage());
+           errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return i;
     }
-   
+
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="BigInteger contextToInteger(String key)">
     /**
      * Busca en el context el key y el value lo devuelve como BigInteger
+     *
      * @param key
-     * @return 
+     * @return
      */
-    public static Integer contextToInteger(String key){
-        Integer i = 0; 
+    public static Integer contextToInteger(String key) {
+        Integer i = 0;
         try {
-          
-            if(JmoordbContext.get(key) == null){
-               warningMessage("Procesando "+key +"key es null");
-            }else{
-                 String val= String.valueOf(JmoordbContext.get(key));
-              i =Integer.parseInt(val); 
+
+            if (JmoordbContext.get(key) == null) {
+                warningMessage("Procesando " + key + "key es null");
+            } else {
+                String val = String.valueOf(JmoordbContext.get(key));
+                i = Integer.parseInt(val);
             }
-            
+
         } catch (Exception e) {
-            JsfUtil.errorMessage("contextToInteger() "+e.getLocalizedMessage());
+               errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return i;
     }
-   
+
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc=" propertiesBigIntegerToContext(Properties properties, String key)">
     /**
      * Lee una propiedad y la asigna al context
-     * 
+     *
      * @param properties
-     * @param key 
+     * @param key
      */
-    public static void propertiesBigIntegerToContext(Properties properties, String key){
+    public static void propertiesBigIntegerToContext(Properties properties, String key) {
         try {
-             if (properties.getProperty(key) == null) {
-                    JsfUtil.warningMessage("no existe la propiedad" +key);
-                    JmoordbContext.put(key, 0);
-                } else {
-                    Integer value = Integer.parseInt(properties.getProperty(key));
-                    JmoordbContext.put(key,value);
-                }
+            if (properties.getProperty(key) == null) {
+                JsfUtil.warningMessage("no existe la propiedad" + key);
+                JmoordbContext.put(key, 0);
+            } else {
+                Integer value = Integer.parseInt(properties.getProperty(key));
+                JmoordbContext.put(key, value);
+            }
+        } catch (Exception e) {
+        }
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc=" propertiesStringToContext(Properties properties, String key)">
+    /**
+     * Lee una propiedad y la asigna al context
+     *
+     * @param properties
+     * @param key
+     */
+    public static void propertiesStringToContext(Properties properties, String key) {
+        try {
+            if (properties.getProperty(key) == null) {
+                JsfUtil.warningMessage("no existe la propiedad" + key);
+                JmoordbContext.put(key, 0);
+            } else {
+               String value = String.valueOf(properties.getProperty(key));
+                JmoordbContext.put(key, value);
+            }
         } catch (Exception e) {
         }
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc=" propertiesBigIntegerToContext(Properties properties, String key)">
+
     /**
      * Lee una propiedad y la asigna al context
-     * 
+     *
      * @param properties
-     * @param key 
+     * @param key
      */
-    public static void propertiesIntegerToContext(Properties properties, String key){
+    public static void propertiesIntegerToContext(Properties properties, String key) {
         try {
-             if (properties.getProperty(key) == null) {
-                    JsfUtil.warningMessage("no existe la propiedad" +key);
-                    JmoordbContext.put(key, 0);
-                } else {
-                    Integer value = Integer.parseInt(properties.getProperty(key));
-                    JmoordbContext.put(key,value);
-                }
+            if (properties.getProperty(key) == null) {
+                JsfUtil.warningMessage("no existe la propiedad" + key);
+                JmoordbContext.put(key, 0);
+            } else {
+                Integer value = Integer.parseInt(properties.getProperty(key));
+                JmoordbContext.put(key, value);
+            }
         } catch (Exception e) {
         }
     }
 // </editor-fold>
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="Boolean divideDestinatary(List<User> list)()">
     /**
      * Divide de una lista los emails
@@ -2463,8 +2467,8 @@ public class JsfUtil implements Serializable {
         return emailRecipients;
     }
     // </editor-fold>
-    
-     // <editor-fold defaultstate="collapsed" desc="desencritpar">  
+
+    // <editor-fold defaultstate="collapsed" desc="desencritpar">  
     /**
      * Encripta un texto en base a una llave
      *
@@ -2475,7 +2479,7 @@ public class JsfUtil implements Serializable {
      */
     public static String desencriptar(String textoencriptado) {
         try {
-            CryptoConverter cryptoConverter = new CryptoConverter(); 
+            CryptoConverter cryptoConverter = new CryptoConverter();
 
             return cryptoConverter.convertToEntityAttribute(textoencriptado);
         } catch (Exception e) {
@@ -2483,8 +2487,8 @@ public class JsfUtil implements Serializable {
         }
         return "";
     }// </editor-fold>
-    
-      // <editor-fold defaultstate="collapsed" desc="encriptar">  
+
+    // <editor-fold defaultstate="collapsed" desc="encriptar">  
     /**
      * Encripta un texto en base a una llave
      *
@@ -2503,18 +2507,16 @@ public class JsfUtil implements Serializable {
         }
         return "";
     }// </editor-fold>
-    
-// <editor-fold defaultstate="collapsed" desc=UIComponent findComponentById(String componentId) ">
 
-    
+// <editor-fold defaultstate="collapsed" desc=UIComponent findComponentById(String componentId) ">
     public static UIComponent findComponentById(String componentId) {
-    FacesContext context = FacesContext.getCurrentInstance();
-    UIViewRoot root = context.getViewRoot();
-    return root.findComponent(componentId);
-}
+        FacesContext context = FacesContext.getCurrentInstance();
+        UIViewRoot root = context.getViewRoot();
+        return root.findComponent(componentId);
+    }
     // </editor-fold>
-    
-      // <editor-fold defaultstate="collapsed" desc="Boolean tieneEspaciosBlanco(String texto)">
+
+    // <editor-fold defaultstate="collapsed" desc="Boolean tieneEspaciosBlanco(String texto)">
     public static Boolean tieneEspaciosBlanco(String texto) {
         try {
 
@@ -2525,13 +2527,13 @@ public class JsfUtil implements Serializable {
             boolean found = matcher.find();
             return found;
         } catch (Exception e) {
-            errorMessage("tieneEspaciosBlanco() "+e.getLocalizedMessage());
+            errorMessage("tieneEspaciosBlanco() " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
 // </editor-fold>
-    
-      // <editor-fold defaultstate="collapsed" desc="Object copyBeans(Object destino, Object fuente)">
+
+    // <editor-fold defaultstate="collapsed" desc="Object copyBeans(Object destino, Object fuente)">
     /**
      * Copia el contenido de un bean en otro
      *
@@ -2547,7 +2549,7 @@ public class JsfUtil implements Serializable {
 
         return destino;
     }// </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Integer numberOfPages(Integer rows,Integer rowForPage)">
     public static Integer numberOfPages(Integer rows, Integer rowForPage) {
         Integer numberOfPage = 1;
@@ -2572,5 +2574,7 @@ public class JsfUtil implements Serializable {
         return numberOfPage;
     }
     // </editor-fold>
+
+    
 
 }

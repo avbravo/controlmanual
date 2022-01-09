@@ -65,7 +65,7 @@ public class EmailSenderListener {
                             JsfUtil.desencriptar(emailConfiguration.getPASSWORD()));
 
         } catch (Exception e) {
-            JsfUtil.errorMessage("escuchaEvento() " + e.getLocalizedMessage());
+               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
 
         }
 
