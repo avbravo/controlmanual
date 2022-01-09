@@ -169,9 +169,10 @@ public class CajeroEncontradoController implements Serializable {
      */
     public String onCommandButtonGrupoAccionBajarPlantilla() {
         try {
+            
             JmoordbContext.put("grupoAccion", grupoAccionBajarPlantilla);
             JmoordbContext.put("pageInView", "/faces/bajarplantilla.xhtml");
-            JmoordbContext.put("pageInView", JmoordbContext.get("prefijo")+"/faces/bajarplantilla.xhtml");
+            JmoordbContext.put("pageInView", JmoordbContext.get("prefijo")+"bajarplantilla.xhtml");
              return "/faces/bajarplantilla.xhtml";
            
           
