@@ -68,7 +68,7 @@
                     <p:outputLabel value="Fecha Ejecución:" styleClass="p-text-bold" rendered="#{!dashboardController.renderedByEstadoSolicitado()}"/>
                     <p:outputLabel rendered="#{!dashboardController.renderedByEstadoSolicitado()}" value=" #{dashboardController.showDate(dashboardController.accionRecienteSelected.FECHAEJECUCION)}"/>
                     <p:outputLabel value="Hora Ejecución:" styleClass="p-text-bold" rendered="#{!dashboardController.renderedByEstadoSolicitado()}"/>
-                    <p:outputLabel rendered="#{!dashboardController.renderedByEstadoSolicitado()}" value=" #{controlmanualController.showHour(dashboardController.accionRecienteSelected.FECHAEJECUCION)}"/>
+                    <p:outputLabel rendered="#{!dashboardController.renderedByEstadoSolicitado()}" value=" #{dashboardController.showHour(dashboardController.accionRecienteSelected.FECHAEJECUCION)}"/>
 
                     <p:outputLabel  value="Fecha" styleClass="p-text-bold"/>
                     <p:datePicker  value="#{dashboardController.event.startDate}" pattern="dd/MM/yyyy"

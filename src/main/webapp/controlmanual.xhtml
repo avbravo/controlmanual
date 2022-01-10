@@ -5,7 +5,6 @@
       xmlns:template="http://xmlns.jcp.org/jsf/composite/template"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ultimaacciongenerada="http://xmlns.jcp.org/jsf/composite/ultimaacciongenerada"
-      xmlns:grupoaccion="http://xmlns.jcp.org/jsf/composite/grupoaccion"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <link rel="stylesheet" href="./resources/vendors/ti-icons/css/themify-icons.css"/>
@@ -19,7 +18,9 @@
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
         <title>Control Manual</title>        
-       
+          <f:metadata>
+             <f:viewAction action="#{controlmanualController.browserEvent('controlmanual')}"/>
+        </f:metadata>
     </h:head>
     <h:body>
         <h:form id="form" prependId="false" rendered="#{accessController.loged}">

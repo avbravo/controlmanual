@@ -101,4 +101,10 @@
         <extension>eot</extension>
         <mime-type>application/x-font-eot</mime-type>
     </mime-mapping>
+    
+    <!-- increase buffer size to avoid JSF1095 errors -->
+<context-param>
+    <param-name>javax.faces.FACELETS_BUFFER_SIZE</param-name>
+    <param-value>131072</param-value>
+</context-param>
 </web-app>

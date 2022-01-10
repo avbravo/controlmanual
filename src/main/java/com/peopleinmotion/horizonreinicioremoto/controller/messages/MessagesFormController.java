@@ -8,6 +8,7 @@ package com.peopleinmotion.horizonreinicioremoto.controller.messages;
 import com.peopleinmotion.horizonreinicioremoto.domains.MessagesForm;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
@@ -25,7 +26,7 @@ import lombok.Data;
 @Named
 @ViewScoped
 @Data
-public class MessagesFormController implements Serializable {
+public class MessagesFormController implements Serializable , Page{
 
     // <editor-fold defaultstate="collapsed" desc="field ">
     private static final long serialVersionUID = 1L;

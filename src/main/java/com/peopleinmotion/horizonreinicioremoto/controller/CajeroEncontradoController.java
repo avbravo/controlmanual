@@ -10,6 +10,7 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.GrupoAccionRepository;
@@ -36,7 +37,7 @@ import org.primefaces.PrimeFaces;
 @Named
 @ViewScoped
 @Data
-public class CajeroEncontradoController implements Serializable {
+public class CajeroEncontradoController implements Serializable , Page{
 
     // <editor-fold defaultstate="collapsed" desc="field ">
     private static final long serialVersionUID = 1L;
@@ -70,7 +71,7 @@ public class CajeroEncontradoController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
+           ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
              if(JmoordbContext.get("user")==null){
                 
             }else{
@@ -139,16 +140,16 @@ public class CajeroEncontradoController implements Serializable {
             JmoordbContext.put("grupoAccion", grupoAccion);
             
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionEncenderSubirPlantillaId"))) {
-                JmoordbContext.put("pageInView", "/faces/subirplantilla.xhtml");
-                return "/faces/subirplantilla.xhtml";
+                JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/subirplantilla.xhtml"));
+                return JsfUtil.goUrlValidate("/faces/subirplantilla.xhtml");
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionReinicioRemotoId"))) {
-              JmoordbContext.put("pageInView", "/faces/reinicioremoto.xhtml");   
-                return "/faces/reinicioremoto.xhtml";
+              JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/reinicioremoto.xhtml"));   
+                return JsfUtil.goUrlValidate("/faces/reinicioremoto.xhtml");
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionBajarPlantillaId"))) {
-                  JmoordbContext.put("pageInView", "/faces/bajarplantilla.xhtml"); 
-                return "/faces/bajarplantilla.xhtml";
+                  JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/bajarplantilla.xhtml")); 
+                return JsfUtil.goUrlValidate("/faces/bajarplantilla.xhtml");
             }
             JsfUtil.warningMessage("No se identifico el grupo de accion para continuar esta operación");
 
@@ -171,9 +172,9 @@ public class CajeroEncontradoController implements Serializable {
         try {
             
             JmoordbContext.put("grupoAccion", grupoAccionBajarPlantilla);
-            JmoordbContext.put("pageInView", "/faces/bajarplantilla.xhtml");
-            JmoordbContext.put("pageInView", JmoordbContext.get("prefijo")+"bajarplantilla.xhtml");
-             return "/faces/bajarplantilla.xhtml";
+            JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/bajarplantilla.xhtml"));
+            
+             return JsfUtil.goUrlValidate("/faces/bajarplantilla.xhtml");
            
           
         } catch (Exception e) {
@@ -264,7 +265,7 @@ public class CajeroEncontradoController implements Serializable {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
         }
-        JmoordbContext.put("pageInView", "/faces/controlmanual.xhtml");
+        JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/controlmanual.xhtml"));
         return "controlmanual.xhtml";
     }
     

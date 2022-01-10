@@ -207,20 +207,18 @@ public class AccessController implements Serializable {
 
         String pageInView = "";
         try {
-             ConsoleUtil.greenBackground("..............................................");
-            ConsoleUtil.greenBackground("........" +JsfUtil.nameOfMethod()+ "+from "+ from+" at "+DateUtil.fechaHoraActual());
+             ConsoleUtil.greenBackgroundWhiteText(JsfUtil.nameOfClass()+ "."+JsfUtil.nameOfMethod()+ "+from "+ from+" at "+DateUtil.fechaHoraActual());
             pageInView = (String) JmoordbContext.get("pageInView");
-              System.out.println("pageInView: " + pageInView);
+             ConsoleUtil.normal("-zzzzzzzzzz------------>pageInView: " + pageInView);
             if(pageInView == null){
                 pageInView ="";
             }else{
-//                  pageInView = (pageInView == null ? (loged ? "/faces/index.xhtml" : "/faces/login.xhtml") : pageInView);
-                  pageInView = (pageInView == null ? (loged ? "/faces/dashboard.xhtml" : "") : pageInView);
-            System.out.println("pageInView Changed " + pageInView);
+                  pageInView = (pageInView == null ? (loged ? JsfUtil.goUrlValidate("/faces/dashboard.xhtml") : "") : pageInView);
+            ConsoleUtil.normal("--------------->pageInView Changed " + pageInView);
             }
           
-           ConsoleUtil.greenBackground("........ pageInView result: "+pageInView);
-           ConsoleUtil.greenBackground("..............................................");
+           ConsoleUtil.normal("..........> pageInView result: "+pageInView);
+           
             return pageInView;
 
         } catch (Exception e) {

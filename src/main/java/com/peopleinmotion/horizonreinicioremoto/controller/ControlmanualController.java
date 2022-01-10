@@ -15,6 +15,7 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
 import com.peopleinmotion.horizonreinicioremoto.entity.Token;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaHistorialRepository;
@@ -48,7 +49,7 @@ import org.primefaces.PrimeFaces;
 @Named
 @ViewScoped
 @Data
-public class ControlmanualController implements Serializable {
+public class ControlmanualController implements Serializable, Page {
 
     // <editor-fold defaultstate="collapsed" desc="field ">
     private static final long serialVersionUID = 1L;
@@ -134,7 +135,7 @@ public class ControlmanualController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
+           ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
             updateByOtherUser = Boolean.FALSE;
             if (JmoordbContext.get("user") == null) {
 
@@ -180,17 +181,17 @@ public class ControlmanualController implements Serializable {
             JmoordbContext.put("grupoAccion", grupoAccion);
 
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionEncenderSubirPlantillaId"))) {
-                JmoordbContext.put("pageInView", "/faces/subirplantilla.xhtml");
+                JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/subirplantilla.xhtml"));
                         
-                return "/faces/subirplantilla.xhtml";
+                return JsfUtil.goUrlValidate("/faces/subirplantilla.xhtml");
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionReinicioRemotoId"))) {
-                JmoordbContext.put("pageInView", "/faces/reinicioremoto.xhtml");
-                return "/faces/reinicioremoto.xhtml";
+                JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/reinicioremoto.xhtml"));
+                return JsfUtil.goUrlValidate("/faces/reinicioremoto.xhtml");
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionBajarPlantillaId"))) {
-                JmoordbContext.put("pageInView","/faces/bajarplantilla.xhtml");
-                return "/faces/bajarplantilla.xhtml";
+                JmoordbContext.put("pageInView",JsfUtil.goUrlValidate("/faces/bajarplantilla.xhtml"));
+                return JsfUtil.goUrlValidate("/faces/bajarplantilla.xhtml");
             }
             JsfUtil.warningMessage("No se identifico el grupo de accion para continuar esta operación");
 
@@ -271,10 +272,10 @@ public class ControlmanualController implements Serializable {
                         .libary("images")
                         .titulo("Cambio de estado a procesando")
                         .mensaje("Otro usuario modifico este registro mientras usted lo editaba. ")
-                        .returnTo("/faces/buscarcajero.xhtml")
+                        .returnTo(JsfUtil.goUrlValidate("/faces/buscarcajero.xhtml"))
                         .build();
                 JmoordbContext.put("messagesForm", messagesForm);
-                JmoordbContext.put("pageInView", "/faces/messagesform.xhtml");
+                JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/messagesform.xhtml"));
                 return "messagesform.xhtml";
             }
 
@@ -319,10 +320,10 @@ public class ControlmanualController implements Serializable {
                                 .libary("images")
                                 .titulo("Cambio de estado a procesado")
                                 .mensaje("Se realizo exitosamente el cambio de estado ")
-                                .returnTo("/faces/dashboard.xhtml")
+                                .returnTo(JsfUtil.goUrlValidate("/faces/dashboard.xhtml"))
                                 .build();
                         JmoordbContext.put("messagesForm", messagesForm);
-                        JmoordbContext.put("pageInView", "/faces/messagesform.xhtml");
+                        JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/messagesform.xhtml"));
                         return "messagesform.xhtml";
                     } else {
                         JsfUtil.warningMessage("No se puede actualizar la agenda...");
@@ -365,10 +366,10 @@ public class ControlmanualController implements Serializable {
                         .libary("images")
                         .titulo("Cambio de estado a finalizado")
                         .mensaje("Otro usuario modifico este registro mientras usted lo editaba. ")
-                        .returnTo("/faces/buscarcajero.xhtml")
+                        .returnTo(JsfUtil.goUrlValidate("/faces/buscarcajero.xhtml"))
                         .build();
                 JmoordbContext.put("messagesForm", messagesForm);
-                JmoordbContext.put("pageInView", "/faces/messagesform.xhtml");
+                JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/messagesform.xhtml"));
                 return "messagesform.xhtml";
             }
 
@@ -412,10 +413,10 @@ public class ControlmanualController implements Serializable {
                                 .libary("images")
                                 .titulo("Cambio de estado a ejecutado")
                                 .mensaje("Se realizo exitosamente el cambio de estado ")
-                                .returnTo("/faces/dashboard.xhtml")
+                                .returnTo(JsfUtil.goUrlValidate("/faces/dashboard.xhtml"))
                                 .build();
                         JmoordbContext.put("messagesForm", messagesForm);
-                        JmoordbContext.put("pageInView", "/faces/messagesform.xhtml");
+                        JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/messagesform.xhtml"));
                         return "messagesform.xhtml";
                     } else {
                         JsfUtil.warningMessage("No se puede actualizar la agenda...");
@@ -464,10 +465,10 @@ public class ControlmanualController implements Serializable {
                                 .libary("images")
                                 .titulo("Reagendar accion")
                                 .mensaje("Se realizo exitosamente el reagendamiento ")
-                                .returnTo("/faces/dashboard.xhtml")
+                                .returnTo(JsfUtil.goUrlValidate("/faces/dashboard.xhtml"))
                                 .build();
                         JmoordbContext.put("messagesForm", messagesForm);
-                        JmoordbContext.put("pageInView", "/faces/messagesform.xhtml");
+                        JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/messagesform.xhtml"));
                         return "messagesform.xhtml";
                     } else {
                         JsfUtil.warningMessage("No se puede actualizar la agenda...");

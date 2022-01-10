@@ -8,6 +8,7 @@ package com.peopleinmotion.horizonreinicioremoto.controller;
 import com.peopleinmotion.horizonreinicioremoto.domains.TotalesEstadoBanco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.paginator.Paginator;
 import com.peopleinmotion.horizonreinicioremoto.services.TotalesEstadoBancoServices;
@@ -31,7 +32,7 @@ import lombok.Data;
 @Named
 @ViewScoped
 @Data
-public class TotalesEstadoBancoController implements Serializable {
+public class TotalesEstadoBancoController implements Serializable, Page {
 
 // <editor-fold defaultstate="collapsed" desc="field ">
     private static final long serialVersionUID = 1L;
@@ -68,7 +69,7 @@ public class TotalesEstadoBancoController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
+          ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
             totalesEstadoBancoList = new ArrayList<>();
             if (JmoordbContext.get("user") == null) {
 

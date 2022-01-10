@@ -8,6 +8,7 @@ package com.peopleinmotion.horizonreinicioremoto.controller;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.paginator.Paginator;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
@@ -33,15 +34,14 @@ import lombok.Data;
  *
  * @author avbravo
  */
-
 @Named
 @ViewScoped
 @Data
-public class BuscarCajeroController implements Serializable {
+public class BuscarCajeroController implements Serializable, Page {
 
 // <editor-fold defaultstate="collapsed" desc="field ">
     private static final long serialVersionUID = 1L;
-  
+
     private Integer rowForPage = 5;
     private Cajero cajeroSelected = new Cajero();
 
@@ -50,8 +50,7 @@ public class BuscarCajeroController implements Serializable {
 
     Usuario user = new Usuario();
     Banco banco = new Banco();
-   
-   
+
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="paginator ">
     Paginator paginator = new Paginator();
@@ -75,7 +74,7 @@ public class BuscarCajeroController implements Serializable {
     @Inject
     AccionRecienteRepository accionRecienteRepository;
 // </editor-fold>
-    
+
     /**
      * Creates a new instance of DashboadController
      */
@@ -86,32 +85,29 @@ public class BuscarCajeroController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-           
-           ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
+
+ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
             if (JmoordbContext.get("user") == null) {
 
             } else {
-              
-             
+
                 /**
                  * Leer de la sesion
                  */
                 user = (Usuario) JmoordbContext.get("user");
                 banco = (Banco) JmoordbContext.get("banco");
-                           
+
                 cajeroList = cajeroRepository.findByBancoId(banco);
-                            
+
             }
         } catch (Exception e) {
-          JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
 
         }
 
     }
 
     // </editor-fold>
-    
-   
 // <editor-fold defaultstate="collapsed" desc="onCommandButtonSelectCajero ">
     public String onCommandButtonSelectCajero(Cajero cajero) {
         try {
@@ -119,14 +115,11 @@ public class BuscarCajeroController implements Serializable {
 
             JsfUtil.infoDialog("Selecciono el cajero ", cajero.getCAJEROID().toString());
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-  JmoordbContext.put("pageInView","/faces/cajeroencontrado.xhtml");
-        return "/faces/cajeroencontrado.xhtml";
+        JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/cajeroencontrado.xhtml"));
+        return JsfUtil.goUrlValidate("/faces/cajeroencontrado.xhtml");
     }
 // </editor-fold>
-
-
-   
 
 }

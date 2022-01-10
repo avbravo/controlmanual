@@ -15,6 +15,7 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
 import com.peopleinmotion.horizonreinicioremoto.entity.Token;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
@@ -50,7 +51,7 @@ import org.primefaces.PrimeFaces;
 @Named
 @ViewScoped
 @Data
-public class BajarPlantillaController implements Serializable {
+public class BajarPlantillaController implements Serializable, Page {
 
     // <editor-fold defaultstate="collapsed" desc="field ">
     private static final long serialVersionUID = 1L;
@@ -110,7 +111,7 @@ public class BajarPlantillaController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
+            ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
             tokenEnviado = Boolean.FALSE;
             if (JmoordbContext.get("user") == null) {
 
@@ -150,7 +151,7 @@ public class BajarPlantillaController implements Serializable {
                 findAccionReciente();
             }
         } catch (Exception e) {
-            // System.out.println("init() " + e.getLocalizedMessage());
+           
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
 
         }
@@ -363,12 +364,12 @@ public class BajarPlantillaController implements Serializable {
                                 .libary("images")
                                 .titulo("Bajar plantilla Programar evento")
                                 .mensaje("Se realizo exitosamente la baja de plantilla ")
-                                .returnTo("/faces/dashboard.xhtml")
+                                .returnTo(JsfUtil.goUrlValidate("/faces/dashboard.xhtml"))
                                 .build();
                         JmoordbContext.put("messagesForm", messagesForm);
                         
-                        JmoordbContext.put("pageInView", "/faces/messagesform.xhtml");
-                        return "/faces/messagesform.xhtml";
+                        JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/messagesform.xhtml"));
+                        return JsfUtil.goUrlValidate("/faces/messagesform.xhtml");
                     }
 
                 }

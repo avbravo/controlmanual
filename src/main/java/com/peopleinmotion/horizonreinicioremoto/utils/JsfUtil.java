@@ -387,7 +387,7 @@ public class JsfUtil implements Serializable {
         try {
             return texto.substring(texto.indexOf("."), texto.length());
         } catch (Exception e) {
-       errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
+            errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -420,7 +420,7 @@ public class JsfUtil implements Serializable {
 
             return true;
         } catch (IOException e) {
-         errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
+            errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return false;
     }
@@ -1160,7 +1160,7 @@ public class JsfUtil implements Serializable {
             }
 
         } catch (Exception e) {
-   
+
             errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return texto;
@@ -2355,7 +2355,7 @@ public class JsfUtil implements Serializable {
             }
 
         } catch (Exception e) {
-           errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
+            errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return i;
     }
@@ -2380,7 +2380,7 @@ public class JsfUtil implements Serializable {
             }
 
         } catch (Exception e) {
-               errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
+            errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return i;
     }
@@ -2407,6 +2407,7 @@ public class JsfUtil implements Serializable {
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc=" propertiesStringToContext(Properties properties, String key)">
+
     /**
      * Lee una propiedad y la asigna al context
      *
@@ -2419,7 +2420,7 @@ public class JsfUtil implements Serializable {
                 JsfUtil.warningMessage("no existe la propiedad" + key);
                 JmoordbContext.put(key, 0);
             } else {
-               String value = String.valueOf(properties.getProperty(key));
+                String value = String.valueOf(properties.getProperty(key));
                 JmoordbContext.put(key, value);
             }
         } catch (Exception e) {
@@ -2575,6 +2576,30 @@ public class JsfUtil implements Serializable {
     }
     // </editor-fold>
 
-    
+    public static String goUrlValidate(String path) {
+        String newPage = path;
+        try {
+//            if (JmoordbContext.get("prefijo") == null || String.valueOf(JmoordbContext.get("prefijo")).equals("")) {
+// No encontro el prefijo
+                if (path.contains("/faces/")) {
 
+                    newPage = path.replace("/faces/", "");
+
+                } else {
+                    newPage = path;
+                }
+//            } else {
+//                if (String.valueOf(JmoordbContext.get("prefijo")).equals("/faces/")) {
+//                    if (path.contains("/faces/")) {
+//                        newPage = path;
+//                    } else {
+//                        newPage = String.valueOf(JmoordbContext.get("prefijo")) + path;
+//                    }
+//                }
+//
+//            }
+        } catch (Exception e) {
+        }
+        return newPage;
+    }
 }

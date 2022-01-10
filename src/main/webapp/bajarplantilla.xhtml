@@ -5,7 +5,6 @@
       xmlns:template="http://xmlns.jcp.org/jsf/composite/template"
       xmlns:p="http://primefaces.org/ui"
 
-      xmlns:token="http://xmlns.jcp.org/jsf/composite/token"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ultimaacciongenerada="http://xmlns.jcp.org/jsf/composite/ultimaacciongenerada"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
@@ -22,7 +21,9 @@
         <link rel="stylesheet" href="./resources/css/extra.css"/>
 
         <title>Control Manual</title>    
-
+   <f:metadata>
+             <f:viewAction action="#{bajarPlantillaController.browserEvent('bajarplantilla')}"/>
+        </f:metadata>
     </h:head>
     <h:body>
         <h:form id="form" prependId="false" rendered="#{accessController.loged}">

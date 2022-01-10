@@ -14,6 +14,7 @@ import static com.diogonunes.jcolor.Attribute.CYAN_TEXT;
 import static com.diogonunes.jcolor.Attribute.GREEN_BACK;
 import static com.diogonunes.jcolor.Attribute.GREEN_TEXT;
 import static com.diogonunes.jcolor.Attribute.RED_BACK;
+import static com.diogonunes.jcolor.Attribute.WHITE_TEXT;
 import static com.diogonunes.jcolor.Attribute.YELLOW_TEXT;
 import static com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil.nameOfMethod;
 
@@ -27,6 +28,7 @@ public class ConsoleUtil {
         try {
             AnsiFormat fInfo = new AnsiFormat(CYAN_TEXT());
             System.out.println(fInfo.format(text));
+               System.out.println("\n");
         } catch (Exception e) {
             JsfUtil.errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
@@ -38,6 +40,7 @@ public class ConsoleUtil {
         try {
 
             System.out.println(text);
+               System.out.println("\n");
         } catch (Exception e) {
             JsfUtil.errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
@@ -49,6 +52,7 @@ public class ConsoleUtil {
         try {
             AnsiFormat fError = new AnsiFormat(YELLOW_TEXT(), RED_BACK());
             System.out.println(fError.format(text));
+               System.out.println("\n");
         } catch (Exception e) {
             JsfUtil.errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
@@ -60,6 +64,7 @@ public class ConsoleUtil {
         try {
             AnsiFormat fWarning = new AnsiFormat(GREEN_TEXT(), BLUE_BACK(), BOLD());
             System.out.println(fWarning.format(text));
+               System.out.println("\n");
         } catch (Exception e) {
             JsfUtil.errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
@@ -70,6 +75,18 @@ public class ConsoleUtil {
     public static void greenBackground(String text) {
         try {
            System.out.print(colorize(text, BOLD(), BRIGHT_YELLOW_TEXT(), GREEN_BACK()));
+            System.out.println("\n");
+        } catch (Exception e) {
+            JsfUtil.errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc=" void consoleGreenBackground(String text)">
+
+    public static void greenBackgroundWhiteText(String text) {
+        try {
+           System.out.print(colorize(text, BOLD(), WHITE_TEXT(), GREEN_BACK()));
+            System.out.println("\n");
         } catch (Exception e) {
             JsfUtil.errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }
@@ -80,6 +97,7 @@ public class ConsoleUtil {
     public static void redBackground(String text) {
         try {
          System.out.println(colorize(text, BOLD(), BRIGHT_YELLOW_TEXT(), RED_BACK()));
+            System.out.println("\n");
         } catch (Exception e) {
             JsfUtil.errorMessage(nameOfMethod() + " " + e.getLocalizedMessage());
         }

@@ -6,6 +6,8 @@
 package com.peopleinmotion.horizonreinicioremoto.browser;
 
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
+import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -28,6 +30,7 @@ public class NavigatorController implements Serializable{
     }
     
     public String go(String url){
+      
          JmoordbContext.put("pageInView", url);
         return url.trim();
     }

@@ -114,7 +114,7 @@ public class DashboardController implements Serializable, Page {
     @PostConstruct
     public void init() {
         try {
-            ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
+              ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
             
             if (JmoordbContext.get("user") == null) {
 
@@ -140,7 +140,7 @@ public class DashboardController implements Serializable, Page {
               calcularTotales();
                 loadSchedule();
                 cajeroList = cajeroRepository.findByBancoId(banco);
-               ConsoleUtil.greenBackground(""+ JmoordbContext.get("pageInView"));
+             
             }
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
@@ -184,8 +184,8 @@ public class DashboardController implements Serializable, Page {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-   JmoordbContext.put("pageInView", "/faces/cajeroencontrado.xhtml");
-        return "/faces/cajeroencontrado.xhtml";
+   JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/cajeroencontrado.xhtml"));
+        return JsfUtil.goUrlValidate("/faces/cajeroencontrado.xhtml");
     }
 // </editor-fold>
 
@@ -274,8 +274,8 @@ public class DashboardController implements Serializable, Page {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-           JmoordbContext.put("pageInView", "/faces/controlmanual.xhtml");
-        return "/faces/controlmanual.xhtml";
+           JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/controlmanual.xhtml"));
+        return JsfUtil.goUrlValidate("/faces/controlmanual.xhtml");
     }
 // </editor-fold>
 
@@ -390,8 +390,8 @@ public class DashboardController implements Serializable, Page {
    
     // <editor-fold defaultstate="collapsed" desc="String onCommnandButtonGoBuscarCajero() ">
     public String onCommnandButtonGoBuscarCajero() {
-           JmoordbContext.put("pageInView", "/faces/buscarcajero.xhtml");
-        return "/faces/buscarcajero.xhtml";
+           JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/buscarcajero.xhtml"));
+        return JsfUtil.goUrlValidate("/faces/buscarcajero.xhtml");
     }
 // </editor-fold>
 
@@ -429,36 +429,5 @@ public class DashboardController implements Serializable, Page {
     }
     // </editor-fold>
     
-    // <editor-fold defaultstate="collapsed" desc="String browserEvent()">
-    public String browserEvent(String from) {
-
-        String pageInView = "";
-        try {
-             ConsoleUtil.greenBackground("..............................................");
-            ConsoleUtil.greenBackground("........" +JsfUtil.nameOfMethod()+ "+from "+ from+" at "+DateUtil.fechaHoraActual());
-            pageInView = (String) JmoordbContext.get("pageInView");
-              System.out.println("pageInView: " + pageInView);
-            if(pageInView == null){
-                pageInView ="";
-            }else{
-                
-                Boolean loged= Boolean.FALSE;
-               if (JmoordbContext.get("user") != null) {
-                   loged= Boolean.TRUE;
-               }
-                  pageInView = (pageInView == null ? (loged ? "" : "/faces/login.xhtml") : pageInView);
-            System.out.println("pageInView Changed " + pageInView);
-            }
-          
-           ConsoleUtil.greenBackground("........ pageInView result: "+pageInView);
-           ConsoleUtil.greenBackground("..............................................");
-            return pageInView;
-
-        } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-        }
-        return pageInView;
-    }
-    // </editor-fold>
+  
 }

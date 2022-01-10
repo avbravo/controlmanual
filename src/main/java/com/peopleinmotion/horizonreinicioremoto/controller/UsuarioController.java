@@ -7,6 +7,8 @@ package com.peopleinmotion.horizonreinicioremoto.controller;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.facade.UsuarioFacade;
+import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
+import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
@@ -30,7 +32,7 @@ import javax.inject.Named;
 //@SessionScoped
 @Named
 @SessionScoped
-public class UsuarioController implements Serializable{
+public class UsuarioController implements Serializable, Page{
     private static final long serialVersionUID = 1L;
 
     // <editor-fold defaultstate="collapsed" desc="field ">
@@ -69,7 +71,7 @@ public class UsuarioController implements Serializable{
     public void init(){
         try {
 
-        ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
+       ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
            
             /**
              * Voy a agregar uno nuevo

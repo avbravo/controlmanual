@@ -10,6 +10,7 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoEstado;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.paginator.Paginator;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
@@ -46,7 +47,7 @@ import org.primefaces.model.ScheduleModel;
 @Named
 @ViewScoped
 @Data
-public class AgendadosController implements Serializable {
+public class AgendadosController implements Serializable, Page {
 
 // <editor-fold defaultstate="collapsed" desc="field ">
     private static final long serialVersionUID = 1L;
@@ -109,7 +110,7 @@ public class AgendadosController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-         ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
+       ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
             if (JmoordbContext.get("user") == null) {
 
             } else {
@@ -187,8 +188,8 @@ public class AgendadosController implements Serializable {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         
-       JmoordbContext.put("pageInView", "/faces/controlmanual.xhtml");
-        return "/faces/controlmanual.xhtml";
+       JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/controlmanual.xhtml"));
+        return JsfUtil.goUrlValidate("/faces/controlmanual.xhtml");
     }
 // </editor-fold>
 
