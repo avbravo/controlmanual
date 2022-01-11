@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -48,7 +49,6 @@ import org.primefaces.model.ScheduleModel;
  *
  * @author avbravo
  */
-
 @Named
 @ViewScoped
 @Data
@@ -58,12 +58,12 @@ public class DashboardController implements Serializable, Page {
     private static final long serialVersionUID = 1L;
     private ScheduleEvent<?> event = new DefaultScheduleEvent<>();
     private Integer rowForPage = 5;
-   
+
     private Cajero cajeroSelected = new Cajero();
     AccionReciente accionRecienteSelected = new AccionReciente();
     List<Cajero> cajeroList = new ArrayList<>();
     List<Cajero> cajeroSelectedList = new ArrayList<>();
-   
+
     private ScheduleModel lazyEventModel;
 
     Usuario user = new Usuario();
@@ -114,34 +114,44 @@ public class DashboardController implements Serializable, Page {
     @PostConstruct
     public void init() {
         try {
-              ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
-            
-            if (JmoordbContext.get("user") == null) {
+            ConsoleUtil.info(JsfUtil.nameOfClass() + " " + JsfUtil.nameOfMethod() + " pageInView" + JmoordbContext.get("pageInView"));
+            String initEvent = "";
+            if (JmoordbContext.get("initEvent" + JsfUtil.nameOfClass()) == null) {
+                ConsoleUtil.normal(" en null el initEvent " + JsfUtil.nameOfClass());
 
             } else {
-                QuerySQL querySQL = new QuerySQL.Builder()
-                        .query("SELECT b FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI' ORDER BY b.BANCO ASC ")
-                        .count("SELECT COUNT(b) FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI'")
-                        .build();
-
-                bancoList = bancoRepository.sql(querySQL);
-
-                accionRecienteScheduleList = new ArrayList<>();
-                /**
-                 * Leer de la sesion
-                 */
-                user = (Usuario) JmoordbContext.get("user");
-                banco = (Banco) JmoordbContext.get("banco");
-
-                selectOneMenuBancoValue = banco;
-
-                fillCarouselAccionReciente();
-
-              calcularTotales();
-                loadSchedule();
-                cajeroList = cajeroRepository.findByBancoId(banco);
-             
+                initEvent = (String) JmoordbContext.get("initEvent" + JsfUtil.nameOfClass());
+                ConsoleUtil.normal("initEvent "+initEvent);
             }
+            if (initEvent.equals("") || initEvent.equals("no")) {
+                if (JmoordbContext.get("user") == null) {
+
+                } else {
+                    QuerySQL querySQL = new QuerySQL.Builder()
+                            .query("SELECT b FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI' ORDER BY b.BANCO ASC ")
+                            .count("SELECT COUNT(b) FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI'")
+                            .build();
+
+                    bancoList = bancoRepository.sql(querySQL);
+
+                    accionRecienteScheduleList = new ArrayList<>();
+                    /**
+                     * Leer de la sesion
+                     */
+                    user = (Usuario) JmoordbContext.get("user");
+                    banco = (Banco) JmoordbContext.get("banco");
+
+                    selectOneMenuBancoValue = banco;
+
+                    fillCarouselAccionReciente();
+
+                    calcularTotales();
+                    loadSchedule();
+                    cajeroList = cajeroRepository.findByBancoId(banco);
+   JmoordbContext.put("initEvent" + JsfUtil.nameOfClass(), "yes");
+                }
+            }
+
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
 
@@ -150,10 +160,20 @@ public class DashboardController implements Serializable, Page {
     }
 
     // </editor-fold>
+    @PreDestroy
+    public void preDestroy() {
+        try {
+            ConsoleUtil.normal("initEvent " + JsfUtil.nameOfClass());
+            JmoordbContext.put("initEvent" + JsfUtil.nameOfClass(), "yes");
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+    }
+
     // <editor-fold defaultstate="collapsed" desc="String fillCarouselAccionReciente()">
     public String fillCarouselAccionReciente() {
         try {
-        
+
             banco = (Banco) JmoordbContext.get("banco");
 
             String where = "(a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoProcesandoId") + "' OR  "
@@ -163,10 +183,9 @@ public class DashboardController implements Serializable, Page {
                     .query("SELECT a FROM AccionReciente a WHERE a.BANCOID = '" + banco.getBANCOID() + "' AND " + where + " ORDER BY a.FECHA DESC")
                     .count("")
                     .build();
-            
+
             accionRecienteList = accionRecienteRepository.sql(querySQL);
 
-          
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
@@ -177,22 +196,18 @@ public class DashboardController implements Serializable, Page {
 // <editor-fold defaultstate="collapsed" desc="onCommandButtonSelectCajero ">
     public String onCommandButtonSelectCajero(Cajero cajero) {
         try {
-           ConsoleUtil.greenBackground(" onCommandButtonSelectCajero");
+            ConsoleUtil.greenBackground(" onCommandButtonSelectCajero");
             JmoordbContext.put("cajero", cajero);
 
             JsfUtil.infoDialog("Selecciono el cajero ", cajero.getCAJEROID().toString());
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-   JmoordbContext.put("pageInView", "cajeroencontrado.xhtml");
+        JmoordbContext.put("pageInView", "cajeroencontrado.xhtml");
         return "cajeroencontrado.xhtml";
     }
 // </editor-fold>
 
-
-   
-
-  
     // <editor-fold defaultstate="collapsed" desc="String showDate(Date date) ">
     public String showDate(Date date) {
         return DateUtil.showDate(date);
@@ -274,7 +289,7 @@ public class DashboardController implements Serializable, Page {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-           JmoordbContext.put("pageInView", "controlmanual.xhtml");
+        JmoordbContext.put("pageInView", "controlmanual.xhtml");
         return "controlmanual.xhtml";
     }
 // </editor-fold>
@@ -343,7 +358,7 @@ public class DashboardController implements Serializable, Page {
     // <editor-fold defaultstate="collapsed" desc="String filterAccionReciente(Date start, Date end) ">
     public String filterAccionReciente(BigInteger bancoId, LocalDateTime start, LocalDateTime end, String activo) {
         try {
-           accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeLocalDate(bancoId, end, start, activo);
+            accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeLocalDate(bancoId, end, start, activo);
 
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + ": " + e.getLocalizedMessage());
@@ -387,10 +402,9 @@ public class DashboardController implements Serializable, Page {
     }
 
 // </editor-fold>
-   
     // <editor-fold defaultstate="collapsed" desc="String onCommnandButtonGoBuscarCajero() ">
     public String onCommnandButtonGoBuscarCajero() {
-           JmoordbContext.put("pageInView", "buscarcajero.xhtml");
+        JmoordbContext.put("pageInView", "buscarcajero.xhtml");
         return "buscarcajero.xhtml";
     }
 // </editor-fold>
@@ -428,6 +442,5 @@ public class DashboardController implements Serializable, Page {
 
     }
     // </editor-fold>
-    
-  
+
 }
