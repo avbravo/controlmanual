@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package com.peopleinmotion.horizonreinicioremoto.controller;
+// <editor-fold defaultstate="collapsed" desc="import ">
+
 
 import com.peopleinmotion.horizonreinicioremoto.domains.MessagesForm;
 import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
@@ -43,7 +45,7 @@ import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import java.util.Date;
 import lombok.Data;
 import org.primefaces.PrimeFaces;
-
+// </editor-fold>
 /**
  *
  * @author avbravo
@@ -364,12 +366,12 @@ public class BajarPlantillaController implements Serializable, Page {
                                 .libary("images")
                                 .titulo("Bajar plantilla Programar evento")
                                 .mensaje("Se realizo exitosamente la baja de plantilla ")
-                                .returnTo(JsfUtil.goUrlValidate("/faces/dashboard.xhtml"))
+                                .returnTo("dashboard.xhtml")
                                 .build();
                         JmoordbContext.put("messagesForm", messagesForm);
                         
-                        JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/messagesform.xhtml"));
-                        return JsfUtil.goUrlValidate("/faces/messagesform.xhtml");
+                        JmoordbContext.put("pageInView", "messagesform.xhtml");
+                        return "messagesform.xhtml";
                     }
 
                 }

@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package com.peopleinmotion.horizonreinicioremoto.controller;
+// <editor-fold defaultstate="collapsed" desc="import ">
+
 
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
@@ -38,7 +40,7 @@ import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
-
+// </editor-fold>
 /**
  *
  * @author avbravo
@@ -188,8 +190,8 @@ public class AgendadosController implements Serializable, Page {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         
-       JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/controlmanual.xhtml"));
-        return JsfUtil.goUrlValidate("/faces/controlmanual.xhtml");
+       JmoordbContext.put("pageInView", "controlmanual.xhtml");
+        return "controlmanual.xhtml";
     }
 // </editor-fold>
 

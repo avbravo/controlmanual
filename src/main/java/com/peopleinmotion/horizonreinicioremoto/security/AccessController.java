@@ -205,6 +205,7 @@ public class AccessController implements Serializable {
  // <editor-fold defaultstate="collapsed" desc="String browserEvent()">
     public String browserEvent(String from) {
 
+
         String pageInView = "";
         try {
              ConsoleUtil.greenBackgroundWhiteText(JsfUtil.nameOfClass()+ "."+JsfUtil.nameOfMethod()+ "+from "+ from+" at "+DateUtil.fechaHoraActual());
@@ -213,7 +214,8 @@ public class AccessController implements Serializable {
             if(pageInView == null){
                 pageInView ="";
             }else{
-                  pageInView = (pageInView == null ? (loged ? JsfUtil.goUrlValidate("/faces/dashboard.xhtml") : "") : pageInView);
+
+                  pageInView = (pageInView == null ? (loged ? "dashboard.xhtml" : "") : pageInView);
             ConsoleUtil.normal("--------------->pageInView Changed " + pageInView);
             }
           

@@ -118,8 +118,8 @@ ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInVi
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-        JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/cajeroencontrado.xhtml"));
-        return JsfUtil.goUrlValidate("/faces/cajeroencontrado.xhtml");
+        JmoordbContext.put("pageInView", "cajeroencontrado.xhtml");
+        return "cajeroencontrado.xhtml";
     }
 // </editor-fold>
 

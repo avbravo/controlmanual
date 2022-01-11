@@ -140,16 +140,16 @@ public class CajeroEncontradoController implements Serializable , Page{
             JmoordbContext.put("grupoAccion", grupoAccion);
             
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionEncenderSubirPlantillaId"))) {
-                JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/subirplantilla.xhtml"));
-                return JsfUtil.goUrlValidate("/faces/subirplantilla.xhtml");
+                JmoordbContext.put("pageInView", "subirplantilla.xhtml");
+                return "subirplantilla.xhtml";
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionReinicioRemotoId"))) {
-              JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/reinicioremoto.xhtml"));   
-                return JsfUtil.goUrlValidate("/faces/reinicioremoto.xhtml");
+              JmoordbContext.put("pageInView", "reinicioremoto.xhtml");   
+                return "reinicioremoto.xhtml";
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionBajarPlantillaId"))) {
-                  JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/bajarplantilla.xhtml")); 
-                return JsfUtil.goUrlValidate("/faces/bajarplantilla.xhtml");
+                  JmoordbContext.put("pageInView", "bajarplantilla.xhtml"); 
+                return "bajarplantilla.xhtml";
             }
             JsfUtil.warningMessage("No se identifico el grupo de accion para continuar esta operación");
 
@@ -172,9 +172,9 @@ public class CajeroEncontradoController implements Serializable , Page{
         try {
             
             JmoordbContext.put("grupoAccion", grupoAccionBajarPlantilla);
-            JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/bajarplantilla.xhtml"));
+            JmoordbContext.put("pageInView", "bajarplantilla.xhtml");
             
-             return JsfUtil.goUrlValidate("/faces/bajarplantilla.xhtml");
+             return "bajarplantilla.xhtml";
            
           
         } catch (Exception e) {
@@ -265,7 +265,7 @@ public class CajeroEncontradoController implements Serializable , Page{
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
         }
-        JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/controlmanual.xhtml"));
+        JmoordbContext.put("pageInView", "controlmanual.xhtml");
         return "controlmanual.xhtml";
     }
     

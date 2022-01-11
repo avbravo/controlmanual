@@ -2576,30 +2576,21 @@ public class JsfUtil implements Serializable {
     }
     // </editor-fold>
 
-    public static String goUrlValidate(String path) {
-        String newPage = path;
-        try {
-//            if (JmoordbContext.get("prefijo") == null || String.valueOf(JmoordbContext.get("prefijo")).equals("")) {
-// No encontro el prefijo
-                if (path.contains("/faces/")) {
-
-                    newPage = path.replace("/faces/", "");
-
-                } else {
-                    newPage = path;
-                }
-//            } else {
-//                if (String.valueOf(JmoordbContext.get("prefijo")).equals("/faces/")) {
-//                    if (path.contains("/faces/")) {
-//                        newPage = path;
-//                    } else {
-//                        newPage = String.valueOf(JmoordbContext.get("prefijo")) + path;
-//                    }
+//    public static String goUrlValidate(String path) {
+//        String newPage = path;
+//        try {
+////            if (JmoordbContext.get("prefijo") == null || String.valueOf(JmoordbContext.get("prefijo")).equals("")) {
+//// No encontro el prefijo
+//                if (path.contains("/faces/")) {
+//
+//                    newPage = path.replace("/faces/", "");
+//
+//                } else {
+//                    newPage = path;
 //                }
 //
-//            }
-        } catch (Exception e) {
-        }
-        return newPage;
-    }
+//        } catch (Exception e) {
+//        }
+//        return newPage;
+//    }
 }

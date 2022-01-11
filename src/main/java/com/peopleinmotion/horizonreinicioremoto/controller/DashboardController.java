@@ -184,8 +184,8 @@ public class DashboardController implements Serializable, Page {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-   JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/cajeroencontrado.xhtml"));
-        return JsfUtil.goUrlValidate("/faces/cajeroencontrado.xhtml");
+   JmoordbContext.put("pageInView", "cajeroencontrado.xhtml");
+        return "cajeroencontrado.xhtml";
     }
 // </editor-fold>
 
@@ -274,8 +274,8 @@ public class DashboardController implements Serializable, Page {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-           JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/controlmanual.xhtml"));
-        return JsfUtil.goUrlValidate("/faces/controlmanual.xhtml");
+           JmoordbContext.put("pageInView", "controlmanual.xhtml");
+        return "controlmanual.xhtml";
     }
 // </editor-fold>
 
@@ -390,8 +390,8 @@ public class DashboardController implements Serializable, Page {
    
     // <editor-fold defaultstate="collapsed" desc="String onCommnandButtonGoBuscarCajero() ">
     public String onCommnandButtonGoBuscarCajero() {
-           JmoordbContext.put("pageInView", JsfUtil.goUrlValidate("/faces/buscarcajero.xhtml"));
-        return JsfUtil.goUrlValidate("/faces/buscarcajero.xhtml");
+           JmoordbContext.put("pageInView", "buscarcajero.xhtml");
+        return "buscarcajero.xhtml";
     }
 // </editor-fold>
 

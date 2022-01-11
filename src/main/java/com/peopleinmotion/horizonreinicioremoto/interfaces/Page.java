@@ -32,7 +32,7 @@ public interface Page {
                if (JmoordbContext.get("user") != null) {
                    loged= Boolean.TRUE;
                }
-                  pageInView = (pageInView == null ? (loged ? "" : JsfUtil.goUrlValidate("/faces/login.xhtml")) : pageInView);
+                  pageInView = (pageInView == null ? (loged ? "" : "login.xhtml") : pageInView);
                   
                   
             System.out.println("pageInView Changed " + pageInView);
