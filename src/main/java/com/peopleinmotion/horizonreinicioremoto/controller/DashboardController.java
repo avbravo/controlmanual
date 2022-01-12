@@ -114,20 +114,25 @@ public class DashboardController implements Serializable, Page {
     @PostConstruct
     public void init() {
         try {
-            ConsoleUtil.info(JsfUtil.nameOfClass() + " " + JsfUtil.nameOfMethod() + " pageInView" + JmoordbContext.get("pageInView"));
-            String initEvent = "";
-            if (JmoordbContext.get("initEvent" + JsfUtil.nameOfClass()) == null) {
-                ConsoleUtil.normal(" en null el initEvent " + JsfUtil.nameOfClass());
-
-            } else {
-                initEvent = (String) JmoordbContext.get("initEvent" + JsfUtil.nameOfClass());
-                ConsoleUtil.normal("initEvent "+initEvent);
+            if(JmoordbContext.get("countViewAction") == null){
+               JmoordbContext.put("countViewAction",0); 
             }
-            if (initEvent.equals("") || initEvent.equals("no")) {
-                if (JmoordbContext.get("user") == null) {
 
-                } else {
-                    QuerySQL querySQL = new QuerySQL.Builder()
+
+            ConsoleUtil.info(JsfUtil.nameOfClass() + " " + JsfUtil.nameOfMethod() + " pageInView" + JmoordbContext.get("pageInView"));
+            ConsoleUtil.normal("countViewAction"+JmoordbContext.get("countViewAction"));
+            
+       Integer countViewAction = Integer.parseInt(JmoordbContext.get("countViewAction").toString());
+        lazyEventModel = new LazyScheduleModel() {
+
+            @Override
+            public void loadEvents(LocalDateTime start, LocalDateTime end) {
+               ConsoleUtil.info("init lazyEventModel.loadEvent at "+DateUtil.fechaHoraActual());
+            }
+            };
+      if(countViewAction >=2){
+           ConsoleUtil.normal(countViewAction + " es >=2 entrare  a proceesar");
+                   QuerySQL querySQL = new QuerySQL.Builder()
                             .query("SELECT b FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI' ORDER BY b.BANCO ASC ")
                             .count("SELECT COUNT(b) FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI'")
                             .build();
@@ -148,10 +153,19 @@ public class DashboardController implements Serializable, Page {
                     calcularTotales();
                     loadSchedule();
                     cajeroList = cajeroRepository.findByBancoId(banco);
-   JmoordbContext.put("initEvent" + JsfUtil.nameOfClass(), "yes");
-                }
-            }
+       }else{
+           ConsoleUtil.normal(countViewAction + " es < 2 NO PROCESARE EL INIT");
+       }
+        
+            
 
+//                }
+//            }
+ConsoleUtil.normal("voy a asignar......");
+countViewAction=countViewAction+1;
+ConsoleUtil.normal("lo incremente ......"+countViewAction);
+ JmoordbContext.put("countViewAction",countViewAction);
+ConsoleUtil.normal("......Aqui lo asigne....");
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
 
@@ -163,8 +177,7 @@ public class DashboardController implements Serializable, Page {
     @PreDestroy
     public void preDestroy() {
         try {
-            ConsoleUtil.normal("initEvent " + JsfUtil.nameOfClass());
-            JmoordbContext.put("initEvent" + JsfUtil.nameOfClass(), "yes");
+            ConsoleUtil.normal(JsfUtil.nameOfClass() + "."+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
         }

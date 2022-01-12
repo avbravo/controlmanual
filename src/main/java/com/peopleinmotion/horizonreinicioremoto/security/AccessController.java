@@ -78,13 +78,18 @@ public class AccessController implements Serializable {
         loged = false;
 
         try {
+          
+            
  ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
+
             /**
              * Lee las configuraciones iniciales
              */
             version = accessServices.loadConfigurationPropeties();
-
-            /**
+        
+      
+          
+           /**
              * Banco
              */
             QuerySQL querySQL = new QuerySQL.Builder()
@@ -93,9 +98,13 @@ public class AccessController implements Serializable {
                     .build();
 
             bancoList = bancoRepository.sql(querySQL);
+      
+            
 
+ JmoordbContext.put("countViewAction",0);
         } catch (Exception e) {
               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
 
     }
@@ -131,7 +140,7 @@ public class AccessController implements Serializable {
                }
       
                  
-                 System.out.println("Test>>> put dashboard.xhtml....");
+               JmoordbContext.put("countViewAction",0);
                  JmoordbContext.put("pageInView","dashboard.xhtml");
                         
                         return "dashboard.xhtml";
@@ -188,7 +197,7 @@ public class AccessController implements Serializable {
     // </editor-fold>
     
     
-    // <editor-fold defaultstate="collapsed" desc="method() ">
+    // <editor-fold defaultstate="collapsed" desc="String showPageInView()">
     public String showPageInView(){
         try {
               String pageInView = (String) JmoordbContext.get("pageInView");
@@ -210,13 +219,12 @@ public class AccessController implements Serializable {
         try {
              ConsoleUtil.greenBackgroundWhiteText(JsfUtil.nameOfClass()+ "."+JsfUtil.nameOfMethod()+ "+from "+ from+" at "+DateUtil.fechaHoraActual());
             pageInView = (String) JmoordbContext.get("pageInView");
-             ConsoleUtil.normal("-zzzzzzzzzz------------>pageInView: " + pageInView);
+             ConsoleUtil.normal("------------>pageInView: " + pageInView);
             if(pageInView == null){
                 pageInView ="";
             }else{
-
                   pageInView = (pageInView == null ? (loged ? "dashboard.xhtml" : "") : pageInView);
-            ConsoleUtil.normal("--------------->pageInView Changed " + pageInView);
+    
             }
           
            ConsoleUtil.normal("..........> pageInView result: "+pageInView);
