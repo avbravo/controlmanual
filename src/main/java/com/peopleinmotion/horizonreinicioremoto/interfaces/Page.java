@@ -15,15 +15,15 @@ import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
  * @author avbravo
  */
 public interface Page {
-    // <editor-fold defaultstate="collapsed" desc="String browserEvent()">
-    default  public String browserEvent(String from) {
+
+    // <editor-fold defaultstate="collapsed" desc=" String browserEventFromPage(String pageLogin)>
+    default  public String browserEventFromPage(String pageLogin) {
 
         String pageInView = "";
         try {
-            ConsoleUtil.warning("..............................................");
-            ConsoleUtil.normal("Page." +JsfUtil.nameOfMethod()+ "+from "+ from+" at "+DateUtil.fechaHoraActual());
+          
             pageInView = (String) JmoordbContext.get("pageInView");
-              System.out.println("pageInView: " + pageInView);
+            
             if(pageInView == null){
                 pageInView ="";
             }else{
@@ -32,14 +32,13 @@ public interface Page {
                if (JmoordbContext.get("user") != null) {
                    loged= Boolean.TRUE;
                }
-                  pageInView = (pageInView == null ? (loged ? "" : "login.xhtml") : pageInView);
+                  pageInView = (pageInView == null ? (loged ? "" : pageLogin) : pageInView);
                   
                   
-            System.out.println("pageInView Changed " + pageInView);
+
             }
           
-           ConsoleUtil.normal("........ pageInView result: "+pageInView);
-           ConsoleUtil.warning("..............................................");
+           
             return pageInView;
 
 
@@ -49,6 +48,32 @@ public interface Page {
         }
         return pageInView;
 
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="String browserEventFromLogin(String toIndex) ">
+   default public String browserEventFromLogin(String toIndex) {
+        String pageInView = "";
+        try {
+          
+            pageInView = (String) JmoordbContext.get("pageInView");   
+            
+             Boolean loged= Boolean.FALSE;
+               if (JmoordbContext.get("user") != null) {
+                   loged= Boolean.TRUE;
+               }
+            if(pageInView == null){
+                pageInView ="";
+            }else{
+                  pageInView = (pageInView == null ? (loged ? toIndex : "") : pageInView);                   
+            }                    
+            return pageInView;
+
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+             ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return pageInView;
     }
     // </editor-fold>
 }

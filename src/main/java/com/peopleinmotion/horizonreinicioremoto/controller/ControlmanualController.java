@@ -135,7 +135,7 @@ public class ControlmanualController implements Serializable, Page {
     @PostConstruct
     public void init() {
         try {
-           ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
+            
             updateByOtherUser = Boolean.FALSE;
             if (JmoordbContext.get("user") == null) {
 

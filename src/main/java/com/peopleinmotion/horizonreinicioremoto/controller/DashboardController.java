@@ -61,7 +61,7 @@ public class DashboardController implements Serializable, Page {
 
     private Cajero cajeroSelected = new Cajero();
     AccionReciente accionRecienteSelected = new AccionReciente();
-    List<Cajero> cajeroList = new ArrayList<>();
+    // List<Cajero> cajeroList = new ArrayList<>();
     List<Cajero> cajeroSelectedList = new ArrayList<>();
 
     private ScheduleModel lazyEventModel;
@@ -114,59 +114,51 @@ public class DashboardController implements Serializable, Page {
     @PostConstruct
     public void init() {
         try {
-            if(JmoordbContext.get("countViewAction") == null){
-               JmoordbContext.put("countViewAction",0); 
+            user = (Usuario) JmoordbContext.get("user");
+            banco = (Banco) JmoordbContext.get("banco");
+            //    cajeroList = new ArrayList<>();
+            accionRecienteList = new ArrayList<>();
+            accionRecienteScheduleList = new ArrayList<>();
+
+            if (JmoordbContext.get("countViewAction") == null) {
+                JmoordbContext.put("countViewAction", 0);
             }
+            Integer countViewAction = Integer.parseInt(JmoordbContext.get("countViewAction").toString());
+            ConsoleUtil.info("--->countViewAction "+countViewAction);
+            lazyEventModel = new LazyScheduleModel() {
 
-
-            ConsoleUtil.info(JsfUtil.nameOfClass() + " " + JsfUtil.nameOfMethod() + " pageInView" + JmoordbContext.get("pageInView"));
-            ConsoleUtil.normal("countViewAction"+JmoordbContext.get("countViewAction"));
-            
-       Integer countViewAction = Integer.parseInt(JmoordbContext.get("countViewAction").toString());
-        lazyEventModel = new LazyScheduleModel() {
-
-            @Override
-            public void loadEvents(LocalDateTime start, LocalDateTime end) {
-               ConsoleUtil.info("init lazyEventModel.loadEvent at "+DateUtil.fechaHoraActual());
-            }
+                @Override
+                public void loadEvents(LocalDateTime start, LocalDateTime end) {
+                    ConsoleUtil.info("-->init lazyEventModel.loadEvent at " + DateUtil.fechaHoraActual());
+                }
             };
-      if(countViewAction >=2){
-           ConsoleUtil.normal(countViewAction + " es >=2 entrare  a proceesar");
-                   QuerySQL querySQL = new QuerySQL.Builder()
-                            .query("SELECT b FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI' ORDER BY b.BANCO ASC ")
-                            .count("SELECT COUNT(b) FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI'")
-                            .build();
 
-                    bancoList = bancoRepository.sql(querySQL);
+            if (countViewAction == 0) {
+                ConsoleUtil.info("-->Voy a Ejecutar el init countViewAction "+countViewAction);
+                QuerySQL querySQL = new QuerySQL.Builder()
+                        .query("SELECT b FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI' ORDER BY b.BANCO ASC ")
+                        .count("SELECT COUNT(b) FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI'")
+                        .build();
+                bancoList = bancoRepository.sql(querySQL);
+                selectOneMenuBancoValue = banco;
+              
+             
+                fillCarouselAccionReciente();
+                calcularTotales();
+                loadSchedule();
+          
 
-                    accionRecienteScheduleList = new ArrayList<>();
-                    /**
-                     * Leer de la sesion
-                     */
-                    user = (Usuario) JmoordbContext.get("user");
-                    banco = (Banco) JmoordbContext.get("banco");
+            } else {
+               
+                selectOneMenuBancoValue = banco;
+            }
 
-                    selectOneMenuBancoValue = banco;
+            countViewAction = countViewAction + 1;
 
-                    fillCarouselAccionReciente();
+            JmoordbContext.put("countViewAction", countViewAction);
 
-                    calcularTotales();
-                    loadSchedule();
-                    cajeroList = cajeroRepository.findByBancoId(banco);
-       }else{
-           ConsoleUtil.normal(countViewAction + " es < 2 NO PROCESARE EL INIT");
-       }
-        
-            
-
-//                }
-//            }
-ConsoleUtil.normal("voy a asignar......");
-countViewAction=countViewAction+1;
-ConsoleUtil.normal("lo incremente ......"+countViewAction);
- JmoordbContext.put("countViewAction",countViewAction);
-ConsoleUtil.normal("......Aqui lo asigne....");
         } catch (Exception e) {
+            ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
 
         }
@@ -177,7 +169,11 @@ ConsoleUtil.normal("......Aqui lo asigne....");
     @PreDestroy
     public void preDestroy() {
         try {
-            ConsoleUtil.normal(JsfUtil.nameOfClass() + "."+JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
+            Integer countViewAction = Integer.parseInt(JmoordbContext.get("countViewAction").toString());
+            ConsoleUtil.warning(JsfUtil.nameOfClass() + "." + JsfUtil.nameOfMethod() + " at " + DateUtil.fechaHoraActual() + " countViewAction  ( " + countViewAction + " )");
+
+            JmoordbContext.put("countViewAction", 0);
+       
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
         }
@@ -430,7 +426,7 @@ ConsoleUtil.normal("......Aqui lo asigne....");
      */
     public String selectOneMenuBancoChanged() {
         try {
-
+            ConsoleUtil.info(JsfUtil.nameOfMethod() + " selectOneMenuBancoValue " + selectOneMenuBancoValue);
             JmoordbContext.put("banco", selectOneMenuBancoValue);
             calcularTotales();
             fillCarouselAccionReciente();

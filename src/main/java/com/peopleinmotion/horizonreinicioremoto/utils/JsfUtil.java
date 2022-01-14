@@ -2348,7 +2348,7 @@ public class JsfUtil implements Serializable {
         try {
 
             if (JmoordbContext.get(key) == null) {
-                warningMessage("Procesando " + key + "key es null");
+                warningMessage("Procesando " + key + " key es null");
             } else {
                 String val = String.valueOf(JmoordbContext.get(key));
                 i = new BigInteger(val);
@@ -2373,7 +2373,7 @@ public class JsfUtil implements Serializable {
         try {
 
             if (JmoordbContext.get(key) == null) {
-                warningMessage("Procesando " + key + "key es null");
+                warningMessage("Procesando " + key + " key es null");
             } else {
                 String val = String.valueOf(JmoordbContext.get(key));
                 i = Integer.parseInt(val);
@@ -2396,13 +2396,14 @@ public class JsfUtil implements Serializable {
     public static void propertiesBigIntegerToContext(Properties properties, String key) {
         try {
             if (properties.getProperty(key) == null) {
-                JsfUtil.warningMessage("no existe la propiedad" + key);
+                JsfUtil.warningMessage("No existe la propiedad" + key);
                 JmoordbContext.put(key, 0);
             } else {
                 Integer value = Integer.parseInt(properties.getProperty(key));
                 JmoordbContext.put(key, value);
             }
         } catch (Exception e) {
+            System.out.println(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
         }
     }
 // </editor-fold>

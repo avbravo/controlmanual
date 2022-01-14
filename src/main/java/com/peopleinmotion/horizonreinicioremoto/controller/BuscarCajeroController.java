@@ -87,7 +87,7 @@ public class BuscarCajeroController implements Serializable, Page {
         try {
             
 
-ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
+ 
             if (JmoordbContext.get("user") == null) {
 
             } else {

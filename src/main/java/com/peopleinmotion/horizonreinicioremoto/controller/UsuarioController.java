@@ -71,8 +71,8 @@ public class UsuarioController implements Serializable, Page{
     public void init(){
         try {
 
-       ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
-           
+        
+           ConsoleUtil.redBackground(JsfUtil.nameOfClass() + "." +JsfUtil.nameOfMethod() + " at "+DateUtil.fechaHoraActual());
             /**
              * Voy a agregar uno nuevo
              */

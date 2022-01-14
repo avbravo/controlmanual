@@ -113,7 +113,7 @@ public class BajarPlantillaController implements Serializable, Page {
     @PostConstruct
     public void init() {
         try {
-            ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
+             
             tokenEnviado = Boolean.FALSE;
             if (JmoordbContext.get("user") == null) {
 

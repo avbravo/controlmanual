@@ -69,7 +69,7 @@ public class TotalesEstadoBancoController implements Serializable, Page {
     @PostConstruct
     public void init() {
         try {
-          ConsoleUtil.info(JsfUtil.nameOfClass() + " "+JsfUtil.nameOfMethod() + " pageInView"+ JmoordbContext.get("pageInView"));
+           
             totalesEstadoBancoList = new ArrayList<>();
             if (JmoordbContext.get("user") == null) {
 
