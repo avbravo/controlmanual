@@ -124,17 +124,17 @@ public class DashboardController implements Serializable, Page {
                 JmoordbContext.put("countViewAction", 0);
             }
             Integer countViewAction = Integer.parseInt(JmoordbContext.get("countViewAction").toString());
-            ConsoleUtil.info("--->countViewAction "+countViewAction);
+           
             lazyEventModel = new LazyScheduleModel() {
 
                 @Override
                 public void loadEvents(LocalDateTime start, LocalDateTime end) {
-                    ConsoleUtil.info("-->init lazyEventModel.loadEvent at " + DateUtil.fechaHoraActual());
+
                 }
             };
 
             if (countViewAction == 0) {
-                ConsoleUtil.info("-->Voy a Ejecutar el init countViewAction "+countViewAction);
+
                 QuerySQL querySQL = new QuerySQL.Builder()
                         .query("SELECT b FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI' ORDER BY b.BANCO ASC ")
                         .count("SELECT COUNT(b) FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI'")

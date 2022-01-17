@@ -83,7 +83,7 @@ public class AccessController implements Serializable, Page {
         try {
             intentos = 0;
 
-            ConsoleUtil.info(JsfUtil.nameOfClass() + " " + JsfUtil.nameOfMethod() + " at " + DateUtil.fechaHoraActual());
+           
 
             /**
              * Lee las configuraciones iniciales
