@@ -8,12 +8,14 @@ package com.peopleinmotion.horizonreinicioremoto.facade;
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.transaction.Transactional;
 
 /**
@@ -94,7 +96,7 @@ public class AgendaFacade extends AbstractFacade<Agenda> {
         return ((Long) query.setParameter("ESTADOID", ESTADOID).setParameter("ACTIVO", ACTIVO).getSingleResult()).intValue();
     }
        // </editor-fold>
-       // <editor-fold defaultstate="collapsed" desc="Long countByBancoIdAndEstadoIdAndActivo(BigInteger BANCOID,BigInteger ESTADOID,String ACTIVO)">    
+       // <editor-fold defaultstate="collapsed" desc="int countByBancoIdAndEstadoIdAndActivo(BigInteger BANCOID,BigInteger ESTADOID,String ACTIVO)">    
 
        public int countByBancoIdAndEstadoIdAndActivo(BigInteger BANCOID,BigInteger ESTADOID,String ACTIVO) {
            
@@ -102,6 +104,34 @@ public class AgendaFacade extends AbstractFacade<Agenda> {
         return ((Long) query.setParameter("BANCOID", BANCOID).setParameter("ESTADOID", ESTADOID).setParameter("ACTIVO", ACTIVO).getSingleResult()).intValue();
         
   
+    }
+       // </editor-fold>
+       // <editor-fold defaultstate="collapsed" desc="int countAgendamiento(BigInteger BANCOID,BigInteger CAJEROID,BigInteger ACCIONID, BigInteger ESTADOID,Date FECHAAGENDADA , String ACTIVO)">    
+/**
+ * Cuenta cuantos agendamientos hay con esa condicion
+ * @param BANCOID
+ * @param CAJEROID
+ * @param ACCIONID
+ * @param ESTADOID
+ * @param FECHAAGENDADA
+ * @param ACTIVO
+ * @return 
+ */
+       public int countAgendamiento(BigInteger BANCOID,BigInteger CAJEROID,BigInteger ACCIONID, BigInteger ESTADOID,Date FECHAAGENDADA , String ACTIVO) {
+           
+        Query query = em.createQuery("SELECT COUNT(a) FROM Agenda a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID AND a.ACCIONID = :ACCIONID AND a.FECHAAGENDADA = :FECHAAGENDADA  AND a.ESTADOID = :ESTADOID AND a.ACTIVO = :ACTIVO ");
+
+        
+    
+           query.setParameter("BANCOID", BANCOID);
+           query.setParameter("CAJEROID",CAJEROID);
+           query.setParameter("CAJEROID",ACCIONID);
+           query.setParameter("ESTADOID",ESTADOID);
+           query.setParameter("ACTIVO", ACTIVO);
+            query.setParameter("FECHAAGENDADA", FECHAAGENDADA, TemporalType.TIMESTAMP);
+       
+                return ((Long) query.getSingleResult()).intValue();
+       
     }
        // </editor-fold>
 }

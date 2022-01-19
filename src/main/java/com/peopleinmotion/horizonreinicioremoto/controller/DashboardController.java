@@ -35,10 +35,13 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import lombok.Data;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.LazyScheduleModel;
@@ -402,11 +405,14 @@ public class DashboardController implements Serializable, Page {
                 JmoordbContext.put("cajero", cajeroSelected);
             }
             JmoordbContext.put("formularioRetorno", "dashboard");
+	
 
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + ": " + e.getLocalizedMessage());
         }
-        return "";
+  
+     return "";
+     //return "";
 
     }
 
@@ -444,6 +450,7 @@ public class DashboardController implements Serializable, Page {
         return "";
     }
 // </editor-fold>
+
 
     // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoSolicitado()">
     public Boolean renderedByEstadoSolicitado() {

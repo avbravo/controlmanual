@@ -6,9 +6,12 @@
 package com.peopleinmotion.horizonreinicioremoto.repository;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
+import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
 import com.peopleinmotion.horizonreinicioremoto.facade.AgendaFacade;
+import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
@@ -90,4 +93,23 @@ public class AgendaRepositoryImpl implements AgendaRepository {
 return agendaFacade.find(id);
     }
 
+    
+      @Override
+    public List<Agenda> sql(QuerySQL querySQL) {
+        return agendaFacade.sql(querySQL); 
+    }
+    @Override
+    public List<Agenda> pagination(QuerySQL querySQL, Integer pageNumber, Integer rowForPage) {
+        return agendaFacade.pagination(querySQL, pageNumber, rowForPage);
+    }
+
+    @Override
+    public int count(QuerySQL querySQL) {
+       return agendaFacade.count(querySQL);
+    }
+
+    @Override
+    public int countAgendamiento(BigInteger BANCOID, BigInteger CAJEROID, BigInteger ACCIONID, BigInteger ESTADOID, Date FECHAAGENDADA, String ACTIVO) {
+        return agendaFacade.countAgendamiento(BANCOID, CAJEROID,ACCIONID,  ESTADOID, FECHAAGENDADA , ACTIVO);
+    }
 }

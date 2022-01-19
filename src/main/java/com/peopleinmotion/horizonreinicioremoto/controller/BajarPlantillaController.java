@@ -19,6 +19,7 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Token;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
+import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
@@ -42,6 +43,7 @@ import com.peopleinmotion.horizonreinicioremoto.services.EmailServices;
 import com.peopleinmotion.horizonreinicioremoto.services.TokenServices;
 import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
+import java.math.BigInteger;
 import java.util.Date;
 import lombok.Data;
 import org.primefaces.PrimeFaces;
@@ -342,6 +344,20 @@ public class BajarPlantillaController implements Serializable, Page {
                 agenda.setUSUARIOIDATIENDE(JsfUtil.toBigInteger(0));
                 agenda.setUSUARIOIDSOLICITA(user.getUSUARIOID());
 
+                 
+                   
+                Integer count = agendaRepository.countAgendamiento(cajero.getBANCOID().getBANCOID(), cajero.getCAJEROID(), accion.getACCIONID() , estado.getESTADOID(),  fechahoraBaja, "SI") ;
+                if(count > 0){
+                    ConsoleUtil.info("Existe un registro agendado de ese cajero en esa fecha");
+                     JsfUtil.warningMessage("Existe un registro agendado de ese cajero en esa fecha");
+                }else{
+                    ConsoleUtil.info("Esta todo ok.....................................");
+                    System.out.println("Esta todo ok.....................................");
+                }
+                   
+
+                
+                
                 if (agendaRepository.create(agenda)) {
 
                     Optional<Agenda> agendaOptional = agendaRepository.findByCodigoTransaccion(agenda.getCODIGOTRANSACCION());

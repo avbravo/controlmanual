@@ -5,8 +5,11 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.repository;
 
+import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
+import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,5 +34,12 @@ public interface AgendaRepository {
     public Integer countByEstadoIdAndActivo(BigInteger ESTADOID, String ACTIVO);
 
     public Integer countByBancoIdAndEstadoIdAndActivo(BigInteger BANCOID, BigInteger ESTADOID, String ACTIVO);
+     public List<Agenda> sql(QuerySQL querySQL);
+
+    public List<Agenda> pagination(QuerySQL querySQL, Integer pageNumber, Integer rowForPage);
+
+    public int count(QuerySQL querySQL);
+    
+     public int countAgendamiento(BigInteger BANCOID,BigInteger CAJEROID,BigInteger ACCIONID, BigInteger ESTADOID,Date FECHAAGENDADA , String ACTIVO);
 
 }

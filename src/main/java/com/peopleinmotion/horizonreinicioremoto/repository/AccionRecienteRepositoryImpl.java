@@ -26,11 +26,11 @@ import javax.inject.Inject;
 public class AccionRecienteRepositoryImpl implements AccionRecienteRepository {
 
     @Inject
-    AccionRecienteFacade agendaRecienteFacade;
+    AccionRecienteFacade accionRecienteFacade;
 
     @Override
     public List<AccionReciente> findAll() {
-        return agendaRecienteFacade.findAll();
+        return accionRecienteFacade.findAll();
     }
 
  
@@ -40,7 +40,7 @@ public class AccionRecienteRepositoryImpl implements AccionRecienteRepository {
     @Override
     public Boolean create(AccionReciente accionReciente) {
         try {
-            agendaRecienteFacade.create(accionReciente);
+            accionRecienteFacade.create(accionReciente);
             return true;
         } catch (Exception e) {
             // System.out.println("create() " + e.getLocalizedMessage());
@@ -50,7 +50,7 @@ public class AccionRecienteRepositoryImpl implements AccionRecienteRepository {
     @Override
     public Boolean update(AccionReciente accionReciente) {
         try {
-            agendaRecienteFacade.edit(accionReciente);
+            accionRecienteFacade.edit(accionReciente);
             return true;
         } catch (Exception e) {
             // System.out.println("create() " + e.getLocalizedMessage());
@@ -60,73 +60,73 @@ public class AccionRecienteRepositoryImpl implements AccionRecienteRepository {
 
     @Override
     public Optional<AccionReciente> findByAccionRecienteId(BigInteger ACCIONRECIENTEID) {
-        return agendaRecienteFacade.findByAccionRecienteId(ACCIONRECIENTEID);
+        return accionRecienteFacade.findByAccionRecienteId(ACCIONRECIENTEID);
     }
 
     @Override
     public List<AccionReciente> findByBancoId(BigInteger BANCOID) {
-      return agendaRecienteFacade.findByBancoId(BANCOID);
+      return accionRecienteFacade.findByBancoId(BANCOID);
     }
 
     @Override
     public List<AccionReciente> findByCajeroId(BigInteger CAJEROID) {
-      return agendaRecienteFacade.findByCajeroId(CAJEROID);
+      return accionRecienteFacade.findByCajeroId(CAJEROID);
     }
 
     @Override
     public List<AccionReciente> findByBancoIdAndCajeroId(BigInteger BANCOID, BigInteger CAJEROID) {
-        return agendaRecienteFacade.findByBancoIdAndCajeroId(BANCOID, CAJEROID) ;
+        return accionRecienteFacade.findByBancoIdAndCajeroId(BANCOID, CAJEROID) ;
         
     }
 
     @Override
     public List<AccionReciente> findByCajeroIdAndVistoBanco(BigInteger CAJEROID, String VISTOBANCO) {
-        return agendaRecienteFacade.findByCajeroIdAndVistoBanco( CAJEROID,  VISTOBANCO);
+        return accionRecienteFacade.findByCajeroIdAndVistoBanco( CAJEROID,  VISTOBANCO);
     }
 
     @Override
     public List<AccionReciente> findByCajeroIdAndVistoTecnico(BigInteger CAJEROID, String VISTOTECNICO) {
-         return agendaRecienteFacade.findByCajeroIdAndVistoTecnico(CAJEROID, VISTOTECNICO);
+         return accionRecienteFacade.findByCajeroIdAndVistoTecnico(CAJEROID, VISTOTECNICO);
     }
 
     @Override
     public List<AccionReciente> findByBancoIdAndVistoBanco(BigInteger BANCOID, String VISTOBANCO) {
-       return agendaRecienteFacade.findByBancoIdAndVistoBanco(BANCOID,VISTOBANCO);
+       return accionRecienteFacade.findByBancoIdAndVistoBanco(BANCOID,VISTOBANCO);
     }
 
     @Override
     public List<AccionReciente> findByBancoIdAndVistoTecnico(BigInteger BANCOID, String VISTOTENICO) {
-       return agendaRecienteFacade.findByBancoIdAndVistoTecnico(BANCOID,VISTOTENICO);
+       return accionRecienteFacade.findByBancoIdAndVistoTecnico(BANCOID,VISTOTENICO);
     }
 
     @Override
     public Optional<AccionReciente> findByBancoIdAndCajeroIdUltimaAccionReciente(BigInteger BANCOID, BigInteger CAJEROID) {
-       return agendaRecienteFacade.findByBancoIdAndCajeroIdUltimaAccionReciente(BANCOID, CAJEROID);
+       return accionRecienteFacade.findByBancoIdAndCajeroIdUltimaAccionReciente(BANCOID, CAJEROID);
     }
     @Override
     public Optional<AccionReciente> findByBancoIdAndCajeroIdUltimaAccionDisponible(BigInteger BANCOID, BigInteger CAJEROID) {
-       return agendaRecienteFacade.findByBancoIdAndCajeroIdUltimaAccionDisponible(BANCOID, CAJEROID);
+       return accionRecienteFacade.findByBancoIdAndCajeroIdUltimaAccionDisponible(BANCOID, CAJEROID);
     }
 
     @Override
     public List<AccionReciente> findBancoIdEntreFechasTypeDate(BigInteger BANCOID, Date DESDE, Date HASTA, String ACTIVO) {
-          return agendaRecienteFacade.findBancoIdEntreFechasTypeDate(BANCOID,DESDE, HASTA,ACTIVO);
+          return accionRecienteFacade.findBancoIdEntreFechasTypeDate(BANCOID,DESDE, HASTA,ACTIVO);
     }
 
     
      @Override
     public List<AccionReciente> findBancoIdEntreFechasTypeLocalDate(BigInteger BANCOID, LocalDateTime DESDE, LocalDateTime HASTA, String ACTIVO) {
-         return agendaRecienteFacade.findBancoIdEntreFechasTypeLocalDateTime(BANCOID,DESDE, HASTA,ACTIVO);
+         return accionRecienteFacade.findBancoIdEntreFechasTypeLocalDateTime(BANCOID,DESDE, HASTA,ACTIVO);
     }
 
     @Override
     public List<AccionReciente> findByBancoIdAndActivo(BigInteger BANCOID, String ACTIVO) {
-      return agendaRecienteFacade.findByBancoIdAndActivo(BANCOID, ACTIVO);
+      return accionRecienteFacade.findByBancoIdAndActivo(BANCOID, ACTIVO);
     }
 
     @Override
     public Optional<AccionReciente> find(BigInteger id) {
-       return agendaRecienteFacade.find(id);
+       return accionRecienteFacade.find(id);
     }
 
     // <editor-fold defaultstate="collapsed" desc="Boolean changed(Banco banco)>
@@ -135,7 +135,7 @@ public class AccionRecienteRepositoryImpl implements AccionRecienteRepository {
     public Boolean changed(AccionReciente accionReciente) {
         try {
             
-            Optional<AccionReciente> live = agendaRecienteFacade.find(accionReciente.getACCIONRECIENTEID());
+            Optional<AccionReciente> live = accionRecienteFacade.find(accionReciente.getACCIONRECIENTEID());
             if (!live.isPresent()) {
                 return Boolean.TRUE;
             }
@@ -158,16 +158,16 @@ public class AccionRecienteRepositoryImpl implements AccionRecienteRepository {
     
     @Override
     public List<AccionReciente> sql(QuerySQL querySQL) {
-        return agendaRecienteFacade.sql(querySQL);
+        return accionRecienteFacade.sql(querySQL);
     }
     @Override
     public List<AccionReciente> pagination(QuerySQL querySQL, Integer pageNumber, Integer rowForPage) {
-        return agendaRecienteFacade.pagination(querySQL, pageNumber, rowForPage);
+        return accionRecienteFacade.pagination(querySQL, pageNumber, rowForPage);
     }
 
     @Override
     public int count(QuerySQL querySQL) {
-       return agendaRecienteFacade.count(querySQL);
+       return accionRecienteFacade.count(querySQL);
     }
 
 }
