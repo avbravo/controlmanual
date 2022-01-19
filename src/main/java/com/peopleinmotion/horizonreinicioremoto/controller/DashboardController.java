@@ -432,7 +432,7 @@ public class DashboardController implements Serializable, Page {
      */
     public String selectOneMenuBancoChanged() {
         try {
-            ConsoleUtil.info(JsfUtil.nameOfMethod() + " selectOneMenuBancoValue " + selectOneMenuBancoValue);
+           
             JmoordbContext.put("banco", selectOneMenuBancoValue);
             calcularTotales();
             fillCarouselAccionReciente();

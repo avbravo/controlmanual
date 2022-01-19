@@ -6,6 +6,7 @@
 package com.peopleinmotion.horizonreinicioremoto.facade;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.Date;
@@ -118,19 +119,23 @@ public class AgendaFacade extends AbstractFacade<Agenda> {
  * @return 
  */
        public int countAgendamiento(BigInteger BANCOID,BigInteger CAJEROID,BigInteger ACCIONID, BigInteger ESTADOID,Date FECHAAGENDADA , String ACTIVO) {
-           
-        Query query = em.createQuery("SELECT COUNT(a) FROM Agenda a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID AND a.ACCIONID = :ACCIONID AND a.FECHAAGENDADA = :FECHAAGENDADA  AND a.ESTADOID = :ESTADOID AND a.ACTIVO = :ACTIVO ");
+           try {
+                Query query = em.createQuery("SELECT COUNT(a) FROM Agenda a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID AND a.ACCIONID = :ACCIONID AND a.FECHAAGENDADA = :FECHAAGENDADA  AND a.ESTADOID = :ESTADOID AND a.ACTIVO = :ACTIVO ");
 
         
     
            query.setParameter("BANCOID", BANCOID);
            query.setParameter("CAJEROID",CAJEROID);
-           query.setParameter("CAJEROID",ACCIONID);
+           query.setParameter("ACCIONID",ACCIONID);
            query.setParameter("ESTADOID",ESTADOID);
            query.setParameter("ACTIVO", ACTIVO);
             query.setParameter("FECHAAGENDADA", FECHAAGENDADA, TemporalType.TIMESTAMP);
        
                 return ((Long) query.getSingleResult()).intValue();
+           } catch (Exception e) {
+               ConsoleUtil.error(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+           }
+       return 0;
        
     }
        // </editor-fold>
