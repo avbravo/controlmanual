@@ -8,6 +8,7 @@ package com.peopleinmotion.horizonreinicioremoto.controller;
 
 
 import com.peopleinmotion.horizonreinicioremoto.domains.MessagesForm;
+import com.peopleinmotion.horizonreinicioremoto.domains.TokenReader;
 import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
@@ -72,7 +73,7 @@ public class BajarPlantillaController implements Serializable, Page {
     private Boolean haveAccionReciente = Boolean.TRUE;
     private String selectOneMenuCuandoValue = "ahora";
     private Date fechahoraBaja;
-    private String tokenIngresado = "****";
+    private TokenReader tokenReader = new TokenReader();
     private Boolean tokenEnviado = Boolean.FALSE;
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="@Inject ">
@@ -239,7 +240,14 @@ public class BajarPlantillaController implements Serializable, Page {
     // <editor-fold defaultstate="collapsed" desc="String sendToken()">
     public String sendToken() {
         try {
-            
+            //Limpio el TokenReader
+            TokenReader tokenReader = TokenReader.builder()
+                    .number1("")
+                    .number2("")
+                    .number3("")
+                    .number4("")
+                    .build();
+                            
             tokenEnviado = Boolean.FALSE;
             if (selectOneMenuAccionValue == null) {
                 JsfUtil.warningMessage("Seleccione la acción a ejecutar..");
@@ -403,6 +411,7 @@ public class BajarPlantillaController implements Serializable, Page {
     // <editor-fold defaultstate="collapsed" desc="Boolean validateToken() ">    
     public Boolean validateToken() {
         try {
+          String  tokenIngresado=tokenReader.getNumber1().trim()+tokenReader.getNumber2().trim()+tokenReader.getNumber3().trim()+tokenReader.getNumber4().trim();
             return tokenServices.validateToken(user, tokenIngresado);
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod()+  "  " + e.getLocalizedMessage());
@@ -427,7 +436,8 @@ public class BajarPlantillaController implements Serializable, Page {
     public String marcarNumero(String numero) {
 
         try {
-            tokenIngresado = tokenServices.marcarToken(numero, tokenIngresado);
+
+            tokenReader = tokenServices.marcarToken(numero, tokenReader);
 
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());

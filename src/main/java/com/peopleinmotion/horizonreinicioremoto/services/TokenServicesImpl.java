@@ -5,6 +5,7 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.services;
 
+import com.peopleinmotion.horizonreinicioremoto.domains.TokenReader;
 import com.peopleinmotion.horizonreinicioremoto.entity.Token;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.repository.TokenRepository;
@@ -26,6 +27,62 @@ public class TokenServicesImpl implements TokenServices {
     TokenRepository tokenRepository;
 // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="String marcarToken(String numero, String tokenIngresado) ">
+    /**
+     * Se usa para controlar los botones del dialogo de confirmación del token
+     * @param numero
+     * @param tokenIngresado
+     * @return 
+     */
+    @Override
+    public TokenReader marcarToken(String numero, TokenReader tokenReader) {
+        try {
+           
+            if (numero.toLowerCase().equals("b")) {
+                /**
+                 * Borrar
+                 */
+                if (!tokenReader.getNumber4().equals("")) {
+                  tokenReader.setNumber4("");
+                } else {
+                    if (!tokenReader.getNumber3().equals("")) {
+                      tokenReader.setNumber3("");
+                    } else {
+                        if (!tokenReader.getNumber2().equals("") ){
+                           tokenReader.setNumber2("");
+                        } else {
+                            if (!tokenReader.getNumber1().equals("")) {
+                             tokenReader.setNumber1("");
+                            }
+                        }
+                    }
+                }
+            } else {
+                if (tokenReader.getNumber1().equals("")) {
+                   tokenReader.setNumber1(numero);
+                } else {
+                    if (tokenReader.getNumber2().equals("")) {
+                     tokenReader.setNumber2(numero);
+                    } else {
+                        if (tokenReader.getNumber3().equals("")) {
+                            tokenReader.setNumber3(numero);
+                        } else {
+                            if (tokenReader.getNumber4().equals("")) {
+                                tokenReader.setNumber4(numero);
+                            }
+                        }
+                    }
+                }
+            }
+         
+
+        } catch (Exception e) {
+             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return tokenReader;
+    }
+
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="String marcarToken(String numero, String tokenIngresado) ">
     /**
      * Se usa para controlar los botones del dialogo de confirmación del token

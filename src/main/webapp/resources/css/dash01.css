@@ -275,6 +275,31 @@ a.bot-regresar01:hover{
 	scroll-behavior: none;
 	resize: none;
 }
+.boardPrimefaces {
+    border: 0px solid #F5B041;
+    background-color: #02a1de;
+	
+	background-image: url("../images/bg-token01.png");
+	background-attachment: scroll;
+	background-position: left center;
+	background-repeat: no-repeat;
+	
+    color: #ffffff;
+    padding-top: 12px;
+	padding-bottom: 12px;
+	padding-left:15px;
+	padding-right:0px;
+	margin-right:0px;
+    font-size: 45pt;
+    width: 278px;
+    height: 64px;
+    margin-bottom: 0px;
+	letter-spacing: 41px;
+	overflow-y: hidden;
+	overflow-x:hidden;
+	scroll-behavior: none;
+	resize: none;
+}
 	
 #virtual-keyboard {
     border: 0px #212F3D double;

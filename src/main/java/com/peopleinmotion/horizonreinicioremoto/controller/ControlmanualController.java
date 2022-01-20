@@ -7,6 +7,7 @@ package com.peopleinmotion.horizonreinicioremoto.controller;
 
 
 import com.peopleinmotion.horizonreinicioremoto.domains.MessagesForm;
+import com.peopleinmotion.horizonreinicioremoto.domains.TokenReader;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
@@ -63,7 +64,7 @@ public class ControlmanualController implements Serializable, Page {
 
     private Boolean showCommandButtonFinalizar = Boolean.FALSE;
     private Boolean showCommandButtonProcesando = Boolean.FALSE;
-    private String tokenIngresado = "****";
+    private TokenReader tokenReader = new TokenReader();
     private Boolean tokenEnviado = Boolean.FALSE;
     private Boolean updateByOtherUser = Boolean.FALSE;
 // </editor-fold>
@@ -550,6 +551,7 @@ public class ControlmanualController implements Serializable, Page {
 
     public Boolean validateToken() {
         try {
+           String  tokenIngresado=tokenReader.getNumber1().trim()+tokenReader.getNumber2().trim()+tokenReader.getNumber3().trim()+tokenReader.getNumber4().trim();
             return tokenServices.validateToken(user, tokenIngresado);
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
@@ -574,7 +576,8 @@ public class ControlmanualController implements Serializable, Page {
     public String marcarNumero(String numero) {
 
         try {
-            tokenIngresado = tokenServices.marcarToken(numero, tokenIngresado);
+
+                 tokenReader = tokenServices.marcarToken(numero, tokenReader);
 
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " "+ e.getLocalizedMessage());

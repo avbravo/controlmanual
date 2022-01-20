@@ -5,6 +5,7 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.services;
 
+import com.peopleinmotion.horizonreinicioremoto.domains.TokenReader;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 
 /**
@@ -13,5 +14,6 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
  */
 public interface TokenServices {
     public String marcarToken(String numero, String tokenIngresado);
+    public TokenReader marcarToken(String numero, TokenReader tokenReader);
       public Boolean validateToken(Usuario usuario, String tokenIngresado) ;
 }
