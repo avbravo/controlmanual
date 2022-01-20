@@ -191,7 +191,7 @@
                                                                              action="#{bajarPlantillaController.onCommandButtonSendToken()}"
 
                                                                              update=":form:growl, :form:commandButtonFinalizar"
-                                                                             oncomplete="PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
+                                                                             oncomplete="if(#{bajarPlantillaController.tokenEnviado}) PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
                                                                              styleClass="rounded-button ui-button-danger" style="margin-right: .5rem">
 
                                                             </p:commandButton>

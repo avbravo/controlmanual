@@ -230,8 +230,25 @@ public class BajarPlantillaController implements Serializable, Page {
 
     // <editor-fold defaultstate="collapsed" desc="onCommandButtonSendToken() ">
     public String onCommandButtonSendToken() {
-
-        sendToken();
+        try {
+            /**
+             * Valida que no se hay un agendamiento en la misma hora
+             */
+               Integer count = agendaRepository.countAgendamiento(cajero.getBANCOID().getBANCOID(), cajero.getCAJEROID(), accion.getACCIONID() , estado.getESTADOID(),  fechahoraBaja, "SI") ;
+                if(count > 0){
+                    ConsoleUtil.info("Existe un registro agendado de ese cajero en esa fecha");
+                     JsfUtil.warningMessage("Existe un registro agendado de ese cajero en esa fecha");
+                              tokenEnviado = Boolean.FALSE;
+                     return "";
+                }else{
+                    ConsoleUtil.info("Esta todo ok.....................................");
+                    System.out.println("Esta todo ok.....................................");
+                }
+                        sendToken();
+        } catch (Exception e) {
+              JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+    
 
         return "";
     }
@@ -247,8 +264,8 @@ public class BajarPlantillaController implements Serializable, Page {
                     .number3("")
                     .number4("")
                     .build();
-                            
-            tokenEnviado = Boolean.FALSE;
+                    tokenEnviado = Boolean.FALSE;                 
+   
             if (selectOneMenuAccionValue == null) {
                 JsfUtil.warningMessage("Seleccione la acción a ejecutar..");
                 return "";
@@ -354,15 +371,7 @@ public class BajarPlantillaController implements Serializable, Page {
 
                  
                    
-                Integer count = agendaRepository.countAgendamiento(cajero.getBANCOID().getBANCOID(), cajero.getCAJEROID(), accion.getACCIONID() , estado.getESTADOID(),  fechahoraBaja, "SI") ;
-                if(count > 0){
-                    ConsoleUtil.info("Existe un registro agendado de ese cajero en esa fecha");
-                     JsfUtil.warningMessage("Existe un registro agendado de ese cajero en esa fecha");
-                }else{
-                    ConsoleUtil.info("Esta todo ok.....................................");
-                    System.out.println("Esta todo ok.....................................");
-                }
-                   
+             
 
                 
                 
