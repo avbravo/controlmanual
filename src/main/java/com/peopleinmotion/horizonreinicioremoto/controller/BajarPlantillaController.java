@@ -346,15 +346,15 @@ public class BajarPlantillaController implements Serializable, Page {
 
                  
                    
-//                Integer count = agendaRepository.countAgendamiento(cajero.getBANCOID().getBANCOID(), cajero.getCAJEROID(), accion.getACCIONID() , estado.getESTADOID(),  fechahoraBaja, "SI") ;
-//                if(count > 0){
-//                    ConsoleUtil.info("Existe un registro agendado de ese cajero en esa fecha");
-//                     JsfUtil.warningMessage("Existe un registro agendado de ese cajero en esa fecha");
-//                }else{
-//                    ConsoleUtil.info("Esta todo ok.....................................");
-//                    System.out.println("Esta todo ok.....................................");
-//                }
-//                   
+                Integer count = agendaRepository.countAgendamiento(cajero.getBANCOID().getBANCOID(), cajero.getCAJEROID(), accion.getACCIONID() , estado.getESTADOID(),  fechahoraBaja, "SI") ;
+                if(count > 0){
+                    ConsoleUtil.info("Existe un registro agendado de ese cajero en esa fecha");
+                     JsfUtil.warningMessage("Existe un registro agendado de ese cajero en esa fecha");
+                }else{
+                    ConsoleUtil.info("Esta todo ok.....................................");
+                    System.out.println("Esta todo ok.....................................");
+                }
+                   
 
                 
                 

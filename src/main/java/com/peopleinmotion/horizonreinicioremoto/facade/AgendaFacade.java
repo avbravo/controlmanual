@@ -120,16 +120,17 @@ public class AgendaFacade extends AbstractFacade<Agenda> {
  */
        public int countAgendamiento(BigInteger BANCOID,BigInteger CAJEROID,BigInteger ACCIONID, BigInteger ESTADOID,Date FECHAAGENDADA , String ACTIVO) {
            try {
-                Query query = em.createQuery("SELECT COUNT(a) FROM Agenda a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID AND a.ACCIONID = :ACCIONID AND a.FECHAAGENDADA = :FECHAAGENDADA  AND a.ESTADOID = :ESTADOID AND a.ACTIVO = :ACTIVO ");
+//                Query query = em.createQuery("SELECT COUNT(a) FROM Agenda a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID AND a.ACCIONID = :ACCIONID AND a.FECHAAGENDADA = :FECHAAGENDADA  AND a.ESTADOID = :ESTADOID AND a.ACTIVO = :ACTIVO ");
+                Query query = em.createQuery("SELECT COUNT(a) FROM Agenda a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID AND a.ACCIONID = :ACCIONID AND a.ESTADOID = :ESTADOID AND a.ACTIVO = :ACTIVO AND a.FECHAAGENDADA = :FECHAAGENDADA" );
 
         
     
            query.setParameter("BANCOID", BANCOID);
-           query.setParameter("CAJEROID",CAJEROID);
+          query.setParameter("CAJEROID",CAJEROID);
            query.setParameter("ACCIONID",ACCIONID);
            query.setParameter("ESTADOID",ESTADOID);
-           query.setParameter("ACTIVO", ACTIVO);
-            query.setParameter("FECHAAGENDADA", FECHAAGENDADA, TemporalType.TIMESTAMP);
+          query.setParameter("ACTIVO", ACTIVO);
+          query.setParameter("FECHAAGENDADA", FECHAAGENDADA, TemporalType.TIMESTAMP);
        
                 return ((Long) query.getSingleResult()).intValue();
            } catch (Exception e) {
