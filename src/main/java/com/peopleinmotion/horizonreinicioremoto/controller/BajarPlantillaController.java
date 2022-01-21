@@ -341,7 +341,12 @@ public class BajarPlantillaController implements Serializable, Page {
                 return "";
             }
 
-            
+             if(selectOneMenuAccionValue == null || selectOneMenuAccionValue.getACCIONID() == null){
+                         JsfUtil.warningMessage("No selecciono la acción a ejecutar");
+                         return "";
+                }
+  
+                JsfUtil.copyBeans(accion, selectOneMenuAccionValue);
             /**
              * Valida que no se hay un agendamiento en la misma hora
              */
@@ -351,16 +356,9 @@ public class BajarPlantillaController implements Serializable, Page {
                      JsfUtil.warningMessage("Existe un registro agendado de ese cajero en esa fecha");
                    
                      return "";
-                }else{
-                    ConsoleUtil.info("Esta todo ok.....................................");
-                    System.out.println("Esta todo ok.....................................");
                 }
                 
-                if(selectOneMenuAccionValue == null || selectOneMenuAccionValue.getACCIONID() == null){
-                         JsfUtil.warningMessage("No selecciono la acción a ejecutar");
-                         return "";
-                }
-                accion=selectOneMenuAccionValue;
+               
                 
             if (accionList == null || accionList.isEmpty()) {
                 JsfUtil.warningMessage("No acciones para el grupo seleccionado");
