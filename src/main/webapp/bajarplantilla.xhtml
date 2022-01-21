@@ -69,7 +69,7 @@
 
                                         </div>
 
-                                        <!--<button type="button" class="btn btn-danger btn-rounded btn-fw text-nowrap" data-toggle="modal" data-target="#exampleModalScrollable"><i class="ti-search"></i>&nbsp;BUSCA CAJERO</button>-->
+                                     
 
 
 
@@ -191,7 +191,7 @@
                                                                              action="#{bajarPlantillaController.onCommandButtonSendToken()}"
 
                                                                              update=":form:growl, :form:commandButtonFinalizar"
-                                                                             oncomplete="if(#{bajarPlantillaController.tokenEnviado}) PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
+                                                                             oncomplete="PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
                                                                              styleClass="rounded-button ui-button-danger" style="margin-right: .5rem">
 
                                                             </p:commandButton>

@@ -234,17 +234,8 @@ public class BajarPlantillaController implements Serializable, Page {
             /**
              * Valida que no se hay un agendamiento en la misma hora
              */
-               Integer count = agendaRepository.countAgendamiento(cajero.getBANCOID().getBANCOID(), cajero.getCAJEROID(), accion.getACCIONID() , estado.getESTADOID(),  fechahoraBaja, "SI") ;
-                if(count > 0){
-                    ConsoleUtil.info("Existe un registro agendado de ese cajero en esa fecha");
-                     JsfUtil.warningMessage("Existe un registro agendado de ese cajero en esa fecha");
-                              tokenEnviado = Boolean.FALSE;
-                     return "";
-                }else{
-                    ConsoleUtil.info("Esta todo ok.....................................");
-                    System.out.println("Esta todo ok.....................................");
-                }
-                        sendToken();
+              
+                      sendToken();
         } catch (Exception e) {
               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
