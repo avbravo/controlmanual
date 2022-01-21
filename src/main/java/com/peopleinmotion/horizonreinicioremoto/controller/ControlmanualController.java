@@ -93,7 +93,7 @@ public class ControlmanualController implements Serializable, Page {
     TokenServices tokenServices;
 
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="set/get() ">
+    // <editor-fold defaultstate="collapsed" desc="Boolean getShowCommandButtonProcesando() ">
     public Boolean getShowCommandButtonProcesando() {
 
         try {
@@ -110,6 +110,10 @@ public class ControlmanualController implements Serializable, Page {
         return showCommandButtonProcesando;
     }
 
+   // </editor-fold> 
+    
+        
+        // <editor-fold defaultstate="collapsed" desc="Boolean getShowCommandButtonFinalizar() ">
     public Boolean getShowCommandButtonFinalizar() {
         try {
             if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoProcesandoId"))) {

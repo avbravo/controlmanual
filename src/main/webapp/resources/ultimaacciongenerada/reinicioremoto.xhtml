@@ -21,14 +21,12 @@
                     </c:if>
                     <c:if test="${reinicioRemotoController.haveAccionReciente}">
                         
-                        <dd class="atm-title-mar01"><p:outputLabel value="Transacción No:"/><strong><p:outputLabel value="#{reinicioRemotoController.accionReciente.ACCIONRECIENTEID}"/></strong></dd>
-                        <dd class="atm-title-mar01"><strong>#{reinicioRemotoController.accionReciente.TITULO}</strong></dd>
-                        <dd class="atm-title-mar01">#{reinicioRemotoController.accionReciente.MENSAJE}</dd>
+                         <dd class="atm-title-mar01"><strong>#{reinicioRemotoController.accionReciente.TITULO}</strong>(<p:outputLabel value="#{reinicioRemotoController.accionReciente.MENSAJE}"/>)</dd>                        
                         <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{reinicioRemotoController.showDate(reinicioRemotoController.accionReciente.FECHAAGENDADA)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{reinicioRemotoController.showHour(reinicioRemotoController.accionReciente.FECHAAGENDADA)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{!reinicioRemotoController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{reinicioRemotoController.showDate(reinicioRemotoController.accionReciente.FECHAEJECUCION)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{!reinicioRemotoController.renderedByEstadoSolicitado()}" value="Hora Ejecución: #{reinicioRemotoController.showHour(reinicioRemotoController.accionReciente.FECHAEJECUCION)}"/></dd>
-                        <dd class="atm-title-mar01"><p:outputLabel value="Estado:#{reinicioRemotoController.accionReciente.ESTADO}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel value="Estado:"/> <strong><p:outputLabel value="#{reinicioRemotoController.accionReciente.ESTADO}"/></strong><p:spacer width="5"/><p:outputLabel value="| Transacción No:"/><strong><p:outputLabel value="#{reinicioRemotoController.accionReciente.ACCIONRECIENTEID}"/></strong></dd>
                     </c:if>
                 </div>
 

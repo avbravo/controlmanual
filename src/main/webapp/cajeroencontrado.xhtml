@@ -7,12 +7,12 @@
       xmlns:ultimaacciongenerada="http://xmlns.jcp.org/jsf/composite/ultimaacciongenerada"
       xmlns:grupoaccion="http://xmlns.jcp.org/jsf/composite/grupoaccion"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-            
+
 
     <h:head>
         <link rel="stylesheet" href="./resources/vendors/ti-icons/css/themify-icons.css"/>
         <link rel="stylesheet" href="./resources/vendors/base/vendor.bundle.base.css"/>
-       <!--  <link href="./resources/vendors/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/> -->
+        <!--  <link href="./resources/vendors/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/> -->
         <link rel="stylesheet" href="./resources/css/style.css"/>
         <link rel="stylesheet" href="./resources/css/dash01.css"/>
         <link rel="stylesheet" href="./resources/css/mantenimiento.css"/>
@@ -21,16 +21,16 @@
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
         <title>Control Manual</title>     
-   <f:metadata>
-             <f:viewAction    action="#{cajeroEncontradoController.browserEventFromPage('login.xhtml')}"/>
+        <f:metadata>
+            <f:viewAction    action="#{cajeroEncontradoController.browserEventFromPage('login.xhtml')}"/>
         </f:metadata>
     </h:head>
     <h:body >
         <h:form id="form" prependId="false" rendered="#{accessController.loged}">
-            
-      
-                
-              <p:ajaxStatus onsuccess="limpiartiempo()" />
+
+
+
+            <p:ajaxStatus onsuccess="limpiartiempo()" />
             <p:remoteCommand name="ejecutarbean" action="#{accessController.inicializa()}" oncomplete="redireccionar()" />
             <script type="text/javascript">
                 function setDataTableWithPageStart() {
@@ -64,16 +64,10 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h4 class="text-secondary">CAJERO ENCONTRADO</h4>
-                                            <p:commandLink value="REGRESAR" class="bot-regresar01" 
-                                                             action="#{navigatorController.go('buscarcajero.xhtml')}"
-                                                      />
+                                         
 
                                         </div>
-                                        <!--                                        <div>
-                                                                                    <button type="button" class="btn btn-danger btn-rounded btn-fw text-nowrap" data-toggle="modal" data-target="#exampleModalScrollable"><i class="ti-search"></i>&nbsp;BUSCA CAJERO</button>
-                                        
-                                        
-                                                                                </div>-->
+
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +100,7 @@
                                                         </div>
                                                         <div class="col-2 col-lg-auto atm-card-marbody01" >
                                                             <p:chip label="#{cajeroEncontradoController.cajero.CAJERO}" styleClass="p-mr-2"/>
-                                                            
+
                                                         </div>
                                                         <div class="col-8 col-lg-9 atm-card-marbody01 atm-mar02" >
                                                             <dl>
@@ -128,51 +122,44 @@
 
 
 
+                                    <p:panelGrid columns="3"  styleClass="ui-panelgrid-blank ui-fluid"
+                                                 style="border:0px none; background-color:transparent;">
+
+                                        <p:commandButton value="Bajar Plantilla"
+                                                         icon="pi pi-chevron-down" 
+                                                         process="@this" 
+                                                         action="#{cajeroEncontradoController.onCommandButtonGrupoAccionBajarPlantilla()}"
+                                                         update=":form:growl"
+                                                         styleClass="rounded-button ui-button-danger" 
+                                                         style="margin-right: .5rem">
+
+                                        </p:commandButton>
+
+                                        <p:commandButton value="IR A CONTROL MANUAL" 
+                                                         rendered="#{cajeroEncontradoController.haveAccionReciente}"
+                                                         styleClass="rounded-button ui-button-success" 
+                                                         style="margin-right: .5rem"
+                                                         update=":form:growl"
+                                                         icon="pi pi-caret-right"
+                                                         action="#{cajeroEncontradoController.onCommandButtonIrControlManual()}">
+
+                                        </p:commandButton>
+                                        
+                                        <p:commandButton value="REGRESAR" styleClass="rounded-button ui-button-help" 
+                                                              icon ="pi pi-arrow-left" 
+                                                         action="#{navigatorController.go('buscarcajero.xhtml')}"
+                                                           />
+
+                                    </p:panelGrid>
 
 
 
-                                    <div class="card-body ">
-                                        <div class="row justify-content-center">
-                                            <div class="col-11 col-lg-11">
-
-                                                <div class="row justify-content-start">
-                                                   
-
-                                                    <div class="col-6 col-lg-auto">
-                                                        <p:commandButton value="Bajar Plantilla"
-                                                                         icon="pi pi-chevron-down" 
-                                                                         process="@this" 
-                                                                         action="#{cajeroEncontradoController.onCommandButtonGrupoAccionBajarPlantilla()}"
-                                                                         update=":form:growl"
-                                                                         styleClass="rounded-button ui-button-danger" 
-                                                                         style="margin-right: .5rem">
-
-                                                        </p:commandButton>
-                                                    </div>
-                                                    
-                                                    <div class="col-6 col-lg-auto">
-                                                        <p:commandButton value="IR A CONTROL MANUAL" 
-                                                                         rendered="#{cajeroEncontradoController.haveAccionReciente}"
-                                                                         styleClass="rounded-button ui-button-success" 
-                                                                         style="margin-right: .5rem"
-                                                                          update=":form:growl"
-                                                                         icon="pi pi-caret-right"
-                                                                         action="#{cajeroEncontradoController.onCommandButtonIrControlManual()}">
-
-                                                        </p:commandButton>
-                                                    </div>
-
-                                                </div>	
-
-                                            </div>
-                                        </div>
-                                    </div>
 
 
                                 </div>
                             </div>
 
-                            <grupoaccion:grupoaccionmenumodal id="cajeroaccionesmodel"/>
+       
 
                         </div>
                         <!-- content-wrapper ends -->
@@ -205,7 +192,7 @@
         <!-- container-scroller -->
 
         <!-- container-scroller -->
-         <template:script/> 
+        <template:script/> 
     </h:body>
 
 </html>

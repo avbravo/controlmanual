@@ -62,14 +62,12 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h4 class="text-secondary"><p:outputLabel value="#{bajarPlantillaController.grupoAccion.GRUPOACCION.toUpperCase()}"/></h4>
-                                            <p:commandLink value="REGRESAR" class="bot-regresar01" 
-                                                           action="#{navigatorController.go('cajeroencontrado.xhtml')}"
-                                                           />
+
                                             <p:messages id="message" showSummary="true" />
 
                                         </div>
 
-                                     
+
 
 
 
@@ -119,107 +117,79 @@
 
                                                 <ultimaacciongenerada:bajarplantilla id="ultimaacciongeneradabajarplantilla"  />
 
-              
+
 
                                             </div>
 
                                         </div>
                                     </div>
 
-                                    <div class="row justify-content-center pt-4 pb-0">
-                                        <div class="col-1 col-lg-1 form-group pt-0 pb-0">
-                                            <p:outputLabel value="Acción"/>
-                                        </div>
-                                        <div class="col-11 col-lg-4 form-group pt-0 pb-0">
+                                    <p:panelGrid columns="2"  styleClass="ui-panelgrid-blank ui-fluid"
+                                                 style="border:0px none; background-color:transparent;">
+                                        <p:outputLabel value="Acción"/>
 
-
-                                            <p:selectOneMenu id="selectOneMenuAccion" 
-                                                             class="form-control rounded-pill solosel01"
-                                                             value="#{bajarPlantillaController.selectOneMenuAccionValue}" 
-                                                             converter="#{accionConverter}"
-                                                             >
-                                                <!--<f:selectItem itemLabel="Seleccione una Accion" itemValue="#{null}"  noSelectionOption="true"/>-->
-                                                <f:selectItems value="#{bajarPlantillaController.accionList}" 
-                                                               var="var" 
-                                                               itemValue="#{var}" itemLabel="#{var.ACCION} " />
+                                        <p:selectOneMenu id="selectOneMenuAccion" 
+                                                         class="form-control rounded-pill solosel01"
+                                                         value="#{bajarPlantillaController.selectOneMenuAccionValue}" 
+                                                         converter="#{accionConverter}"
+                                                         >
+                                            <!--<f:selectItem itemLabel="Seleccione una Accion" itemValue="#{null}"  noSelectionOption="true"/>-->
+                                            <f:selectItems value="#{bajarPlantillaController.accionList}" 
+                                                           var="var" 
+                                                           itemValue="#{var}" itemLabel="#{var.ACCION} " />
 
 
 
 
-                                            </p:selectOneMenu>
+                                        </p:selectOneMenu>
+
+
+                                        <p:outputLabel value="Fecha"/>
+
+                                        <p:datePicker id="time1" 
+                                                      pattern="dd/MM/yyyy hh:mm a"
+                                                      value="#{bajarPlantillaController.fechahoraBaja}" showTime="true">
+
+                                        </p:datePicker>
+                                        <f:facet name="footer">
+
+                                            <p:panelGrid columns="2"  styleClass="ui-panelgrid-blank ui-fluid"
+                                                         style="border:0px none; background-color:transparent;">
+                                                <c:if test="${bajarPlantillaController.showButton}">
+                                                    <p:commandButton value="Solicitar Token" icon="pi pi-inbox" 
+                                                                     title="Envia el token al correo"
+                                                                     id="commandButtonSendToken"
+                                                                     action="#{bajarPlantillaController.onCommandButtonSendToken()}"
+
+                                                                     update=":form:growl"
+                                                                     oncomplete="PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
+                                                                     styleClass="rounded-button ui-button-success" style="margin-right: .5rem">
+
+                                                    </p:commandButton>
+
+                                                </c:if>
 
 
 
-                                        </div>
+                                                <p:commandButton value="REGRESAR"
+                                                                 styleClass="rounded-button ui-button-help"
+                                                                 icon ="pi pi-arrow-left"
+                                                                 action="#{navigatorController.go('cajeroencontrado.xhtml')}"
+                                                                 />
 
-                                    </div>
+                                            </p:panelGrid>
 
-                                    <div class="row justify-content-center pt-4 pb-0">
-                                        <div class="col-1 col-lg-1 form-group pt-0 pb-0">
-                                            <p:outputLabel value="Fecha"/>
-                                        </div>
-                                        <div class="col-10 col-lg-4 form-group pt-0 pb-0">
+                                        </f:facet>
 
-                                            <p:datePicker id="time1" 
-                                                          pattern="dd/MM/yyyy hh:mm a"
-                                                          value="#{bajarPlantillaController.fechahoraBaja}" showTime="true">
-
-                                            </p:datePicker>
-
-
-                                        </div>
-
-                                    </div>
+                                    </p:panelGrid>
 
 
 
 
 
 
-                                    <div class="card-body ">
-                                        <div class="row justify-content-center">
-                                            <div class="col-11 col-lg-11">
-
-                                                <div class="row justify-content-start">
 
 
-                                                    <div class="col-6 col-lg-auto">
-                                                        <c:if test="${bajarPlantillaController.showButton}">
-                                                            <p:commandButton value="Solicitar Token" icon="pi pi-inbox" 
-                                                                             title="Envia el token al correo"
-                                                                             id="commandButtonSendToken"
-                                                                             action="#{bajarPlantillaController.onCommandButtonSendToken()}"
-
-                                                                             update=":form:growl, :form:commandButtonFinalizar"
-                                                                             oncomplete="PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
-                                                                             styleClass="rounded-button ui-button-danger" style="margin-right: .5rem">
-
-                                                            </p:commandButton>
-
-                                                        </c:if>
-
-                                                    </div>
-
-                                                    <div class="col-6 col-lg-auto">
-                                                        <p:commandButton value="Finalizar" 
-                                                                         id="commandButtonFinalizar"
-                                                                         rendered="#{bajarPlantillaController.tokenEnviado}"
-                                                                         icon="pi pi-unlock" 
-
-                                                                         oncomplete="PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
-                                                                         styleClass="rounded-button ui-button-success" style="margin-right: .5rem"
-                                                                         >
-                                                            <p:autoUpdate/>
-                                                        </p:commandButton>
-
-
-                                                    </div>
-
-                                                </div>	
-
-                                            </div>
-                                        </div>
-                                    </div>
 
                                 </div>
                             </div>
@@ -262,11 +232,11 @@
                           >
 
                     <f:facet name="header">
-                      <p:outputLabel value="Recibirás un Email con tu token"/>
+                        <p:outputLabel value="Recibirás un Email con tu token"/>
                     </f:facet>
 
                     <p:panelGrid columns="4"  styleClass="ui-panelgrid-blank ui-fluid"
-                                   id="tokenDialogDetails"
+                                 id="tokenDialogDetails"
                                  style="border:0px none; background-color:transparent;">
                         <p:inputTextarea  cols="1" id="mytokeen1" maxlength="1" 
                                           class="boardPrimefaces"
@@ -297,7 +267,7 @@
                             <p:autoUpdate />
                         </p:inputTextarea>    
                         <f:facet name="footer">
-                             <p:outputLabel  value="Digita el token que recibiste" styleClass="p-text-bold"/>
+                            <p:outputLabel  value="Digita el token que recibiste" styleClass="p-text-bold"/>
                         </f:facet>
                     </p:panelGrid>
 
@@ -370,15 +340,16 @@
                                           icon="pi pi-times" styleClass="rounded-button ui-button-danger"
                                           />
                         <p:commandButton styleClass="rounded-button ui-button-success" 
-                                         
-                                              update="tokenDialogDetails, tokenmessage"
+
+                                         update="tokenDialogDetails, tokenmessage"
                                          icon="pi pi-unlock"
                                          value="Aceptar"
                                          action="#{bajarPlantillaController.onCommandButtonBajarPlantillaProgramarEvento()}">
 
                         </p:commandButton>
 
-                 </f:facet>
+
+                    </f:facet>
                     <p:messages id="tokenmessage" />
                 </p:dialog>
             </h:panelGroup>
