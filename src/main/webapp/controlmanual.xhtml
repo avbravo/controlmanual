@@ -209,7 +209,7 @@
                                                                   >-->
 
                     <f:facet name="header">
-                        <h4><p:outputLabel value="Recibirás un Email con tu token"/></h4>
+                     <p:outputLabel value="Recibirás un Email con tu token"/>
                     </f:facet>
 
 
@@ -244,14 +244,12 @@
                                           >
                             <p:autoUpdate />
                         </p:inputTextarea>     
+                         <f:facet name="footer">
+                             <p:outputLabel  value="Digita el token que recibiste" styleClass="p-text-bold"/>
+                        </f:facet>
                     </p:panelGrid>
 
-                    <p:panelGrid columns="1"  styleClass="ui-panelgrid-blank ui-fluid"
-                                 style="border:0px none; background-color:transparent;">
-
-                        <p:outputLabel  value="Digita el token que recibiste" styleClass="p-text-bold"/>
-                    </p:panelGrid>
-
+                 
 
                     <p:panelGrid columns="3"  styleClass="ui-panelgrid-blank ui-fluid"
                                  style="border:0px none; background-color:transparent;">
@@ -313,8 +311,7 @@
 
 
 
-                 <p:panelGrid columns="3"  styleClass="ui-panelgrid-blank ui-fluid"
-                                 style="border:0px none; background-color:transparent;">
+                  <f:facet name="footer">
                         <p:commandButton  oncomplete="PF('widgetVarTokenDialog').hide();" 
                                           action="#{controlmanualController.remoteCommand()}"
                                           value="Cerrar"
@@ -338,7 +335,7 @@
                                          >
                         </p:commandButton>
 
-                  </p:panelGrid>
+                </f:facet>
                     <p:messages id="tokenmessage" />
                 </p:dialog>
             </h:panelGroup>     

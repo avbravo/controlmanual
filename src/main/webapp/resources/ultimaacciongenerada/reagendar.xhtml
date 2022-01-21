@@ -20,8 +20,10 @@
                         <p class="atm-title-mar01"><strong>No hay acciones agendadas</strong></p>
                     </c:if>
                     <c:if test="${reagendarController.haveAccionReciente}">
+                        
+                        <dd class="atm-title-mar01"><p:outputLabel value="Transacción No:"/><strong><p:outputLabel value="#{reagendarController.accionReciente.ACCIONRECIENTEID}"/></strong></dd>
                         <dd class="atm-title-mar01"><strong>#{reagendarController.accionReciente.TITULO}</strong></dd>
-                        <!--<dd class="atm-title-mar01"><p:outputLabel value="Evento Agendado:#{reagendarController.accionReciente.MENSAJE}"/></dd>-->
+                        <dd class="atm-title-mar01">#{reagendarController.accionReciente.MENSAJE}</dd>
                         <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{reagendarController.showDate(reagendarController.accionReciente.FECHAAGENDADA)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{reagendarController.showHour(reagendarController.accionReciente.FECHAAGENDADA)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{!reagendarController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{reagendarController.showDate(reagendarController.accionReciente.FECHAEJECUCION)}"/></dd>

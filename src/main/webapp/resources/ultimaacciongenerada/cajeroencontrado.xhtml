@@ -20,8 +20,12 @@
                         <p class="atm-title-mar01"><strong>No hay acciones agendadas</strong></p>
                     </c:if>
                     <c:if test="${cajeroEncontradoController.haveAccionReciente}">
+                        
+                        
+                        <dd class="atm-title-mar01"><p:outputLabel value="Transacción No:"/> <strong> <p:outputLabel value="#{cajeroEncontradoController.accionReciente.ACCIONRECIENTEID}"/></strong></dd>
                         <dd class="atm-title-mar01"><strong>#{cajeroEncontradoController.accionReciente.TITULO}</strong></dd>
-                        <!--<dd class="atm-title-mar01"><p:outputLabel value="Evento Agendado:#{cajeroEncontradoController.accionReciente.MENSAJE}"/></dd>-->
+                        <dd class="atm-title-mar01">#{cajeroEncontradoController.accionReciente.MENSAJE}</dd>
+                        
                         <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{cajeroEncontradoController.showDate(cajeroEncontradoController.accionReciente.FECHAAGENDADA)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{cajeroEncontradoController.showHour(cajeroEncontradoController.accionReciente.FECHAAGENDADA)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{!cajeroEncontradoController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{cajeroEncontradoController.showDate(cajeroEncontradoController.accionReciente.FECHAEJECUCION)}"/></dd>

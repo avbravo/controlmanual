@@ -217,7 +217,7 @@ public class CajeroEncontradoController implements Serializable , Page{
      */
     private String findAccionDisponible(){
         try {
-          
+            haveAccionReciente = Boolean.FALSE;
             Optional<AccionReciente> accionRecienteOptional = accionRecienteRepository.findByBancoIdAndCajeroIdUltimaAccionDisponible(bank.getBANCOID(), cajero.getCAJEROID());
             if(accionRecienteOptional.isPresent()){
                 accionReciente = accionRecienteOptional.get();
@@ -225,9 +225,6 @@ public class CajeroEncontradoController implements Serializable , Page{
          
               
    
-            }else{
-                
-              
             }
         } catch (Exception e) {
             System.out.println("Error() "+ JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());

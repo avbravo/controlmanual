@@ -194,6 +194,7 @@ public class BajarPlantillaController implements Serializable, Page {
      */
     private String findAccionReciente() {
         try {
+            haveAccionReciente=Boolean.FALSE;
             Optional<AccionReciente> accionRecienteOptional = accionRecienteRepository.findByBancoIdAndCajeroIdUltimaAccionReciente(bank.getBANCOID(), cajero.getCAJEROID());
             if (accionRecienteOptional.isPresent()) {
                 accionReciente = accionRecienteOptional.get();
@@ -340,6 +341,27 @@ public class BajarPlantillaController implements Serializable, Page {
                 return "";
             }
 
+            
+            /**
+             * Valida que no se hay un agendamiento en la misma hora
+             */
+               Integer count = agendaRepository.countAgendamiento(cajero.getBANCOID().getBANCOID(), cajero.getCAJEROID(), accion.getACCIONID() , estado.getESTADOID(),  fechahoraBaja, "SI") ;
+                if(count > 0){
+                    ConsoleUtil.info("Existe un registro agendado de ese cajero en esa fecha");
+                     JsfUtil.warningMessage("Existe un registro agendado de ese cajero en esa fecha");
+                   
+                     return "";
+                }else{
+                    ConsoleUtil.info("Esta todo ok.....................................");
+                    System.out.println("Esta todo ok.....................................");
+                }
+                
+                if(selectOneMenuAccionValue == null || selectOneMenuAccionValue.getACCIONID() == null){
+                         JsfUtil.warningMessage("No selecciono la acción a ejecutar");
+                         return "";
+                }
+                accion=selectOneMenuAccionValue;
+                
             if (accionList == null || accionList.isEmpty()) {
                 JsfUtil.warningMessage("No acciones para el grupo seleccionado");
             } else {
