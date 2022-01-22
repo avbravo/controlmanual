@@ -297,7 +297,7 @@
                     <p:outputLabel rendered="#{!dashboardController.renderedByEstadoSolicitado()}" value=" #{dashboardController.showHour(dashboardController.accionRecienteSelected.FECHAEJECUCION)}"/>
 
                     <p:outputLabel  value="Fecha" styleClass="p-text-bold"/>
-                    <p:datePicker  value="#{dashboardController.event.startDate}" pattern="dd/MM/yyyy"
+                    <p:datePicker  hourFormat="12"  value="#{dashboardController.event.startDate}" pattern="dd/MM/yyyy"
                                 
                                   showTime="true" appendTo="@(body)"/>
 
