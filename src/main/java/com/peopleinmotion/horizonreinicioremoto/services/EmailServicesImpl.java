@@ -350,11 +350,47 @@ public class EmailServicesImpl implements EmailServices {
 //            }
             return Boolean.TRUE;
         } catch (Exception e) {
-            JsfUtil.warningMessage("sendTokenToEmail() " + e.getLocalizedMessage());
+            JsfUtil.warningMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Boolean sendTokenToEmailSincrono(Token token, Usuario usuario)">
+
+    @Override
+    public Boolean sendTokenToEmailSincrono(Token token, Usuario usuario) {
+        try {
+            //
+            /*
+             Enviar el token al uuario
+             */
+          
+            String message = generateTokenMessages(token, "Generacion Token", usuario);
+
+            //Busco el email
+            Optional<EmailConfiguration> emailConfigurationOptional = emailConfigurationRepository.findByActivo("SI");
+            if (!emailConfigurationOptional.isPresent()) {
+
+                JsfUtil.warningMessage("No hay ninguna configuracion de email establecida.");
+                return Boolean.FALSE;
+            }
+            
+           return     jmoordbEmailSender.sendOutlook(usuario.getEMAIL(), "Token", message, 
+                    emailConfigurationOptional.get().getEMAIL(), 
+                    JsfUtil.desencriptar(emailConfigurationOptional.get().getPASSWORD()),
+                            Boolean.FALSE);
+             
+
+  
+        } catch (Exception e) {
+            JsfUtil.warningMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return Boolean.FALSE;
+    }
+    // </editor-fold>
+    
+    
     
    
 }

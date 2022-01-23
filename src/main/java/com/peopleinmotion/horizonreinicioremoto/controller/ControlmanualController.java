@@ -95,7 +95,7 @@ public class ControlmanualController implements Serializable, Page {
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Boolean getShowCommandButtonProcesando() ">
     public Boolean getShowCommandButtonProcesando() {
-
+ showCommandButtonProcesando = Boolean.FALSE;
         try {
 
             if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId"))) {
@@ -115,6 +115,7 @@ public class ControlmanualController implements Serializable, Page {
         
         // <editor-fold defaultstate="collapsed" desc="Boolean getShowCommandButtonFinalizar() ">
     public Boolean getShowCommandButtonFinalizar() {
+         showCommandButtonFinalizar = Boolean.FALSE;
         try {
             if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoProcesandoId"))) {
                 showCommandButtonFinalizar = Boolean.TRUE;
@@ -407,7 +408,8 @@ public class ControlmanualController implements Serializable, Page {
                         agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIO ESTADO A EJECUTADA", user);
 
                         JmoordbContext.put("accionReciente", accionReciente);
-                        emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIO ESTADO A EJECUTADA", user, cajero, bank);
+                 emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIO ESTADO A EJECUTADA", user, cajero, bank);
+                   
                         /*
                         *Mensajes exitosos
                          */

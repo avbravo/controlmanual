@@ -7,6 +7,8 @@ package com.peopleinmotion.horizonreinicioremoto.emails;
 
 
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbUtil;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
+import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Properties;
@@ -290,7 +292,9 @@ public class JmoordbEmailSender implements Serializable{
             Transport.send(message);
             sending = true;
         } catch (Exception ex) {
-            JmoordbUtil.errorMessage("send() " + ex.getLocalizedMessage());
+//            JmoordbUtil.errorMessage("send() " + ex.getLocalizedMessage());
+            ConsoleUtil.error(JsfUtil.nameOfClass() + "."+JsfUtil.nameOfMethod() + " "+ex.getLocalizedMessage());
+            sending = false;
             // System.out.println("send() " + ex.getLocalizedMessage());
         }
         return sending;
@@ -391,6 +395,9 @@ public class JmoordbEmailSender implements Serializable{
         }
         return sending;
     }// </editor-fold>
+    
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="Boolean send(String emaildestinatario, String titulo, String mensaje,           String emailremitente, String passwordremitente,Properties props) "> 
     /**

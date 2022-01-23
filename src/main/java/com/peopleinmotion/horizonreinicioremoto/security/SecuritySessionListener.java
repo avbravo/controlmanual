@@ -5,6 +5,7 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.security;
 
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import java.io.Serializable;
 import java.util.Date;
 import javax.servlet.http.HttpSession;
@@ -19,16 +20,18 @@ public class SecuritySessionListener implements HttpSessionListener, Serializabl
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        System.out.println("********************************************************************");
-        System.out.println("Session created : " + se.getSession().getId() + " at " + new Date());
-        System.out.println("********************************************************************");
+        
+        
+        ConsoleUtil.normal("********************************************************************");
+        ConsoleUtil.normal("Session created : " + se.getSession().getId() + " at " + new Date());
+        ConsoleUtil.normal("********************************************************************");
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
         HttpSession session = se.getSession();
-        System.out.println("********************************************************************");
-        System.out.println("session destroyed :" + session.getId() + " Logging out user... at  " + new Date());
-        System.out.println("********************************************************************");
+       ConsoleUtil.normal("********************************************************************");
+        ConsoleUtil.normal("session destroyed :" + session.getId() + " Logging out user... at  " + new Date());
+       ConsoleUtil.normal("********************************************************************");
     }
 }

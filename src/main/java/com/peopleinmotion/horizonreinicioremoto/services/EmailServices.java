@@ -29,5 +29,6 @@ public interface EmailServices {
     public Boolean sendEmailToTecnicos(AccionReciente accionReciente, Accion accion, Usuario usuario, Cajero cajero, Banco banco);
     Boolean sendEmailToTecnicosHeader(AccionReciente accionReciente, String header, Usuario usuario, Cajero cajero, Banco banco);
     public Boolean sendTokenToEmail(Token token, Usuario usuario);
+    public Boolean sendTokenToEmailSincrono(Token token, Usuario usuario);
     
 }

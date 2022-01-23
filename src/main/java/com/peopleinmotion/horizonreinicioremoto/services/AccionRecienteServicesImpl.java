@@ -58,7 +58,7 @@ public class AccionRecienteServicesImpl implements AccionRecienteServices {
             }
 
         } catch (Exception e) {
-               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return accionReciente;
     }
@@ -73,7 +73,7 @@ public class AccionRecienteServicesImpl implements AccionRecienteServices {
             }
             return Boolean.FALSE;
         } catch (Exception e) {
-               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
@@ -95,7 +95,6 @@ public class AccionRecienteServicesImpl implements AccionRecienteServices {
                 return Boolean.TRUE;
             }
             String jsonAccionRecienteLive = live.get().toJSON();
-
 
             String jsonAccionReciente = accionReciente.toJSON();
 

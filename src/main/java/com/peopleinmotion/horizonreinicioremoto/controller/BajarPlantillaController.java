@@ -6,7 +6,6 @@
 package com.peopleinmotion.horizonreinicioremoto.controller;
 // <editor-fold defaultstate="collapsed" desc="import ">
 
-
 import com.peopleinmotion.horizonreinicioremoto.domains.MessagesForm;
 import com.peopleinmotion.horizonreinicioremoto.domains.TokenReader;
 import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
@@ -49,6 +48,7 @@ import java.util.Date;
 import lombok.Data;
 import org.primefaces.PrimeFaces;
 // </editor-fold>
+
 /**
  *
  * @author avbravo
@@ -116,7 +116,7 @@ public class BajarPlantillaController implements Serializable, Page {
     @PostConstruct
     public void init() {
         try {
-             
+
             tokenEnviado = Boolean.FALSE;
             if (JmoordbContext.get("user") == null) {
 
@@ -156,7 +156,7 @@ public class BajarPlantillaController implements Serializable, Page {
                 findAccionReciente();
             }
         } catch (Exception e) {
-           
+
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
 
         }
@@ -180,7 +180,6 @@ public class BajarPlantillaController implements Serializable, Page {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
 
-            
         }
         return "";
     }
@@ -194,7 +193,7 @@ public class BajarPlantillaController implements Serializable, Page {
      */
     private String findAccionReciente() {
         try {
-            haveAccionReciente=Boolean.FALSE;
+            haveAccionReciente = Boolean.FALSE;
             Optional<AccionReciente> accionRecienteOptional = accionRecienteRepository.findByBancoIdAndCajeroIdUltimaAccionReciente(bank.getBANCOID(), cajero.getCAJEROID());
             if (accionRecienteOptional.isPresent()) {
                 accionReciente = accionRecienteOptional.get();
@@ -235,12 +234,11 @@ public class BajarPlantillaController implements Serializable, Page {
             /**
              * Valida que no se hay un agendamiento en la misma hora
              */
-              
-                      sendToken();
+
+            sendToken();
         } catch (Exception e) {
-              JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-    
 
         return "";
     }
@@ -256,8 +254,8 @@ public class BajarPlantillaController implements Serializable, Page {
                     .number3("")
                     .number4("")
                     .build();
-                    tokenEnviado = Boolean.FALSE;                 
-   
+            tokenEnviado = Boolean.FALSE;
+
             if (selectOneMenuAccionValue == null) {
                 JsfUtil.warningMessage("Seleccione la acción a ejecutar..");
                 return "";
@@ -276,18 +274,43 @@ public class BajarPlantillaController implements Serializable, Page {
             token.setUSADO("NO");
             token.setUSUARIOID(user.getUSUARIOID());
             token.setVENCIDO("NO");
+
+            JmoordbContext.put("accion", selectOneMenuAccionValue);
             if (tokenRepository.create(token)) {
 
-                //Envia el token al usuario
-                emailServices.sendTokenToEmail(token, user);
-                JmoordbContext.put("accion", selectOneMenuAccionValue);
-
-                JsfUtil.successMessage("Se envio el token a su correo. Reviselo por favor");
-                tokenEnviado = Boolean.TRUE;
-
+                //Envia el token sincrono y valida si fue o no enviado.
+                if (!emailServices.sendTokenToEmailSincrono(token, user)) {
+                    JsfUtil.errorMessage("No se logro enviar el token a su correo. Reintente la operación");
+                    tokenEnviado = Boolean.FALSE;
+                    ConsoleUtil.info("No lo pude enviar el dialogo...");
+                } else {
+                    JsfUtil.successMessage("Se envio el token a su correo. Reviselo por favor");
+                    tokenEnviado = Boolean.TRUE;
+                    ConsoleUtil.info("mostrare el dialogo...");
+        openDialogToken();
+                }
+                //Envia el token asincrono
+//                emailServices.sendTokenToEmail(token, user);
+//Abre el dialogo
+        
             } else {
                 JsfUtil.warningMessage("No se pudo generar el token. Repita la acción");
             }
+
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return "";
+    }
+// </editor-fold>
+
+
+    // <editor-fold defaultstate="collapsed" desc="closeAddtDialog() ">
+    public String openDialogToken() {
+        try {
+
+            PrimeFaces.current().executeScript("PF('widgetVarTokenDialog').initPosition()");
+            PrimeFaces.current().executeScript("PF('widgetVarTokenDialog').show()");
 
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -341,31 +364,29 @@ public class BajarPlantillaController implements Serializable, Page {
                 return "";
             }
 
-             if(selectOneMenuAccionValue == null || selectOneMenuAccionValue.getACCIONID() == null){
-                         JsfUtil.warningMessage("No selecciono la acción a ejecutar");
-                         return "";
-                }
-  
-                JsfUtil.copyBeans(accion, selectOneMenuAccionValue);
+            if (selectOneMenuAccionValue == null || selectOneMenuAccionValue.getACCIONID() == null) {
+                JsfUtil.warningMessage("No selecciono la acción a ejecutar");
+                return "";
+            }
+
+            JsfUtil.copyBeans(accion, selectOneMenuAccionValue);
             /**
              * Valida que no se hay un agendamiento en la misma hora
              */
-               Integer count = agendaRepository.countAgendamiento(cajero.getBANCOID().getBANCOID(), cajero.getCAJEROID(), accion.getACCIONID() , estado.getESTADOID(),  fechahoraBaja, "SI") ;
-                if(count > 0){
-                    ConsoleUtil.info("Existe un registro agendado de ese cajero en esa fecha");
-                     JsfUtil.warningMessage("Existe un registro agendado de ese cajero en esa fecha");
-                   
-                     return "";
-                }
-                
-               
-                
+            Integer count = agendaRepository.countAgendamiento(cajero.getBANCOID().getBANCOID(), cajero.getCAJEROID(), accion.getACCIONID(), estado.getESTADOID(), fechahoraBaja, "SI");
+            if (count > 0) {
+                ConsoleUtil.info("Existe un registro agendado de ese cajero en esa fecha");
+                JsfUtil.warningMessage("Existe un registro agendado de ese cajero en esa fecha");
+
+                return "";
+            }
+
             if (accionList == null || accionList.isEmpty()) {
                 JsfUtil.warningMessage("No acciones para el grupo seleccionado");
             } else {
 
                 Date fechahoraBaja = (Date) JmoordbContext.get("fechahoraBaja");
-               
+
                 Agenda agenda = new Agenda();
                 agenda.setACTIVO("SI");
                 agenda.setCODIGOTRANSACCION(JsfUtil.generateUniqueID());
@@ -380,12 +401,6 @@ public class BajarPlantillaController implements Serializable, Page {
                 agenda.setUSUARIOIDATIENDE(JsfUtil.toBigInteger(0));
                 agenda.setUSUARIOIDSOLICITA(user.getUSUARIOID());
 
-                 
-                   
-             
-
-                
-                
                 if (agendaRepository.create(agenda)) {
 
                     Optional<Agenda> agendaOptional = agendaRepository.findByCodigoTransaccion(agenda.getCODIGOTRANSACCION());
@@ -400,8 +415,13 @@ public class BajarPlantillaController implements Serializable, Page {
                         /**
                          * Envio de email
                          */
-
                         emailServices.sendEmailToTecnicos(accionReciente, accion, user, cajero, bank);
+//       Boolean emailSend=    emailServices.sendEmailToTecnicos(accionReciente, accion, user, cajero, bank);
+//                     if(emailSend ){
+//                        ConsoleUtil.info("Si envio el email");
+//                    }else{
+//                        ConsoleUtil.error("No envio el email");
+//                    }
                         MessagesForm messagesForm = new MessagesForm.Builder()
                                 .id(accionReciente.getCAJERO())
                                 .header("Operación Exitosa")
@@ -413,7 +433,7 @@ public class BajarPlantillaController implements Serializable, Page {
                                 .returnTo("dashboard.xhtml")
                                 .build();
                         JmoordbContext.put("messagesForm", messagesForm);
-                        
+
                         JmoordbContext.put("pageInView", "messagesform.xhtml");
                         return "messagesform.xhtml";
                     }
@@ -431,10 +451,10 @@ public class BajarPlantillaController implements Serializable, Page {
     // <editor-fold defaultstate="collapsed" desc="Boolean validateToken() ">    
     public Boolean validateToken() {
         try {
-          String  tokenIngresado=tokenReader.getNumber1().trim()+tokenReader.getNumber2().trim()+tokenReader.getNumber3().trim()+tokenReader.getNumber4().trim();
+            String tokenIngresado = tokenReader.getNumber1().trim() + tokenReader.getNumber2().trim() + tokenReader.getNumber3().trim() + tokenReader.getNumber4().trim();
             return tokenServices.validateToken(user, tokenIngresado);
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+  "  " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + "  " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }

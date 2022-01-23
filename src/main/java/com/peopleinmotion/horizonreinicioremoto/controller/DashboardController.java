@@ -173,7 +173,7 @@ public class DashboardController implements Serializable, Page {
     public void preDestroy() {
         try {
             Integer countViewAction = Integer.parseInt(JmoordbContext.get("countViewAction").toString());
-            ConsoleUtil.warning(JsfUtil.nameOfClass() + "." + JsfUtil.nameOfMethod() + " at " + DateUtil.fechaHoraActual() + " countViewAction  ( " + countViewAction + " )");
+
 
             JmoordbContext.put("countViewAction", 0);
        
