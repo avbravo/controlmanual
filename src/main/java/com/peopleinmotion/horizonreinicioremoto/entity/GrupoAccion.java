@@ -139,6 +139,16 @@ public class GrupoAccion implements Serializable {
         return "GrupoAccion{" + "GRUPOACCIONID=" + GRUPOACCIONID + ", GRUPOACCION=" + GRUPOACCION + ", ACTIVO=" + ACTIVO + ", ORDEN=" + ORDEN + ", ACCIONCollection=" + ACCIONCollection + '}';
     }
 
-    
+     public String toJSON() {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append("\n  \"GRUPOACCIONID\":\"").append(GRUPOACCIONID).append("\"");
+        sb.append("\n, \"GRUPOACCION\":\"").append(GRUPOACCION).append("\"");
+        sb.append("\n, \"ACTIVO\":\"").append(ACTIVO).append("\"");
+        sb.append("\n, \"ORDEN\":\"").append(ORDEN).append("\"");
+        sb.append("\n}");
+        return sb.toString();
+    }
     
 }

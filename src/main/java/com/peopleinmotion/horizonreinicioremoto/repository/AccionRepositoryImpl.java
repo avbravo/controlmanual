@@ -8,6 +8,7 @@ package com.peopleinmotion.horizonreinicioremoto.repository;
 import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
 import com.peopleinmotion.horizonreinicioremoto.facade.AccionFacade;
+import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.math.BigInteger;
 import java.util.List;
@@ -80,6 +81,45 @@ public class AccionRepositoryImpl implements AccionRepository {
     }
 
     
-    
+
+    // <editor-fold defaultstate="collapsed" desc=Boolean changed(Accion accion)>
+
+    @Override
+    public Boolean changed(Accion accion) {
+        try {
+            
+            Optional<Accion> live = accionFacade.find(accion.getACCIONID());
+            if (!live.isPresent()) {
+                return Boolean.TRUE;
+            }
+            String jsonLive = live.get().toJSON();
+
+            String json =accion.toJSON();
+
+            if (!json.equals(jsonLive)) {
+                //Otro usuario lo cambio mientras se estaba procesando
+                return Boolean.TRUE;
+            }
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return Boolean.FALSE;
+    }
+    // </editor-fold>
+
+     
+    @Override
+    public List<Accion> sql(QuerySQL querySQL) {
+        return accionFacade.sql(querySQL);
+    }
+    @Override
+    public List<Accion> pagination(QuerySQL querySQL, Integer pageNumber, Integer rowForPage) {
+        return accionFacade.pagination(querySQL, pageNumber, rowForPage);
+    }
+
+    @Override
+    public int count(QuerySQL querySQL) {
+       return accionFacade.count(querySQL);
+    }
     
 }
