@@ -131,7 +131,7 @@
                                         >
                                 <p:card style="width: 25em">
                                     <f:facet name="header">
-                                        <p:outputLabel value="#{item.TITULO}"/>
+                                        <strong><p:outputLabel value="#{item.TITULO}"/></strong>
                                     </f:facet>
                                     <f:facet name="title">
                                         <p:commandButton styleClass="rounded-button ui-button-secondary"
@@ -150,7 +150,7 @@
                                         <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{dashboardController.showHour(item.FECHAAGENDADA)}"/></dd>
                                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{dashboardController.renderedByEstadoSolicitado(item.ESTADOID)}" value="Fecha Ejecución: #{dashboardController.showDate(item.FECHAEJECUCION)}"/></dd>
                                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{dashboardController.renderedByEstadoSolicitado(item.ESTADOID)}" value="Hora Ejecución: #{dashboardController.showHour(item.FECHAEJECUCION)}"/></dd>
-                                        <dd class="atm-title-mar01"><p:outputLabel value="Estado:#{item.ESTADO}"/></dd>
+                                        <dd class="atm-title-mar01"><p:outputLabel value="Estado:"/> <strong><p:outputLabel value="#{item.ESTADO}"/></strong></dd>
 
                                     </p>
                                     <f:facet name="footer">

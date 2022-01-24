@@ -6,12 +6,9 @@
 package com.peopleinmotion.horizonreinicioremoto.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,13 +16,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.Builder;
 
 /**
  *
@@ -43,6 +40,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Token.findByActivo", query = "SELECT t FROM Token t WHERE t.ACTIVO = :ACTIVO")
     
 })
+
 public class Token implements Serializable {
 
     private static final long serialVersionUID = 1L;

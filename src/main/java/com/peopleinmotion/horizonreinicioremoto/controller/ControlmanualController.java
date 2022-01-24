@@ -525,23 +525,23 @@ public class ControlmanualController implements Serializable, Page {
         try {
             
             tokenEnviado = Boolean.FALSE;
+Token token = tokenServices.supplier();
 
-            Token token = new Token();
-            token.setACTIVO("SI");
-            token.setCODIGOTRANSACCION(JsfUtil.getUUID());
-            token.setFECHAGENERACION(DateUtil.fechaHoraActual());
-            token.setFECHAVENCIMIENTO(DateUtil.sumarMinutosAFecha(token.getFECHAGENERACION(), 3));
-            token.setTOKEN(JsfUtil.otp(4));
-            token.setUSADO("NO");
-            token.setUSUARIOID(user.getUSUARIOID());
-            token.setVENCIDO("NO");
+            
             if (tokenRepository.create(token)) {
-
+    //Envia el token sincrono y valida si fue o no enviado.
+                if (!emailServices.sendTokenToEmailSincrono(token, user)) {
+                    JsfUtil.errorMessage("No se logro enviar el token a su correo. Reintente la operación");
+                    tokenEnviado = Boolean.FALSE;
+                  
+                } else {
+                    JsfUtil.successMessage("Se envio el token a su correo. Reviselo por favor");
+                    tokenEnviado = Boolean.TRUE;
+                   
+        openDialogToken();
+                }
                 //Envia el token al usuario
-                emailServices.sendTokenToEmail(token, user);
-
-                JsfUtil.successMessage("Se envio el token a su correo. Reviselo por favor");
-                tokenEnviado = Boolean.TRUE;
+              
 
             } else {
                 JsfUtil.warningMessage("No se pudo generar el token. Repita la acción");
@@ -591,4 +591,19 @@ public class ControlmanualController implements Serializable, Page {
         return "";
     }
 // </editor-fold> 
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="String openDialogToken()">
+    public String openDialogToken() {
+        try {
+
+            PrimeFaces.current().executeScript("PF('widgetVarTokenDialog').initPosition()");
+            PrimeFaces.current().executeScript("PF('widgetVarTokenDialog').show()");
+
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return "";
+    }
+// </editor-fold>
 }

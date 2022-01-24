@@ -8,10 +8,12 @@ package com.peopleinmotion.horizonreinicioremoto.services;
 import com.peopleinmotion.horizonreinicioremoto.domains.TokenReader;
 import com.peopleinmotion.horizonreinicioremoto.entity.Token;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
+import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.repository.TokenRepository;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.util.List;
+import java.util.function.Supplier;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -21,48 +23,49 @@ import javax.inject.Inject;
  */
 @Stateless
 public class TokenServicesImpl implements TokenServices {
-    
+
     // <editor-fold defaultstate="collapsed" desc="@Inject ">
     @Inject
     TokenRepository tokenRepository;
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="String marcarToken(String numero, String tokenIngresado) ">
+    // <editor-fold defaultstate="collapsed" desc="String marcarToken(String numero, TokenReader tokenReader) ">
     /**
      * Se usa para controlar los botones del dialogo de confirmación del token
+     *
      * @param numero
      * @param tokenIngresado
-     * @return 
+     * @return
      */
     @Override
     public TokenReader marcarToken(String numero, TokenReader tokenReader) {
         try {
-           
+
             if (numero.toLowerCase().equals("b")) {
                 /**
                  * Borrar
                  */
                 if (!tokenReader.getNumber4().equals("")) {
-                  tokenReader.setNumber4("");
+                    tokenReader.setNumber4("");
                 } else {
                     if (!tokenReader.getNumber3().equals("")) {
-                      tokenReader.setNumber3("");
+                        tokenReader.setNumber3("");
                     } else {
-                        if (!tokenReader.getNumber2().equals("") ){
-                           tokenReader.setNumber2("");
+                        if (!tokenReader.getNumber2().equals("")) {
+                            tokenReader.setNumber2("");
                         } else {
                             if (!tokenReader.getNumber1().equals("")) {
-                             tokenReader.setNumber1("");
+                                tokenReader.setNumber1("");
                             }
                         }
                     }
                 }
             } else {
                 if (tokenReader.getNumber1().equals("")) {
-                   tokenReader.setNumber1(numero);
+                    tokenReader.setNumber1(numero);
                 } else {
                     if (tokenReader.getNumber2().equals("")) {
-                     tokenReader.setNumber2(numero);
+                        tokenReader.setNumber2(numero);
                     } else {
                         if (tokenReader.getNumber3().equals("")) {
                             tokenReader.setNumber3(numero);
@@ -74,10 +77,9 @@ public class TokenServicesImpl implements TokenServices {
                     }
                 }
             }
-         
 
         } catch (Exception e) {
-             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return tokenReader;
     }
@@ -86,9 +88,10 @@ public class TokenServicesImpl implements TokenServices {
     // <editor-fold defaultstate="collapsed" desc="String marcarToken(String numero, String tokenIngresado) ">
     /**
      * Se usa para controlar los botones del dialogo de confirmación del token
+     *
      * @param numero
      * @param tokenIngresado
-     * @return 
+     * @return
      */
     @Override
     public String marcarToken(String numero, String tokenIngresado) {
@@ -136,18 +139,16 @@ public class TokenServicesImpl implements TokenServices {
             tokenIngresado = pos0 + pos1 + pos2 + pos3;
 
         } catch (Exception e) {
-             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return tokenIngresado;
     }
 
 // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Boolean validateToken(Usuario usuario, String tokenIngresado) ">
-
     @Override
     public Boolean validateToken(Usuario usuario, String tokenIngresado) {
-         try {
+        try {
             List<Token> tokenList = tokenRepository.findByUsuarioIdTokenAndActivo(usuario.getUSUARIOID(), tokenIngresado, "SI");
             if (tokenList == null || tokenList.isEmpty()) {
                 JsfUtil.warningMessage("El token no es válido .Verifique los datos...");
@@ -171,12 +172,12 @@ public class TokenServicesImpl implements TokenServices {
                                 // JsfUtil.warningMessage("No se pudo actualizar el token");
                             }
                         } else {
-                       
+
                             token.setACTIVO("NO");
                             token.setVENCIDO("XX");
                             token.setUSADO("SI");
                             if (tokenRepository.update(token)) {
-                                 
+
                                 return Boolean.TRUE;
                             } else {
                                 JsfUtil.warningMessage("No se pudo actualizar el token");
@@ -187,9 +188,34 @@ public class TokenServicesImpl implements TokenServices {
             }
 
         } catch (Exception e) {
-           JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
     // </editor-fold>
+
+    @Override
+    public Token supplier() {
+        Token token = new Token();
+        try {
+            if (JmoordbContext.get("user") == null) {
+
+            } else {
+
+                Usuario user = (Usuario) JmoordbContext.get("user");
+                token.setUSUARIOID(user.getUSUARIOID());
+            }
+            token.setACTIVO("SI");
+            token.setCODIGOTRANSACCION(JsfUtil.getUUID());
+            token.setFECHAGENERACION(DateUtil.fechaHoraActual());
+            token.setFECHAVENCIMIENTO(DateUtil.sumarMinutosAFecha(token.getFECHAGENERACION(), 3));
+            token.setTOKEN(JsfUtil.otp(4));
+            token.setUSADO("NO");
+
+            token.setVENCIDO("NO");
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return token;
+    }
 }

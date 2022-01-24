@@ -265,15 +265,9 @@ public class BajarPlantillaController implements Serializable, Page {
                 return "";
             }
             JmoordbContext.put("fechahoraBaja", fechahoraBaja);
-            Token token = new Token();
-            token.setACTIVO("SI");
-            token.setCODIGOTRANSACCION(JsfUtil.getUUID());
-            token.setFECHAGENERACION(DateUtil.fechaHoraActual());
-            token.setFECHAVENCIMIENTO(DateUtil.sumarMinutosAFecha(token.getFECHAGENERACION(), 3));
-            token.setTOKEN(JsfUtil.otp(4));
-            token.setUSADO("NO");
-            token.setUSUARIOID(user.getUSUARIOID());
-            token.setVENCIDO("NO");
+            Token token = tokenServices.supplier();
+
+
 
             JmoordbContext.put("accion", selectOneMenuAccionValue);
             if (tokenRepository.create(token)) {
@@ -305,7 +299,7 @@ public class BajarPlantillaController implements Serializable, Page {
 // </editor-fold>
 
 
-    // <editor-fold defaultstate="collapsed" desc="closeAddtDialog() ">
+    // <editor-fold defaultstate="collapsed" desc="String openDialogToken()">
     public String openDialogToken() {
         try {
 

@@ -60,7 +60,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h4 class="text-secondary">CONTROL MANUAL</h4>
-                                           
+
 
                                         </div>
 
@@ -113,40 +113,40 @@
 
                                         </div>
                                     </div>
-                                    
+
                                     <p:panelGrid columns="2"  styleClass="ui-panelgrid-blank ui-fluid"
                                                  style="border:0px none; background-color:transparent;">
-                                                     
-                                         <p:commandButton value="Procesando" 
-                                                                         update=":form:growl"
-icon="pi pi-cog"
-                                                                         rendered="#{controlmanualController.showCommandButtonProcesando}"
-                                                                         action="#{controlmanualController.onCommandButtonSendToken()}"
-                                                                         oncomplete="PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
-                                                                         title="Envia el token al correo"
-                                                                         styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
-                                                                         >
-                                                 </p:commandButton>
-                                              <p:commandButton value="Finalizado" 
-                                                                         styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
-                                                                         update=":form:growl"
-                                                                         icon="pi pi-eject"
-                                                                         action="#{controlmanualController.onCommandButtonSendToken()}"
-                                                                         oncomplete="PF('widgetVarTokenDialog').initPosition(); PF('widgetVarTokenDialog').show()"
-                                                                         rendered="#{controlmanualController.showCommandButtonFinalizar}"
-                                                                         >
 
-                                                        </p:commandButton>
-                                             
-                                             
-                                         <p:commandButton value="REGRESAR" class="bot-regresar01" 
-                                                        styleClass="rounded-button ui-button-help"
-                                                                 icon ="pi pi-arrow-left"
-                                                        action="#{controlmanualController.regresar()}"/>
-                                        
+                                        <p:commandButton value="Procesando" 
+                                                         update=":form:growl"
+                                                         icon="pi pi-cog"
+                                                         rendered="#{controlmanualController.showCommandButtonProcesando}"
+                                                         action="#{controlmanualController.onCommandButtonSendToken()}"
+
+                                                         title="Envia el token al correo"
+                                                         styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
+                                                         >
+                                        </p:commandButton>
+                                        <p:commandButton value="Finalizado" 
+                                                         styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
+                                                         update=":form:growl"
+                                                         icon="pi pi-eject"
+                                                         action="#{controlmanualController.onCommandButtonSendToken()}"
+
+                                                         rendered="#{controlmanualController.showCommandButtonFinalizar}"
+                                                         >
+
+                                        </p:commandButton>
+
+
+                                        <p:commandButton value="REGRESAR" class="bot-regresar01" 
+                                                         styleClass="rounded-button ui-button-help"
+                                                         icon ="pi pi-arrow-left"
+                                                         action="#{controlmanualController.regresar()}"/>
+
                                     </p:panelGrid>
 
-                                
+
 
 
 
@@ -193,10 +193,10 @@ icon="pi pi-cog"
                           onShow="PF('widgetVarTokenDialog').initPosition()"
                           resizable="false"
                           >
-      
+
 
                     <f:facet name="header">
-                     <p:outputLabel value="Recibirás un Email con tu token"/>
+                        <p:outputLabel value="Recibirás un Email con tu token"/>
                     </f:facet>
 
 
@@ -231,12 +231,12 @@ icon="pi pi-cog"
                                           >
                             <p:autoUpdate />
                         </p:inputTextarea>     
-                         <f:facet name="footer">
-                             <p:outputLabel  value="Digita el token que recibiste" styleClass="p-text-bold"/>
+                        <f:facet name="footer">
+                            <p:outputLabel  value="Digita el token que recibiste" styleClass="p-text-bold"/>
                         </f:facet>
                     </p:panelGrid>
 
-                 
+
 
                     <p:panelGrid columns="3"  styleClass="ui-panelgrid-blank ui-fluid"
                                  style="border:0px none; background-color:transparent;">
@@ -298,7 +298,7 @@ icon="pi pi-cog"
 
 
 
-                  <f:facet name="footer">
+                    <f:facet name="footer">
                         <p:commandButton  oncomplete="PF('widgetVarTokenDialog').hide();" 
                                           action="#{controlmanualController.remoteCommand()}"
                                           value="Cerrar"
@@ -322,7 +322,7 @@ icon="pi pi-cog"
                                          >
                         </p:commandButton>
 
-                </f:facet>
+                    </f:facet>
                     <p:messages id="tokenmessage" />
                 </p:dialog>
             </h:panelGroup>     

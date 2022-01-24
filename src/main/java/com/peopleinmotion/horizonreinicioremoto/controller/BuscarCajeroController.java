@@ -5,6 +5,8 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.controller;
 
+// <editor-fold defaultstate="collapsed" desc="import ">
+
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
@@ -29,7 +31,7 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import lombok.Data;
-
+// </editor-fold>
 /**
  *
  * @author avbravo
