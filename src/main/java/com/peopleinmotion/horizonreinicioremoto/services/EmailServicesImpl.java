@@ -35,7 +35,7 @@ import javax.inject.Inject;
  */
 @Stateless
 public class EmailServicesImpl implements EmailServices {
-   // <editor-fold defaultstate="collapsed" desc="@Inject ">
+    // <editor-fold defaultstate="collapsed" desc="@Inject ">
 
     @Inject
     BancoRepository bancoRepository;
@@ -76,6 +76,8 @@ public class EmailServicesImpl implements EmailServices {
                     + accionReciente.getESTADO()
                     + "\nAccion generada por: "
                     + usuario.getNOMBRE()
+                    + "\n\nTransacción No.: "
+                    + accionReciente.getACCIONRECIENTEID()
                     + "\n\n\b"
                     + "\nPor favor no responda este correo..."
                     + "\n-------------------------------------------------------------";
@@ -106,7 +108,7 @@ public class EmailServicesImpl implements EmailServices {
                     + "\nUtilicelo antes de : "
                     + DateUtil.showDate(token.getFECHAVENCIMIENTO())
                     + " "
-                    + DateUtil.showHour(token.getFECHAVENCIMIENTO())                   
+                    + DateUtil.showHour(token.getFECHAVENCIMIENTO())
                     + "\n\n\b"
                     + "\nPor favor no responda este correo..."
                     + "\n-------------------------------------------------------------";
@@ -199,7 +201,6 @@ public class EmailServicesImpl implements EmailServices {
     }// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Boolean sendEmailToTecnicos(AccionReciente accionReciente, Accion accion, Usuario usuario, Cajero cajero, Banco banco)">    
-
     @Override
     public Boolean sendEmailToTecnicos(AccionReciente accionReciente, Accion accion, Usuario usuario, Cajero cajero, Banco banco) {
         try {
@@ -317,7 +318,7 @@ public class EmailServicesImpl implements EmailServices {
             /*
              Enviar email a los tecnicos
              */
-           
+
             List<String> emailList = new ArrayList<>();
             emailList.add(usuario.getEMAIL());
             String message = generateTokenMessages(token, "Generacion Token", usuario);
@@ -333,7 +334,7 @@ public class EmailServicesImpl implements EmailServices {
              * divide los emails
              */
             EmailRecipients emailRecipients = JsfUtil.divideDestinatary(emailList);
-            
+
             Future<String> completableFutureCC
                     = sendEmailCccBccAsync(
                             emailRecipients.getTo(),
@@ -350,14 +351,13 @@ public class EmailServicesImpl implements EmailServices {
 //            }
             return Boolean.TRUE;
         } catch (Exception e) {
-            JsfUtil.warningMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
+            JsfUtil.warningMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
     // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="Boolean sendTokenToEmailSincrono(Token token, Usuario usuario)">
 
+    // <editor-fold defaultstate="collapsed" desc="Boolean sendTokenToEmailSincrono(Token token, Usuario usuario)">
     @Override
     public Boolean sendTokenToEmailSincrono(Token token, Usuario usuario) {
         try {
@@ -365,7 +365,7 @@ public class EmailServicesImpl implements EmailServices {
             /*
              Enviar el token al uuario
              */
-          
+
             String message = generateTokenMessages(token, "Generacion Token", usuario);
 
             //Busco el email
@@ -375,22 +375,17 @@ public class EmailServicesImpl implements EmailServices {
                 JsfUtil.warningMessage("No hay ninguna configuracion de email establecida.");
                 return Boolean.FALSE;
             }
-            
-           return     jmoordbEmailSender.sendOutlook(usuario.getEMAIL(), "Token", message, 
-                    emailConfigurationOptional.get().getEMAIL(), 
-                    JsfUtil.desencriptar(emailConfigurationOptional.get().getPASSWORD()),
-                            Boolean.FALSE);
-             
 
-  
+            return jmoordbEmailSender.sendOutlook(usuario.getEMAIL(), "Token", message,
+                    emailConfigurationOptional.get().getEMAIL(),
+                    JsfUtil.desencriptar(emailConfigurationOptional.get().getPASSWORD()),
+                    Boolean.FALSE);
+
         } catch (Exception e) {
             JsfUtil.warningMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
     // </editor-fold>
-    
-    
-    
-   
+
 }
