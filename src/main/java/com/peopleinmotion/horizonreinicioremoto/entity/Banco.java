@@ -83,6 +83,7 @@ public class Banco implements Serializable {
     private Collection<Cajero> cajeroCollection;
 
     public Banco() {
+     
     }
 
     public String getSIGLAS() {
