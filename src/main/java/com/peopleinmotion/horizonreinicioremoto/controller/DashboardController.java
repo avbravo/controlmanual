@@ -458,5 +458,16 @@ public class DashboardController implements Serializable, Page {
 
     }
     // </editor-fold>
+ // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoFinalizado()">
+    public Boolean renderedByEstadoFinalizado() {
+        return accionRecienteServices.renderedByEstadoFinalizado(accionRecienteSelected);
 
+    }
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoEnProceso()">
+    public Boolean renderedByEstadoEnProceso() {
+        return accionRecienteServices.renderedByEstadoEnProceso(accionRecienteSelected);
+
+    }
+    // </editor-fold>
 }
