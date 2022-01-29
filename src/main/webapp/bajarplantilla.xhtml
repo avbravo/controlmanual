@@ -163,7 +163,7 @@
                                                                      id="commandButtonSendToken"
                                                                      action="#{bajarPlantillaController.onCommandButtonSendToken()}"
                                                                      update=":form:growl"                                                                    
-                                                                     styleClass="rounded-button ui-button-success" style="margin-right: .5rem">
+                                                                    styleClass="rounded-button ui-button-danger" style="margin-right: .5rem">
                                                     </p:commandButton>
 
                                                 </c:if>
@@ -172,7 +172,7 @@
 
 
                                                 <p:commandButton value="REGRESAR"
-                                                                 styleClass="rounded-button ui-button-help"
+                                                                 styleClass="rounded-button ui-button-outlined ui-button-secondary" style="margin-right: .5rem"
                                                                  icon ="pi pi-arrow-left"
                                                                  action="#{navigatorController.go('cajeroencontrado.xhtml')}"
                                                                  />
@@ -337,9 +337,9 @@
                                           action="#{bajarPlantillaController.remoteCommand()}"
                                           value="Cerrar"
                                           process="@this"
-                                          icon="pi pi-times" styleClass="rounded-button ui-button-danger"
+                                          icon="pi pi-times" styleClass="rounded-button ui-button-outlined ui-button-secondary" style="margin-right: .5rem"
                                           />
-                        <p:commandButton styleClass="rounded-button ui-button-success" 
+                        <p:commandButton styleClass="rounded-button ui-button-danger"
 
                                          update="tokenDialogDetails, tokenmessage"
                                          icon="pi pi-unlock"
