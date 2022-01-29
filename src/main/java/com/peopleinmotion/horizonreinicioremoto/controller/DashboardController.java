@@ -470,4 +470,25 @@ public class DashboardController implements Serializable, Page {
 
     }
     // </editor-fold>
+    
+ // <editor-fold defaultstate="collapsed" desc="cortarTexto(String texto)">
+    public String cortarTexto(String texto) {
+        try {
+            Integer limite = 35;
+            if (JsfUtil.contextToInteger("numeroCaracteresCortarTexto") == null) {
+                JsfUtil.warningMessage("No se ha definido la cantidad de caracteres en el archivo de confioguración");
+            } else {
+                limite = JsfUtil.contextToInteger("numeroCaracteresCortarTexto");
+            }
+            Integer length = texto.length();
+            if (length > limite) {
+
+                texto = texto.substring(0, (limite -1));
+            }
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return texto;
+    }
+// </editor-fold>
 }

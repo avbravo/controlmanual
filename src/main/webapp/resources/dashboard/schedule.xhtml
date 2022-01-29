@@ -63,12 +63,15 @@
                     <p:outputLabel id="titulo" value="#{dashboardController.accionRecienteSelected.TITULO}"/>
 
                     <p:outputLabel  value="Mensaje" styleClass="p-text-bold"/>
-                    <p:outputLabel id="mensaje" value="#{dashboardController.accionRecienteSelected.MENSAJE}"/>
+                    <p:outputLabel id="mensaje2" value="#{dashboardController.cortarTexto(dashboardController.accionRecienteSelected.MENSAJE)}"/>
 
-                    <p:outputLabel value="Se Agendó el:" styleClass="p-text-bold"/>
+                    <p:outputLabel value="Se Agendó el:" styleClass="p-text-bold"    rendered="false"/>
                     <p:calendar  value="#{dashboardController.event.startDate}" pattern="dd/MM/yyyy hh:mm a"
-                              
+                                 rendered="false"
                                  />
+                    
+                         <p:outputLabel value="Se Agendó el:" styleClass="p-text-bold" />
+                         <p:outputLabel value="#{dashboardController.showDate(dashboardController.accionRecienteSelected.FECHAAGENDADA)}  #{dashboardController.showHour(dashboardController.accionRecienteSelected.FECHAAGENDADA) }"/>
 
                     <p:outputLabel value="Fecha/Ejecución:" styleClass="p-text-bold" rendered="#{!dashboardController.renderedByEstadoSolicitado()}"/>
                     <p:outputLabel rendered="#{!dashboardController.renderedByEstadoSolicitado()}" value=" #{dashboardController.showDate(dashboardController.accionRecienteSelected.FECHAEJECUCION)}"/>
