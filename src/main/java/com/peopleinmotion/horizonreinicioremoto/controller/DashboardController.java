@@ -60,7 +60,7 @@ public class DashboardController implements Serializable, Page {
 // <editor-fold defaultstate="collapsed" desc="field ">
     private static final long serialVersionUID = 1L;
     private ScheduleEvent<?> event = new DefaultScheduleEvent<>();
-    private Integer rowForPage = 5;
+    private Integer rowForPage = 15;
 
     private Cajero cajeroSelected = new Cajero();
     AccionReciente accionRecienteSelected = new AccionReciente();
@@ -126,6 +126,11 @@ public class DashboardController implements Serializable, Page {
             if (JmoordbContext.get("countViewAction") == null) {
                 JmoordbContext.put("countViewAction", 0);
             }
+            
+            if(JsfUtil.contextToInteger("rowForPage") != null){
+                    rowForPage=JsfUtil.contextToInteger("rowForPage");
+                }
+
             Integer countViewAction = Integer.parseInt(JmoordbContext.get("countViewAction").toString());
            
             lazyEventModel = new LazyScheduleModel() {

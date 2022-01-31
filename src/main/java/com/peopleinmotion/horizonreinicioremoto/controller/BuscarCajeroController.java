@@ -44,7 +44,7 @@ public class BuscarCajeroController implements Serializable, Page {
 // <editor-fold defaultstate="collapsed" desc="field ">
     private static final long serialVersionUID = 1L;
 
-    private Integer rowForPage = 5;
+    private Integer rowForPage = 15;
     private Cajero cajeroSelected = new Cajero();
 
     List<Cajero> cajeroList = new ArrayList<>();
@@ -99,6 +99,9 @@ public class BuscarCajeroController implements Serializable, Page {
                  */
                 user = (Usuario) JmoordbContext.get("user");
                 banco = (Banco) JmoordbContext.get("banco");
+if(JsfUtil.contextToInteger("rowForPage") != null){
+                    rowForPage=JsfUtil.contextToInteger("rowForPage");
+                }
 
                 cajeroList = cajeroRepository.findByBancoIdAndActivo(banco, "SI");
 
