@@ -95,7 +95,7 @@ public Optional<Cajero> findByCajeroId(BigInteger CAJEROID) {
     
    
      
-// <editor-fold defaultstate="collapsed" desc="findByCajeroIdAndActiv(BigInteger CAJEROID, String ACTIVO) ">
+// <editor-fold defaultstate="collapsed" desc="findByCajeroIdAndActivo(BigInteger CAJEROID, String ACTIVO) ">
 public List<Cajero> findByCajeroIdAndActivo(BigInteger CAJEROID, String ACTIVO) {
             List<Cajero> list = new ArrayList<>();
         try {
