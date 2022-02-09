@@ -25,8 +25,7 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 public class CajeroConverter implements Converter {
-@Inject
-    CajeroRepository cajeroRepository;
+   CajeroRepository cajeroRepository;
 
     
    
@@ -34,7 +33,7 @@ public class CajeroConverter implements Converter {
     public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
         Cajero a = new Cajero();
         if (cajeroRepository == null) {
-            // System.out.println("Repository is null");
+
         }
 
         if (submittedValue == null || submittedValue.isEmpty()) {
@@ -49,9 +48,7 @@ public class CajeroConverter implements Converter {
             }
             return a;
         } catch (Exception e) {
-            // System.out.println("====================");
-            // System.out.println("---> getAsObject" +e.getLocalizedMessage());
-            // System.out.println("====================");
+
             throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
         }
     }
@@ -67,11 +64,11 @@ public class CajeroConverter implements Converter {
         if (modelValue instanceof Cajero) {
           return String.valueOf(((Cajero) modelValue).getCAJEROID());
         } else {
-            // System.out.println("----------->getAsString");
+
           throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
         }
       } catch (Exception e) {
-            // System.out.println("--------getAsString () "+e.getLocalizedMessage());
+   
             new FacesMessage("Error en converter Cajero "+e.getLocalizedMessage());
       }
 
