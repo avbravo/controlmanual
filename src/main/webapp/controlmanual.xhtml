@@ -117,7 +117,7 @@
                                     <p:panelGrid columns="2"  styleClass="ui-panelgrid-blank ui-fluid"
                                                  style="border:0px none; background-color:transparent;">
 
-                                        <p:commandButton value="Procesando" 
+                                        <p:commandButton value="PROCESANDO" 
                                                          update=":form:growl"
                                                          icon="pi pi-cog"
                                                          rendered="#{controlmanualController.showCommandButtonProcesando}"
@@ -127,7 +127,7 @@
                                                          styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
                                                          >
                                         </p:commandButton>
-                                        <p:commandButton value="Finalizado" 
+                                        <p:commandButton value="FINALIZADO" 
                                                          styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
                                                          update=":form:growl"
                                                          icon="pi pi-eject"
@@ -178,8 +178,8 @@
             </div>
               <div style="position: absolute; left: 1px; top: 1px;">
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
-                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
-                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+                <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" />
             </p:confirmDialog>
 </div>
 
@@ -304,7 +304,7 @@
                     <f:facet name="footer">
                         <p:commandButton  oncomplete="PF('widgetVarTokenDialog').hide();" 
                                           action="#{controlmanualController.remoteCommand()}"
-                                          value="Cerrar"
+                                          value="CERRAR"
                                           process="@this"
                                           icon="pi pi-times" styleClass="rounded-button ui-button-outlined ui-button-secondary" style="margin-right: .5rem"
                                           />
@@ -312,7 +312,7 @@
                                          update="tokenDialogDetails, tokenmessage"
                                          rendered="#{controlmanualController.showCommandButtonProcesando}"
                                          icon="pi pi-unlock"
-                                         value="Aceptar"
+                                         value="ACEPTAR"
                                          action="#{controlmanualController.onCommandButtonProcesando()}">
 
                         </p:commandButton>
@@ -320,7 +320,7 @@
                                          update="tokenDialogDetails, tokenmessage"
                                          rendered="#{controlmanualController.showCommandButtonFinalizar}"
                                          icon="pi pi-unlock"
-                                         value="Aceptar"
+                                         value="ACEPTAR"
                                          action="#{controlmanualController.onCommandButtonFinalizando()}"
                                          >
                         </p:commandButton>
