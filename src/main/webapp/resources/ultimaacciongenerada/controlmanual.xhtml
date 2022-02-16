@@ -21,9 +21,11 @@
                     </c:if>
                     
                        <c:if test="${controlmanualController.haveAccionReciente}">
-                        <dd class="atm-title-mar01"><strong>#{controlmanualController.accionReciente.TITULO}</strong>(<p:outputLabel value="#{controlmanualController.accionReciente.MENSAJE}"/>)</dd>                        
+                           <dd class="atm-title-mar01"><strong>#{controlmanualController.accionReciente.TITULO}</strong>(<p:outputLabel value="#{controlmanualController.accionReciente.MENSAJE}"/>)</dd>                        
                         <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{controlmanualController.showDate(controlmanualController.accionReciente.FECHAAGENDADA)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{controlmanualController.showHour(controlmanualController.accionReciente.FECHAAGENDADA)}"/></dd>
+                                                <dd class="atm-title-mar01"><p:outputLabel value="Fecha Creación: #{controlmanualController.showDate(controlmanualController.accionReciente.FECHA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel value="Hora Creación:#{controlmanualController.showHour(controlmanualController.accionReciente.FECHA)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{controlmanualController.showDate(controlmanualController.accionReciente.FECHAEJECUCION)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="Hora Ejecución: #{controlmanualController.showHour(controlmanualController.accionReciente.FECHAEJECUCION)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel value="Estado:"/> <strong><p:outputLabel value="#{controlmanualController.accionReciente.ESTADO}"/></strong><p:spacer width="5"/><p:outputLabel value="| Transacción No:"/><strong><p:outputLabel value="#{controlmanualController.accionReciente.ACCIONRECIENTEID}"/></strong></dd>

@@ -20,9 +20,11 @@
                         <p class="atm-title-mar01"><strong>No hay acciones agendadas</strong></p>
                     </c:if>
                     <c:if test="${subirPlantillaController.haveAccionReciente}">
-                       <dd class="atm-title-mar01"><strong>#{subirPlantillaController.accionReciente.TITULO}</strong>(<p:outputLabel value="#{subirPlantillaController.accionReciente.MENSAJE}"/>)</dd>                        
+                        <dd class="atm-title-mar01"><strong>#{subirPlantillaController.accionReciente.TITULO}</strong>(<p:outputLabel value="#{subirPlantillaController.accionReciente.MENSAJE}"/>)</dd>                        
                         <dd class="atm-title-mar01"><p:outputLabel value="Se Agendo el: #{subirPlantillaController.showDate(subirPlantillaController.accionReciente.FECHAAGENDADA)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel value="Hora Agendada:#{subirPlantillaController.showHour(subirPlantillaController.accionReciente.FECHAAGENDADA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel value="Fecha Creación: #{subirPlantillaController.showDate(subirPlantillaController.accionReciente.FECHA)}"/></dd>
+                        <dd class="atm-title-mar01"><p:outputLabel value="Hora Creación:#{subirPlantillaController.showHour(subirPlantillaController.accionReciente.FECHA)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{!subirPlantillaController.renderedByEstadoSolicitado()}" value="Fecha Ejecución: #{subirPlantillaController.showDate(subirPlantillaController.accionReciente.FECHAEJECUCION)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel rendered="#{!subirPlantillaController.renderedByEstadoSolicitado()}" value="Hora Ejecución: #{subirPlantillaController.showHour(subirPlantillaController.accionReciente.FECHAEJECUCION)}"/></dd>
                         <dd class="atm-title-mar01"><p:outputLabel value="Estado:"/> <strong><p:outputLabel value="#{subirPlantillaController.accionReciente.ESTADO}"/></strong><p:spacer width="5"/><p:outputLabel value="| Transacción No:"/><strong><p:outputLabel value="#{subirPlantillaController.accionReciente.ACCIONRECIENTEID}"/></strong></dd>
