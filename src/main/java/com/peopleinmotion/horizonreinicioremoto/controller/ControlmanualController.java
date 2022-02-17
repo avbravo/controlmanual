@@ -296,7 +296,7 @@ public class ControlmanualController implements Serializable, Page {
 
             accionReciente.setESTADOID(estado.getESTADOID());
             accionReciente.setESTADO(estado.getESTADO());
-            accionReciente.setFECHA(DateUtil.getFechaHoraActual());
+           // accionReciente.setFECHA(DateUtil.getFechaHoraActual());
             accionReciente.setFECHAEJECUCION(DateUtil.getFechaHoraActual());
             if (accionRecienteRepository.update(accionReciente)) {
                 //Actualizar la agenda
