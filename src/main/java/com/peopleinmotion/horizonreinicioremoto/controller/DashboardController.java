@@ -496,4 +496,20 @@ public class DashboardController implements Serializable, Page {
         return texto;
     }
 // </editor-fold>
+     public void onIdle() {
+         ConsoleUtil.info("onIdle() "+DateUtil.fechaHoraActual());
+         fillCarouselAccionReciente();
+         JsfUtil.warningMessage("No activity."+ "User is idle");
+//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+//                "No activity.", "User is idle"));
+    }
+
+    public void onActive() {
+          ConsoleUtil.info("onActive() "+DateUtil.fechaHoraActual());
+                 JsfUtil.warningMessage(     "Activity detected"+ "User is active");
+//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+//                "Activity detected", "User is active"));
+    }
+
+
 }
