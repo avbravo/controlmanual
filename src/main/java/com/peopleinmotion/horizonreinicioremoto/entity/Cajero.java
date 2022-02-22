@@ -183,6 +183,20 @@ public class Cajero implements Serializable {
         return "Cajero{" + "CAJEROID=" + CAJEROID + ", CAJERO=" + CAJERO + ", ACTIVO=" + ACTIVO + ", DESCRIPCION=" + DESCRIPCION + ", DIRECCION=" + DIRECCION + ", DIRECCIONCORTA=" + DIRECCIONCORTA + ", ORDEN=" + ORDEN + ", BANCOID=" + BANCOID + '}';
     }
 
-   
+   public String toJSON() {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append("\n  \"CAJEROID\":\"").append(CAJEROID).append("\"");
+        sb.append("\n, \"CAJERO\":\"").append(CAJERO).append("\"");
+        sb.append("\n, \"ACTIVO\":\"").append(ACTIVO).append("\"");
+        sb.append("\n, \"DESCRIPCION\":\"").append(DESCRIPCION).append("\"");
+        sb.append("\n, \"DIRECCION\":\"").append(DIRECCION).append("\"");
+        sb.append("\n, \"DIRECCIONCORTA\":\"").append(DIRECCIONCORTA).append("\"");
+        sb.append("\n, \"ORDEN\":\"").append(ORDEN).append("\"");
+        sb.append("\n, \"BANCOID\":").append(BANCOID.toJSON());
+        sb.append("\n}");
+        return sb.toString();
+    }
     
 }
