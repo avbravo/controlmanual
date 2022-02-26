@@ -6,13 +6,13 @@
 package com.peopleinmotion.horizonreinicioremoto.controller;
 
 // <editor-fold defaultstate="collapsed" desc="import ">
-
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.paginator.Paginator;
+import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaHistorialRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaRepository;
@@ -26,12 +26,18 @@ import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import lombok.Data;
+import org.primefaces.PrimeFaces;
+import org.primefaces.model.FilterMeta;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortMeta;
 // </editor-fold>
+
 /**
  *
  * @author avbravo
@@ -52,6 +58,8 @@ public class BuscarCajeroController implements Serializable, Page {
 
     Usuario user = new Usuario();
     Banco banco = new Banco();
+    private LazyDataModel<Cajero> lazyDataModelCajero;
+    QuerySQL querySQL = new QuerySQL();
 
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="paginator ">
@@ -87,9 +95,7 @@ public class BuscarCajeroController implements Serializable, Page {
     @PostConstruct
     public void init() {
         try {
-            
 
- 
             if (JmoordbContext.get("user") == null) {
 
             } else {
@@ -99,12 +105,26 @@ public class BuscarCajeroController implements Serializable, Page {
                  */
                 user = (Usuario) JmoordbContext.get("user");
                 banco = (Banco) JmoordbContext.get("banco");
-if(JsfUtil.contextToInteger("rowForPage") != null){
-                    rowForPage=JsfUtil.contextToInteger("rowForPage");
+                if (JsfUtil.contextToInteger("rowForPage") != null) {
+                    rowForPage = JsfUtil.contextToInteger("rowForPage");
                 }
+                this.lazyDataModelCajero = new LazyDataModel<Cajero>() {
+                    @Override
+                    public List<Cajero> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
 
-                cajeroList = cajeroRepository.findByBancoIdAndActivo(banco, "SI");
+                        Integer count = cajeroRepository.countBancoIdAndActivo(banco, "SI");
+                        Integer paginas = JsfUtil.numberOfPages(count, rowForPage);
 
+                        List<Cajero> result = cajeroRepository.findBancoIdAndActivoPaginacion(banco, "SI", offset, rowForPage);
+
+                        lazyDataModelCajero.setRowCount(count);
+                        PrimeFaces.current().executeScript("setDataTableWithPageStart()");
+                        return result;
+                    }
+
+                };
+
+//                cajeroList = cajeroRepository.findByBancoIdAndActivo(banco, "SI");
             }
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());

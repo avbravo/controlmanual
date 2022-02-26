@@ -38,15 +38,15 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Cajero.findByDireccion", query = "SELECT c FROM Cajero c WHERE c.DIRECCION= :DIRECCION"),
     @NamedQuery(name = "Cajero.findByDireccioncorta", query = "SELECT c FROM Cajero c WHERE c.DIRECCIONCORTA = :DIRECCIONCORTA"),
     @NamedQuery(name = "Cajero.findByOrden", query = "SELECT c FROM Cajero c WHERE c.ORDEN = :ORDEN")
-    
-    })
+
+})
 @Cacheable(false)
 public class Cajero implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-        @Id
-    @SequenceGenerator(name = "CAJERO_GEN", sequenceName = "CAJERO_SEQ",allocationSize = 1)
+    @Id
+    @SequenceGenerator(name = "CAJERO_GEN", sequenceName = "CAJERO_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CAJERO_GEN")
     @NotNull
     @Column(name = "CAJEROID")
@@ -58,7 +58,7 @@ public class Cajero implements Serializable {
     private String CAJERO;
     @Basic(optional = false)
     @NotNull
-     
+
     @Column(name = "ACTIVO")
     private String ACTIVO;
     @Basic(optional = false)
@@ -80,14 +80,14 @@ public class Cajero implements Serializable {
     @NotNull
     @Column(name = "ORDEN")
     private BigInteger ORDEN;
-    
+
     @JoinColumn(name = "BANCOID", referencedColumnName = "BANCOID")
     @ManyToOne(optional = false)
     private Banco BANCOID;
 
     public Cajero() {
     }
-    
+
     public Cajero(BigInteger CAJEROID) {
         this.CAJEROID = CAJEROID;
     }
@@ -156,8 +156,6 @@ public class Cajero implements Serializable {
         this.BANCOID = BANCOID;
     }
 
-    
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -183,7 +181,9 @@ public class Cajero implements Serializable {
         return "Cajero{" + "CAJEROID=" + CAJEROID + ", CAJERO=" + CAJERO + ", ACTIVO=" + ACTIVO + ", DESCRIPCION=" + DESCRIPCION + ", DIRECCION=" + DIRECCION + ", DIRECCIONCORTA=" + DIRECCIONCORTA + ", ORDEN=" + ORDEN + ", BANCOID=" + BANCOID + '}';
     }
 
-   public String toJSON() {
+
+
+    public String toJSON() {
 
         StringBuilder sb = new StringBuilder();
         sb.append("{");
@@ -198,5 +198,5 @@ public class Cajero implements Serializable {
         sb.append("\n}");
         return sb.toString();
     }
-    
+
 }

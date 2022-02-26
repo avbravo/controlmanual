@@ -78,7 +78,7 @@ public class CajeroRepositoryImpl implements CajeroRepository {
        return cajeroFacade.find(id);
     }
 
-  // <editor-fold defaultstate="collapsed" desc="Boolean changed(Cajero cajero)>
+// <editor-fold defaultstate="collapsed" desc="Boolean changed(Cajero cajero)>
 
     @Override
     public Boolean changed(Cajero cajero) {
@@ -118,6 +118,15 @@ public class CajeroRepositoryImpl implements CajeroRepository {
        return cajeroFacade.count(querySQL);
     }
 
+    @Override
+    public int countBancoIdAndActivo(Banco BANCOID, String ACTIVO) {
+       return cajeroFacade.countBancoIdAndActivo(BANCOID, ACTIVO);
+    }
+
+    @Override
+    public List<Cajero> findBancoIdAndActivoPaginacion(Banco BANCOID, String ACTIVO, Integer pageNumber, Integer rowForPage) {
+       return cajeroFacade.findBancoIdAndActivoPaginacion(BANCOID, ACTIVO, pageNumber, rowForPage);
+    }
 
   
     

@@ -33,11 +33,16 @@ public interface CajeroRepository {
     public List<Cajero> findByCajeroIdBancoIdAndActivo(Banco BANCOID, String CAJERO, String ACTIVO);
     public List<Cajero> findByDireccionCortaBancoIdAndActivo(Banco BANCOID, String DIRECCIONCORTA, String ACTIVO);
 
-    public Boolean changed(Cajero cajero);
+    
+     public Boolean changed(Cajero cajero);
 
     public List<Cajero> sql(QuerySQL querySQL);
 
     public List<Cajero> pagination(QuerySQL querySQL, Integer pageNumber, Integer rowForPage);
 
     public int count(QuerySQL querySQL);
+    
+        public int countBancoIdAndActivo(Banco BANCOID, String ACTIVO);
+        public List<Cajero> findBancoIdAndActivoPaginacion(Banco BANCOID, String ACTIVO, Integer pageNumber, Integer rowForPage);
+
 }
