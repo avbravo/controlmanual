@@ -5,7 +5,8 @@
       xmlns:template="http://xmlns.jcp.org/jsf/composite/template"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ultimaacciongenerada="http://xmlns.jcp.org/jsf/composite/ultimaacciongenerada"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <link rel="stylesheet" href="./resources/vendors/ti-icons/css/themify-icons.css"/>
         <link rel="stylesheet" href="./resources/vendors/base/vendor.bundle.base.css"/>
@@ -106,45 +107,76 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="card-body ">
+                                                    <div class="row justify-content-center align-content-center">
+                                                        <div class="col-12 col-lg-11 atm-card-marbody01 ali-desc-mov01" >
+                                                            <c:if test="${!controlmanualController.haveAccionReciente}">
+                                                                <p class="atm-title-mar01"><strong>No hay acciones agendadas</strong></p>
+                                                            </c:if>
+                                                            <h:panelGrid id="eventDetails" columns="2" cellpadding="2">
+                                                                <c:if test="${controlmanualController.haveAccionReciente}">
+                                                                    <p:outputLabel  value="Acción" styleClass="p-text-bold"/>
+                                                                    <p:outputLabel  value="#{controlmanualController.accionReciente.TITULO}"/>
+                                                                    <p:outputLabel  value="Evento" styleClass="p-text-bold"/>
+                                                                    <p:outputLabel value="#{controlmanualController.accionReciente.MENSAJE}"/>                       
+                                                                    <p:outputLabel value="Se Agendo el"/>
+                                                                    <p:outputLabel value="#{controlmanualController.showDate(controlmanualController.accionReciente.FECHAAGENDADA)}"/>
+                                                                    <p:outputLabel value="Hora Agendada"/>
+                                                                    <p:outputLabel value="#{controlmanualController.showHour(controlmanualController.accionReciente.FECHAAGENDADA)}"/>
+                                                                    <p:outputLabel value="Fecha Creación"/>
+                                                                    <p:outputLabel value="#{controlmanualController.showDate(controlmanualController.accionReciente.FECHACREACION)}"/>
+                                                                    <p:outputLabel value="Hora Creación"/>
+                                                                    <p:outputLabel value="#{controlmanualController.showHour(controlmanualController.accionReciente.FECHACREACION)}"/>
+                                                                    <p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="Fecha Ejecución"/>
+                                                                    <p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="#{controlmanualController.showDate(controlmanualController.accionReciente.FECHAEJECUCION)}"/>
+                                                                    <p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="Hora Ejecución"/>
+                                                                    <p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="#{controlmanualController.showHour(controlmanualController.accionReciente.FECHAEJECUCION)}"/>
+                                                                    <p:outputLabel value="Estado:"/> 
+                                                                    <p:outputLabel value="#{controlmanualController.accionReciente.ESTADO}"/>
+                                                                    <p:outputLabel value="Transacción No:"/>
+                                                                    <p:outputLabel value="#{controlmanualController.accionReciente.ACCIONRECIENTEID}"/>
+                                                                </c:if>
+                                                                <f:facet name="footer">
+                                                                    <p:commandButton value="PROCESANDO" 
+                                                                                     update=":form:growl"
+                                                                                     icon="pi pi-cog"
+                                                                                     rendered="#{controlmanualController.showCommandButtonProcesando}"
+                                                                                     action="#{controlmanualController.onCommandButtonSendToken()}"
+                                                                                     title="Envia el token al correo"
+                                                                                     styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
+                                                                                     >
+                                                                    </p:commandButton>
+                                                                    <p:commandButton value="FINALIZADO" 
+                                                                                     styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
+                                                                                     update=":form:growl"
+                                                                                     icon="pi pi-eject"
+                                                                                     action="#{controlmanualController.onCommandButtonSendToken()}"
+                                                                                     rendered="#{controlmanualController.showCommandButtonFinalizar}"
+                                                                                     >
 
-                                                <ultimaacciongenerada:controlmanual id="ultimaacciongeneradacontrolmanual"  />
+                                                                    </p:commandButton>
+
+
+                                                                    <p:commandButton value="REGRESAR" class="bot-regresar01" 
+                                                                                     styleClass="rounded-button ui-button-outlined ui-button-secondary" style="margin-right: .5rem"
+                                                                                     icon ="pi pi-arrow-left"
+                                                                                     action="#{controlmanualController.regresar()}"/>
+                                                                </f:facet>
+                                                            </h:panelGrid>
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
 
                                             </div>
 
                                         </div>
                                     </div>
 
-                                    <p:panelGrid columns="2"  styleClass="ui-panelgrid-blank ui-fluid"
-                                                 style="border:0px none; background-color:transparent;">
 
-                                        <p:commandButton value="PROCESANDO" 
-                                                         update=":form:growl"
-                                                         icon="pi pi-cog"
-                                                         rendered="#{controlmanualController.showCommandButtonProcesando}"
-                                                         action="#{controlmanualController.onCommandButtonSendToken()}"
-
-                                                         title="Envia el token al correo"
-                                                         styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
-                                                         >
-                                        </p:commandButton>
-                                        <p:commandButton value="FINALIZADO" 
-                                                         styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
-                                                         update=":form:growl"
-                                                         icon="pi pi-eject"
-                                                         action="#{controlmanualController.onCommandButtonSendToken()}"
-
-                                                         rendered="#{controlmanualController.showCommandButtonFinalizar}"
-                                                         >
-
-                                        </p:commandButton>
-
-
-                                        <p:commandButton value="REGRESAR" class="bot-regresar01" 
-                                                         styleClass="rounded-button ui-button-outlined ui-button-secondary" style="margin-right: .5rem"
-                                                         icon ="pi pi-arrow-left"
-                                                         action="#{controlmanualController.regresar()}"/>
-
-                                    </p:panelGrid>
 
 
 
@@ -176,20 +208,20 @@
                 </div>
                 <!-- page-body-wrapper ends -->
             </div>
-              <div style="position: absolute; left: 1px; top: 1px;">
-            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
-                <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
-                <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" />
-            </p:confirmDialog>
-</div>
+            <div style="position: absolute; left: 1px; top: 1px;">
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                    <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                    <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" />
+                </p:confirmDialog>
+            </div>
 
 
-          <div style="position: absolute; left: 1px; top: 1px;">
+            <div style="position: absolute; left: 1px; top: 1px;">
 
                 <p:dialog widgetVar="widgetVarTokenDialog" header="Token" 
-           showEffect="fade" hideEffect="fade"
+                          showEffect="fade" hideEffect="fade"
                           minHeight="40" width="350" 
-               
+
                           style="width:20%;margin:0 auto"
                           position="center center"
                           onShow="PF('widgetVarTokenDialog').initPosition()"
