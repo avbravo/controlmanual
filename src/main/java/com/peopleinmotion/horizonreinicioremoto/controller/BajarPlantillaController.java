@@ -19,7 +19,6 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Token;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
-import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
@@ -31,7 +30,6 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRepository;
-import com.peopleinmotion.horizonreinicioremoto.repository.AgendaRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.CajeroRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.EmailConfigurationRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.EstadoRepository;
@@ -41,10 +39,10 @@ import com.peopleinmotion.horizonreinicioremoto.services.AccionRecienteServices;
 import com.peopleinmotion.horizonreinicioremoto.services.AgendaHistorialServices;
 import com.peopleinmotion.horizonreinicioremoto.services.AgendaServices;
 import com.peopleinmotion.horizonreinicioremoto.services.EmailServices;
+import com.peopleinmotion.horizonreinicioremoto.services.NotificacionServices;
 import com.peopleinmotion.horizonreinicioremoto.services.TokenServices;
 import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
-import java.math.BigInteger;
 import java.util.Date;
 import lombok.Data;
 import org.primefaces.PrimeFaces;
@@ -105,6 +103,9 @@ public class BajarPlantillaController implements Serializable, Page {
     AgendaHistorialServices agendaHistorialServices;
     @Inject
     TokenServices tokenServices;
+    
+    @Inject
+    NotificacionServices notificacionServices;
 
 // </editor-fold>
     /**
@@ -390,6 +391,7 @@ public class BajarPlantillaController implements Serializable, Page {
 
                         AccionReciente accionReciente = accionRecienteServices.create(agendaOptional.get(), bank, cajero, accion, grupoAccion, estado,"SI","CM");
                         JmoordbContext.put("accionReciente", accionReciente);
+                         notificacionServices.process(bank.getBANCOID(), "BANCO");
                         /**
                          * Envio de email
                          */
@@ -401,6 +403,7 @@ public class BajarPlantillaController implements Serializable, Page {
 //                        ConsoleUtil.error("No envio el email");
 //                    }
                         MessagesForm messagesForm = new MessagesForm.Builder()
+                                .errorWindows(Boolean.FALSE)
                                 .id(accionReciente.getCAJERO())
                                 .header("Operación Exitosa")
                                 .header2("La acción se realizo exitosamente")

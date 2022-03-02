@@ -5,7 +5,6 @@
  */
 package com.peopleinmotion.horizonreinicioremoto.controller;
 
-
 import com.peopleinmotion.horizonreinicioremoto.domains.MessagesForm;
 import com.peopleinmotion.horizonreinicioremoto.domains.TokenReader;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
@@ -27,8 +26,8 @@ import com.peopleinmotion.horizonreinicioremoto.repository.TokenRepository;
 import com.peopleinmotion.horizonreinicioremoto.services.AccionRecienteServices;
 import com.peopleinmotion.horizonreinicioremoto.services.AgendaHistorialServices;
 import com.peopleinmotion.horizonreinicioremoto.services.EmailServices;
+import com.peopleinmotion.horizonreinicioremoto.services.NotificacionServices;
 import com.peopleinmotion.horizonreinicioremoto.services.TokenServices;
-import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
@@ -92,10 +91,13 @@ public class ControlmanualController implements Serializable, Page {
     @Inject
     TokenServices tokenServices;
 
+    @Inject
+    NotificacionServices notificacionServices;
+
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Boolean getShowCommandButtonProcesando() ">
     public Boolean getShowCommandButtonProcesando() {
- showCommandButtonProcesando = Boolean.FALSE;
+        showCommandButtonProcesando = Boolean.FALSE;
         try {
 
             if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId"))) {
@@ -110,12 +112,10 @@ public class ControlmanualController implements Serializable, Page {
         return showCommandButtonProcesando;
     }
 
-   // </editor-fold> 
-    
-        
-        // <editor-fold defaultstate="collapsed" desc="Boolean getShowCommandButtonFinalizar() ">
+    // </editor-fold> 
+    // <editor-fold defaultstate="collapsed" desc="Boolean getShowCommandButtonFinalizar() ">
     public Boolean getShowCommandButtonFinalizar() {
-         showCommandButtonFinalizar = Boolean.FALSE;
+        showCommandButtonFinalizar = Boolean.FALSE;
         try {
             if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoProcesandoId"))) {
                 showCommandButtonFinalizar = Boolean.TRUE;
@@ -141,7 +141,7 @@ public class ControlmanualController implements Serializable, Page {
     @PostConstruct
     public void init() {
         try {
-            
+
             updateByOtherUser = Boolean.FALSE;
             if (JmoordbContext.get("user") == null) {
 
@@ -150,15 +150,15 @@ public class ControlmanualController implements Serializable, Page {
                 grupoAccionList = new ArrayList<>();
                 user = (Usuario) JmoordbContext.get("user");
                 bank = (Banco) JmoordbContext.get("banco");
-              //  findAccionReciente();
-               accionReciente = (AccionReciente) JmoordbContext.get("accionRecienteDashboard");
+                //  findAccionReciente();
+                accionReciente = (AccionReciente) JmoordbContext.get("accionRecienteDashboard");
                 JsfUtil.copyBeans(accionRecienteOld, accionReciente);
                 cajero = (Cajero) JmoordbContext.get("cajero");
                 haveAccionReciente = Boolean.TRUE;
             }
 
         } catch (Exception e) {
-     JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
 
         }
 
@@ -170,7 +170,7 @@ public class ControlmanualController implements Serializable, Page {
         try {
             grupoAccionList = grupoAccionRepository.findAll();
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+" " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -189,7 +189,7 @@ public class ControlmanualController implements Serializable, Page {
 
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionEncenderSubirPlantillaId"))) {
                 JmoordbContext.put("pageInView", "subirplantilla.xhtml");
-                        
+
                 return "subirplantilla.xhtml";
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionReinicioRemotoId"))) {
@@ -197,13 +197,13 @@ public class ControlmanualController implements Serializable, Page {
                 return "reinicioremoto.xhtml";
             }
             if (grupoAccion.getGRUPOACCIONID().equals(JsfUtil.contextToBigInteger("grupoAccionBajarPlantillaId"))) {
-                JmoordbContext.put("pageInView","bajarplantilla.xhtml");
+                JmoordbContext.put("pageInView", "bajarplantilla.xhtml");
                 return "bajarplantilla.xhtml";
             }
             JsfUtil.warningMessage("No se identifico el grupo de accion para continuar esta operación");
 
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -229,7 +229,7 @@ public class ControlmanualController implements Serializable, Page {
 
             }
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " "+ e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             PrimeFaces.current().ajax().update("form:growl");
 
         }
@@ -269,9 +269,10 @@ public class ControlmanualController implements Serializable, Page {
             /**
              * Valida si fue cambiado por otro usuario
              */
-            
+
             if (accionRecienteServices.changed(accionRecienteOld)) {
                 MessagesForm messagesForm = new MessagesForm.Builder()
+                        .errorWindows(Boolean.TRUE)
                         .id(accionReciente.getCAJERO())
                         .header("Operación Incompleta")
                         .header2("La acción no fue completada")
@@ -297,15 +298,15 @@ public class ControlmanualController implements Serializable, Page {
 
             accionReciente.setESTADOID(estado.getESTADOID());
             accionReciente.setESTADO(estado.getESTADO());
-           // accionReciente.setFECHA(DateUtil.getFechaHoraActual());
+            accionReciente.setFECHA(DateUtil.getFechaHoraActual());
             accionReciente.setFECHAEJECUCION(DateUtil.getFechaHoraActual());
             if (accionRecienteRepository.update(accionReciente)) {
                 //Actualizar la agenda
-
+                notificacionServices.process(bank.getBANCOID(), "BANCO");
                 Optional<Agenda> agendaOptional = agendaRepository.findByAgendaId(accionReciente.getAGENDAID());
                 if (!agendaOptional.isPresent()) {
                     JsfUtil.warningMessage("No se encontro registros de ese agendamiento");
-                    
+
                     return "";
                 } else {
                     Agenda agenda = agendaOptional.get();
@@ -320,7 +321,8 @@ public class ControlmanualController implements Serializable, Page {
                         /*
                         *Mensajes exitosos
                          */
-                         MessagesForm messagesForm = new MessagesForm.Builder()
+                        MessagesForm messagesForm = new MessagesForm.Builder()
+                                .errorWindows(Boolean.FALSE)
                                 .id(accionReciente.getCAJERO())
                                 .header("Operación Exitosa")
                                 .header2("La acción se realizo exitosamente")
@@ -366,7 +368,7 @@ public class ControlmanualController implements Serializable, Page {
              * Valida si fue cambiado por otro usuario
              */
             if (accionRecienteServices.changed(accionRecienteOld)) {
-                  MessagesForm messagesForm = new MessagesForm.Builder()
+                MessagesForm messagesForm = new MessagesForm.Builder()
                         .id(accionReciente.getCAJERO())
                         .header("Operación Incompleta")
                         .header2("La acción no fue completada")
@@ -393,9 +395,10 @@ public class ControlmanualController implements Serializable, Page {
 
             accionReciente.setESTADOID(estado.getESTADOID());
             accionReciente.setESTADO(estado.getESTADO());
+            accionReciente.setFECHA(DateUtil.getFechaHoraActual());
             if (accionRecienteRepository.update(accionReciente)) {
                 //Actualizar la agenda
-
+                notificacionServices.process(bank.getBANCOID(), "BANCO");
                 Optional<Agenda> agendaOptional = agendaRepository.findByAgendaId(accionReciente.getAGENDAID());
                 if (!agendaOptional.isPresent()) {
                     JsfUtil.warningMessage("No se encontro registros de ese agendamiento");
@@ -409,12 +412,13 @@ public class ControlmanualController implements Serializable, Page {
                         agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIO ESTADO A EJECUTADA", user);
 
                         JmoordbContext.put("accionReciente", accionReciente);
-                 emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIO ESTADO A EJECUTADA", user, cajero, bank);
-                   
+                        emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIO ESTADO A EJECUTADA", user, cajero, bank);
+
                         /*
                         *Mensajes exitosos
                          */
-                          MessagesForm messagesForm = new MessagesForm.Builder()
+                        MessagesForm messagesForm = new MessagesForm.Builder()
+                                .errorWindows(Boolean.FALSE)
                                 .id(accionReciente.getCAJERO())
                                 .header("Operación Exitosa")
                                 .header2("La acción se realizo exitosamente")
@@ -447,7 +451,7 @@ public class ControlmanualController implements Serializable, Page {
     // <editor-fold defaultstate="collapsed" desc="reagendarAccion() ">
     public String reagendarAccion() {
         try {
-
+            accionReciente.setFECHA(DateUtil.getFechaHoraActual());
             if (accionRecienteRepository.update(accionReciente)) {
                 //Actualizar la agenda
                 Optional<Agenda> agendaOptional = agendaRepository.findByAgendaId(accionReciente.getAGENDAID());
@@ -466,7 +470,8 @@ public class ControlmanualController implements Serializable, Page {
                         /*
                         *Mensajes exitosos
                          */
-                          MessagesForm messagesForm = new MessagesForm.Builder()
+                        MessagesForm messagesForm = new MessagesForm.Builder()
+                                .errorWindows(Boolean.FALSE)
                                 .id(accionReciente.getCAJERO())
                                 .header("Operación Exitosa")
                                 .header2("La acción se realizo exitosamente")
@@ -489,7 +494,7 @@ public class ControlmanualController implements Serializable, Page {
                 JsfUtil.warningMessage("No se pudo actualizar la agenda reciente");
             }
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -506,7 +511,7 @@ public class ControlmanualController implements Serializable, Page {
             JmoordbContext.put("pageInView", retorno);
             return retorno;
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " "+ e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }
@@ -524,25 +529,23 @@ public class ControlmanualController implements Serializable, Page {
     // <editor-fold defaultstate="collapsed" desc="String sendToken()">
     public String sendToken() {
         try {
-            
-            tokenEnviado = Boolean.FALSE;
-Token token = tokenServices.supplier();
 
-            
+            tokenEnviado = Boolean.FALSE;
+            Token token = tokenServices.supplier();
+
             if (tokenRepository.create(token)) {
-    //Envia el token sincrono y valida si fue o no enviado.
+                //Envia el token sincrono y valida si fue o no enviado.
                 if (!emailServices.sendTokenToEmailSincrono(token, user)) {
                     JsfUtil.errorMessage("No se logro enviar el token a su correo. Reintente la operación");
                     tokenEnviado = Boolean.FALSE;
-                  
+
                 } else {
                     JsfUtil.successMessage("Se envio el token a su correo. Reviselo por favor");
                     tokenEnviado = Boolean.TRUE;
-                   
-        openDialogToken();
+
+                    openDialogToken();
                 }
                 //Envia el token al usuario
-              
 
             } else {
                 JsfUtil.warningMessage("No se pudo generar el token. Repita la acción");
@@ -558,10 +561,10 @@ Token token = tokenServices.supplier();
 
     public Boolean validateToken() {
         try {
-           String  tokenIngresado=tokenReader.getNumber1().trim()+tokenReader.getNumber2().trim()+tokenReader.getNumber3().trim()+tokenReader.getNumber4().trim();
+            String tokenIngresado = tokenReader.getNumber1().trim() + tokenReader.getNumber2().trim() + tokenReader.getNumber3().trim() + tokenReader.getNumber4().trim();
             return tokenServices.validateToken(user, tokenIngresado);
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+ e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return Boolean.FALSE;
     }
@@ -584,16 +587,15 @@ Token token = tokenServices.supplier();
 
         try {
 
-                 tokenReader = tokenServices.marcarToken(numero, tokenReader);
+            tokenReader = tokenServices.marcarToken(numero, tokenReader);
 
         } catch (Exception e) {
-            JsfUtil.errorMessage(JsfUtil.nameOfMethod()+ " "+ e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
         return "";
     }
 // </editor-fold> 
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="String openDialogToken()">
     public String openDialogToken() {
         try {

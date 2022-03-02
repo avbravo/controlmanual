@@ -5,7 +5,8 @@
       xmlns:template="http://xmlns.jcp.org/jsf/composite/template"
       xmlns:p="http://primefaces.org/ui"
           
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <link rel="stylesheet" href="./resources/vendors/ti-icons/css/themify-icons.css"/>
         <link rel="stylesheet" href="./resources/vendors/base/vendor.bundle.base.css"/>
@@ -90,38 +91,66 @@
                                                 <div class="card-header atm-head01 card-bor-top01">
                                                     <div class="row justify-content-center">
                                                         <div class="col-12 col-lg-11">
-                                                            <p class="card-title text-md-center text-xl-left textmvl01
-                                                               "><font color="#fff"> <p:outputLabel value="#{messagesFormController.messagesForm.header2}"/> </font></p>
+                                                            <p class="card-title text-md-center text-xl-left textmvl01">
+                                                                <font color="#fff"> <p:outputLabel value="#{messagesFormController.messagesForm.header2}"/> 
+                                                                </font></p>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="card-body atm-body02">
-                                                    <div class="row justify-content-center align-content-center atm-row01">
-                                                        <div class="col-1 col-lg-auto atm-card-marbody01 atm-mar01" >
-                                                            <p:graphicImage name="#{messagesFormController.messagesForm.image}"
-                                                                            library="#{messagesFormController.messagesForm.library}" alt="" class="card-icono01" />
+                                                
+                                                         <c:if test="${messagesFormController.messagesForm.errorWindows}">
+                                                    <div class="card-body atm-body02 bg-danger text-white">
+                                                        <div class="row justify-content-center align-content-center atm-row01">
+                                                            <div class="col-1 col-lg-auto atm-card-marbody01 atm-mar01" >
+                                                                <p:graphicImage name="#{messagesFormController.messagesForm.image}"
+                                                                                library="#{messagesFormController.messagesForm.library}" alt="" class="card-icono01" />
 
-                                                        </div>
-                                                        <div class="col-2 col-lg-auto atm-card-marbody01" >
-                                                            <button type="button" class="btn btn-rounded btn-fw text-nowrap btn-secondary btn-sm" >
-                                                                #{messagesFormController.messagesForm.id}
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-8 col-lg-9 atm-card-marbody01 atm-mar02" >
-                                                            <dl>
-                                                                <dd class="atm-title-mar01"><strong></strong></dd>
-                                                                <dd class="atm-title-mar01"></dd>
-                                                            </dl>
+                                                            </div>
+                                                            <div class="col-2 col-lg-auto atm-card-marbody01" >
+                                                                <button type="button" class="btn btn-rounded btn-fw text-nowrap btn-secondary btn-sm" >
+                                                                    #{messagesFormController.messagesForm.id}
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-8 col-lg-9 atm-card-marbody01 atm-mar02" >
+                                                                <dl>
+                                                                    <dd class="atm-title-mar01"><strong></strong></dd>
+                                                                    <dd class="atm-title-mar01"></dd>
+                                                                </dl>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </c:if>
+                                                <c:if test="${!messagesFormController.messagesForm.errorWindows}">
+                                                    <div class="card-body atm-body02  text-white">
+                                                        <div class="row justify-content-center align-content-center atm-row01">
+                                                            <div class="col-1 col-lg-auto atm-card-marbody01 atm-mar01" >
+                                                                <p:graphicImage name="#{messagesFormController.messagesForm.image}"
+                                                                                library="#{messagesFormController.messagesForm.library}" alt="" class="card-icono01" />
 
+                                                            </div>
+                                                            <div class="col-2 col-lg-auto atm-card-marbody01" >
+                                                                <button type="button" class="btn btn-rounded btn-fw text-nowrap btn-secondary btn-sm" >
+                                                                    #{messagesFormController.messagesForm.id}
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-8 col-lg-9 atm-card-marbody01 atm-mar02" >
+                                                                <dl>
+                                                                    <dd class="atm-title-mar01"><strong></strong></dd>
+                                                                    <dd class="atm-title-mar01"></dd>
+                                                                </dl>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                              
+                                                
+                                                
                                                 <div class="card-body ">
                                                     <div class="row justify-content-center align-content-center">
                                                         <div class="col-12 col-lg-11 atm-card-marbody01 ali-desc-mov01" >
 
-                                                            <dd class="atm-title-mar01"><strong> Evento realizado: #{messagesFormController.messagesForm.titulo}</strong></dd>
+                                                            <dd class="atm-title-mar01"><strong> Evento: #{messagesFormController.messagesForm.titulo}</strong></dd>
                                                             <dd class="atm-title-mar01"><p:outputLabel value="#{messagesFormController.messagesForm.mensaje}"/></dd>
                                                             
 

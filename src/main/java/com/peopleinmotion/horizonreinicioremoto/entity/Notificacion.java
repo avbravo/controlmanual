@@ -39,7 +39,7 @@ import lombok.Data;
 @Cacheable(false)
 public class Notificacion implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @SequenceGenerator(name = "NOTIFICACION_GEN", sequenceName = "NOTIFICACION_SEQ", allocationSize = 1)

@@ -37,10 +37,13 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import lombok.Data;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.LazyScheduleModel;
@@ -54,7 +57,7 @@ import org.primefaces.model.ScheduleModel;
 @Named
 @ViewScoped
 @Data
-public class DashboardController implements Serializable, Page {
+public class CalendarioController implements Serializable, Page {
 
 // <editor-fold defaultstate="collapsed" desc="field ">
     private static final long serialVersionUID = 1L;
@@ -78,7 +81,8 @@ public class DashboardController implements Serializable, Page {
     private TotalesEstadoBanco totalesEstadoBanco = new TotalesEstadoBanco();
 
     Banco selectOneMenuBancoValue = new Banco();
-    private Notificacion notificacionOld = new Notificacion();
+    private Boolean showDialog=Boolean.FALSE;
+      private Notificacion notificacionOld = new Notificacion();
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="paginator ">
     Paginator paginator = new Paginator();
@@ -105,14 +109,14 @@ public class DashboardController implements Serializable, Page {
     AccionRecienteRepository accionRecienteRepository;
     @Inject
     TotalesEstadoBancoServices totalesEstadoBancoServices;
-    @Inject
+      @Inject
     NotificacionServices notificacionServices;
 // </editor-fold>
 
     /**
      * Creates a new instance of DashboadController
      */
-    public DashboardController() {
+    public CalendarioController() {
     }
 
     // <editor-fold defaultstate="collapsed" desc="init()">
@@ -122,24 +126,27 @@ public class DashboardController implements Serializable, Page {
             user = (Usuario) JmoordbContext.get("user");
             banco = (Banco) JmoordbContext.get("banco");
             
-             Optional<Notificacion> optional = notificacionServices.findByIDANDTIPOID(banco.getBANCOID(), "BANCO");
+             /**
+             * Para validar las notificaciones
+             */
+            Optional<Notificacion> optional = notificacionServices.findByIDANDTIPOID(banco.getBANCOID(), "BANCO");
             if (optional.isPresent()) {
                 notificacionOld = optional.get();
             }
             //    cajeroList = new ArrayList<>();
             accionRecienteList = new ArrayList<>();
             accionRecienteScheduleList = new ArrayList<>();
-
-            if (JmoordbContext.get("countViewAction") == null) {
-                JmoordbContext.put("countViewAction", 0);
-            }
-            
+            showDialog=Boolean.FALSE;
             if(JsfUtil.contextToInteger("rowForPage") != null){
                     rowForPage=JsfUtil.contextToInteger("rowForPage");
                 }
 
+
+            if (JmoordbContext.get("countViewAction") == null) {
+                JmoordbContext.put("countViewAction", 0);
+            }
             Integer countViewAction = Integer.parseInt(JmoordbContext.get("countViewAction").toString());
-           
+
             lazyEventModel = new LazyScheduleModel() {
 
                 @Override
@@ -150,21 +157,19 @@ public class DashboardController implements Serializable, Page {
 
             if (countViewAction == 0) {
 
-                QuerySQL querySQL = new QuerySQL.Builder()
-                        .query("SELECT b FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI' ORDER BY b.BANCO ASC ")
-                        .count("SELECT COUNT(b) FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI'")
-                        .build();
-                bancoList = bancoRepository.sql(querySQL);
+//                QuerySQL querySQL = new QuerySQL.Builder()
+//                        .query("SELECT b FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI' ORDER BY b.BANCO ASC ")
+//                        .count("SELECT COUNT(b) FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI'")
+//                        .build();
+//                bancoList = bancoRepository.sql(querySQL);
                 selectOneMenuBancoValue = banco;
-              
-             
-                fillCarouselAccionReciente();
-                calcularTotales();
+
+//                fillCarouselAccionReciente();
+//                calcularTotales();
                 loadSchedule();
-          
 
             } else {
-               
+
                 selectOneMenuBancoValue = banco;
             }
 
@@ -186,9 +191,8 @@ public class DashboardController implements Serializable, Page {
         try {
             Integer countViewAction = Integer.parseInt(JmoordbContext.get("countViewAction").toString());
 
-
             JmoordbContext.put("countViewAction", 0);
-       
+
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
         }
@@ -220,7 +224,7 @@ public class DashboardController implements Serializable, Page {
 // <editor-fold defaultstate="collapsed" desc="onCommandButtonSelectCajero ">
     public String onCommandButtonSelectCajero(Cajero cajero) {
         try {
-            ConsoleUtil.greenBackground(" onCommandButtonSelectCajero");
+           
             JmoordbContext.put("cajero", cajero);
 
             JsfUtil.infoDialog("Selecciono el cajero ", cajero.getCAJEROID().toString());
@@ -313,8 +317,10 @@ public class DashboardController implements Serializable, Page {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-        JmoordbContext.put("pageInView", "controlmanual.xhtml");
-        return "controlmanual.xhtml";
+
+        JmoordbContext.put("pageInView", "reagendar.xhtml");
+        return "reagendar.xhtml";
+
     }
 // </editor-fold>
 
@@ -328,8 +334,8 @@ public class DashboardController implements Serializable, Page {
 
                     Date DESDE = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(start), 0, 00);
                     Date HASTA = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(end), 23, 59);
-                    //accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
-                    accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDateEstadoPendienteOProgreso(banco.getBANCOID(), DESDE, HASTA, "SI", JsfUtil.contextToBigInteger("estadoProcesandoId"), JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId"));
+                    accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
+
                     if (accionRecienteScheduleList == null || accionRecienteScheduleList.isEmpty()) {
                         JsfUtil.successMessage("No hay registros de acciones recientes");
                     } else {
@@ -394,10 +400,7 @@ public class DashboardController implements Serializable, Page {
     // <editor-fold defaultstate="collapsed" desc="String onEventSelect(SelectEvent<ScheduleEvent<?>> selectEvent)">
     public String onEventSelect(SelectEvent<ScheduleEvent<?>> selectEvent) {
         try {
-if(selectEvent == null){
-                JsfUtil.warningMessage("No se puede procesar este evento");
-                return "";
-            }
+showDialog=Boolean.TRUE;
             event = selectEvent.getObject();
             String id = event.getId();
 
@@ -420,14 +423,17 @@ if(selectEvent == null){
                 JmoordbContext.put("cajero", cajeroSelected);
             }
             JmoordbContext.put("formularioRetorno", "dashboard");
-	
+ PrimeFaces.current().ajax().update("widgetVarscheduleDialog");
+        PrimeFaces.current().executeScript("PF('widgetVarscheduleDialog').initPosition()");
+            PrimeFaces.current().executeScript("PF('widgetVarscheduleDialog').show()");
 
+ ConsoleUtil.info("Actualizo el dialogo");
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + ": " + e.getLocalizedMessage());
         }
 
-     return "";
-     //return "";
+        return "";
+        //return "";
 
     }
 
@@ -447,7 +453,7 @@ if(selectEvent == null){
      */
     public String selectOneMenuBancoChanged() {
         try {
-           
+
             JmoordbContext.put("banco", selectOneMenuBancoValue);
             calcularTotales();
             fillCarouselAccionReciente();
@@ -466,18 +472,20 @@ if(selectEvent == null){
     }
 // </editor-fold>
 
-
     // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoSolicitado()">
     public Boolean renderedByEstadoSolicitado() {
         return accionRecienteServices.renderedByEstadoSolicitado(accionRecienteSelected);
 
     }
+
     // </editor-fold>
- // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoFinalizado()">
-    public Boolean renderedByEstadoFinalizado() {
+    // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoFinalizado()">
+    public Boolean renderedByEstadoFinalizado(AccionReciente accionRecienteSelected) {
+
         return accionRecienteServices.renderedByEstadoFinalizado(accionRecienteSelected);
 
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoEnProceso()">
     public Boolean renderedByEstadoEnProceso() {
@@ -485,8 +493,8 @@ if(selectEvent == null){
 
     }
     // </editor-fold>
-    
- // <editor-fold defaultstate="collapsed" desc="cortarTexto(String texto)">
+
+    // <editor-fold defaultstate="collapsed" desc="cortarTexto(String texto)">
     public String cortarTexto(String texto) {
         try {
             Integer limite = 35;
@@ -506,8 +514,8 @@ if(selectEvent == null){
         return texto;
     }
 // </editor-fold>
-   
-    // <editor-fold defaultstate="collapsed" desc="onIdle() ">
+    
+       // <editor-fold defaultstate="collapsed" desc="onIdle()">
 
     public void onIdle() {
         try {
@@ -522,8 +530,8 @@ if(selectEvent == null){
                 }
 
                 fillCarouselAccionReciente();
-               loadSchedule();
-                     calcularTotales();
+                loadSchedule();
+                      calcularTotales();
             }
 
         } catch (Exception e) {
@@ -532,7 +540,8 @@ if(selectEvent == null){
 
     }
 // </editor-fold>
-        // <editor-fold defaultstate="collapsed" desc="onActive()">
+    
+      // <editor-fold defaultstate="collapsed" desc="onActive() ">
     public void onActive() {
    try {
             ConsoleUtil.info("onActive() " + DateUtil.fechaHoraActual());

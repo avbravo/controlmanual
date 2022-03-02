@@ -39,6 +39,7 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
     public AccionRecienteFacade() {
         super(AccionReciente.class);
     }
+
 // <editor-fold defaultstate="collapsed" desc="Optional<AccionReciente> find(BigInteger id)">
 
     public Optional<AccionReciente> find(BigInteger id) {
@@ -127,11 +128,10 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
             
             Query query = em.createQuery("SELECT a FROM AccionReciente a WHERE a.BANCOID = :BANCOID AND a.CAJEROID = :CAJEROID AND (a.ESTADOID <= 2) ORDER BY a.AGENDAID DESC");
                  query.setParameter("BANCOID", BANCOID).setParameter("CAJEROID", CAJEROID);
-              query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+          query.setHint(QueryHints.REFRESH, HintValues.TRUE);
             query.setFirstResult(0);
             query.setMaxResults(1);
-            //Agregado para el refresh
-      
+            
             AccionReciente accionReciente = (AccionReciente) query.getSingleResult();
             return Optional.of(accionReciente);
         } catch (Exception ex) {
@@ -241,6 +241,27 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
     }
 
 // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="List<AccionReciente> findBancoIdEntreFechasTypeDateEstadoPendienteOProgreso(BigInteger BANCOID, Date DESDE, Date HASTA, String ACTIVO, BigInteger ESTADOIDPROCESANDO , BigInteger ESTADOIDEJECUTADA)">
+   public List<AccionReciente> findBancoIdEntreFechasTypeDateEstadoPendienteOProgreso(BigInteger BANCOID, Date DESDE, Date HASTA, String ACTIVO, BigInteger ESTADOIDPROCESANDO , BigInteger ESTADOIDEJECUTADA) {
+        List<AccionReciente> list = new ArrayList<>();
+        try {
+             
+            Query query = em.createQuery("SELECT a FROM AccionReciente a WHERE a.BANCOID = :BANCOID AND (a.ESTADOID = :ESTADOIDPROCESANDO OR a.ESTADOID = :ESTADOIDEJECUTADA)    AND a.ACTIVO = :ACTIVO AND a.FECHAAGENDADA BETWEEN :DESDE AND :HASTA");
+           query.setParameter("BANCOID", BANCOID);
+           query.setParameter("ACTIVO", ACTIVO);
+           query.setParameter("ESTADOIDPROCESANDO", ESTADOIDPROCESANDO);
+           query.setParameter("ESTADOIDEJECUTADA", ESTADOIDEJECUTADA);
+            query.setParameter("DESDE", DESDE, TemporalType.TIMESTAMP);
+           query.setParameter("HASTA", HASTA, TemporalType.TIMESTAMP);
+        
+          list=  query.getResultList();
+        } catch (Exception ex) {
+          JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
+        }
+        return list;
+    }
+
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="List<AccionReciente> findBancoIdEntreFechasTypeLocalDateTime(BigInteger BANCOID, LocalDateTime DESDE, LocalDateTime HASTA, String ACTIVO)">
 
     public List<AccionReciente> findBancoIdEntreFechasTypeLocalDateTime(BigInteger BANCOID, LocalDateTime DESDE, LocalDateTime HASTA, String ACTIVO) {
@@ -263,5 +284,6 @@ public class AccionRecienteFacade extends AbstractFacade<AccionReciente> {
 
 // </editor-fold>
     
+
 
 }

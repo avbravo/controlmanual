@@ -55,7 +55,21 @@ public class EmailServicesImpl implements EmailServices {
         try {
 
             String supervisadoMessage = "";
-
+String autorizado="";
+switch(accionReciente.getAUTORIZADO()){
+    case "SI":
+        autorizado="Autorizado";
+        break;
+                
+    case "NO":
+          autorizado="Denegado";
+        break;
+                
+    case "PE":
+          autorizado="Pendiente";
+                break;
+                
+}
             messages = "\n  "
                     + "\n----------------------ACCION RECIENTE---------------------------------------"
                     + "\n"
@@ -74,6 +88,9 @@ public class EmailServicesImpl implements EmailServices {
                     + banco.getBANCO()
                     + "\nEstado: "
                     + accionReciente.getESTADO()
+                     + "\nAutorizado: "
+                    + accionReciente.getAUTORIZADO()
+                    +autorizado
                     + "\nAccion generada por: "
                     + usuario.getNOMBRE()
                     + "\n\nTransacción No.: "
