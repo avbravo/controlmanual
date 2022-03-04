@@ -55,45 +55,44 @@ public class EmailServicesImpl implements EmailServices {
         try {
 
             String supervisadoMessage = "";
-String autorizado="";
-switch(accionReciente.getAUTORIZADO()){
-    case "SI":
-        autorizado="Autorizado";
-        break;
-                
-    case "NO":
-          autorizado="Denegado";
-        break;
-                
-    case "PE":
-          autorizado="Pendiente";
-                break;
-                
-}
+            String autorizado = "";
+            switch (accionReciente.getAUTORIZADO()) {
+                case "SI":
+                    autorizado = "Autorizado";
+                    break;
+
+                case "NO":
+                    autorizado = "Denegado";
+                    break;
+
+                case "PE":
+                    autorizado = "Pendiente";
+                    break;
+
+            }
             messages = "\n  "
                     + "\n----------------------ACCION RECIENTE---------------------------------------"
                     + "\n"
                     + header
                     + "\n"
                     + accionReciente.getTITULO()
-                    + "\nFecha : "
+                    + "\nFecha              : "
                     + DateUtil.showDate(accionReciente.getFECHAAGENDADA())
                     + " "
                     + DateUtil.showHour(accionReciente.getFECHAAGENDADA())
-                    + "\nMensaje: "
+                    + "\nMensaje            : "
                     + accionReciente.getMENSAJE()
-                    + "\nCajero: "
+                    + "\nCajero             : "
                     + cajero.getCAJERO()
-                    + "\nBanco: "
+                    + "\nBanco              : "
                     + banco.getBANCO()
-                    + "\nEstado: "
+                    + "\nEstado             : "
                     + accionReciente.getESTADO()
-                     + "\nAutorizado: "
-                    + accionReciente.getAUTORIZADO()
-                    +autorizado
-                    + "\nAccion generada por: "
+                    + "\nAutorizado         : "
+                    + autorizado
+                    + "\nAcción generada por: "
                     + usuario.getNOMBRE()
-                    + "\n\nTransacción No.: "
+                    + "\n\nTransacción No.  : "
                     + accionReciente.getACCIONRECIENTEID()
                     + "\n\n\b"
                     + "\nPor favor no responda este correo..."
