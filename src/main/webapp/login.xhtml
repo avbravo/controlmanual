@@ -15,12 +15,12 @@
         <!--<h:outputStylesheet library="css" name="styles.css"/>-->
         <meta name="referrer" content="no-referrer"/>
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
-         <f:metadata>
-             <f:viewAction    action="#{accessController.browserEventFromLogin('dashboard.xhtml')}"/>
+        <f:metadata>
+            <f:viewAction    action="#{accessController.browserEventFromLogin('dashboard.xhtml')}"/>
         </f:metadata>
     </h:head>
     <h:body>
-           
+
         <div class="container-scroller">
             <div class="container-fluid page-body-wrapper full-page-wrapper">
                 <div class="content-wrapper d-flex align-items-center auth px-0">
@@ -48,15 +48,12 @@
                                 <h4 class="text-center">Control Manual</h4>
                                 <h6 class="font-weight-light text-center">Ingrese credenciales </h6>
                                 <h:form id="form" prependId="false" class="pt-3">
-                              
-                                    <p:growl  id="growl" >
-                                        <p:autoUpdate/>
-                                    </p:growl>
+
+
                                     <div class="form-group">
                                         <p:outputLabel for="username">Usuario</p:outputLabel>
                                         <h:inputText id="username" class="form-control form-control-lg rounded-pill" pt:placeholder="Usuario"
-                                                     required="true"
-                                                     requiredMessage="Ingrese el nombre de usuario"
+
                                                      value="#{accessController.username}">
                                         </h:inputText>
                                         <p:message for="username" severity="error"/>
@@ -65,16 +62,15 @@
                                     <div class="form-group">
                                         <p:outputLabel for="password">Password</p:outputLabel>
                                         <h:inputSecret  id="password"
-                                                        required="true"
-                                                        requiredMessage="Ingrese el password"
+
                                                         class="form-control form-control-lg rounded-pill" pt:placeholder="Contraseña"
                                                         value="#{accessController.password}"
                                                         ></h:inputSecret>
                                         <p:message for="password" severity="error"/>
 
                                     </div>
-                                    
-                                    
+
+
                                     <div class="form-group">
                                         <p:selectOneMenu id="selectOneMenuBanco" 
                                                          class="form-control rounded-pill solosel01"
@@ -106,9 +102,12 @@
 
 
                                     </div>
-                                 
 
 
+
+                                    <p:messages  id="growl"  showDetail="true" closable="true">
+
+                                    </p:messages>
 
 
                                 </h:form>
