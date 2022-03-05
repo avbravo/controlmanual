@@ -7,15 +7,10 @@ package com.peopleinmotion.horizonreinicioremoto.entity;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collection;
-import static java.util.stream.Collectors.toCollection;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,16 +18,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.Data;
 
 /**
  *
  * @author avbravo
  */
+@Data
 @Entity
 @Table(name = "USUARIO")
 @NamedQueries({
@@ -101,6 +97,24 @@ public class Usuario implements Serializable {
 
     @Column(name = "ACTIVO")
     private String ACTIVO;
+    
+      @Basic(optional = false)
+    @NotNull
+    @Column(name = "MODULOBANCO")
+    private String MODULOBANCO;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "MODULOTECNICO")
+    private String MODULOTECNICO;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "MODULOCONTROLMANUAL")
+    private String MODULOCONTROLMANUAL;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "MODULOMANTENIMIENTO")
+    private String MODULOMANTENIMIENTO;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "ORDEN")

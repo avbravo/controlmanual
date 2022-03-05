@@ -83,8 +83,6 @@ public class AccessController implements Serializable, Page {
         try {
             intentos = 0;
 
-           
-
             /**
              * Lee las configuraciones iniciales
              */
@@ -112,11 +110,11 @@ public class AccessController implements Serializable, Page {
     // <editor-fold defaultstate="collapsed" desc="String login()">
     public String login() {
         try {
-              if(username == null  || username.equals("")){
+            if (username == null || username.equals("")) {
                 JsfUtil.warningMessage("Ingrese el nombre del usuario");
                 return "";
             }
-            if(password== null  || password.equals("")){
+            if (password == null || password.equals("")) {
                 JsfUtil.warningMessage("Ingrese el password del usuario");
                 return "";
             }
@@ -127,6 +125,10 @@ public class AccessController implements Serializable, Page {
             }
 
             if (accessServices.validateCredentials(usuario, username, password, selectOneMenuBancoValue)) {
+                if (usuario.getMODULOCONTROLMANUAL().toUpperCase().equals("NO")) {
+                    JsfUtil.warningMessage("No tiene permisos para usar este módulo ");
+                    return "";
+                }
                 setLoged(Boolean.TRUE);
                 JsfUtil.successMessage("Bienvenido " + usuario.getNOMBRE());
 
@@ -147,8 +149,8 @@ public class AccessController implements Serializable, Page {
 
                 JmoordbContext.put("countViewAction", 0);
                 JmoordbContext.put("pageInView", "dashboard.xhtml");
-intentos=0;
-  return "dashboard.xhtml";
+                intentos = 0;
+                return "dashboard.xhtml";
 //               return "index.xhtml";
             } else {
                 intentos++;
