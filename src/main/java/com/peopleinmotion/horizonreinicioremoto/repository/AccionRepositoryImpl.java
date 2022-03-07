@@ -121,5 +121,5 @@ public class AccionRepositoryImpl implements AccionRepository {
     public int count(QuerySQL querySQL) {
        return accionFacade.count(querySQL);
     }
-    
+  
 }

@@ -6,6 +6,7 @@
 package com.peopleinmotion.horizonreinicioremoto.repository;
 
 import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
+import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
 import com.peopleinmotion.horizonreinicioremoto.paginator.QuerySQL;
 import java.math.BigInteger;
@@ -39,4 +40,5 @@ public interface AccionRepository {
     public List<Accion> pagination(QuerySQL querySQL, Integer pageNumber, Integer rowForPage);
 
     public int count(QuerySQL querySQL);
+      
 }

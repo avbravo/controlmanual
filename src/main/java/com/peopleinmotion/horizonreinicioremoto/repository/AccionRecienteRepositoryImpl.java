@@ -172,4 +172,14 @@ public class AccionRecienteRepositoryImpl implements AccionRecienteRepository {
        return accionRecienteFacade.count(querySQL);
     }
 
+    
+    @Override
+    public int countBancoIdAndActivo(BigInteger BANCOID, String ACTIVO) {
+       return accionRecienteFacade.countBancoIdAndActivo(BANCOID, ACTIVO);
+    }
+
+    @Override
+    public List<AccionReciente> findBancoIdAndActivoPaginacion(BigInteger BANCOID, String ACTIVO, Integer pageNumber, Integer rowForPage) {
+        return accionRecienteFacade.findBancoIdAndActivoPaginacion(BANCOID, ACTIVO, pageNumber, rowForPage);
+    }
 }

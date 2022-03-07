@@ -12,6 +12,8 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
+import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,4 +31,5 @@ public interface AccionRecienteServices {
     public Boolean renderedByEstadoEnProceso(AccionReciente accionReciente);
 
     public Boolean changed(AccionReciente accionReciente);
+   
 }

@@ -14,6 +14,8 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Estado;
 import com.peopleinmotion.horizonreinicioremoto.entity.GrupoAccion;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
+import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -142,4 +144,5 @@ public class AccionRecienteServicesImpl implements AccionRecienteServices {
     }
 
     // </editor-fold>
+     
 }
