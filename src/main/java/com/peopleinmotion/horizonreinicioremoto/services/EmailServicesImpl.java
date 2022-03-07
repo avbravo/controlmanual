@@ -88,7 +88,7 @@ public class EmailServicesImpl implements EmailServices {
                     + banco.getBANCO()
                     + "\nEstado             : "
                     + accionReciente.getESTADO()
-                    + "\nAutorizado         : "
+                    + "\nAutorización      : "
                     + autorizado
                     + "\nAcción generada por: "
                     + usuario.getNOMBRE()

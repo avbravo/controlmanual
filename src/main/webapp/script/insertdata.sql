@@ -69,8 +69,6 @@ INSERT INTO USUARIO (USERNAME ,PASSWORD,NOMBRE,CEDULA , EMAIL , TELEFONO , CELUL
 
 
 
-
-
 -- /*
 -- =============================================================================
 -- */
