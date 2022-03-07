@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
 
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ultimaacciongenerada="http://xmlns.jcp.org/jsf/composite/ultimaacciongenerada"
+
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <link rel="stylesheet" href="./resources/vendors/ti-icons/css/themify-icons.css"/>
@@ -146,6 +146,17 @@
                                                                     <p:outputLabel value="#{bajarPlantillaController.accionReciente.ACCIONRECIENTEID}"/>
                                                                 </c:if>
                                                               
+                                                                    <p:spacer rendered="#{!bajarPlantillaController.haveAccionReciente}"/>
+                                                                <p:spacer rendered="#{!bajarPlantillaController.haveAccionReciente}"/>
+                                                                <p:spacer rendered="#{!bajarPlantillaController.haveAccionReciente}"/>
+                                                                <p:spacer rendered="#{!bajarPlantillaController.haveAccionReciente}"/>
+                                                                <p:outputLabel value="Fecha"/>
+                                                                <p:datePicker  hourFormat="12" id="time1" 
+                                                                               pattern="dd/MM/yyyy hh:mm a"
+                                                                               value="#{bajarPlantillaController.fechahoraBaja}" showTime="true">
+
+                                                                </p:datePicker>
+                                                                
                                                                 <p:outputLabel value="Acción"/>
 
                                                                 <p:selectOneMenu id="selectOneMenuAccion" 
@@ -160,12 +171,6 @@
                                                                 </p:selectOneMenu>
 
 
-                                                                <p:outputLabel value="Fecha"/>
-                                                                <p:datePicker  hourFormat="12" id="time1" 
-                                                                               pattern="dd/MM/yyyy hh:mm a"
-                                                                               value="#{bajarPlantillaController.fechahoraBaja}" showTime="true">
-
-                                                                </p:datePicker>
                                                                 
                                                                   <f:facet name="footer">
                                                                     <c:if test="${bajarPlantillaController.showButton}">
@@ -238,12 +243,12 @@
 
 
 
-            <div style="position: absolute; left: 1px; top: 1px;">
+            <!--<div style="position: absolute; left: 1px; top: 1px;">-->
                 <p:dialog widgetVar="widgetVarTokenDialog" header="Token" 
                           showEffect="fade" hideEffect="fade"
                           minHeight="40" width="350" 
 
-                          style="width:20%;margin:0 auto"
+                          style="position: absolute; left: 1px; top: 1px;width:20%;margin:0 auto"
                           position="center center"
                           onShow="PF('widgetVarTokenDialog').initPosition()"
                           resizable="false"
@@ -371,7 +376,7 @@
                     </f:facet>
                     <p:messages id="tokenmessage" />
                 </p:dialog>
-            </div>
+            <!--</div>-->
 
         </h:form>    
         <h:form id="formaccesodenegado" prependId="false" rendered="#{!accessController.loged}">

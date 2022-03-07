@@ -127,6 +127,41 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
+    public String getMODULOBANCO() {
+        return MODULOBANCO;
+    }
+
+    public void setMODULOBANCO(String MODULOBANCO) {
+        this.MODULOBANCO = MODULOBANCO;
+    }
+
+    public String getMODULOTECNICO() {
+        return MODULOTECNICO;
+    }
+
+    public void setMODULOTECNICO(String MODULOTECNICO) {
+        this.MODULOTECNICO = MODULOTECNICO;
+    }
+
+    public String getMODULOCONTROLMANUAL() {
+        return MODULOCONTROLMANUAL;
+    }
+
+    public void setMODULOCONTROLMANUAL(String MODULOCONTROLMANUAL) {
+        this.MODULOCONTROLMANUAL = MODULOCONTROLMANUAL;
+    }
+
+    public String getMODULOMANTENIMIENTO() {
+        return MODULOMANTENIMIENTO;
+    }
+
+    public void setMODULOMANTENIMIENTO(String MODULOMANTENIMIENTO) {
+        this.MODULOMANTENIMIENTO = MODULOMANTENIMIENTO;
+    }
+    
+    
+    
+
     public Usuario(BigInteger USUARIOID) {
         this.USUARIOID = USUARIOID;
     }

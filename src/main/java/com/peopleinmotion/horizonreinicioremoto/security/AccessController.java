@@ -125,6 +125,7 @@ public class AccessController implements Serializable, Page {
             }
 
             if (accessServices.validateCredentials(usuario, username, password, selectOneMenuBancoValue)) {
+                     usuario = (Usuario) JmoordbContext.get("user");
                 if (usuario.getMODULOCONTROLMANUAL().toUpperCase().equals("NO")) {
                     JsfUtil.warningMessage("No tiene permisos para usar este módulo ");
                     return "";
@@ -132,7 +133,7 @@ public class AccessController implements Serializable, Page {
                 setLoged(Boolean.TRUE);
                 JsfUtil.successMessage("Bienvenido " + usuario.getNOMBRE());
 
-                usuario = (Usuario) JmoordbContext.get("user");
+        
 
                 Historial historial = new Historial.Builder()
                         .EVENTO("Login")
