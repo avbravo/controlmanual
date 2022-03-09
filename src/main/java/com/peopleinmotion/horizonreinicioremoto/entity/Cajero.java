@@ -61,18 +61,18 @@ public class Cajero implements Serializable {
 
     @Column(name = "ACTIVO")
     private String ACTIVO;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "DESCRIPCION")
     private String DESCRIPCION;
-    
-     @Basic(optional = false)
+
+    @Basic(optional = false)
     @NotNull
     @Column(name = "INFORMACIONADICIONAL")
     private String INFORMACIONADICIONAL;
-     
-     
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -163,6 +163,14 @@ public class Cajero implements Serializable {
         this.BANCOID = BANCOID;
     }
 
+    public String getINFORMACIONADICIONAL() {
+        return INFORMACIONADICIONAL;
+    }
+
+    public void setINFORMACIONADICIONAL(String INFORMACIONADICIONAL) {
+        this.INFORMACIONADICIONAL = INFORMACIONADICIONAL;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -188,8 +196,6 @@ public class Cajero implements Serializable {
         return "Cajero{" + "CAJEROID=" + CAJEROID + ", CAJERO=" + CAJERO + ", ACTIVO=" + ACTIVO + ", DESCRIPCION=" + DESCRIPCION + ", DIRECCION=" + DIRECCION + ", DIRECCIONCORTA=" + DIRECCIONCORTA + ", ORDEN=" + ORDEN + ", BANCOID=" + BANCOID + '}';
     }
 
-
-
     public String toJSON() {
 
         StringBuilder sb = new StringBuilder();
@@ -198,6 +204,7 @@ public class Cajero implements Serializable {
         sb.append("\n, \"CAJERO\":\"").append(CAJERO).append("\"");
         sb.append("\n, \"ACTIVO\":\"").append(ACTIVO).append("\"");
         sb.append("\n, \"DESCRIPCION\":\"").append(DESCRIPCION).append("\"");
+        sb.append("\n, \"INFORMACIONADICIONAL\":\"").append(INFORMACIONADICIONAL).append("\"");
         sb.append("\n, \"DIRECCION\":\"").append(DIRECCION).append("\"");
         sb.append("\n, \"DIRECCIONCORTA\":\"").append(DIRECCIONCORTA).append("\"");
         sb.append("\n, \"ORDEN\":\"").append(ORDEN).append("\"");

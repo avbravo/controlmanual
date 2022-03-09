@@ -22,7 +22,7 @@ import javax.inject.Inject;
  */
 @Stateless
 public class CajeroRepositoryImpl implements CajeroRepository {
-    @Inject
+     @Inject
     CajeroFacade cajeroFacade;
 
     @Override
@@ -128,7 +128,40 @@ public class CajeroRepositoryImpl implements CajeroRepository {
        return cajeroFacade.findBancoIdAndActivoPaginacion(BANCOID, ACTIVO, pageNumber, rowForPage);
     }
 
+    @Override
+    public List<Cajero> findCajeroBancoIdAndActivoLikePaginacion(String cajero, Banco BANCOID, String ACTIVO, Integer pageNumber, Integer rowForPage) {
+         return cajeroFacade.findCajeroBancoIdAndActivoLikePaginacion(cajero, BANCOID, ACTIVO, pageNumber, rowForPage);
+    }
+
+    @Override
+    public List<Cajero> findCajeroBancoIdAndActivoLike(String cajero, Banco BANCOID, String ACTIVO) {
+        return cajeroFacade.findCajeroBancoIdAndActivoLike( cajero, BANCOID, ACTIVO);
+    }
+
+   
+    @Override
+    public int countCajeroBancoIdAndActivoLike(String cajero, Banco BANCOID, String ACTIVO) {
+      return cajeroFacade.countCajeroBancoIdAndActivoLike(cajero, BANCOID, ACTIVO);
+    }
+
+    @Override
+    public int countDireccionBancoIdAndActivoLike(String DIRECCION, Banco BANCOID, String ACTIVO) {
+     return cajeroFacade.countDireccionBancoIdAndActivoLike(DIRECCION, BANCOID, ACTIVO);
+    }
+
+    @Override
+    public List<Cajero> findDireccionBancoIdAndActivoLikePaginacion(String DIRECCION, Banco BANCOID, String ACTIVO, Integer pageNumber, Integer rowForPage) {
+       return cajeroFacade.findDireccionBancoIdAndActivoLikePaginacion(DIRECCION, BANCOID, ACTIVO, pageNumber, rowForPage);
+    }
+
+    @Override
+    public List<Cajero> findDireccionBancoIdAndActivoLike(String DIRECCION, Banco BANCOID, String ACTIVO) {
+        return cajeroFacade.findDireccionBancoIdAndActivoLikePaginacion(DIRECCION, BANCOID, ACTIVO, Integer.MAX_VALUE, Integer.MIN_VALUE);
+    }
+
   
+    
+    
     
     
     

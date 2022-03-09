@@ -61,6 +61,10 @@ public class BuscarCajeroController implements Serializable, Page {
     private LazyDataModel<Cajero> lazyDataModelCajero;
     QuerySQL querySQL = new QuerySQL();
 
+    String cajeroSearch = "";
+    String direccionSearch = "";
+    String queryType = "init";
+
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="paginator ">
     Paginator paginator = new Paginator();
@@ -108,14 +112,35 @@ public class BuscarCajeroController implements Serializable, Page {
                 if (JsfUtil.contextToInteger("rowForPage") != null) {
                     rowForPage = JsfUtil.contextToInteger("rowForPage");
                 }
+
+                queryType = "init";
+
                 this.lazyDataModelCajero = new LazyDataModel<Cajero>() {
                     @Override
                     public List<Cajero> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
+                        Integer count = 0, paginas;
+                        List<Cajero> result = new ArrayList<>();
+                        switch (queryType) {
+                        case "init":
+                            count = cajeroRepository.countBancoIdAndActivo(banco, "SI");
+                            paginas = JsfUtil.numberOfPages(count, rowForPage);
 
-                        Integer count = cajeroRepository.countBancoIdAndActivo(banco, "SI");
-                        Integer paginas = JsfUtil.numberOfPages(count, rowForPage);
+                            result = cajeroRepository.findBancoIdAndActivoPaginacion(banco, "SI", offset, rowForPage);
+                            break;
+                        case "cajero":
+                            count = cajeroRepository.countCajeroBancoIdAndActivoLike(cajeroSearch, banco, "SI");
+                            paginas = JsfUtil.numberOfPages(count, rowForPage);
+                            result = cajeroRepository.findCajeroBancoIdAndActivoLikePaginacion(cajeroSearch, banco, "SI", 0, rowForPage);
+                            break;
+                        case "direccion":
+                            count = cajeroRepository.countDireccionBancoIdAndActivoLike(direccionSearch, banco, "SI");
+                            paginas = JsfUtil.numberOfPages(count, rowForPage);
+                            result = cajeroRepository.findDireccionBancoIdAndActivoLikePaginacion(direccionSearch, banco, "SI", 0, rowForPage);
+                            break;
+                    }
 
-                        List<Cajero> result = cajeroRepository.findBancoIdAndActivoPaginacion(banco, "SI", offset, rowForPage);
+                        
+                        
 
                         lazyDataModelCajero.setRowCount(count);
                         PrimeFaces.current().executeScript("setDataTableWithPageStart()");
@@ -145,6 +170,30 @@ public class BuscarCajeroController implements Serializable, Page {
         }
         JmoordbContext.put("pageInView", "cajeroencontrado.xhtml");
         return "cajeroencontrado.xhtml";
+    }
+// </editor-fold>
+    
+      // <editor-fold defaultstate="collapsed" desc="String searchByCajero()">
+    public String searchByCajero() {
+        try {
+            queryType="cajero";
+            direccionSearch="";
+
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return "";
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String searchByDireccion()">
+    public String searchByDireccion() {
+        try {
+            queryType="direccion";
+            cajeroSearch="";
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return "";
     }
 // </editor-fold>
 
