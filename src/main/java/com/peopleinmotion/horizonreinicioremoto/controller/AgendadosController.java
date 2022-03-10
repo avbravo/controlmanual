@@ -6,7 +6,6 @@
 package com.peopleinmotion.horizonreinicioremoto.controller;
 // <editor-fold defaultstate="collapsed" desc="import ">
 
-
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
@@ -30,17 +29,22 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import lombok.Data;
+import org.primefaces.PrimeFaces;
 import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
+import org.primefaces.model.SortMeta;
 // </editor-fold>
+
 /**
  *
  * @author avbravo
@@ -69,15 +73,22 @@ public class AgendadosController implements Serializable, Page {
     List<Banco> bancoList = new ArrayList<>();
     List<AccionReciente> accionRecienteList = new ArrayList<>();
     List<AccionReciente> accionRecienteSelectedList = new ArrayList<>();
-    
+
     //Totales en el dashboard por grupo
     List<GrupoEstado> grupoEstadoList = new ArrayList<>();
     private BigInteger totalSolicitado = new BigInteger("0");
     private BigInteger totalFinalizado = new BigInteger("0");
     private BigInteger totalEnProceso = new BigInteger("0");
     private BigInteger totalNoSePuedeEjecutar = new BigInteger("0");
-    
+
     Banco selectOneMenuBancoValue = new Banco();
+
+    private LazyDataModel<AccionReciente> lazyDataModelAccionReciente;
+    String cajeroSearch = "";
+    String tituloSearch = "";
+    String estadoSearch = "";
+    String autorizadoSearch = "";
+    String queryType = "init";
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="paginator ">
     Paginator paginator = new Paginator();
@@ -112,56 +123,93 @@ public class AgendadosController implements Serializable, Page {
     @PostConstruct
     public void init() {
         try {
-       
+
             if (JmoordbContext.get("user") == null) {
 
             } else {
-              
-               
-              
+
                 /**
                  * Leer de la sesion
                  */
                 user = (Usuario) JmoordbContext.get("user");
                 banco = (Banco) JmoordbContext.get("banco");
-                if(JsfUtil.contextToInteger("rowForPage") != null){
-                    rowForPage=JsfUtil.contextToInteger("rowForPage");
+                if (JsfUtil.contextToInteger("rowForPage") != null) {
+                    rowForPage = JsfUtil.contextToInteger("rowForPage");
                 }
 
-     
                 fillAccionRecienteList();
-                
-                
-                
-               
+
+                queryType = "init";
+
+                this.lazyDataModelAccionReciente = new LazyDataModel<AccionReciente>() {
+                    @Override
+                    public List<AccionReciente> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
+
+                        Integer count = 0, paginas;
+                        List<AccionReciente> result = new ArrayList<>();
+
+                        switch (queryType) {
+                            case "init":
+                                count = cajeroRepository.countBancoIdAndActivo(banco, "SI");
+                                paginas = JsfUtil.numberOfPages(count, rowForPage);
+
+                                result = accionRecienteRepository.findBancoIdAndActivoPaginacion(banco.getBANCOID(), "SI", offset, rowForPage);
+                                break;
+                            case "cajero":
+                                count = accionRecienteRepository.countCajeroBancoIdAndActivoLike(cajeroSearch, banco.getBANCOID(), "SI");
+                                paginas = JsfUtil.numberOfPages(count, rowForPage);
+                                result = accionRecienteRepository.findCajeroBancoIdAndActivoLikePaginacion(cajeroSearch, banco.getBANCOID(), "SI", 0, rowForPage);
+                                break;
+                            case "titulo":
+                                count = accionRecienteRepository.countTituloBancoIdAndActivoLike(tituloSearch, banco.getBANCOID(), "SI");
+                                paginas = JsfUtil.numberOfPages(count, rowForPage);
+                                result = accionRecienteRepository.findTituloBancoIdAndActivoLikePaginacion(tituloSearch, banco.getBANCOID(), "SI", 0, rowForPage);
+                                break;
+                            case "estado":
+                                count = accionRecienteRepository.countEstadoBancoIdAndActivoLike(estadoSearch, banco.getBANCOID(), "SI");
+                                paginas = JsfUtil.numberOfPages(count, rowForPage);
+                                result = accionRecienteRepository.findEstadoBancoIdAndActivoLikePaginacion(estadoSearch, banco.getBANCOID(), "SI", 0, rowForPage);
+                                break;
+                            case "autorizado":
+                             
+                                count = accionRecienteRepository.countAutorizadoBancoIdAndActivoLike(autorizadoSearch, banco.getBANCOID(), "SI");
+                                paginas = JsfUtil.numberOfPages(count, rowForPage);
+                                result = accionRecienteRepository.findAutorizadoBancoIdAndActivoLikePaginacion(autorizadoSearch, banco.getBANCOID(), "SI", 0, rowForPage);
+                                break;
+                        }
+
+//                        Integer count = accionRecienteRepository.countBancoIdAndActivo(banco.getBANCOID(), "SI");
+//                        Integer paginas = JsfUtil.numberOfPages(count, rowForPage);
+//
+//                        List<AccionReciente> result = accionRecienteRepository.findBancoIdAndActivoPaginacion(banco.getBANCOID(), "SI", offset, rowForPage);
+                        lazyDataModelAccionReciente.setRowCount(count);
+                        PrimeFaces.current().executeScript("setDataTableWithPageStart()");
+                        return result;
+                    }
+
+                };
             }
         } catch (Exception e) {
-          JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
 
         }
 
     }
 
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="fillAccionRecienteList()">
-    public String fillAccionRecienteList(){
+    public String fillAccionRecienteList() {
         try {
-             banco = (Banco) JmoordbContext.get("banco");
-              accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
-             
+            banco = (Banco) JmoordbContext.get("banco");
+            accionRecienteList = accionRecienteRepository.findByBancoIdAndActivo(banco.getBANCOID(), "SI");
 
         } catch (Exception e) {
-             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
         }
         return "";
     }
-          
+
 // </editor-fold>
-
-
-
-   
     // <editor-fold defaultstate="collapsed" desc="String showDate(Date date) ">
     public String showDate(Date date) {
         return DateUtil.showDate(date);
@@ -173,8 +221,6 @@ public class AgendadosController implements Serializable, Page {
         return DateUtil.showHour(date);
     }
     // </editor-fold>
-
-
 
     // <editor-fold defaultstate="collapsed" desc="String onCommandButtonSelectAccionReciente(AccionReciente accionReciente)">
     public String onCommandButtonSelectAccionReciente(AccionReciente accionReciente, String formularioretorno) {
@@ -192,9 +238,66 @@ public class AgendadosController implements Serializable, Page {
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-        
-       JmoordbContext.put("pageInView", "controlmanual.xhtml");
+
+        JmoordbContext.put("pageInView", "controlmanual.xhtml");
         return "controlmanual.xhtml";
+    }
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="String searchByCajero()">
+    public String searchByCajero() {
+        try {
+            queryType = "cajero";
+            tituloSearch = "";
+            autorizadoSearch = "";
+            estadoSearch = "";
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return "";
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String String searchByTitulo()">
+
+    public String searchByTitulo() {
+        try {
+            queryType = "titulo";
+            cajeroSearch = "";
+            autorizadoSearch = "";
+            estadoSearch = "";
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return "";
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String String searchByEstado()">
+
+    public String searchByEstado() {
+        try {
+            queryType = "estado";
+            cajeroSearch = "";
+            tituloSearch = "";
+            autorizadoSearch = "";
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return "";
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String String searchByAutorizado()">
+
+    public String searchByAutorizado() {
+        try {
+            queryType = "autorizado";
+
+            cajeroSearch = "";
+            tituloSearch = "";
+            estadoSearch = "";
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return "";
     }
 // </editor-fold>
 

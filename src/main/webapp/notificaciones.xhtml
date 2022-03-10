@@ -4,11 +4,12 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"         
       xmlns:template="http://xmlns.jcp.org/jsf/composite/template"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
     <h:head>
         <link rel="stylesheet" href="./resources/vendors/ti-icons/css/themify-icons.css"/>
         <link rel="stylesheet" href="./resources/vendors/base/vendor.bundle.base.css"/>
-       <!--  <link href="./resources/vendors/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/> -->
+        <!--  <link href="./resources/vendors/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/> -->
         <link rel="stylesheet" href="./resources/css/style.css"/>
         <link rel="stylesheet" href="./resources/css/dash01.css"/>
         <link rel="stylesheet" href="./resources/css/mantenimiento.css"/>
@@ -17,17 +18,17 @@
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
         <title>Control Manual</title>    
-   <f:metadata>
-             <f:viewAction    action="#{bajarPlantillaController.browserEventFromPage('login.xhtml')}"/>
+        <f:metadata>
+            <f:viewAction    action="#{bajarPlantillaController.browserEventFromPage('login.xhtml')}"/>
         </f:metadata>
 
     </h:head>
     <h:body>
         <h:form id="form" prependId="false" rendered="#{accessController.loged}">
-            
-              
-            
-              <p:ajaxStatus onsuccess="limpiartiempo()" />
+
+
+
+            <p:ajaxStatus onsuccess="limpiartiempo()" />
             <p:remoteCommand name="ejecutarbean" action="#{accessController.inicializa()}" oncomplete="redireccionar()" />
             <style type="text/css">
                 .ui-filter-column .ui-column-customfilter .custom-filter {
@@ -67,14 +68,64 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h4 class="text-secondary">NOTIFICACIONES DE #{agendadosController.banco.BANCO}</h4>
-                                            
+
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
+   <span style="font-weight: bold">BUSCAR</span>
+                            <div class="row justify-content-center" jsf:id="divSearch">
 
 
+                                <span class="filter-container ui-input-icon-left">
+                                    <i class="pi pi-search" />
+                                    <p:inputText  value="#{agendadosController.cajeroSearch}"  id="cajeroSearch"
+                                                  onkeyup="remoteCommandCajero()" placeholder="Cajero"/>
+                                </span>
+
+
+                                <span class="filter-container ui-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <p:inputText  value="#{agendadosController.tituloSearch}" id="tituloSearch"
+                                                  onkeyup="remoteCommandTitulo()" placeholder="Acción"/>
+                                </span>
+                                <span class="filter-container ui-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <p:inputText  value="#{agendadosController.estadoSearch}" id="estadoSearch"
+                                                  onkeyup="remoteCommandEstado()" placeholder="Estado"/>
+                                </span>
+
+                                <span class="filter-container ui-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <h:selectOneMenu id="autorizadoSearch" class="form-control col-lg-auto solosel01 rounded-pill" 
+                                                     value="#{agendadosController.autorizadoSearch}"
+                                                     label="Autorización"
+
+                                                     >
+                                        <f:selectItem itemLabel="" itemValue=""/>
+                                        <f:selectItem itemLabel="Pendiente" itemValue="PE"/>
+                                        <f:selectItem itemLabel="Autorizado" itemValue="SI"/>                        
+                                        <f:selectItem itemLabel="Denegado" itemValue="NO"/>                        
+                                        <p:ajax process="autorizadoSearch" event="change"
+                                                update=":form:dataTable, :form:growl,:form:cajeroSearch,:form:tituloSearch,form:estadoSearch"
+                                                listener="#{agendadosController.searchByAutorizado()}"/>
+
+                                    </h:selectOneMenu>
+                                </span>
+
+
+
+
+                                <p:remoteCommand name="remoteCommandCajero" update=":form:dataTable,:form:growl, :form:tituloSearch,form:estadoSearch,:form:autorizadoSearch"
+                                                 action="#{agendadosController.searchByCajero()}"/>
+                                <p:remoteCommand name="remoteCommandTitulo" update=":form:dataTable,:form:growl,:form:cajeroSearch,form:estadoSearch,:form:autorizadoSearch"
+                                                 action="#{agendadosController.searchByTitulo()}"/>
+                                <p:remoteCommand name="remoteCommandEstado" update=":form:dataTable,:form:growl,:form:cajeroSearch,:form:tituloSearch,:form:autorizadoSearch"
+                                                 action="#{agendadosController.searchByEstado()}"/>
+                                <p:remoteCommand name="remoteCommandAutorizado" update=":form:dataTable,:form:growl,:form:cajeroSearch,:form:tituloSearch,form:estadoSearch"
+                                                 action="#{agendadosController.searchByAutorizado()}"/>
+                            </div>
 
 
                             <div class="row justify-content-center">
@@ -82,35 +133,24 @@
 
                                 <div class="col-12 col-lg-12">
                                     <div class="table-responsive">
-                                        <p:dataTable value="#{agendadosController.accionRecienteList}"  
+                                        <p:dataTable value="#{agendadosController.lazyDataModelAccionReciente}"  
                                                      var="item" 
-                                                     id="dataTableagendadosmodal"
-                                                     widgetVar="widgetVardataTableagendadosmodal"
-                                                     lazy="false"
-                                                     filteredValue="#{agendadosController.accionRecienteSelectedList}" 
-
+                                                     widgetVar="widgetVardataTable"
+                                                     id="dataTable"
+                                                     lazy="true"
                                                      paginator="true"
                                                      rows="#{agendadosController.rowForPage}"
                                                      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                                      tableStyleClass="table table-hover"
                                                      >
 
-                                            <f:facet name="header">
-                                                <div class="products-table-header">
-                                                    <span style="font-weight: bold">NOTIFICACIONES</span>
 
-                                                    <span class="filter-container ui-input-icon-left">
-                                                        <i class="pi pi-search"></i>
-                                                        <p:inputText id="globalFilter" onkeyup="PF('widgetVardataTableagendadosmodal').filter()" placeholder="Search"/>
-                                                    </span>
-
-
-                                                </div>
-                                            </f:facet>
-                                            <p:column headerText="Cajero"  style="width:4%; color:'#02A1DE'">
-                                                <p:graphicImage name="atm-blue02.png" library="images" alt="" class="" />
+                                            <p:column headerText=""  style="width:3%; color:'#02A1DE'">
+                                                <p:graphicImage title="Rechazado" name="atm-blue02.png" library="images" alt="" class="" rendered="#{item.AUTORIZADO eq 'NO'}"/>
+                                                <p:graphicImage title="Autorizado" name="atm-green01.png" library="images" alt="" class="" rendered="#{item.AUTORIZADO eq 'SI'}"/>
+                                                <p:graphicImage title="Pendiente" name="atm-liblue01.png" library="images" alt="" class="" rendered="#{item.AUTORIZADO eq 'PE'}"/>
                                             </p:column>
-                                            <p:column headerText="" style="width:8%;" filterBy="#{item.CAJERO}">
+                                            <p:column headerText="" style="width:8%;" >
 
                                                 <p:commandLink  class="btn btn-rounded btn-fw text-nowrap btn-secondary btn-sm" 
                                                                 style="text-decoration:none;color:black;"
@@ -122,11 +162,17 @@
                                             </p:column>
 
 
-                                            <p:column headerText="Estado" >
+                                            <p:column headerText="Estado" style="width:20%;">
 
                                                 <label class="text-black">#{item.ESTADO}</label>
                                             </p:column>
-                                            <p:column headerText="Acción" filterBy="#{item.TITULO}">
+                                            <p:column headerText="Autorizado" >
+
+                                                <p:outputLabel value="Autorizado" rendered="#{item.AUTORIZADO eq 'SI'}"/>
+                                                <p:outputLabel value="Denegado" rendered="#{item.AUTORIZADO eq 'NO'}"/>
+                                                <p:outputLabel value="Pendiente" rendered="#{item.AUTORIZADO eq 'PE'}"/>
+                                            </p:column>
+                                            <p:column headerText="Acción" >
                                                 <label class="badge badge-danger">#{item.TITULO}</label>
 
                                             </p:column>
@@ -138,9 +184,9 @@
                                             <p:column headerText="Hora" >
                                                 <label class="text-black">#{agendadosController.showHour(item.FECHAAGENDADA)}</label>
                                             </p:column>
-<!--                                            <p:column headerText="#" >
-                                                <label class="text-black">#{item.ACCIONRECIENTEID}</label>
-                                            </p:column>-->
+                                            <!--                                            <p:column headerText="#" >
+                                                                                            <label class="text-black">#{item.ACCIONRECIENTEID}</label>
+                                                                                        </p:column>-->
 
                                         </p:dataTable>
 
