@@ -7,6 +7,7 @@ package com.peopleinmotion.horizonreinicioremoto.controller;
 
 import com.peopleinmotion.horizonreinicioremoto.domains.TotalesEstadoBanco;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
+import com.peopleinmotion.horizonreinicioremoto.entity.Cajero;
 import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
@@ -18,11 +19,16 @@ import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import lombok.Data;
+import org.primefaces.PrimeFaces;
+import org.primefaces.model.FilterMeta;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortMeta;
 
 /**
  *
@@ -45,8 +51,9 @@ public class TotalesEstadoBancoController implements Serializable, Page {
  
     List<TotalesEstadoBanco> totalesEstadoBancoList = new ArrayList<>();
     List<TotalesEstadoBanco> totalesEstadoBancoSelectedList = new ArrayList<>();
-
-
+private LazyDataModel<TotalesEstadoBanco> lazyDataModelTotalesEstadoBanco;
+ String bancoSearch = "";
+    String queryType = "init";
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="paginator ">
     Paginator paginator = new Paginator();
@@ -85,6 +92,8 @@ if(JsfUtil.contextToInteger("rowForPage") != null){
                 }
 
                calcularTotales();
+               
+               
 
             }
         } catch (Exception e) {
@@ -103,6 +112,18 @@ if(JsfUtil.contextToInteger("rowForPage") != null){
            
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return "";
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String searchByCajero() ">
+      public String searchByCajero() {
+        try {
+            queryType="banco";
+          
+
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
         }
         return "";
     }

@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"         
       xmlns:template="http://xmlns.jcp.org/jsf/composite/template"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
     <h:head>
         <link rel="stylesheet" href="./resources/vendors/ti-icons/css/themify-icons.css"/>
         <link rel="stylesheet" href="./resources/vendors/base/vendor.bundle.base.css"/>
@@ -71,7 +72,7 @@
                                 </div>
                             </div>
 
-
+ 
 
 
                             <div class="row justify-content-center">
@@ -81,7 +82,7 @@
                                     <div class="table-responsive">
                                         <p:dataTable value="#{totalesEstadoBancoController.totalesEstadoBancoList}"  
                                                      var="item" 
-                                                     id="dataTableagendadosmodal"
+                                                     id="dataTable"
                                                      widgetVar="widgetVardataTableagendadosmodal"
                                                      lazy="false"
                                                      filteredValue="#{totalesEstadoBancoController.totalesEstadoBancoSelectedList}" 
@@ -98,7 +99,7 @@
 
                                                     <span class="filter-container ui-input-icon-left">
                                                         <i class="pi pi-search"></i>
-                                                        <p:inputText id="globalFilter" onkeyup="PF('widgetVardataTableagendadosmodal').filter()" placeholder="Search"/>
+                                                        <p:inputText id="globalFilter" onkeyup="PF('widgetVardataTableagendadosmodal').filter()" placeholder="Banco"/>
                                                     </span>
 
 
