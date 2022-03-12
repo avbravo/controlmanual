@@ -30,7 +30,7 @@
                                 draggable="false"
                                 >
 
-                        <p:ajax event="eventSelect"  listener="#{dashboardController.onEventSelect}" update="eventDetails"
+                        <p:ajax event="eventSelect"  listener="#{dashboardController.onEventSelect}" update="eventDetails,commandButtonProcesar, panelGridScheduleFooter"
 
                                 oncomplete="PF('widgetVarscheduleDialog').show();"
                                 />
@@ -98,7 +98,8 @@
 
 
             <f:facet name="footer">
-                <p:commandButton  oncomplete="PF('widgetVarscheduleDialog').hide();" 
+                <h:panelGrid id="panelGridScheduleFooter" columns="2" cellpadding="7">
+                     <p:commandButton  oncomplete="PF('widgetVarscheduleDialog').hide();" 
                                   value="CERRAR"
                                   icon="pi pi-times"
                                   styleClass="rounded-button ui-button-outlined ui-button-secondary" style="margin-right: .5rem"/>
@@ -107,12 +108,16 @@
                 <p:commandButton 
                     rendered="#{dashboardController.accionRecienteSelected.AUTORIZADO eq 'SI'}"
                     styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
+                    rendered="#{dashboardController.renderedAutorizado()}"
                     id="commandButtonProcesar"
                     value="CONTROL MANUAL"
                     icon="pi pi-cog"
                     update=":form:growl"
                     action="#{dashboardController.onCommandButtonSelectAccionReciente(dashboardController.accionRecienteSelected,'dashboard')}"/>
 
+                    
+                </h:panelGrid>
+               
 
             </f:facet>
         </p:dialog>

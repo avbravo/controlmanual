@@ -29,7 +29,9 @@ public interface AccionRecienteServices {
     public Boolean renderedByEstadoFinalizado(AccionReciente accionReciente);
 
     public Boolean renderedByEstadoEnProceso(AccionReciente accionReciente);
-
+    public Boolean renderedAutorizado(AccionReciente accionReciente);
+    public Boolean renderedPendiente(AccionReciente accionReciente);
+    public Boolean renderedDenegado(AccionReciente accionReciente);
     public Boolean changed(AccionReciente accionReciente);
    
 }
