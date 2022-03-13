@@ -348,7 +348,7 @@ CREATE SEQUENCE TOKEN_SEQ MINVALUE 1 MAXVALUE 9999999999999999999999999999 START
 /**
 *AGENDA
 Lleva el control de todos los eventos para el cajeron
-el campo CODIGOTRANSACCION  se usa para la generacion de agenda y permite localizar
+el campo CODIGOTRANSACCION  se usa para la generación de agenda y permite localizar
 la agenda correspondiente despues de su creacion
 *
 */

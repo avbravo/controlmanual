@@ -119,9 +119,9 @@ public class EmailServicesImpl implements EmailServices {
                     + "\n"
                     + header
                     + "\n"
-                    + "\nToken generado: "
+                    + "\nToken generado     : "
                     + token.getTOKEN()
-                    + "\nUtilicelo antes de : "
+                    + "\nUtilizarlo antes de: "
                     + DateUtil.showDate(token.getFECHAVENCIMIENTO())
                     + " "
                     + DateUtil.showHour(token.getFECHAVENCIMIENTO())
@@ -337,7 +337,7 @@ public class EmailServicesImpl implements EmailServices {
 
             List<String> emailList = new ArrayList<>();
             emailList.add(usuario.getEMAIL());
-            String message = generateTokenMessages(token, "Generacion Token", usuario);
+            String message = generateTokenMessages(token, "Generación de Token", usuario);
 
             //Busco el email
             Optional<EmailConfiguration> emailConfigurationOptional = emailConfigurationRepository.findByActivo("SI");
@@ -382,7 +382,7 @@ public class EmailServicesImpl implements EmailServices {
              Enviar el token al uuario
              */
 
-            String message = generateTokenMessages(token, "Generacion Token", usuario);
+            String message = generateTokenMessages(token, "Generación de Token", usuario);
 
             //Busco el email
             Optional<EmailConfiguration> emailConfigurationOptional = emailConfigurationRepository.findByActivo("SI");
