@@ -99,25 +99,24 @@
 
             <f:facet name="footer">
                 <h:panelGrid id="panelGridScheduleFooter" columns="2" cellpadding="7">
-                     <p:commandButton  oncomplete="PF('widgetVarscheduleDialog').hide();" 
-                                  value="CERRAR"
-                                  icon="pi pi-times"
-                                  styleClass="rounded-button ui-button-outlined ui-button-secondary" style="margin-right: .5rem"/>
-                
-           
-                <p:commandButton 
-                    rendered="#{dashboardController.accionRecienteSelected.AUTORIZADO eq 'SI'}"
-                    styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
-                    rendered="#{dashboardController.renderedAutorizado()}"
-                    id="commandButtonProcesar"
-                    value="CONTROL MANUAL"
-                    icon="pi pi-cog"
-                    update=":form:growl"
-                    action="#{dashboardController.onCommandButtonSelectAccionReciente(dashboardController.accionRecienteSelected,'dashboard')}"/>
+                    <p:commandButton  oncomplete="PF('widgetVarscheduleDialog').hide();" 
+                                      value="CERRAR"
+                                      icon="pi pi-times"
+                                      styleClass="rounded-button ui-button-outlined ui-button-secondary" style="margin-right: .5rem"/>
 
-                    
+
+                    <p:commandButton 
+                        styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
+                        rendered="#{dashboardController.renderedAutorizado()}"
+                        id="commandButtonProcesar"
+                        value="CONTROL MANUAL"
+                        icon="pi pi-cog"
+                        update=":form:growl"
+                        action="#{dashboardController.onCommandButtonSelectAccionReciente(dashboardController.accionRecienteSelected,'dashboard')}"/>
+
+
                 </h:panelGrid>
-               
+
 
             </f:facet>
         </p:dialog>
