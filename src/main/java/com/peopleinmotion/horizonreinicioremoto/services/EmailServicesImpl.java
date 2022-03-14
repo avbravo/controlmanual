@@ -96,6 +96,7 @@ public class EmailServicesImpl implements EmailServices {
                     + accionReciente.getACCIONRECIENTEID()
                     + "\n\n\b"
                     + "\nPor favor no responda este correo..."
+   
                     + "\n-------------------------------------------------------------";
 
         } catch (Exception e) {
@@ -127,6 +128,7 @@ public class EmailServicesImpl implements EmailServices {
                     + DateUtil.showHour(token.getFECHAVENCIMIENTO())
                     + "\n\n\b"
                     + "\nPor favor no responda este correo..."
+ 
                     + "\n-------------------------------------------------------------";
 
         } catch (Exception e) {
