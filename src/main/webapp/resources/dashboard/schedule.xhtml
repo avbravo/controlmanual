@@ -62,7 +62,7 @@
                   resizable="false"
 
                   >
-            <h:panelGrid id="eventDetails" columns="2" cellpadding="7">
+            <h:panelGrid id="eventDetails" columns="2" cellpadding="2">
                 <p:outputLabel  value="Cajero" styleClass="p-text-bold"/>
                 <p:outputLabel id="cajero" value="#{dashboardController.accionRecienteSelected.CAJERO}" />
 
@@ -98,7 +98,7 @@
 
 
             <f:facet name="footer">
-                <h:panelGrid id="panelGridScheduleFooter" columns="2" cellpadding="7">
+                <h:panelGrid id="panelGridScheduleFooter" columns="2" cellpadding="2">
                     <p:commandButton  oncomplete="PF('widgetVarscheduleDialog').hide();" 
                                       value="CERRAR"
                                       icon="pi pi-times"

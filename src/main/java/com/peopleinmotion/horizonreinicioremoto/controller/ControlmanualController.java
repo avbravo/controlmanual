@@ -313,10 +313,10 @@ public class ControlmanualController implements Serializable, Page {
                     agenda.setESTADOID(estado.getESTADOID());
 
                     if (agendaRepository.update(agenda)) {
-                        agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIO ESTADO A PROCESANDO", user);
+                        agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIÓ ESTADO A PROCESANDO", user);
 
                         JmoordbContext.put("accionReciente", accionReciente);
-                        emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIO ESTADO A PROCESANDO", user, cajero, bank);
+                        emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIÓ ESTADO A PROCESANDO", user, cajero, bank);
 
                         /*
                         *Mensajes exitosos
@@ -325,11 +325,11 @@ public class ControlmanualController implements Serializable, Page {
                                 .errorWindows(Boolean.FALSE)
                                 .id(accionReciente.getCAJERO())
                                 .header("Operación Exitosa")
-                                .header2("La acción se realizo exitosamente")
+                                .header2("La acción se realizó exitosamente")
                                 .image("atm-green01.png")
                                 .libary("images")
                                 .titulo("Cambio de estado a procesado")
-                                .mensaje("Se realizo exitosamente el cambio de estado ")
+                                .mensaje("Se realizó exitosamente el cambio de estado ")
                                 .returnTo("dashboard.xhtml")
                                 .build();
                         JmoordbContext.put("messagesForm", messagesForm);
@@ -409,10 +409,10 @@ public class ControlmanualController implements Serializable, Page {
                     agenda.setESTADOID(estado.getESTADOID());
 
                     if (agendaRepository.update(agenda)) {
-                        agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIO ESTADO A EJECUTADA", user);
+                        agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIÓ ESTADO A EJECUTADA", user);
 
                         JmoordbContext.put("accionReciente", accionReciente);
-                        emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIO ESTADO A EJECUTADA", user, cajero, bank);
+                        emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIÓ ESTADO A EJECUTADA", user, cajero, bank);
 
                         /*
                         *Mensajes exitosos
@@ -421,11 +421,11 @@ public class ControlmanualController implements Serializable, Page {
                                 .errorWindows(Boolean.FALSE)
                                 .id(accionReciente.getCAJERO())
                                 .header("Operación Exitosa")
-                                .header2("La acción se realizo exitosamente")
+                                .header2("La acción se realizó exitosamente")
                                 .image("atm-green01.png")
                                 .libary("images")
                                 .titulo("Cambio de estado a ejecutado")
-                                .mensaje("Se realizo exitosamente el cambio de estado ")
+                                .mensaje("Se realizó exitosamente el cambio de estado ")
                                 .returnTo("dashboard.xhtml")
                                 .build();
                         JmoordbContext.put("messagesForm", messagesForm);
@@ -474,11 +474,11 @@ public class ControlmanualController implements Serializable, Page {
                                 .errorWindows(Boolean.FALSE)
                                 .id(accionReciente.getCAJERO())
                                 .header("Operación Exitosa")
-                                .header2("La acción se realizo exitosamente")
+                                .header2("La acción se realizó exitosamente")
                                 .image("atm-green01.png")
                                 .libary("images")
                                 .titulo("Reagendar accion")
-                                .mensaje("Se realizo exitosamente el reagendamiento ")
+                                .mensaje("Se realizó exitosamente el reagendamiento ")
                                 .returnTo("dashboard.xhtml")
                                 .build();
                         JmoordbContext.put("messagesForm", messagesForm);

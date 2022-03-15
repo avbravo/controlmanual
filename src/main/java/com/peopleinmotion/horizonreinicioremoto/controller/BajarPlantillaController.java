@@ -406,11 +406,11 @@ public class BajarPlantillaController implements Serializable, Page {
                                 .errorWindows(Boolean.FALSE)
                                 .id(accionReciente.getCAJERO())
                                 .header("Operación Exitosa")
-                                .header2("La acción se realizo exitosamente")
+                                .header2("La acción se realizó exitosamente")
                                 .image("atm-green01.png")
                                 .libary("images")
                                 .titulo("Bajar plantilla Programar evento")
-                                .mensaje("Se realizo exitosamente la baja de plantilla ")
+                                .mensaje("Se realizó exitosamente la baja de plantilla ")
                                 .returnTo("dashboard.xhtml")
                                 .build();
                         JmoordbContext.put("messagesForm", messagesForm);

@@ -8,7 +8,7 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf">
     <h:head>
         <link rel="stylesheet" href="./resources/vendors/ti-icons/css/themify-icons.css"/>
-        <link rel="stylesheet" href="./resources/vendors/base/vendor.bundle.base.css"/>
+        <!-- <link rel="stylesheet" href="./resources/vendors/base/vendor.bundle.base.css"/> -->
         <!--  <link href="./resources/vendors/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/> -->
         <link rel="stylesheet" href="./resources/css/style.css"/>
         <link rel="stylesheet" href="./resources/css/dash01.css"/>
@@ -151,10 +151,12 @@
                                                 <p:graphicImage title="Pendiente" name="atm-liblue01.png" library="images" alt="" class="" rendered="#{item.AUTORIZADO eq 'PE'}"/>
                                             </p:column>
                                             <p:column headerText="" style="width:8%;" >
-
+                                                <p:outputLabel value="#{item.CAJERO}" rendered="#{item.AUTORIZADO eq 'NO'}"/>
+                                                <p:outputLabel value="#{item.CAJERO}" rendered="#{item.AUTORIZADO eq 'PE'}"/>
                                                 <p:commandLink  class="btn btn-rounded btn-fw text-nowrap btn-secondary btn-sm" 
                                                                 style="text-decoration:none;color:black;"
                                                                 value="#{item.CAJERO}"
+                                                                rendered="#{item.AUTORIZADO eq 'SI'}"
                                                                 update=":form:growl"
                                                                 title="Ir a control manual"
                                                                 action="#{agendadosController.onCommandButtonSelectAccionReciente(item,'notificaciones')}"/>
