@@ -255,6 +255,7 @@ public class CajeroEncontradoController implements Serializable , Page{
     }
     // </editor-fold>
     
+ // <editor-fold defaultstate="collapsed" desc="String onCommandButtonIrControlManual()">
     public String onCommandButtonIrControlManual(){
         try {
             JmoordbContext.put("accionRecienteDashboard",accionReciente);
@@ -265,5 +266,19 @@ public class CajeroEncontradoController implements Serializable , Page{
         JmoordbContext.put("pageInView", "controlmanual.xhtml");
         return "controlmanual.xhtml";
     }
+        // </editor-fold>
     
+     // <editor-fold defaultstate="collapsed" desc="String onCommandButtonIrControlManual()">
+    public Boolean renderedCommandButtonControlManual(){
+        try {
+            if(haveAccionReciente && accionReciente.getAUTORIZADO().equals("SI")){
+                return Boolean.TRUE; 
+                        
+            }
+        } catch (Exception e) {
+              JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " "+e.getLocalizedMessage());
+        }
+        return Boolean.FALSE;
+    }
+          // </editor-fold>
 }

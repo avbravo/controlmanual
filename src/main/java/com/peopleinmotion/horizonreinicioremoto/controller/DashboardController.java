@@ -595,7 +595,13 @@ if(selectEvent == null){
     // </editor-fold>
       // <editor-fold defaultstate="collapsed" desc="Boolean renderedAutorizado(AccionReciente accionReciente)">
     public Boolean renderedAutorizado(AccionReciente accionReciente) {
-        return accionReciente.getAUTORIZADO().equals("SI");
+        try {
+            if(accionReciente.getAUTORIZADO().equals("SI")){
+                return Boolean.TRUE;
+            }
+        } catch (Exception e) {
+        }
+        return Boolean.FALSE;
 
     }
 
