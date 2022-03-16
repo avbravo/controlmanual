@@ -115,23 +115,23 @@
                                                             </c:if>
                                                             <h:panelGrid id="eventDetails" columns="2" cellpadding="2">
                                                                 <c:if test="${controlmanualController.haveAccionReciente}">
-                                                                    <p:outputLabel  value="Acción" styleClass="p-text-bold"/>
+                                                                    <p:outputLabel  value="Acción:" styleClass="p-text-bold"/>
                                                                     <p:outputLabel  value="#{controlmanualController.accionReciente.TITULO}"/>
-                                                                    <p:outputLabel  value="Evento" styleClass="p-text-bold"/>
+                                                                    <p:outputLabel  value="Evento:" styleClass="p-text-bold"/>
                                                                     <p:outputLabel value="#{controlmanualController.accionReciente.MENSAJE}"/>                       
-                                                                    <p:outputLabel value="Se agendò el"/>
+                                                                    <p:outputLabel value="Se agendó el:"/>
                                                                     <p:outputLabel value="#{controlmanualController.showDate(controlmanualController.accionReciente.FECHAAGENDADA)}"/>
-                                                                    <p:outputLabel value="Hora agendada"/>
+                                                                    <p:outputLabel value="Hora agendada:"/>
                                                                     <p:outputLabel value="#{controlmanualController.showHour(controlmanualController.accionReciente.FECHAAGENDADA)}"/>
-                                                                    <p:outputLabel value="Fecha creación"/>
+                                                                    <p:outputLabel value="Fecha creación:"/>
                                                                     <p:outputLabel value="#{controlmanualController.showDate(controlmanualController.accionReciente.FECHACREACION)}"/>
-                                                                    <p:outputLabel value="Hora creación"/>
+                                                                    <p:outputLabel value="Hora creación:"/>
                                                                     <p:outputLabel value="#{controlmanualController.showHour(controlmanualController.accionReciente.FECHACREACION)}"/>
-                                                                    <p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="Fecha ejecución"/>
+                                                                    <p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="Fecha ejecución:"/>
                                                                     <p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="#{controlmanualController.showDate(controlmanualController.accionReciente.FECHAEJECUCION)}"/>
-                                                                    <p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="Hora ejecución"/>
+                                                                    <p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="Hora ejecución:"/>
                                                                     <p:outputLabel rendered="#{!controlmanualController.renderedByEstadoSolicitado()}" value="#{controlmanualController.showHour(controlmanualController.accionReciente.FECHAEJECUCION)}"/>
-                                                                    <p:outputLabel value="Estado"/> 
+                                                                    <p:outputLabel value="Estado:"/> 
                                                                     <p:outputLabel value="#{controlmanualController.accionReciente.ESTADO}"/>
                                                                     <p:outputLabel value="Transacción No:"/>
                                                                     <p:outputLabel value="#{controlmanualController.accionReciente.ACCIONRECIENTEID}"/>
@@ -142,7 +142,7 @@
                                                                                      icon="pi pi-cog"
                                                                                      rendered="#{controlmanualController.showCommandButtonProcesando}"
                                                                                      action="#{controlmanualController.onCommandButtonSendToken()}"
-                                                                                     title="Envia el token al correo"
+                                                                                     title="Envía el token al correo"
                                                                                      styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
                                                                                      >
                                                                     </p:commandButton>
