@@ -107,7 +107,7 @@
 
                     <p:commandButton 
                         styleClass="rounded-button ui-button-danger" style="margin-right: .5rem"
-                        rendered="#{dashboardController.renderedAutorizado()}"
+                        rendered="#{dashboardController.renderedAutorizado(dashboardController.accionRecienteSelected)}"
                         id="commandButtonProcesar"
                         value="CONTROL MANUAL"
                         icon="pi pi-cog"

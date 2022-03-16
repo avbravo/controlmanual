@@ -559,6 +559,10 @@ if(selectEvent == null){
     
        // <editor-fold defaultstate="collapsed" desc="Boolean renderedAutorizado()">
     public Boolean renderedAutorizado() {
+        try {
+            
+        } catch (Exception e) {
+        }
         return accionRecienteServices.renderedAutorizado(accionRecienteSelected);
 
     }
