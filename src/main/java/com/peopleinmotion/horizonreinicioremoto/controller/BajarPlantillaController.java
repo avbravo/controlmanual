@@ -280,7 +280,7 @@ public class BajarPlantillaController implements Serializable, Page {
                     tokenEnviado = Boolean.FALSE;
                     ConsoleUtil.info("No lo pude enviar el dialogo...");
                 } else {
-                    JsfUtil.successMessage("Se envio el token a su correo. Reviselo por favor");
+                    JsfUtil.successMessage("El token fue enviado a su correo.");
                     tokenEnviado = Boolean.TRUE;
                     ConsoleUtil.info("mostrare el dialogo...");
         openDialogToken();

@@ -540,7 +540,7 @@ public class ControlmanualController implements Serializable, Page {
                     tokenEnviado = Boolean.FALSE;
 
                 } else {
-                    JsfUtil.successMessage("Se envio el token a su correo. Reviselo por favor");
+                    JsfUtil.successMessage("El token fue enviado a su correo.");
                     tokenEnviado = Boolean.TRUE;
 
                     openDialogToken();

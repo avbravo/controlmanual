@@ -71,28 +71,28 @@ public class EmailServicesImpl implements EmailServices {
 
             }
             messages = "\n  "
-                    + "\n----------------------ACCION RECIENTE---------------------------------------"
+                    + "\n----------------------ACCIÓN RECIENTE---------------------------------------"
                     + "\n"
                     + header
                     + "\n"
                     + accionReciente.getTITULO()
-                    + "\nFecha              : "
+                    + "\nFecha: "
                     + DateUtil.showDate(accionReciente.getFECHAAGENDADA())
                     + " "
                     + DateUtil.showHour(accionReciente.getFECHAAGENDADA())
-                    + "\nMensaje            : "
+                    + "\nMensaje: "
                     + accionReciente.getMENSAJE()
-                    + "\nCajero             : "
+                    + "\nCajero: "
                     + cajero.getCAJERO()
-                    + "\nBanco              : "
+                    + "\nBanco: "
                     + banco.getBANCO()
-                    + "\nEstado             : "
+                    + "\nEstado: "
                     + accionReciente.getESTADO()
-                    + "\nAutorización      : "
+                    + "\nAutorización: "
                     + autorizado
                     + "\nAcción generada por: "
                     + usuario.getNOMBRE()
-                    + "\n\nTransacción No.  : "
+                    + "\n\nTransacción No.: "
                     + accionReciente.getACCIONRECIENTEID()
                     + "\n\n\b"
                     + "\nPor favor no responda este correo..."
@@ -116,13 +116,13 @@ public class EmailServicesImpl implements EmailServices {
             String supervisadoMessage = "";
 
             messages = "\n  "
-                    + "\n----------------------TOKEN GENERADO---------------------------------------"
+                    + "\n----------------------Token Generado---------------------------------------"
                     + "\n"
                     + header
                     + "\n"
-                    + "\nToken generado     : "
+                    + "\nToken generado: "
                     + token.getTOKEN()
-                    + "\nUtilizarlo antes de: "
+                    + "\nUtilícelo antes de: "
                     + DateUtil.showDate(token.getFECHAVENCIMIENTO())
                     + " "
                     + DateUtil.showHour(token.getFECHAVENCIMIENTO())
