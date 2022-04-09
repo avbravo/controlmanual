@@ -20,7 +20,7 @@
         <meta name="referrer" content="no-referrer"/>
         <meta name="referrer" content="strict-origin-when-cross-origin"/>
 
-        <title>Modulo Banco</title>    
+ <title>Control Manual</title>  
 
 
         <f:metadata>
@@ -37,15 +37,7 @@
             <p:remoteCommand name="ejecutarbean" action="#{accessController.inicializa()}" oncomplete="redireccionar()" />
 
 
-            <script type="text/javascript">
-                function setDataTableWithPageStart() {
-
-                    widgetVardataTable.getPaginator().setPage(0);
-                    alert("ejecutado la funcion setDataTableWithPageStart()")
-                }
-
-
-            </script>
+         
 
 
             <p:growl id='growl' widgetVar="widgetVarGrowl"/>
@@ -129,8 +121,11 @@
         </h:form>
         <!-- container-scroller -->
         <!-- container-scroller -->
-        <template:script/> 
+        <template:script/>
     </h:body>
-
+<script type="text/javascript">
+            $.noConflict();
+          
+        </script>
 </html>
 

@@ -511,7 +511,7 @@ if(selectEvent == null){
 
     public void onIdle() {
         try {
-            ConsoleUtil.info("onIdle() " + DateUtil.fechaHoraActual());
+
             /**
              * Si una accionreciente fue cambiada por otro usuario
              */
@@ -535,7 +535,7 @@ if(selectEvent == null){
         // <editor-fold defaultstate="collapsed" desc="onActive()">
     public void onActive() {
    try {
-            ConsoleUtil.info("onActive() " + DateUtil.fechaHoraActual());
+        
             /**
              * Si una accionreciente fue cambiada por otro usuario
              */
@@ -576,36 +576,47 @@ if(selectEvent == null){
 
     // </editor-fold>
 
-      // <editor-fold defaultstate="collapsed" desc="Boolean renderedPendiente()">
-    public Boolean renderedPendiente() {
-        return accionRecienteServices.renderedPendiente(accionRecienteSelected);
-
-    }
-
-    // </editor-fold>
-      // <editor-fold defaultstate="collapsed" desc="Boolean renderedPendiente(AccionReciente accionReciente)">
+       // <editor-fold defaultstate="collapsed" desc="Boolean renderedPendiente(AccionReciente accionReciente)">
     public Boolean renderedPendiente(AccionReciente accionReciente) {
-        return accionReciente.getAUTORIZADO().equals("PE");
+        try {
+            if(accionReciente == null ||accionReciente.getAUTORIZADO() ==null){
+                 return Boolean.FALSE;
+            }
+             return accionReciente.getAUTORIZADO().equals("PE");
+        } catch (Exception e) {
+               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+       return Boolean.FALSE;
 
     }
 
     // </editor-fold>
       // <editor-fold defaultstate="collapsed" desc="Boolean renderedDenegado(AccionReciente accionReciente)">
     public Boolean renderedDenegado(AccionReciente accionReciente) {
-        return accionReciente.getAUTORIZADO().equals("NO");
+        try{
 
+             if(accionReciente == null ||accionReciente.getAUTORIZADO() ==null){
+                 return Boolean.FALSE;
+            }
+        return accionReciente.getAUTORIZADO().equals("NO");
+ } catch (Exception e) {
+               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+       return Boolean.FALSE;
     }
 
     // </editor-fold>
       // <editor-fold defaultstate="collapsed" desc="Boolean renderedAutorizado(AccionReciente accionReciente)">
     public Boolean renderedAutorizado(AccionReciente accionReciente) {
-        try {
-            if(accionReciente.getAUTORIZADO().equals("SI")){
-                return Boolean.TRUE;
+        try{
+             if(accionReciente == null ||accionReciente.getAUTORIZADO() ==null){
+                 return Boolean.FALSE;
             }
-        } catch (Exception e) {
+        return accionReciente.getAUTORIZADO().equals("SI");
+         } catch (Exception e) {
+               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-        return Boolean.FALSE;
+       return Boolean.FALSE;
 
     }
 

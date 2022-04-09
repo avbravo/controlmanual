@@ -171,10 +171,15 @@ public class AgendadosController implements Serializable, Page {
                                 result = accionRecienteRepository.findEstadoBancoIdAndActivoLikePaginacion(estadoSearch, banco.getBANCOID(), "SI", 0, rowForPage);
                                 break;
                             case "autorizado":
-                             
-                                count = accionRecienteRepository.countAutorizadoBancoIdAndActivoLike(autorizadoSearch, banco.getBANCOID(), "SI");
+                                 if(autorizadoSearch == null || autorizadoSearch.equals("")){
+                                     count = accionRecienteRepository.countBancoIdAndActivo( banco.getBANCOID(), "SI");
+                                paginas = JsfUtil.numberOfPages(count, rowForPage);
+                                result = accionRecienteRepository.findBancoIdAndActivoPaginacion(banco.getBANCOID(), "SI", 0, rowForPage);
+                                }else{
+                                     count = accionRecienteRepository.countAutorizadoBancoIdAndActivoLike(autorizadoSearch, banco.getBANCOID(), "SI");
                                 paginas = JsfUtil.numberOfPages(count, rowForPage);
                                 result = accionRecienteRepository.findAutorizadoBancoIdAndActivoLikePaginacion(autorizadoSearch, banco.getBANCOID(), "SI", 0, rowForPage);
+                                }
                                 break;
                         }
 
@@ -183,7 +188,7 @@ public class AgendadosController implements Serializable, Page {
 //
 //                        List<AccionReciente> result = accionRecienteRepository.findBancoIdAndActivoPaginacion(banco.getBANCOID(), "SI", offset, rowForPage);
                         lazyDataModelAccionReciente.setRowCount(count);
-                        PrimeFaces.current().executeScript("setDataTableWithPageStart()");
+//                        PrimeFaces.current().executeScript("setDataTableWithPageStart()");
                         return result;
                     }
 

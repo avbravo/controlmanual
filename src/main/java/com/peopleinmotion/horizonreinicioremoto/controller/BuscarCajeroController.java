@@ -143,7 +143,7 @@ public class BuscarCajeroController implements Serializable, Page {
                         
 
                         lazyDataModelCajero.setRowCount(count);
-                        PrimeFaces.current().executeScript("setDataTableWithPageStart()");
+                    //    PrimeFaces.current().executeScript("setDataTableWithPageStart()");
                         return result;
                     }
 

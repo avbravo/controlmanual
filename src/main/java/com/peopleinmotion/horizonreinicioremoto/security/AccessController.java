@@ -19,6 +19,7 @@ import com.peopleinmotion.horizonreinicioremoto.utils.BrowserUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
+import com.peopleinmotion.horozoncomponent.RemoteSessionBean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -68,6 +69,9 @@ public class AccessController implements Serializable, Page {
     @Inject
     BrowserUtil browserUtil;
 // </editor-fold>
+    @Inject
+    RemoteSessionBean  remoteSessionBean ;
+    
 
     /**
      * Creates a new instance of AccessController
@@ -81,6 +85,14 @@ public class AccessController implements Serializable, Page {
         loged = false;
 
         try {
+           ConsoleUtil.info("loading ejb");
+                    remoteSessionBean.businessMethod();
+                   
+            
+            ConsoleUtil.info("voy a cargar SQL");
+           
+           
+           
             intentos = 0;
 
             /**
@@ -106,7 +118,24 @@ public class AccessController implements Serializable, Page {
 
     }
 // </editor-fold>
+ 
+       // <editor-fold defaultstate="collapsed" desc="String loadSQL()">
+    public String loadSQL(){
+        try {
+              QuerySQL querySQL = new QuerySQL.Builder()
+                    .query("SELECT b FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI' ORDER BY b.BANCO ASC")
+                    .count("SELECT COUNT(b) FROM Banco b WHERE b.ESCONTROL = 'NO' AND b.ACTIVO = 'SI'")
+                    .build();
 
+            bancoList = bancoRepository.sql(querySQL);
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            ConsoleUtil.error(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return "";
+    }
+    
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="String login()">
     public String login() {
         try {
@@ -119,10 +148,10 @@ public class AccessController implements Serializable, Page {
                 return "";
             }
             setLoged(Boolean.FALSE);
-            if (intentos > 2) {
-                JsfUtil.warningMessage("Usted ha intentado ingresar en mas de tres ocasiones de manera fallida.");
-                return "";
-            }
+//            if (intentos > 2) {
+//                JsfUtil.warningMessage("Usted ha intentado ingresar en mas de tres ocasiones sin éxito.");
+//                return "";
+//            }
 
             if (accessServices.validateCredentials(usuario, username, password, selectOneMenuBancoValue)) {
                      usuario = (Usuario) JmoordbContext.get("user");
@@ -155,6 +184,12 @@ public class AccessController implements Serializable, Page {
 //               return "index.xhtml";
             } else {
                 intentos++;
+                  if (intentos > 2) {
+                    JsfUtil.warningMessage("Usted ha intentado ingresar en más de tres ocasiones sin éxito.");
+                    accessServices.disableUser(username);
+                    intentos =0;
+                    return "";
+                }
             }
 
         } catch (Exception e) {
@@ -163,6 +198,73 @@ public class AccessController implements Serializable, Page {
         return "";
     }
 // </editor-fold>
+ public String loginActiveDirectory() {
+        try {
+            if (username == null || username.equals("")) {
+                JsfUtil.warningMessage("Ingrese el nombre del usuario");
+                return "";
+            }
+            if (password == null || password.equals("")) {
+                JsfUtil.warningMessage("Ingrese el password del usuario");
+                return "";
+            }
+            setLoged(Boolean.FALSE);
+          
+            /**
+            Banco de Control
+            */
+            if(bancoList == null || bancoList.isEmpty()){
+            //
+            }
+            else{
+            selectOneMenuBancoValue = bancoList.get(0);
+            }
+
+            if (accessServices.validateCredentialsActiveDirectory( username, password,selectOneMenuBancoValue)) {
+
+                     usuario = (Usuario) JmoordbContext.get("user");
+                if (usuario.getMODULOCONTROLMANUAL().toUpperCase().equals("NO")) {
+                    JsfUtil.warningMessage("No tiene permisos para usar este módulo ");
+                    return "";
+                }
+                setLoged(Boolean.TRUE);
+                JsfUtil.successMessage("Bienvenido " + usuario.getNOMBRE());
+
+         
+
+               Historial historial = new Historial.Builder()
+                        .EVENTO("Login")
+                        .FECHA(DateUtil.fechaHoraActual())
+                        .MODULO("AccessController")
+                        .TABLA("USUARIO")
+                        .CONTENIDO(usuario.toJSON())
+                        .USUARIOID(usuario.getUSUARIOID())
+                        .build();
+
+                if (!historialRepository.create(historial)) {
+
+                }
+
+                JmoordbContext.put("countViewAction", 0);
+                JmoordbContext.put("pageInView", "dashboard.xhtml");
+                intentos = 0;
+                return "dashboard.xhtml";
+
+            } else {
+                intentos++;
+                   if (intentos > 2) {
+                    JsfUtil.warningMessage("Usted ha intentado ingresar en más de tres ocasiones sin éxito.");
+                    accessServices.disableUser(username);
+                    intentos =0;
+                    return "";
+                }
+            }
+
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+        return "";
+    }
 
     // <editor-fold defaultstate="collapsed" desc="String subjectSelectionChanged() ">
     public String subjectSelectionChanged() {

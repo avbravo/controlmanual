@@ -427,7 +427,7 @@ showDialog=Boolean.TRUE;
         PrimeFaces.current().executeScript("PF('widgetVarscheduleDialog').initPosition()");
             PrimeFaces.current().executeScript("PF('widgetVarscheduleDialog').show()");
 
- ConsoleUtil.info("Actualizo el dialogo");
+ // ConsoleUtil.info("Actualizo el dialogo");
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + ": " + e.getLocalizedMessage());
         }
@@ -519,7 +519,7 @@ showDialog=Boolean.TRUE;
 
     public void onIdle() {
         try {
-            ConsoleUtil.info("onIdle() " + DateUtil.fechaHoraActual());
+            // ConsoleUtil.info("onIdle() " + DateUtil.fechaHoraActual());
             /**
              * Si una accionreciente fue cambiada por otro usuario
              */
@@ -544,7 +544,7 @@ showDialog=Boolean.TRUE;
       // <editor-fold defaultstate="collapsed" desc="onActive() ">
     public void onActive() {
    try {
-            ConsoleUtil.info("onActive() " + DateUtil.fechaHoraActual());
+            // ConsoleUtil.info("onActive() " + DateUtil.fechaHoraActual());
             /**
              * Si una accionreciente fue cambiada por otro usuario
              */

@@ -32,13 +32,7 @@
                     box-sizing: border-box;
                 }
             </style>
-            <script type="text/javascript">
-                function setDataTableWithPageStart() {
-
-                    widgetVardataTable.getPaginator().setPage(0);
-                    alert("ejecutado la funcion setDataTableWithPageStart()")
-                }
-            </script>
+           
             <p:growl id='growl' widgetVar="widgetVarGrowl">
                 <p:autoUpdate/>
             </p:growl>
@@ -95,18 +89,12 @@
 
                                             <f:facet name="header">
                                                 <div class="products-table-header">
-                                                    <span style="font-weight: bold">Buscar</span>
-
-                                                    <span class="filter-container ui-input-icon-left">
-                                                        <i class="pi pi-search"></i>
-                                                        <p:inputText id="globalFilter" onkeyup="PF('widgetVardataTableagendadosmodal').filter()" placeholder="Banco"/>
-                                                    </span>
-
+                                                    
 
                                                 </div>
                                             </f:facet>
 
-                                            <p:column headerText="Banco"  filterBy="#{item.banco.BANCO}">
+                                            <p:column headerText="Banco" >
                                                 <label class="text-black">#{item.banco.BANCO}</label>
 
                                             </p:column>
@@ -173,6 +161,9 @@
         <!-- container-scroller -->
          <template:script/> 
     </h:body>
-
+<script type="text/javascript">
+            $.noConflict();
+          
+        </script>
 </html>
 

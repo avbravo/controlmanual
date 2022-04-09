@@ -259,13 +259,13 @@ public class ControlmanualController implements Serializable, Page {
     // <editor-fold defaultstate="collapsed" desc="String onCommandButtonProcesando()">
     public String onCommandButtonProcesando() {
         try {
-            if (!tokenEnviado) {
-                JsfUtil.warningMessage("Usted debe solicite primero un token");
-                return "";
-            }
-            if (!validateToken()) {
-                return "";
-            }
+//            if (!tokenEnviado) {
+//                JsfUtil.warningMessage("Usted debe solicite primero un token");
+//                return "";
+//            }
+//            if (!validateToken()) {
+//                return "";
+//            }
             /**
              * Valida si fue cambiado por otro usuario
              */
@@ -357,13 +357,13 @@ public class ControlmanualController implements Serializable, Page {
 
         try {
             //PrimeFaces.current().executeScript("PF('bancoDialog').hide()");
-            if (!tokenEnviado) {
-                JsfUtil.warningMessage("Usted debe solicite primero un token");
-                return "";
-            }
-            if (!validateToken()) {
-                return "";
-            }
+//            if (!tokenEnviado) {
+//                JsfUtil.warningMessage("Usted debe solicite primero un token");
+//                return "";
+//            }
+//            if (!validateToken()) {
+//                return "";
+//            }
             /**
              * Valida si fue cambiado por otro usuario
              */
@@ -396,6 +396,7 @@ public class ControlmanualController implements Serializable, Page {
             accionReciente.setESTADOID(estado.getESTADOID());
             accionReciente.setESTADO(estado.getESTADO());
             accionReciente.setFECHA(DateUtil.getFechaHoraActual());
+              accionReciente.setFECHAEJECUCION(DateUtil.getFechaHoraActual());
             if (accionRecienteRepository.update(accionReciente)) {
                 //Actualizar la agenda
                 notificacionServices.process(bank.getBANCOID(), "BANCO");
