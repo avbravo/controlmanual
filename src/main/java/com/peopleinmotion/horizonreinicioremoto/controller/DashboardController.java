@@ -121,8 +121,8 @@ public class DashboardController implements Serializable, Page {
         try {
             user = (Usuario) JmoordbContext.get("user");
             banco = (Banco) JmoordbContext.get("banco");
-            
-             Optional<Notificacion> optional = notificacionServices.findByIDANDTIPOID(banco.getBANCOID(), "BANCO");
+
+            Optional<Notificacion> optional = notificacionServices.findByIDANDTIPOID(banco.getBANCOID(), "BANCO");
             if (optional.isPresent()) {
                 notificacionOld = optional.get();
             }
@@ -133,13 +133,13 @@ public class DashboardController implements Serializable, Page {
             if (JmoordbContext.get("countViewAction") == null) {
                 JmoordbContext.put("countViewAction", 0);
             }
-            
-            if(JsfUtil.contextToInteger("rowForPage") != null){
-                    rowForPage=JsfUtil.contextToInteger("rowForPage");
-                }
+
+            if (JsfUtil.contextToInteger("rowForPage") != null) {
+                rowForPage = JsfUtil.contextToInteger("rowForPage");
+            }
 
             Integer countViewAction = Integer.parseInt(JmoordbContext.get("countViewAction").toString());
-           
+
             lazyEventModel = new LazyScheduleModel() {
 
                 @Override
@@ -156,15 +156,13 @@ public class DashboardController implements Serializable, Page {
                         .build();
                 bancoList = bancoRepository.sql(querySQL);
                 selectOneMenuBancoValue = banco;
-              
-             
+
                 fillCarouselAccionReciente();
                 calcularTotales();
                 loadSchedule();
-          
 
             } else {
-               
+
                 selectOneMenuBancoValue = banco;
             }
 
@@ -186,9 +184,8 @@ public class DashboardController implements Serializable, Page {
         try {
             Integer countViewAction = Integer.parseInt(JmoordbContext.get("countViewAction").toString());
 
-
             JmoordbContext.put("countViewAction", 0);
-       
+
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + e.getLocalizedMessage());
         }
@@ -200,9 +197,19 @@ public class DashboardController implements Serializable, Page {
 
             banco = (Banco) JmoordbContext.get("banco");
 
-            String where = "(a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoProcesandoId") + "' OR  "
-                    + "a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId") + "' )";
-
+//            String where = "(a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoProcesandoId") + "' OR  "
+//                    + "a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId") + "' )";
+//    String where = "(a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoFinalizadoId") + "' OR  "
+//                    + "a.ESTADOID !='" + JsfUtil.contextToBigInteger("estadoAcciónNoSePuedeEjecutarId") + "' )";
+            String where = "(a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId") + "' OR  "
+                    + " a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoProcesandoId") + "' OR  "
+                    + " a.ESTADOID ='" + JsfUtil.contextToBigInteger("esatadoEnesperadeconfirmacióndelTécnico") + "' OR  "
+                    + " a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoSolicituddedeshabilitaciónPlantillaenviadaaTelered") + "' OR  "
+                    + " a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoSolicituddedeshabilitacióndePlantillaenProceso") + "' OR  "
+                    + " a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoSolicitudEnviada") + "' OR  "
+                    + " a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoSolicituddeReinicioRemotoenProceso") + "' OR  "
+                    + " a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoSolicituddeHabilitacióndePlantillaEnviada") + "' OR  "
+                    + "a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoPlantillaHabilitadaenProceso") + "' )";
             QuerySQL querySQL = new QuerySQL.Builder()
                     .query("SELECT a FROM AccionReciente a WHERE a.BANCOID = '" + banco.getBANCOID() + "' AND a.ACTIVO ='SI' AND " + where + " ORDER BY a.FECHA DESC")
                     .count("")
@@ -329,7 +336,21 @@ public class DashboardController implements Serializable, Page {
                     Date DESDE = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(start), 0, 00);
                     Date HASTA = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(end), 23, 59);
                     //accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
-                    accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDateEstadoPendienteOProgreso(banco.getBANCOID(), DESDE, HASTA, "SI", JsfUtil.contextToBigInteger("estadoProcesandoId"), JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId"));
+//                    accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDateEstadoPendienteOProgreso(banco.getBANCOID(), DESDE, HASTA, "SI", JsfUtil.contextToBigInteger("estadoProcesandoId"), JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId"));
+//                    accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDateEstadoPendienteOProgreso(banco.getBANCOID(), DESDE, HASTA, "SI", JsfUtil.contextToBigInteger("estadoFinalizadoId"), JsfUtil.contextToBigInteger("estadoAcciónNoSePuedeEjecutarId"));
+                    accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDateGrupoEstadoPendienteOProgreso(banco.getBANCOID(), DESDE, HASTA, "SI", JsfUtil.contextToBigInteger("grupoEstadoSolicitadoId"), JsfUtil.contextToBigInteger("grupoEstadoEnprocesoId'"));
+//accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasForSchedule(banco.getBANCOID(), DESDE, HASTA, "SI", 
+//        JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId") ,
+//             JsfUtil.contextToBigInteger("estadoProcesandoId"),
+//             JsfUtil.contextToBigInteger("esatadoEnesperadeconfirmacióndelTécnico"),
+//             JsfUtil.contextToBigInteger("estadoSolicituddedeshabilitaciónPlantillaenviadaaTelered"),
+//             JsfUtil.contextToBigInteger("estadoSolicituddedeshabilitacióndePlantillaenProceso"),
+//             JsfUtil.contextToBigInteger("estadoSolicitudEnviada"),
+//             JsfUtil.contextToBigInteger("estadoSolicituddeReinicioRemotoenProceso"),
+//             JsfUtil.contextToBigInteger("estadoSolicituddeHabilitacióndePlantillaEnviada"),
+//             JsfUtil.contextToBigInteger("estadoPlantillaHabilitadaenProceso")   
+//        
+//        );
                     if (accionRecienteScheduleList == null || accionRecienteScheduleList.isEmpty()) {
                         JsfUtil.successMessage("No hay registros de acciones recientes");
                     } else {
@@ -394,7 +415,7 @@ public class DashboardController implements Serializable, Page {
     // <editor-fold defaultstate="collapsed" desc="String onEventSelect(SelectEvent<ScheduleEvent<?>> selectEvent)">
     public String onEventSelect(SelectEvent<ScheduleEvent<?>> selectEvent) {
         try {
-if(selectEvent == null){
+            if (selectEvent == null) {
                 JsfUtil.warningMessage("No se puede procesar este evento");
                 return "";
             }
@@ -420,14 +441,13 @@ if(selectEvent == null){
                 JmoordbContext.put("cajero", cajeroSelected);
             }
             JmoordbContext.put("formularioRetorno", "dashboard");
-	
 
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + ": " + e.getLocalizedMessage());
         }
 
-     return "";
-     //return "";
+        return "";
+        //return "";
 
     }
 
@@ -447,7 +467,7 @@ if(selectEvent == null){
      */
     public String selectOneMenuBancoChanged() {
         try {
-           
+
             JmoordbContext.put("banco", selectOneMenuBancoValue);
             calcularTotales();
             fillCarouselAccionReciente();
@@ -466,18 +486,18 @@ if(selectEvent == null){
     }
 // </editor-fold>
 
-
     // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoSolicitado()">
     public Boolean renderedByEstadoSolicitado() {
         return accionRecienteServices.renderedByEstadoSolicitado(accionRecienteSelected);
 
     }
     // </editor-fold>
- // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoFinalizado()">
+    // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoFinalizado()">
     public Boolean renderedByEstadoFinalizado() {
         return accionRecienteServices.renderedByEstadoFinalizado(accionRecienteSelected);
 
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Boolean renderedByEstadoEnProceso()">
     public Boolean renderedByEstadoEnProceso() {
@@ -485,8 +505,8 @@ if(selectEvent == null){
 
     }
     // </editor-fold>
-    
- // <editor-fold defaultstate="collapsed" desc="cortarTexto(String texto)">
+
+    // <editor-fold defaultstate="collapsed" desc="cortarTexto(String texto)">
     public String cortarTexto(String texto) {
         try {
             Integer limite = 35;
@@ -498,7 +518,7 @@ if(selectEvent == null){
             Integer length = texto.length();
             if (length > limite) {
 
-                texto = texto.substring(0, (limite -1));
+                texto = texto.substring(0, (limite - 1));
             }
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -506,9 +526,8 @@ if(selectEvent == null){
         return texto;
     }
 // </editor-fold>
-   
-    // <editor-fold defaultstate="collapsed" desc="onIdle() ">
 
+    // <editor-fold defaultstate="collapsed" desc="onIdle() ">
     public void onIdle() {
         try {
 
@@ -522,8 +541,8 @@ if(selectEvent == null){
                 }
 
                 fillCarouselAccionReciente();
-               loadSchedule();
-                     calcularTotales();
+                loadSchedule();
+                calcularTotales();
             }
 
         } catch (Exception e) {
@@ -532,10 +551,11 @@ if(selectEvent == null){
 
     }
 // </editor-fold>
-        // <editor-fold defaultstate="collapsed" desc="onActive()">
+    // <editor-fold defaultstate="collapsed" desc="onActive()">
+
     public void onActive() {
-   try {
-        
+        try {
+
             /**
              * Si una accionreciente fue cambiada por otro usuario
              */
@@ -547,7 +567,7 @@ if(selectEvent == null){
 
                 fillCarouselAccionReciente();
                 loadSchedule();
-                      calcularTotales();
+                calcularTotales();
             }
 
         } catch (Exception e) {
@@ -556,11 +576,10 @@ if(selectEvent == null){
     }
 // </editor-fold>
 
-    
-       // <editor-fold defaultstate="collapsed" desc="Boolean renderedAutorizado()">
+    // <editor-fold defaultstate="collapsed" desc="Boolean renderedAutorizado()">
     public Boolean renderedAutorizado() {
         try {
-            
+
         } catch (Exception e) {
         }
         return accionRecienteServices.renderedAutorizado(accionRecienteSelected);
@@ -568,55 +587,54 @@ if(selectEvent == null){
     }
 
     // </editor-fold>
-      // <editor-fold defaultstate="collapsed" desc="Boolean renderedDenegado()">
+    // <editor-fold defaultstate="collapsed" desc="Boolean renderedDenegado()">
     public Boolean renderedDenegado() {
         return accionRecienteServices.renderedDenegado(accionRecienteSelected);
 
     }
 
     // </editor-fold>
-
-       // <editor-fold defaultstate="collapsed" desc="Boolean renderedPendiente(AccionReciente accionReciente)">
+    // <editor-fold defaultstate="collapsed" desc="Boolean renderedPendiente(AccionReciente accionReciente)">
     public Boolean renderedPendiente(AccionReciente accionReciente) {
         try {
-            if(accionReciente == null ||accionReciente.getAUTORIZADO() ==null){
-                 return Boolean.FALSE;
+            if (accionReciente == null || accionReciente.getAUTORIZADO() == null) {
+                return Boolean.FALSE;
             }
-             return accionReciente.getAUTORIZADO().equals("PE");
+            return accionReciente.getAUTORIZADO().equals("PE");
         } catch (Exception e) {
-               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-       return Boolean.FALSE;
+        return Boolean.FALSE;
 
     }
 
     // </editor-fold>
-      // <editor-fold defaultstate="collapsed" desc="Boolean renderedDenegado(AccionReciente accionReciente)">
+    // <editor-fold defaultstate="collapsed" desc="Boolean renderedDenegado(AccionReciente accionReciente)">
     public Boolean renderedDenegado(AccionReciente accionReciente) {
-        try{
+        try {
 
-             if(accionReciente == null ||accionReciente.getAUTORIZADO() ==null){
-                 return Boolean.FALSE;
+            if (accionReciente == null || accionReciente.getAUTORIZADO() == null) {
+                return Boolean.FALSE;
             }
-        return accionReciente.getAUTORIZADO().equals("NO");
- } catch (Exception e) {
-               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            return accionReciente.getAUTORIZADO().equals("NO");
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-       return Boolean.FALSE;
+        return Boolean.FALSE;
     }
 
     // </editor-fold>
-      // <editor-fold defaultstate="collapsed" desc="Boolean renderedAutorizado(AccionReciente accionReciente)">
+    // <editor-fold defaultstate="collapsed" desc="Boolean renderedAutorizado(AccionReciente accionReciente)">
     public Boolean renderedAutorizado(AccionReciente accionReciente) {
-        try{
-             if(accionReciente == null ||accionReciente.getAUTORIZADO() ==null){
-                 return Boolean.FALSE;
+        try {
+            if (accionReciente == null || accionReciente.getAUTORIZADO() == null) {
+                return Boolean.FALSE;
             }
-        return accionReciente.getAUTORIZADO().equals("SI");
-         } catch (Exception e) {
-               JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            return accionReciente.getAUTORIZADO().equals("SI");
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
         }
-       return Boolean.FALSE;
+        return Boolean.FALSE;
 
     }
 

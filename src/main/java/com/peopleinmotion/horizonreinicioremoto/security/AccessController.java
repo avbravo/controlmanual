@@ -235,7 +235,7 @@ public class AccessController implements Serializable, Page {
                Historial historial = new Historial.Builder()
                         .EVENTO("Login")
                         .FECHA(DateUtil.fechaHoraActual())
-                        .MODULO("AccessController")
+                        .MODULO("CONTROLMANUAL")
                         .TABLA("USUARIO")
                         .CONTENIDO(usuario.toJSON())
                         .USUARIOID(usuario.getUSUARIOID())

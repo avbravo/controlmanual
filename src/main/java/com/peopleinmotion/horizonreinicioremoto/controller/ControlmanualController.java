@@ -7,6 +7,7 @@ package com.peopleinmotion.horizonreinicioremoto.controller;
 
 import com.peopleinmotion.horizonreinicioremoto.domains.MessagesForm;
 import com.peopleinmotion.horizonreinicioremoto.domains.TokenReader;
+import com.peopleinmotion.horizonreinicioremoto.entity.Accion;
 import com.peopleinmotion.horizonreinicioremoto.entity.AccionReciente;
 import com.peopleinmotion.horizonreinicioremoto.entity.Agenda;
 import com.peopleinmotion.horizonreinicioremoto.entity.Banco;
@@ -18,6 +19,7 @@ import com.peopleinmotion.horizonreinicioremoto.entity.Usuario;
 import com.peopleinmotion.horizonreinicioremoto.interfaces.Page;
 import com.peopleinmotion.horizonreinicioremoto.jmoordb.JmoordbContext;
 import com.peopleinmotion.horizonreinicioremoto.repository.AccionRecienteRepository;
+import com.peopleinmotion.horizonreinicioremoto.repository.AccionRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaHistorialRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.AgendaRepository;
 import com.peopleinmotion.horizonreinicioremoto.repository.EstadoRepository;
@@ -66,9 +68,15 @@ public class ControlmanualController implements Serializable, Page {
     private TokenReader tokenReader = new TokenReader();
     private Boolean tokenEnviado = Boolean.FALSE;
     private Boolean updateByOtherUser = Boolean.FALSE;
+
+    private Boolean isBajarPlantilla = Boolean.FALSE;
+    private Boolean isSubirPlantilla = Boolean.FALSE;
+    private Boolean isReinicioRemoto = Boolean.FALSE;
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="@Inject ">
+    @Inject
+    AccionRepository accionRepository;
     @Inject
     GrupoAccionRepository grupoAccionRepository;
     @Inject
@@ -99,11 +107,36 @@ public class ControlmanualController implements Serializable, Page {
     public Boolean getShowCommandButtonProcesando() {
         showCommandButtonProcesando = Boolean.FALSE;
         try {
+            /**
+             * Busca el listado de acciones por grupo
+             */
+            verificarTipoAccion();
 
-            if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId"))) {
-                showCommandButtonProcesando = Boolean.TRUE;
+            if (isBajarPlantilla) {
+                if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoSolicituddedeshabilitaciónPlantillaenviadaaTelered"))
+                        && accionReciente.getAUTORIZADO().equals("SI")) {
+                    showCommandButtonProcesando = Boolean.TRUE;
+                } else {
+                    showCommandButtonProcesando = Boolean.FALSE;
+                }
             } else {
-                showCommandButtonProcesando = Boolean.FALSE;
+                if (isSubirPlantilla) {
+                    if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoSolicituddeHabilitacióndePlantillaEnviada"))
+                            && accionReciente.getAUTORIZADO().equals("SI")) {
+                        showCommandButtonProcesando = Boolean.TRUE;
+                    } else {
+                        showCommandButtonProcesando = Boolean.FALSE;
+                    }
+                } else {
+                    if (isReinicioRemoto) {
+                        if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoSolicitudEnviada"))
+                                && accionReciente.getAUTORIZADO().equals("SI")) {
+                            showCommandButtonProcesando = Boolean.TRUE;
+                        } else {
+                            showCommandButtonProcesando = Boolean.FALSE;
+                        }
+                    }
+                }
             }
 
         } catch (Exception e) {
@@ -117,12 +150,39 @@ public class ControlmanualController implements Serializable, Page {
     public Boolean getShowCommandButtonFinalizar() {
         showCommandButtonFinalizar = Boolean.FALSE;
         try {
-            if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoProcesandoId"))) {
-                showCommandButtonFinalizar = Boolean.TRUE;
-
+            verificarTipoAccion();
+            if (isBajarPlantilla) {
+                if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoSolicituddedeshabilitacióndePlantillaenProceso"))
+                        && accionReciente.getAUTORIZADO().equals("SI")) {
+                    showCommandButtonFinalizar = Boolean.TRUE;
+                } else {
+                    showCommandButtonFinalizar = Boolean.FALSE;
+                }
             } else {
-                showCommandButtonFinalizar = Boolean.FALSE;
+                if (isSubirPlantilla) {
+                    if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoPlantillaHabilitadaenProceso"))
+                            && accionReciente.getAUTORIZADO().equals("SI")) {
+                        showCommandButtonFinalizar = Boolean.TRUE;
+                    } else {
+                        showCommandButtonFinalizar = Boolean.FALSE;
+                    }
+                } else {
+                    if (isReinicioRemoto) {
+                        if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoSolicituddeReinicioRemotoenProceso"))
+                                && accionReciente.getAUTORIZADO().equals("SI")) {
+                            showCommandButtonFinalizar = Boolean.TRUE;
+                        } else {
+                            showCommandButtonFinalizar = Boolean.FALSE;
+                        }
+                    }
+                }
             }
+//            if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoProcesandoId"))) {
+//                showCommandButtonFinalizar = Boolean.TRUE;
+//
+//            } else {
+//                showCommandButtonFinalizar = Boolean.FALSE;
+//            }
 
         } catch (Exception e) {
             JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -141,7 +201,9 @@ public class ControlmanualController implements Serializable, Page {
     @PostConstruct
     public void init() {
         try {
-
+            isBajarPlantilla = Boolean.FALSE;
+            isSubirPlantilla = Boolean.FALSE;
+            isReinicioRemoto = Boolean.FALSE;
             updateByOtherUser = Boolean.FALSE;
             if (JmoordbContext.get("user") == null) {
 
@@ -288,15 +350,39 @@ public class ControlmanualController implements Serializable, Page {
             }
 
             Estado estado = new Estado();
-            Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoProcesandoId"));
-            if (!optional.isPresent()) {
+            if (isBajarPlantilla) {
+                Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoSolicituddedeshabilitacióndePlantillaenProceso"));
+                if (!optional.isPresent()) {
 
-                JsfUtil.warningMessage("No se ha encontado el estado predeterminado para asignalor a esta operacion.");
+                    JsfUtil.warningMessage("No se ha encontado el estado predeterminado para asignarlo a esta operacion.");
+                } else {
+                    estado = optional.get();
+                }
             } else {
-                estado = optional.get();
+                if (isSubirPlantilla) {
+                    Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoPlantillaHabilitadaenProceso"));
+                    if (!optional.isPresent()) {
+
+                        JsfUtil.warningMessage("No se ha encontado el estado predeterminado para asignarlo a esta operacion.");
+                    } else {
+                        estado = optional.get();
+                    }
+                } else {
+                    if (isReinicioRemoto) {
+                        Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoSolicituddeReinicioRemotoenProceso"));
+                        if (!optional.isPresent()) {
+
+                            JsfUtil.warningMessage("No se ha encontado el estado predeterminado para asignarlo a esta operacion.");
+                        } else {
+                            estado = optional.get();
+                        }
+
+                    }
+                }
             }
 
             accionReciente.setESTADOID(estado.getESTADOID());
+            accionReciente.setGRUPOESTADOID(estado.getGRUPOESTADOID().getGRUPOESTADOID());
             accionReciente.setESTADO(estado.getESTADO());
             accionReciente.setFECHA(DateUtil.getFechaHoraActual());
             accionReciente.setFECHAEJECUCION(DateUtil.getFechaHoraActual());
@@ -311,9 +397,11 @@ public class ControlmanualController implements Serializable, Page {
                 } else {
                     Agenda agenda = agendaOptional.get();
                     agenda.setESTADOID(estado.getESTADOID());
-
+                    agenda.setGRUPOESTADOID(estado.getGRUPOESTADOID().getGRUPOESTADOID());
+                    agenda.setFECHA(DateUtil.getFechaHoraActual());
+                    agenda.setFECHAEJECUCION(DateUtil.getFechaHoraActual());
                     if (agendaRepository.update(agenda)) {
-                        agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIÓ ESTADO A PROCESANDO", user);
+                        agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIÓ ESTADO A PROCESANDO", estado, user, "CONTROLMANUAL");
 
                         JmoordbContext.put("accionReciente", accionReciente);
                         emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIÓ ESTADO A PROCESANDO", user, cajero, bank);
@@ -384,19 +472,43 @@ public class ControlmanualController implements Serializable, Page {
             }
 
             Estado estado = new Estado();
-            Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoFinalizadoId"));
-            if (!optional.isPresent()) {
 
-                JsfUtil.warningMessage("No se ha encontado el estado predeterminado para asignalor a esta operacion.");
+            if (isBajarPlantilla) {
+                Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoPlantillaDeshabilitada"));
+                if (!optional.isPresent()) {
+
+                    JsfUtil.warningMessage("No se ha encontado el estado predeterminado para asignarlo a esta operacion.");
+                } else {
+                    estado = optional.get();
+                }
             } else {
-                estado = optional.get();
+                if (isSubirPlantilla) {
+                    Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoPlantillaHabilitada"));
+                    if (!optional.isPresent()) {
 
+                        JsfUtil.warningMessage("No se ha encontado el estado predeterminado para asignarlo a esta operacion.");
+                    } else {
+                        estado = optional.get();
+                    }
+                } else {
+                    if (isReinicioRemoto) {
+                        Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoReinicioRemotoCompletado"));
+                        if (!optional.isPresent()) {
+
+                            JsfUtil.warningMessage("No se ha encontado el estado predeterminado para asignarlo a esta operacion.");
+                        } else {
+                            estado = optional.get();
+                        }
+
+                    }
+                }
             }
 
             accionReciente.setESTADOID(estado.getESTADOID());
+            accionReciente.setGRUPOESTADOID(estado.getGRUPOESTADOID().getGRUPOESTADOID());
             accionReciente.setESTADO(estado.getESTADO());
             accionReciente.setFECHA(DateUtil.getFechaHoraActual());
-              accionReciente.setFECHAEJECUCION(DateUtil.getFechaHoraActual());
+            accionReciente.setFECHAEJECUCION(DateUtil.getFechaHoraActual());
             if (accionRecienteRepository.update(accionReciente)) {
                 //Actualizar la agenda
                 notificacionServices.process(bank.getBANCOID(), "BANCO");
@@ -408,9 +520,11 @@ public class ControlmanualController implements Serializable, Page {
                 } else {
                     Agenda agenda = agendaOptional.get();
                     agenda.setESTADOID(estado.getESTADOID());
-
+                    agenda.setGRUPOESTADOID(estado.getGRUPOESTADOID().getGRUPOESTADOID());
+                    agenda.setFECHA(DateUtil.getFechaHoraActual());
+                    agenda.setFECHAEJECUCION(DateUtil.getFechaHoraActual());
                     if (agendaRepository.update(agenda)) {
-                        agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIÓ ESTADO A EJECUTADA", user);
+                        agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIÓ ESTADO A EJECUTADA", estado, user, "CONTROLMANUAL");
 
                         JmoordbContext.put("accionReciente", accionReciente);
                         emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIÓ ESTADO A EJECUTADA", user, cajero, bank);
@@ -460,11 +574,20 @@ public class ControlmanualController implements Serializable, Page {
                     JsfUtil.warningMessage("No se encontro registros de ese agendamiento");
                     return "";
                 } else {
+                    Estado estado = new Estado();
+                    Optional<Estado> optional = estadoRepository.findByEstadoId(accionReciente.getESTADOID());
+                    if (!optional.isPresent()) {
+
+                        JsfUtil.warningMessage("No se ha encontado el estado predeterminado para asignalor a esta operacion.");
+                    } else {
+                        estado = optional.get();
+
+                    }
                     Agenda agenda = agendaOptional.get();
                     agenda.setFECHAAGENDADA(accionReciente.getFECHAAGENDADA());
 
                     if (agendaRepository.update(agenda)) {
-                        agendaHistorialServices.createHistorial(agendaOptional.get(), "CONTROLMANUAL ACCION", user);
+                        agendaHistorialServices.createHistorial(agendaOptional.get(), "SE REAGENDO LA ACCIÓN", estado, user, "CONTROLMANUAL");
                         JmoordbContext.put("operacionExitosaMensaje", "Control Manual Accion");
                         JmoordbContext.put("accionReciente", accionReciente);
                         emailServices.sendEmailToTecnicosHeader(accionReciente, "CONTROLMANUAL ACCION", user, cajero, bank);
@@ -610,4 +733,64 @@ public class ControlmanualController implements Serializable, Page {
         return "";
     }
 // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="verificarTipoAccion()">
+
+    private void verificarTipoAccion() {
+        try {
+            isBajarPlantilla = Boolean.FALSE;
+            isSubirPlantilla = Boolean.FALSE;
+            isReinicioRemoto = Boolean.FALSE;
+            Optional<GrupoAccion> grupoAccionBajaPlantilla = grupoAccionRepository.findByGrupoAccionId(JsfUtil.contextToBigInteger("grupoAccionBajarPlantillaId"));
+            List<Accion> accionBajarPlantillaList = accionRepository.findByGrupoAccionId(grupoAccionBajaPlantilla.get());
+            Optional<GrupoAccion> grupoAccionReinicioRemoto = grupoAccionRepository.findByGrupoAccionId(JsfUtil.contextToBigInteger("grupoAccionReinicioRemotoId"));
+            List<Accion> accionReinicioRemotoList = accionRepository.findByGrupoAccionId(grupoAccionReinicioRemoto.get());
+            Optional<GrupoAccion> grupoAccionEncenderSubirPlantilla = grupoAccionRepository.findByGrupoAccionId(JsfUtil.contextToBigInteger("grupoAccionEncenderSubirPlantillaId"));
+            List<Accion> accionEncenderSubirPlantillaList = accionRepository.findByGrupoAccionId(grupoAccionEncenderSubirPlantilla.get());
+
+            /**
+             * Veririficar si es bajarPlantilla
+             */
+            if (accionBajarPlantillaList == null || accionBajarPlantillaList.isEmpty()) {
+
+            } else {
+                for (Accion a : accionBajarPlantillaList) {
+                    if (a.getACCIONID().equals(accionReciente.getACCIONID())) {
+                        isBajarPlantilla = Boolean.TRUE;
+                        break;
+                    }
+                }
+            }
+// si no es bajar plantilla revisar si es reinicoo remoto
+            if (!isBajarPlantilla) {
+                if (accionReinicioRemotoList == null || accionReinicioRemotoList.isEmpty()) {
+
+                } else {
+                    for (Accion a : accionReinicioRemotoList) {
+                        if (a.getACCIONID().equals(accionReciente.getACCIONID())) {
+                            isReinicioRemoto = Boolean.TRUE;
+                            break;
+                        }
+                    }
+                }
+            }
+            /**
+             * Verifica si es subir plantilla
+             */
+            if (!isBajarPlantilla && !isReinicioRemoto) {
+                if (accionEncenderSubirPlantillaList == null || accionEncenderSubirPlantillaList.isEmpty()) {
+
+                } else {
+                    for (Accion a : accionEncenderSubirPlantillaList) {
+                        if (a.getACCIONID().equals(accionReciente.getACCIONID())) {
+                            isSubirPlantilla = Boolean.TRUE;
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JsfUtil.errorMessage(JsfUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+        }
+    }
+    // </editor-fold>
 }
