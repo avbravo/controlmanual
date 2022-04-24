@@ -148,7 +148,8 @@ public class BajarPlantillaController implements Serializable, Page {
                 } else {
                     accion = accionList.get(0);
                 }
-                Optional<Estado> optional = estadoRepository.findByPredeterminadoAndActivo("SI", "SI");
+                 Optional<Estado> optional = estadoRepository.findByEstadoId(JsfUtil.contextToBigInteger("estadoSolicituddedeshabilitaciónPlantillaenviadaaTelered"));
+//                Optional<Estado> optional = estadoRepository.findByPredeterminadoAndActivo("SI", "SI");
                 if (!optional.isPresent()) {
                     JsfUtil.warningMessage("No se ha encontado el estado predeterminado para asignalor a esta operacion.");
                 } else {
@@ -469,7 +470,7 @@ public class BajarPlantillaController implements Serializable, Page {
     }
 // </editor-fold> 
     
-      // <editor-fold defaultstate="collapsed" desc="String onCommandButtonBajarPlantillaProgramarEvento()">
+      // <editor-fold defaultstate="collapsed" desc="String onCommandButtonBajarPlantillaSinToken()()">
     /**
      * Guarda el evento y envia notificaciones
      *

@@ -218,7 +218,7 @@ public class CajeroEncontradoController implements Serializable , Page{
     private String findAccionDisponible(){
         try {
             haveAccionReciente = Boolean.FALSE;
-            Optional<AccionReciente> accionRecienteOptional = accionRecienteRepository.findByBancoIdAndCajeroIdUltimaAccionDisponible(bank.getBANCOID(), cajero.getCAJEROID());
+            Optional<AccionReciente> accionRecienteOptional = accionRecienteRepository.findByBancoIdAndCajeroIdUltimaAccionDisponible(bank.getBANCOID(), cajero.getCAJEROID(),JsfUtil.contextToBigInteger("grupoEstadoSolicitadoId"), JsfUtil.contextToBigInteger("grupoEstadoEnprocesoId"));
             if(accionRecienteOptional.isPresent()){
                 accionReciente = accionRecienteOptional.get();
                 haveAccionReciente = Boolean.TRUE;
