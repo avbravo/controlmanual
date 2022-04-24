@@ -388,7 +388,7 @@ public class BajarPlantillaController implements Serializable, Page {
                 if (!agendaOptional.isPresent()) {
                     JsfUtil.warningMessage("No se encontro la agenda con ese codigo de transaccion");
                 } else {
-                        agendaHistorialServices.createHistorial(agendaOptional.get(), "BAJAR PLANTILLA PROGRAMAR EVENTO", estado,user,"CONTROLMANUAL");
+                        agendaHistorialServices.createHistorial(agendaOptional.get(), "BAJAR PLANTILLA PROGRAMAR EVENTO", estado,user,"CM");
 
                         AccionReciente accionReciente = accionRecienteServices.create(agendaOptional.get(), bank, cajero, accion, grupoAccion, estado,"SI","CM");
                         JmoordbContext.put("accionReciente", accionReciente);
@@ -524,7 +524,7 @@ public class BajarPlantillaController implements Serializable, Page {
                 if (!agendaOptional.isPresent()) {
                     JsfUtil.warningMessage("No se encontro la agenda con ese codigo de transaccion");
                 } else {
-                        agendaHistorialServices.createHistorial(agendaOptional.get(), "BAJAR PLANTILLA PROGRAMAR EVENTO",estado, user,"CONTROLMANUAL");
+                        agendaHistorialServices.createHistorial(agendaOptional.get(), "BAJAR PLANTILLA PROGRAMAR EVENTO",estado, user,"CM");
 
                         AccionReciente accionReciente = accionRecienteServices.create(agendaOptional.get(), bank, cajero, accion, grupoAccion, estado,"SI","CM");
                         JmoordbContext.put("accionReciente", accionReciente);

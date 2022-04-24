@@ -1,13 +1,16 @@
-
-           
-             JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId ,
-             JsfUtil.contextToBigInteger("estadoProcesandoId,
-             JsfUtil.contextToBigInteger("esatadoEnesperadeconfirmacióndelTécnico,
-             JsfUtil.contextToBigInteger("estadoSolicituddedeshabilitaciónPlantillaenviadaaTelered,
-             JsfUtil.contextToBigInteger("estadoSolicituddedeshabilitacióndePlantillaenProceso,
-             JsfUtil.contextToBigInteger("estadoSolicitudEnviada,
-             JsfUtil.contextToBigInteger("estadoSolicituddeReinicioRemotoenProceso,
-             JsfUtil.contextToBigInteger("estadoSolicituddeHabilitacióndePlantillaEnviada,
-             JsfUtil.contextToBigInteger("estadoPlantillaHabilitadaenProceso)
+  
+  enviarToken();
+  
+  if (selectOneMenuAccionValue == null) {
+                JsfUtil.warningMessage("Seleccione la acción a ejecutar..");
+                return "";
+            }
+            if (fechahoraBaja == null) {
+                JsfUtil.warningMessage("Seleccione la fecha y hora");
+                return "";
+            }
+            JmoordbContext.put("fechahoraBaja", fechahoraBaja);
+            
+                 JmoordbContext.put("accion", selectOneMenuAccionValue);
      
       

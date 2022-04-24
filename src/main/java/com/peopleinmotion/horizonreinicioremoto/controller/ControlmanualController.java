@@ -401,7 +401,7 @@ public class ControlmanualController implements Serializable, Page {
                     agenda.setFECHA(DateUtil.getFechaHoraActual());
                     agenda.setFECHAEJECUCION(DateUtil.getFechaHoraActual());
                     if (agendaRepository.update(agenda)) {
-                        agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIÓ ESTADO A PROCESANDO", estado, user, "CONTROLMANUAL");
+                        agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIÓ ESTADO A PROCESANDO", estado, user, "CM");
 
                         JmoordbContext.put("accionReciente", accionReciente);
                         emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIÓ ESTADO A PROCESANDO", user, cajero, bank);
@@ -524,7 +524,7 @@ public class ControlmanualController implements Serializable, Page {
                     agenda.setFECHA(DateUtil.getFechaHoraActual());
                     agenda.setFECHAEJECUCION(DateUtil.getFechaHoraActual());
                     if (agendaRepository.update(agenda)) {
-                        agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIÓ ESTADO A EJECUTADA", estado, user, "CONTROLMANUAL");
+                        agendaHistorialServices.createHistorial(agendaOptional.get(), "SE CAMBIÓ ESTADO A EJECUTADA", estado, user, "CM");
 
                         JmoordbContext.put("accionReciente", accionReciente);
                         emailServices.sendEmailToTecnicosHeader(accionReciente, "SE CAMBIÓ ESTADO A EJECUTADA", user, cajero, bank);
