@@ -138,9 +138,10 @@
                                                 <h:panelGrid id="eventDetails" columns="2" cellpadding="2">
 
                                                     <f:facet name="footer">
-                                                        <p:commandButton value="BAJAR PLANTILLA"
+                                                        <p:commandButton value="SUBIR PLANTILLA"
                                                                          icon="pi pi-chevron-down" 
                                                                          process="@this" 
+                                                                         rendered="#{cajeroEncontradoController.showCommandButtonSubirPlantila}"
                                                                          action="#{cajeroEncontradoController.onCommandButtonGrupoAccionBajarPlantilla()}"
                                                                          update=":form:growl"
                                                                          styleClass="rounded-button ui-button-danger" 

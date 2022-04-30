@@ -48,6 +48,7 @@ public class CajeroEncontradoController implements Serializable , Page{
     List<GrupoAccion> grupoAccionList = new ArrayList<>();
     private GrupoAccion grupoAccionBajarPlantilla = new GrupoAccion();
     Boolean haveAccionReciente = Boolean.FALSE;
+    Boolean showCommandButtonSubirPlantila = Boolean.FALSE;
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="@Inject ">
@@ -75,6 +76,7 @@ public class CajeroEncontradoController implements Serializable , Page{
              if(JmoordbContext.get("user")==null){
                 
             }else{
+                 showCommandButtonSubirPlantila = Boolean.FALSE;
             haveAccionReciente = Boolean.FALSE;
             grupoAccionList = new ArrayList<>();
             user = (Usuario) JmoordbContext.get("user");
@@ -83,6 +85,12 @@ public class CajeroEncontradoController implements Serializable , Page{
             findAccionDisponible();
             if(accionReciente == null || accionReciente.getACCIONID() == null){
             
+            }else{
+               
+                if(accionReciente.getESTADOID().equals(JsfUtil.contextToInteger("estadoPlantillaDeshabilitada")))
+                {
+                    showCommandButtonSubirPlantila= Boolean.TRUE;
+                }
             }
             
          fillSelectOneMenuGrupoAccionBajarPlantilla();
