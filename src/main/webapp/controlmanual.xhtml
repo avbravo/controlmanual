@@ -103,7 +103,7 @@
 
                                                 <div class="card-body ">
                                                     <div class="row justify-content-center align-content-center">
-                                                  
+
                                                         <div class="col-12 col-lg-11 atm-card-marbody01 ali-desc-mov01" >
                                                             <c:if test="${!controlmanualController.haveAccionReciente}">
                                                                 <p class="atm-title-mar01"><strong>No hay acciones agendadas</strong></p>
@@ -144,7 +144,7 @@
 
                                                         <p:commandButton styleClass="rounded-button ui-button-danger"
                                                                          style="margin-right: .5rem"
-                                                                       
+
                                                                          rendered="#{controlmanualController.showCommandButtonProcesando}"
                                                                          icon="pi pi-unlock"
                                                                          value="PROCESAR"
@@ -153,19 +153,57 @@
                                                         </p:commandButton>
                                                         <p:commandButton styleClass="rounded-button ui-button-danger" 
                                                                          style="margin-right: .5rem"
-                                                                      
+
                                                                          rendered="#{controlmanualController.showCommandButtonFinalizar}"
                                                                          icon="pi pi-unlock"
                                                                          value="PROCESAR"
                                                                          action="#{controlmanualController.onCommandButtonFinalizando()}"
                                                                          >
-                                                              </p:commandButton>
-                                                           
+                                                        </p:commandButton>
 
-                                                            <p:commandButton value="REGRESAR" class="bot-regresar01" 
-                                                                             styleClass="rounded-button ui-button-outlined ui-button-secondary" style="margin-right: .5rem"
-                                                                             icon ="pi pi-arrow-left"
-                                                                             action="#{controlmanualController.regresar()}"/>
+                                                        <c:if test="${controlmanualController.showCommandButtonEncenderSubirPlantilla}">
+                                                            <p:panelGrid columns="3"  styleClass="ui-panelgrid-blank ui-fluid"
+                                                                         style="border:0px none; background-color:transparent;">
+                                                                <p:outputLabel value="Acción"/>
+                                                                <p:selectOneMenu id="selectOneMenuAccion" 
+                                                                                 class="form-control rounded-pill solosel01"
+                                                                                 value="#{controlmanualController.selectOneMenuAccionValue}" 
+                                                                                 converter="#{accionConverter}"
+                                                                                 >
+                                                                    <!--<f:selectItem itemLabel="Seleccione una Accion" itemValue="#{null}"  noSelectionOption="true"/>-->
+                                                                    <f:selectItems value="#{controlmanualController.accionList}" 
+                                                                                   var="var" 
+                                                                                   itemValue="#{var}" itemLabel="#{var.ACCION} " />
+
+                                                                </p:selectOneMenu>
+                                                                <p:commandButton value="ACEPTAR" 
+                                                                                 title="ACEPTAR"
+                                                                                 icon="pi pi-unlock"
+
+                                                                                 id="commandButtonAceptar"
+                                                                                 action="#{controlmanualController.onCommandButtonEncenderSubirPlantillaSinToken()}"
+                                                                                 update=":form:growl"                                                                    
+                                                                                 styleClass="rounded-button ui-button-danger" style="margin-right: .5rem">
+                                                                </p:commandButton>
+
+
+
+                                                            </p:panelGrid>
+
+
+
+                                                        </c:if>
+
+
+
+
+
+                                                        <p:commandButton value="REGRESAR" class="bot-regresar01" 
+                                                                         styleClass="rounded-button ui-button-outlined ui-button-secondary" style="margin-right: .5rem"
+                                                                         icon ="pi pi-arrow-left"
+                                                                         action="#{controlmanualController.regresar()}"/>
+
+
                                                     </f:facet>
                                                 </h:panelGrid>
 
@@ -214,7 +252,7 @@
             </div>
 
 
-        
+
 
 
 
