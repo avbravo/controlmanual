@@ -208,6 +208,7 @@ public class DashboardController implements Serializable, Page {
                     + " a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoSolicituddedeshabilitacióndePlantillaenProceso") + "' OR  "
                     + " a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoSolicitudEnviada") + "' OR  "
                     + " a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoSolicituddeReinicioRemotoenProceso") + "' OR  "
+                    + " a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoPlantillaDeshabilitada") + "' OR  "
                     + " a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoSolicituddeHabilitacióndePlantillaEnviada") + "' OR  "
                     + "a.ESTADOID ='" + JsfUtil.contextToBigInteger("estadoPlantillaHabilitadaenProceso") + "' )";
             QuerySQL querySQL = new QuerySQL.Builder()
@@ -335,10 +336,13 @@ public class DashboardController implements Serializable, Page {
 
                     Date DESDE = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(start), 0, 00);
                     Date HASTA = DateUtil.setHourToDate(DateUtil.convertLocalDateTimeToJavaDate(end), 23, 59);
+//                    accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDateGrupoEstadoPendienteOProgreso(banco.getBANCOID(), DESDE, HASTA, "SI", JsfUtil.contextToBigInteger("grupoEstadoSolicitadoId"), JsfUtil.contextToBigInteger("grupoEstadoEnprocesoId"));
+//Necesitamos mostrar la plantilla que esta desabilitada
+                    accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDateGrupoEstadoPendienteOProgresoOEstadoId(banco.getBANCOID(), DESDE, HASTA, "SI", JsfUtil.contextToBigInteger("grupoEstadoSolicitadoId"), JsfUtil.contextToBigInteger("grupoEstadoEnprocesoId"), JsfUtil.contextToBigInteger("estadoPlantillaDeshabilitada"));
                     //accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDate(banco.getBANCOID(), DESDE, HASTA, "SI");
 //                    accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDateEstadoPendienteOProgreso(banco.getBANCOID(), DESDE, HASTA, "SI", JsfUtil.contextToBigInteger("estadoProcesandoId"), JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId"));
 //                    accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDateEstadoPendienteOProgreso(banco.getBANCOID(), DESDE, HASTA, "SI", JsfUtil.contextToBigInteger("estadoFinalizadoId"), JsfUtil.contextToBigInteger("estadoAcciónNoSePuedeEjecutarId"));
-                    accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasTypeDateGrupoEstadoPendienteOProgreso(banco.getBANCOID(), DESDE, HASTA, "SI", JsfUtil.contextToBigInteger("grupoEstadoSolicitadoId"), JsfUtil.contextToBigInteger("grupoEstadoEnprocesoId"));
+                    
 //accionRecienteScheduleList = accionRecienteRepository.findBancoIdEntreFechasForSchedule(banco.getBANCOID(), DESDE, HASTA, "SI", 
 //        JsfUtil.contextToBigInteger("estadoEnEsperaDeEjecucionId") ,
 //             JsfUtil.contextToBigInteger("estadoProcesandoId"),

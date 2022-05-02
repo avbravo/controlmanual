@@ -30,6 +30,7 @@ import com.peopleinmotion.horizonreinicioremoto.services.AgendaHistorialServices
 import com.peopleinmotion.horizonreinicioremoto.services.EmailServices;
 import com.peopleinmotion.horizonreinicioremoto.services.NotificacionServices;
 import com.peopleinmotion.horizonreinicioremoto.services.TokenServices;
+import com.peopleinmotion.horizonreinicioremoto.utils.ConsoleUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.DateUtil;
 import com.peopleinmotion.horizonreinicioremoto.utils.JsfUtil;
 import java.io.Serializable;
@@ -111,7 +112,7 @@ public class ControlmanualController implements Serializable, Page {
              * Busca el listado de acciones por grupo
              */
             verificarTipoAccion();
-
+ConsoleUtil.info("xxxxx isBajarPlantilla "+isBajarPlantilla + " isSubirPlantilla "+isSubirPlantilla +  " isReinicioRemoto "+isReinicioRemoto);
             if (isBajarPlantilla) {
                 if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoSolicituddedeshabilitaciónPlantillaenviadaaTelered"))
                         && accionReciente.getAUTORIZADO().equals("SI")) {
@@ -121,12 +122,15 @@ public class ControlmanualController implements Serializable, Page {
                 }
             } else {
                 if (isSubirPlantilla) {
+                    ConsoleUtil.info("xxxxxx accionReciente.getESTADOID() "+accionReciente.getESTADOID());
+                    ConsoleUtil.info("xxxxxx estadoSolicituddeHabilitacióndePlantillaEnviada() "+JsfUtil.contextToBigInteger("estadoSolicituddeHabilitacióndePlantillaEnviada"));
                     if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoSolicituddeHabilitacióndePlantillaEnviada"))
                             && accionReciente.getAUTORIZADO().equals("SI")) {
                         showCommandButtonProcesando = Boolean.TRUE;
                     } else {
                         showCommandButtonProcesando = Boolean.FALSE;
                     }
+                    System.out.println("xxxx showCommandButtonProcesando "+showCommandButtonProcesando);
                 } else {
                     if (isReinicioRemoto) {
                         if (accionReciente.getESTADOID().equals(JsfUtil.contextToBigInteger("estadoSolicitudEnviada"))
