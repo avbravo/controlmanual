@@ -935,7 +935,7 @@ public class ControlmanualController implements Serializable, Page {
                 accionReciente.setESTADOID(estado.getESTADOID());
                 accionReciente.setGRUPOESTADOID(estado.getGRUPOESTADOID().getGRUPOESTADOID());
                 accionReciente.setACCIONID(selectOneMenuAccionValue.getACCIONID());
-            
+            accionReciente.setTITULO(selectOneMenuAccionValue.getGRUPOACCIONID().getGRUPOACCION());
     
                 if (accionRecienteRepository.update(accionReciente)) {
                     //Actualizar la agenda
