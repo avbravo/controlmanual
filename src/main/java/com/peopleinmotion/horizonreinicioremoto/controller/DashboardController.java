@@ -420,6 +420,7 @@ public class DashboardController implements Serializable, Page {
     public String onEventSelect(SelectEvent<ScheduleEvent<?>> selectEvent) {
         try {
             if (selectEvent == null) {
+                
                 JsfUtil.warningMessage("No se puede procesar este evento");
                 return "";
             }
